@@ -17,7 +17,7 @@ js/bulletin.js        CapBulletin : lecture des bulletins PDF dans le navigateur
 js/moteur.js          CapEngine : chances d'admission, liste de vœux, propositions à l'étranger
 js/app.js             navigation et vues (accueil, profil, questionnaire, ma liste, fiche, catalogue, plan, données)
 data/                 jeux de données (JSON), chargés au démarrage
-vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0), chargé au premier import de bulletin
+vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0, voir vendor/README.md), chargé au premier import de bulletin
 scripts/              outils (construction de la version tout-en-un)
 tests/                tests (à venir)
 ```
