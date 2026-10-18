@@ -39,4 +39,10 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 - Lancer le site : `python3 -m http.server 8000` à la racine, puis http://localhost:8000.
 - Version tout-en-un : `python3 scripts/build-standalone.py` (sortie dans `dist/`, non versionné).
   Si un fichier est ajouté ou retiré dans `data/`, mettre à jour la liste `DONNEES` du script.
-- Les tests automatiques iront dans `tests/` (vide pour l'instant).
+- Tests de non-régression (règle 5) : `npm test` (Node 20 ou plus, aucune dépendance à installer).
+  Ils chargent le vrai site dans Node et comparent, pour 10 profils types (`tests/profils.js`),
+  les recommandations, la liste de 10 vœux et les propositions à l'étranger aux références
+  enregistrées dans `tests/reference/`. Lancer `npm test` avant et après chaque modification.
+- Changement de résultats voulu : `node tests/generer-reference.js <profil>` (ou sans argument
+  pour tous), puis montrer les différences avant / après dans la PR (`git diff tests/reference/`).
+  Ne jamais régénérer une référence pour faire passer un test qu'on ne comprend pas.

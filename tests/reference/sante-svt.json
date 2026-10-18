@@ -1,0 +1,740 @@
+{
+ "profil": "sante-svt",
+ "description": "13 de moyenne, SVT + physique-chimie, veut travailler dans la santé",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 13.2,
+  "moyennePeriode": "Terminale – T1",
+  "maths": 12,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": 12,
+  "anglais": "B1",
+  "anglaisCertifie": false,
+  "ecartClasse": 0.8,
+  "rangRelatif": null,
+  "nbExperiences": 1,
+  "nbExperiencesFortes": 0,
+  "geo": {
+   "lat": 43.6985,
+   "lon": 7.2737,
+   "nom": "Lycée Masséna (Nice)"
+  },
+  "certifications": [],
+  "specialites": [
+   "SVT",
+   "physique_chimie"
+  ],
+  "abandonnee": "maths",
+  "optionMaths": "complementaires",
+  "niveau": "terminale",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": null
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.225,
+   "economie": 0,
+   "gestion_commerce": 0.075,
+   "finance": 0.025,
+   "droit": 0.2,
+   "sciences_politiques": 0.25,
+   "international": 0.075,
+   "ingenierie_tech": 0.6,
+   "data_informatique": 0.075,
+   "sciences_humaines": 0.275,
+   "langues": 0.025,
+   "arts": 0.075,
+   "sante": 1,
+   "vivant": 0.9,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "svt",
+    "pc"
+   ],
+   "secteurs": [
+    "sante",
+    "vivant"
+   ],
+   "salaire": 3,
+   "pratique": 5,
+   "maths_niv": 1,
+   "ecrit_niv": 1,
+   "encadrement": 4,
+   "poly": 0,
+   "charge": 2,
+   "ambition": 4,
+   "tests": 2,
+   "long": 5,
+   "etranger": 0,
+   "anglais": 2,
+   "pays": [
+    "aucun"
+   ],
+   "budget_max": 1000,
+   "lieu": [
+    "regions"
+   ],
+   "mobilite": 1
+  },
+  "types": [],
+  "metiers": [
+   "biologiste",
+   "charge_environnement",
+   "educateur_specialise",
+   "infirmier",
+   "ingenieur_agronome",
+   "kinesitherapeute",
+   "medecin",
+   "psychologue",
+   "veterinaire"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "diplome-d-etat-d-infirmier-ifsi-de-l-ap-hm-marseille",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    49,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-de-nice-nice",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    26,
+    55
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-pass",
+   "interet": 76,
+   "faisabilite": 87,
+   "pertinence": 80,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-sciences-de-la-vie",
+   "interet": 78,
+   "faisabilite": 81,
+   "pertinence": 79,
+   "chance": [
+    80,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-toulon-sciences-de-la-vie",
+   "interet": 78,
+   "faisabilite": 81,
+   "pertinence": 79,
+   "chance": [
+    42,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-grenoble-alpes-grenoble",
+   "interet": 86,
+   "faisabilite": 68,
+   "pertinence": 79,
+   "chance": [
+    38,
+    79
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-sciences-de-la-vie",
+   "interet": 78,
+   "faisabilite": 77,
+   "pertinence": 78,
+   "chance": [
+    28,
+    59
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-sciences-de-la-vie",
+   "interet": 78,
+   "faisabilite": 77,
+   "pertinence": 78,
+   "chance": [
+    28,
+    59
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-educateur-specialise-irts-paca-et-corse-marseille",
+   "interet": 79,
+   "faisabilite": 72,
+   "pertinence": 76,
+   "chance": [
+    65,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-aix-en-provence-psychologie",
+   "interet": 71,
+   "faisabilite": 81,
+   "pertinence": 75,
+   "chance": [
+    60,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-psychologie-universite-de-nimes-nimes",
+   "interet": 71,
+   "faisabilite": 81,
+   "pertinence": 75,
+   "chance": [
+    58,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-psychologie",
+   "interet": 71,
+   "faisabilite": 81,
+   "pertinence": 75,
+   "chance": [
+    42,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-psychologie-universite-savoie-mont-blanc-jacob-bellecombette",
+   "interet": 71,
+   "faisabilite": 81,
+   "pertinence": 75,
+   "chance": [
+    56,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-geographie-et-amenagement",
+   "interet": 69,
+   "faisabilite": 80,
+   "pertinence": 73,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-psychologie",
+   "interet": 71,
+   "faisabilite": 77,
+   "pertinence": 73,
+   "chance": [
+    33,
+    70
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-geographie-et-amenagement",
+   "interet": 69,
+   "faisabilite": 80,
+   "pertinence": 73,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-de-nantes-nantes",
+   "interet": 69,
+   "faisabilite": 78,
+   "pertinence": 73,
+   "chance": [
+    35,
+    72
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-ergotherapeute-institut-de-formation-en-ergotherapie-de-marseille-marseil",
+   "interet": 69,
+   "faisabilite": 78,
+   "pertinence": 73,
+   "chance": [
+    49,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-aix-en-provence-geographie-et-amenagement",
+   "interet": 69,
+   "faisabilite": 76,
+   "pertinence": 72,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-claude-bernard-lyon-1-sciences-de-la-terre",
+   "interet": 61,
+   "faisabilite": 87,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-sciences-de-la-vie",
+   "interet": 61,
+   "faisabilite": 85,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-sciences-de-la-vie",
+   "interet": 61,
+   "faisabilite": 85,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-poitiers-sciences-de-la-vie",
+   "interet": 61,
+   "faisabilite": 85,
+   "pertinence": 71,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rennes-sciences-de-la-terre",
+   "interet": 61,
+   "faisabilite": 87,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-strasbourg-sciences-de-la-vie",
+   "interet": 61,
+   "faisabilite": 85,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-toulon-chimie",
+   "interet": 61,
+   "faisabilite": 87,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-le-havre-normandie-sciences-de-la-vie",
+   "interet": 61,
+   "faisabilite": 87,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "nantes-universite-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-clermont-auvergne-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-angers-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bordeaux-bordeaux-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bourgogne-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-franche-comte-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lille-lille-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-limoges-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lorraine-nancy-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-montpellier-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rennes-pass",
+   "interet": 59,
+   "faisabilite": 87,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "psup-34546",
+    "categorie": "securite",
+    "pertinence": 84,
+    "chance": [
+     57,
+     97
+    ]
+   },
+   {
+    "id": "psup-4021",
+    "categorie": "securite",
+    "pertinence": 81,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-25295",
+    "categorie": "ambitieux",
+    "pertinence": 82,
+    "chance": [
+     6,
+     14
+    ]
+   },
+   {
+    "id": "psup-31846",
+    "categorie": "ambitieux",
+    "pertinence": 76,
+    "chance": [
+     15,
+     31
+    ]
+   },
+   {
+    "id": "psup-27761",
+    "categorie": "ambitieux",
+    "pertinence": 73,
+    "chance": [
+     13,
+     29
+    ]
+   },
+   {
+    "id": "aix-marseille-universite-marseille-pass",
+    "categorie": "realiste",
+    "pertinence": 80,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "u-de-toulon-sciences-de-la-vie",
+    "categorie": "realiste",
+    "pertinence": 79,
+    "chance": [
+     42,
+     80
+    ]
+   },
+   {
+    "id": "psup-20458",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     24,
+     53
+    ]
+   },
+   {
+    "id": "psup-39146",
+    "categorie": "realiste",
+    "pertinence": 70,
+    "chance": [
+     28,
+     58
+    ]
+   },
+   {
+    "id": "diplome-d-etat-d-educateur-specialise-irts-paca-et-corse-marseille",
+    "categorie": "securite",
+    "pertinence": 76,
+    "chance": [
+     65,
+     97
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "decide",
+   "top": [
+    "sante",
+    "vivant",
+    "ingenierie_tech"
+   ]
+  },
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et PASS ou LAS (santé) comme solutions de repli.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "non",
+  "liste": []
+ },
+ "empreintes": {
+  "calculs": "36bc36d6dfc334eeb65c6cb0247e2cb3cdfcad2fd00054482493f1c46b6e4039",
+  "textes": "a4e545f8db55cfb29f4a7e8655fb8a4a3ccd776065b55f1e197b8e4817bb3c1c"
+ }
+}

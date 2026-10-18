@@ -1,0 +1,13 @@
+{
+  "name": "mon-plan-sup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Outil d’aide à l’orientation post-bac (Parcoursup)",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:reference": "node tests/generer-reference.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
