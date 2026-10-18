@@ -655,12 +655,21 @@
     ]
    },
    {
-    "id": "psup-28409",
+    "id": "psup-51987",
     "categorie": "ambitieux",
-    "pertinence": 74,
+    "pertinence": 73,
     "chance": [
-     7,
-     15
+     null,
+     null
+    ]
+   },
+   {
+    "id": "psup-35636",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     57,
+     75
     ]
    },
    {
@@ -682,21 +691,12 @@
     ]
    },
    {
-    "id": "psup-16662",
-    "categorie": "realiste",
-    "pertinence": 75,
+    "id": "psup-28972",
+    "categorie": "ambitieux",
+    "pertinence": 76,
     "chance": [
-     16,
-     36
-    ]
-   },
-   {
-    "id": "psup-35533",
-    "categorie": "securite",
-    "pertinence": 75,
-    "chance": [
-     95,
-     97
+     5,
+     12
     ]
    },
    {
@@ -825,7 +825,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "d4259e5a7f7588fe67ffd6d471da4b2bb2ad99acc4df9f8d7a257ec4e5a43975",
-  "textes": "5d0a9177e386b4a3b81a0d9d1e613e1cd8e4d6ce9dd4fdfd2bf2c6145c371c3c"
+  "calculs": "1512fc69ff1d8bd1e7b388c66edf4b93853e47a321427f42882cc389a9461dd6",
+  "textes": "3dbc00167998ad11d5e2c28a71f8d593eaed210d538cea5675e208fbe5ee5c33"
  }
 }

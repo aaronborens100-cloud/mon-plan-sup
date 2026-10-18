@@ -20,7 +20,7 @@
 
   let DATA = null, QUEST = null, METIERS = null, POURS = null, EXTRA = null, etat = S.lire();
   // Base fusionnée : CAT = toutes les fiches affichées (ancienne base + Parcoursup), sans doublon certain
-  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, FIL = null, LIEUX = null, VILLES_GPS = {};
+  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, STATUTS_ST = {}, MANUELLES = {}, FIL = null, LIEUX = null, VILLES_GPS = {};
   const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
   migrer();
 
@@ -52,8 +52,8 @@
   }
   const chargerLycees = () => une("lieux", async () => { if (!LIEUX) chargerLieux(await charger("data-lieux", "data/lieux.json")); });
   const chargerFormations = () => une("formations", async () => {
-    const [d, ps, fu, st, fil, aj] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), chargerLycees().catch(() => null)]);
-    construireCatalogue(d, ps, fu, st, fil, aj);
+    const [d, ps, fu, st, fil, aj, sts, man] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null)]);
+    construireCatalogue(d, ps, fu, st, fil, aj, sts, man);
     etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
     const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
     DATA = d; window.__DATA = DATA;
@@ -142,7 +142,7 @@
   }
   function progressionProfil() { const p = etat.profil; return [p.specialites.length, p.periodes.length, p.certifications.length || p.anglaisAuto, p.experiences.length].filter(Boolean).length; }
   const nbReponses = () => Object.values(etat.reponses).filter((r) => r !== undefined && !(Array.isArray(r) && !r.length)).length;
-  const STATUTS = { officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", non_communique: "non communiqué", indicatif: "indicatif" };
+  const STATUTS = { releve_manuel: "relevé manuel", officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", non_communique: "non communiqué", indicatif: "indicatif" };
   const statutBadge = (st) => (st ? `<span class="badge-statut ${esc(st)}">${STATUTS[st] || esc(st)}</span>` : "");
   function srcLien(o) {
     if (!o || !o.source) return "";
@@ -165,7 +165,7 @@
     return `<div class="note5"><span class="note5-g">${etoiles(g, "Note Mon Plan Sup")}<strong>${f5(g)}/5</strong></span><span class="small muted">Intérêt <strong>${f5(sur5(x.interet))}/5</strong> · Faisabilité <strong>${f5(sur5(x.faisabilite))}/5</strong></span></div>`;
   }
   const CRIT5 = { fort: "5/5", conforme: "4/5", preparer: "3/5", renforcer: "2/5", faible: "1/5", bloquant: "0/5", inconnu: "?/5", na: "—" };
-  function chanceTxt(ch) { if (!ch || ch.bas === null) return "à calculer"; return `${ch.bas}–${ch.haut} %`; }
+  function chanceTxt(ch) { if (ch && ch.nouvelle) return "pas encore de chiffres"; if (!ch || ch.bas === null) return "à calculer"; return `${ch.bas}–${ch.haut} %`; }
   function jauge(ch) {
     if (!ch || ch.bas === null) return "";
     return `<div class="jauge" role="img" aria-label="Estimation entre ${ch.bas} et ${ch.haut} %"><div class="jauge-plage" style="left:${ch.bas}%;width:${Math.max(2, ch.haut - ch.bas)}%"></div></div>`;
@@ -610,7 +610,7 @@
       <div class="f-head">
         ${rang ? `<span class="f-rang" aria-label="Rang ${rang}">${rang}</span>` : ""}
         <div class="f-titre">
-          <div class="row badges">${catPill(x.categorie)}${typePill(f.type, f.type_label)}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${x.exclu ? '<span class="pill bad">Hors de tes critères</span>' : ""}</div>
+          <div class="row badges">${catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${x.exclu ? '<span class="pill bad">Hors de tes critères</span>' : ""}</div>
           <h3><a href="#formation-${f.id}">${esc(f.nom)}</a></h3>
           <p class="f-lieu"><span>${ico("ecole")}${esc(f.etablissement)}</span><span>${ico("pin")}${esc(f.ville)}${f.pays !== "France" ? ", " + esc(f.pays) : ""}</span></p>
         </div>
@@ -907,7 +907,7 @@
         <a href="#liste" class="lien-retour">${ico("retour")}Ma liste</a>
         <div class="fiche-hero-grille">
           <div class="fiche-hero-txt">
-            <div class="row badges">${catPill(x.categorie)}${typePill(f.type, f.type_label)}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${CATBY[f.id] && CATBY[f.id].av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
+            <div class="row badges">${catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${CATBY[f.id] && CATBY[f.id].av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
             <h1>${esc(f.nom)}</h1>
             <p class="f-lieu"><span>${ico("ecole")}${esc(f.etablissement)}</span><span>${ico("pin")}${esc(f.ville)} · ${esc(f.pays)}</span></p>
             <div class="row"><button class="btn ${retenu ? "primary" : "blanc"}" data-action="retenir" data-id="${f.id}" aria-pressed="${retenu}">${ico("etoile", retenu ? "plein" : "")}${retenu ? "Dans mes vœux" : "Ajouter à mes vœux"}</button></div>
@@ -916,6 +916,7 @@
         </div>
         <div class="tuiles">${tuiles.map(([i, l, v, s, t]) => `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(i)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${esc(v)}</span>${s ? `<span class="tuile-s">${esc(s)}</span>` : ""}</div>`).join("")}</div>
       </header>
+      ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle ne peut entrer dans ta liste qu'en vœu ambitieux ou découverte, sans estimation de tes chances." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
       ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
       ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${chanceTxt(r.chance)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
       <nav class="sommaire" aria-label="Sur cette fiche"><button data-action="ancre" data-cible="sec-formation"><span>1</span>Formation</button><button data-action="ancre" data-cible="sec-poursuites"><span>2</span>Poursuite d'études</button><button data-action="ancre" data-cible="sec-metiers"><span>3</span>Métiers et débouchés</button></nav>
@@ -929,11 +930,12 @@
 
         <div class="card stack"><div class="carte-tete"><span class="info-ico ton-violet">${ico("courbe")}</span><h3>Admission : les chiffres</h3></div>
           ${chiffres.length ? `<div class="stats stats-couleur">${chiffres.map(([l, v, i, t]) => `<div class="ton-${t}">${ico(i)}<span class="tiny">${l}</span><strong>${typeof v === "number" ? v.toLocaleString("fr-FR") : v}</strong></div>`).join("")}</div>` : ""}
-          <p class="small">${esc(a.texte || "Statistiques non communiquées.")} ${a.libelle ? `<span class="muted">(${esc(a.libelle)})</span>` : ""}${statutBadge(a.statut)}${srcLien(a)}</p>
+          <p class="small">${esc(a.texte || "Statistiques non communiquées.")} ${a.libelle && !MENTION_STATS[f.stats] ? `<span class="muted">(${esc(a.libelle)})</span>` : ""}${statutBadge(a.statut)}${srcLien(a)}</p>
+          ${f.stats_anciennes ? (() => { const o = f.stats_anciennes, l = [o.places != null ? `${nbFr(o.places)} places` : null, o.voeux != null ? `${nbFr(o.voeux)} vœux` : null, o.admis != null ? `${nbFr(o.admis)} admis` : null, o.taux != null ? `taux d'accès ${String(o.taux).replace(".", ",")} %` : null].filter(Boolean).join(" · "); return `<p class="small">Statistiques de la session ${esc(o.session)} : ${esc(l || "chiffres non communiqués")}. Elles ne servent pas au calcul de tes chances.${statutBadge(o.statut)}${srcLien(o)}</p>`; })() : ""}
           ${f.mentions_admis ? `<h4>Mentions au bac des admis 2025</h4>${barreMentions(f.mentions_admis)}` : ""}
-          <div class="chances-detail ton-${CAT_TON[x.categorie]}"><div><h4>Tes chances (estimation)</h4><p><span class="big">${chanceTxt(x.chance)}</span> ${x.chance.approx ? '<span class="badge-statut estimation">très approximatif</span>' : '<span class="badge-statut estimation">estimation</span>'}</p></div>
+          <div class="chances-detail ton-${CAT_TON[x.categorie]}"><div><h4>Tes chances (estimation)</h4><p><span class="big">${chanceTxt(x.chance)}</span> ${x.chance.nouvelle ? "" : x.chance.approx ? '<span class="badge-statut estimation">très approximatif</span>' : '<span class="badge-statut estimation">estimation</span>'}</p></div>
             ${jauge(x.chance)}<div class="jauge-leg tiny"><span>Ambitieux</span><span>Réaliste</span><span>Sécurité</span></div>
-            <p class="small muted">${esc(x.chance.methode)} Fourchette volontairement large : les jurys regardent aussi la progression, la motivation et le lycée d'origine.</p></div>
+            <p class="small muted">${esc(x.chance.methode)}${x.chance.nouvelle ? "" : " Fourchette volontairement large : les jurys regardent aussi la progression, la motivation et le lycée d'origine."}</p></div>
         </div>
 
         <div class="card stack"><div class="carte-tete"><span class="info-ico ton-menthe">${ico("cible")}</span><h3>Ton adéquation</h3></div>
@@ -1001,7 +1003,7 @@
       </div>
       <div class="resultats-tete"><p aria-live="polite"><b>${nbFr(liste.length)}</b> formation${liste.length > 1 ? "s" : ""} trouvée${liste.length > 1 ? "s" : ""}</p><span class="tiny muted">Places : capacité Parcoursup 2025 du vœu · base du ${esc(fmtDate(FU ? FU.meta.version : DATA.meta.version))}</span></div>
       <div class="cat-grille">${vis.map((e) => `<a class="cat-carte ton-${tonType(e.type, e.type_label)}" href="#formation-${e.id}">
-          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
+          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}${e.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : e.stats === "sans_stats" ? '<span class="pill neutral">Stats non publiées</span>' : ""}</div>
           <h3>${esc(e.nom)}</h3>
           <p class="f-lieu"><span>${ico("ecole")}${esc(e.etablissement)}</span></p>
           <div class="cat-pied"><span>${ico("pin")}${esc(e.ville)}${e.pays !== "France" ? ", " + esc(e.pays) : ""}</span><span>${ico("groupe")}${e.places ? nbFr(e.places) + " places" : "places n. c."}</span><span>${ico("euro")}${e.cout != null ? E.fmtEur(e.cout) + "/an" : "coût n. c."}</span></div>
@@ -1060,7 +1062,7 @@
     if (f.__gen) {
       const e = CATBY[f.id], fam = f.__gen.fam, prob = (FU && FU.ps_probables[f.__gen.gta]) || [], dup = (FU && FU.ps_doublons[f.__gen.gta]) || [];
       return `<div class="card stack" id="sec-fusion"><h3>Sources et données officielles</h3>
-        <p class="small">Fiche construite à partir de Parcoursup. Chiffres d'admission et mentions : ${STATS[f.__gen.gta] ? `statistiques officielles 2025${srcBadge("P")}` : "pas de statistiques Parcoursup 2025 pour cette formation"}. ${fam.origine === "deduit_intitule"
+        <p class="small">Fiche construite à partir de Parcoursup. Chiffres d'admission et mentions : ${STATS[f.__gen.gta] ? `statistiques officielles 2025${srcBadge("P")}` : f.admission.statut === "releve_manuel" ? `relevé manuel, statistiques de la session ${esc(MANUELLES[f.__gen.gta].session)}` : esc((MENTION_STATS[f.stats] || MENTION_STATS.sans_stats).replace(/^./, (c) => c.toLowerCase()).replace(/\.$/, ""))}. ${fam.origine === "deduit_intitule"
           ? `Profil, domaines, spécialités et métiers : déduits de l'intitulé officiel de la filière (« ${esc(fam.libelle)} », code ${esc(fam.nmc)})${srcBadge("E")}, confiance ${esc(fam.confiance)}.`
           : `Profil, domaines, spécialités, métiers et poursuites : repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière (code ${esc(fam.nmc)})${srcBadge("E")}, par exemple ${fam.exemples.slice(0, 3).map((id) => lienFiche(id)).join(", ")}.`} Ces éléments décrivent la filière, pas cet établissement en particulier : à vérifier.</p>
         ${prob.length ? `<div class="notice small"><strong>À vérifier : fiche peut-être déjà présente.</strong> ${prob.map((id) => lienFiche(id)).join(", ")}.</div>` : ""}
@@ -1124,11 +1126,16 @@
     const c = VILLES_GPS[sansAccents(String(f.ville).split(/\s*[/(]/)[0].trim())];
     return c ? { lat: c.lat, lon: c.lon } : null;
   }
-  function construireCatalogue(d, psc, fu, st, fil, aj) {
+  function construireCatalogue(d, psc, fu, st, fil, aj, sts, man) {
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
     if (st) { STATS = st.rows; STCOLS = st.meta.cols; STCONS = st.meta.consulte_le; }
+    STATUTS_ST = (sts && sts.formations) || {};
+    // relevés manuels : retenus seulement s'ils citent leur source et leur date (vérifiés par scripts/construire-statuts-stats.py)
+    MANUELLES = {};
+    for (const [g, e] of Object.entries((man && man.formations) || {}))
+      if (e && typeof e.taux === "number" && /^https?:\/\//.test(e.source || "") && /^\d{4}-\d{2}-\d{2}$/.test(e.consulte_le || "") && e.session && e.statut === "releve_manuel" && !STATS[g]) MANUELLES[g] = e;
     if (fil) for (const [k, l] of Object.entries(fil.meta.types_label)) if (!d.meta.types[k]) d.meta.types[k] = l;   // types ajoutés par la table des filières
     // compléments officiels (champs vides de l'ancienne base) : on ne remplace jamais une valeur existante
     if (fu) for (const f of d.formations) {
@@ -1184,7 +1191,7 @@
       if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); }
       const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
-        type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin"), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf,
+        type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin") || (gf && gf.admission.places), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf, stats: gf ? gf.stats : null,
         app: !!(r.app && r.app.length), av: prob.length + dup.length > 0, avTxt: [],
         cle: sansAccents([r.nm.join(" "), r.fl.join(" "), r.etab_nom, r.commune, r.departement, r.region, r.tf.join(" ")].join(" ")) });
     }
@@ -1199,17 +1206,25 @@
   function horsPerimetre(r) { const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || []; return r.tf.some((t) => cats.includes(t)); }
   const NIV_TAUX = (t) => (t == null ? null : t < 10 ? "tres_haute" : t < 25 ? "haute" : t < 50 ? "moyenne" : "ouverte");
   const TC_ETAB = { "Publics": "public", "Privés en contrat avec l’Etat / EESC": "prive_sous_contrat", "Privés": "prive" };
+  // Mentions affichées pour les formations sans statistiques d'admission (statut « stats » de la fiche)
+  const MENTION_STATS = {
+    nouvelle_2026: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission.",
+    sans_stats: "Statistiques d'admission non publiées.",
+  };
   // Fiche d'une formation Parcoursup : attributs éditoriaux de sa filière (data/filieres.json, code nmc),
-  // chiffres officiels de la formation (stats.json, session 2025). Sans statistiques 2025, la fiche est quand même
-  // créée (taux et mentions à null) : le moteur estime alors les chances d'après la sélectivité, sans « sécurité ».
+  // chiffres officiels de la formation (stats.json, session 2025) ou, à défaut, relevé manuel sourcé
+  // (stats-manuelles.json). Sans chiffres, la fiche est quand même créée (taux et mentions à null), avec le statut
+  // de data/statuts-stats.json : « nouvelle_2026 » (pas de fourchette de chances, vœu ambitieux ou découverte
+  // seulement) ou « sans_stats » (hors des listes de vœux).
   function fichGeneree(r, fil) {
     const g = r.gta;
     let fam = fil.filieres[r.nmc];
     if (!fam) return null;
     const va = fam.variantes && (r.fl || []).find((x) => fam.variantes[x]);   // code nmc partagé : intitulé de la formation
     if (va) fam = fam.variantes[va];
-    const v = (c) => statDe(g, c), aStats = !!STATS[g];
-    const places = v("capa_fin"), voeux = v("voe_tot"), admis = v("acc_tot"), taux = v("taux_acces_ens");
+    const v = (c) => statDe(g, c), aStats = !!STATS[g], man = !aStats ? MANUELLES[g] || null : null;
+    const stats = aStats || man ? "avec_stats" : (STATUTS_ST[g] && STATUTS_ST[g].stats) || "sans_stats";
+    const places = man ? man.places : v("capa_fin"), voeux = man ? man.voeux : v("voe_tot"), admis = man ? man.admis : v("acc_tot"), taux = man ? man.taux : v("taux_acces_ens");
     const pm = ["pct_tbf", "pct_tb", "pct_b", "pct_ab", "pct_sansmention"].map(v);
     const men = admis && pm.every((x) => x != null) && pm.some((x) => x > 0) ? pm : null;   // répartition vide = non publiée
     const deduite = fam.origine === "deduit_intitule";
@@ -1231,12 +1246,16 @@
       pieces: ["dossier Parcoursup", "projet de formation motivé"],
       langue_requise: { anglais_cecrl: fam.anglais_cecrl, texte: fam.anglais_cecrl ? `Niveau ${fam.anglais_cecrl} habituellement attendu dans cette filière (estimation).` : "Pas de certification exigée relevée pour cette filière.", statut: "estimation" },
       admission: aStats ? { taux, libelle: "Taux d'accès 2025", candidats: voeux, places, admis, texte: `${chiffres} (Parcoursup 2025).${taux != null ? ` Taux d'accès : ${taux} %.` : ""}`, source: src, consulte_le: cons, statut: "officiel" }
-        : { taux: null, libelle: "Taux d'accès 2025", candidats: null, places: null, admis: null, texte: "Pas de statistiques d'admission Parcoursup 2025 pour cette formation (formation nouvelle ou chiffres non publiés).", source: src, consulte_le: cons, statut: "non_communique" },
+        : man ? { taux, libelle: `Taux d'accès ${man.session}`, candidats: voeux, places, admis, texte: `${chiffres ? chiffres + " " : ""}(statistiques de la session ${man.session}, relevé manuel). Taux d'accès : ${taux} %.`, session: man.session, source: man.source, consulte_le: man.consulte_le, statut: "releve_manuel" }
+        : { taux: null, libelle: "Taux d'accès 2025", candidats: null, places: null, admis: null, texte: MENTION_STATS[stats], source: src, consulte_le: cons, statut: "non_communique" },
+      stats, stats_certitude: STATUTS_ST[g] && !aStats && !man ? STATUTS_ST[g].certitude : null, stats_anciennes: !aStats && !man && STATUTS_ST[g] ? STATUTS_ST[g].anciennes || null : null,
       mentions_admis: m, classement: null, integrations: [],
       incertitudes: [deduite ? `Profil, domaines, spécialités et métiers déduits de l'intitulé officiel de la filière Parcoursup (« ${fam.libelle} », ${fam.nmc}) : estimation à vérifier pour cet établissement.`
           : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
         ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
-        ...(!aStats ? ["Pas de statistiques d'admission Parcoursup 2025 : tes chances sont estimées d'après un niveau de sélectivité moyen par défaut, et cette formation n'est jamais classée « sécurité »."] : []),
+        ...(man ? [`Pas de statistiques Parcoursup 2025 : chiffres relevés à la main (session ${man.session}), sans les mentions des admis.`] : []),
+        ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas d'estimation de tes chances. Elle ne peut entrer dans ta liste qu'en vœu ambitieux ou découverte."] : []),
+        ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : l'estimation de tes chances est très approximative (niveau de sélectivité moyen par défaut, jamais « sécurité »), et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
         ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
       domaines: fam.domaines,
       cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: r.tc === "Publics" ? "Frais non relevés pour cette formation : vérifie sur le site de l'établissement." : "Établissement privé : frais non relevés, vérifie sur le site de l'établissement.", statut: "non_communique" },

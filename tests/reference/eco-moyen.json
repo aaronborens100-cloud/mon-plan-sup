@@ -125,7 +125,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -216,7 +216,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -320,7 +320,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -346,7 +346,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -398,7 +398,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -476,7 +476,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -554,7 +554,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -567,7 +567,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -636,48 +636,39 @@
     ]
    },
    {
-    "id": "psup-26131",
+    "id": "psup-26296",
     "categorie": "securite",
-    "pertinence": 73,
+    "pertinence": 74,
     "chance": [
-     51,
+     64,
      97
     ]
    },
    {
-    "id": "psup-44895",
+    "id": "psup-10451",
+    "categorie": "securite",
+    "pertinence": 72,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-51869",
+    "categorie": "ambitieux",
+    "pertinence": 77,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "psup-51307",
     "categorie": "ambitieux",
     "pertinence": 73,
     "chance": [
-     15,
-     33
-    ]
-   },
-   {
-    "id": "ps-8461",
-    "categorie": "ambitieux",
-    "pertinence": 65,
-    "chance": [
-     10,
-     22
-    ]
-   },
-   {
-    "id": "psup-2226",
-    "categorie": "ambitieux",
-    "pertinence": 65,
-    "chance": [
-     8,
-     17
-    ]
-   },
-   {
-    "id": "psup-39903",
-    "categorie": "realiste",
-    "pertinence": 73,
-    "chance": [
-     27,
-     56
+     null,
+     null
     ]
    },
    {
@@ -687,6 +678,15 @@
     "chance": [
      21,
      45
+    ]
+   },
+   {
+    "id": "psup-26115",
+    "categorie": "realiste",
+    "pertinence": 71,
+    "chance": [
+     26,
+     53
     ]
    },
    {
@@ -733,7 +733,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "03e2ab667de72158c039b9bd6dd5d6d667436440ea5dcda368e2e9002b46fc73",
-  "textes": "270b1c05b7670ecac958a4d271fd8f1523ebae6005f58e1b163764aac060914b"
+  "calculs": "a7865a37bf2d943f085c01105fa1a436e9f40ee478c1e8502778ee0242a03c02",
+  "textes": "8ad5d5809ae499482352d71ab4488bfc0298b72427f433343503c9fdc6607f4b"
  }
 }

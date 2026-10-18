@@ -236,12 +236,15 @@
     return clamp(cum, 0, 1);
   }
   function chance(f, s, crit) {
+    // nouvelle formation (statut « stats » de la fiche, data/statuts-stats.json) : aucune fourchette affichée
+    if (f.stats === "nouvelle_2026") return { bas: null, haut: null, mid: null, base: null, approx: true, nouvelle: true,
+      methode: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas d'estimation de tes chances." };
     const a = f.admission || {};
     let T = typeof a.taux === "number" ? a.taux : null, approx = false, methode;   // le taux d'accès sert au calcul mais n'est plus affiché   // le taux d'accès sert au calcul mais n'est plus affiché
     if (T === null) {
       T = { tres_haute: 8, haute: 20, moyenne: 40, ouverte: 70 }[f.selectivite.niveau] || 30; approx = true;
       methode = "Statistiques d'admission non publiées : estimation à partir du niveau de sélectivité.";
-    } else methode = "Point de départ : les statistiques d'admission 2025 de la formation.";
+    } else methode = a.statut === "releve_manuel" ? `Point de départ : les statistiques d'admission de la session ${a.session} de la formation (relevé manuel).` : "Point de départ : les statistiques d'admission 2025 de la formation.";
     let p = null;
     const m = f.mentions_admis;
     const moyEleve = s.moyenneGenerale !== null ? s.moyenneGenerale + 0.4 : null; // la moyenne au bac dépasse en général celle des bulletins
@@ -344,7 +347,7 @@
     let categorie;
     if (ch.mid === null) categorie = { tres_haute: "ambitieux", haute: "ambitieux", moyenne: "realiste", ouverte: "securite" }[sel] || "realiste";
     else categorie = ch.mid >= 55 && ch.base > 30 && !ch.approx ? "securite" : ch.mid >= 25 ? "realiste" : "ambitieux";   // pas de « sécurité » sans taux publié
-    if (bloque) categorie = "ambitieux";
+    if (bloque || ch.nouvelle) categorie = "ambitieux";   // nouvelle formation : jamais « réaliste » ni « sécurité »
     const pertinence = Math.round(it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite);
     return { f, crit, interet, faisabilite, pertinence, chance: ch, categorie, bloque, exclu, ajust, dist, raisons: raisons(f, s, it, crit, cout, ch), actions: actions(f, s, crit) };
   }
@@ -479,8 +482,9 @@
   // visible dans le catalogue et sur sa fiche, et l'élève peut toujours l'ajouter lui-même à ses vœux.
   const SEUIL_BAC_GENERAL = 20;   // part minimale (%) de bacheliers généraux parmi les admis 2025 (stats.json, pct_bg)
   const CATEGORIES_BAC_PRO = ["Certificats de spécialisation et FCIL"];   // catégories Parcoursup (tf) visant les bacs pro
+  const MAX_NOUVELLES = 2;   // nouvelles formations 2026 (sans statistiques) : au plus 2 par liste, en ambitieux ou découverte
   const HORS_LISTE = {
-    sans_stats: "Pas de taux d'accès 2025 publié : chances impossibles à estimer.",
+    sans_stats: "Statistiques d'admission non publiées : chances impossibles à estimer.",
     filiere_a_relire: "Description de la filière encore à vérifier.",
     bac_pro: "Formation qui accueille surtout des bacheliers professionnels.",
   };
@@ -488,7 +492,7 @@
   function reglesHorsListe(f) {
     if (f.pays !== "France") return [];
     const r = [];
-    if (!f.admission || typeof f.admission.taux !== "number") r.push("sans_stats");
+    if (f.stats !== "nouvelle_2026" && (!f.admission || typeof f.admission.taux !== "number")) r.push("sans_stats");
     if (f.__gen && f.__gen.fam && f.__gen.fam.valide === false) r.push("filiere_a_relire");
     if ((f.__tf || []).some((t) => CATEGORIES_BAC_PRO.includes(t)) || (typeof f.__pctBG === "number" && f.__pctBG < SEUIL_BAC_GENERAL)) r.push("bac_pro");
     return r;
@@ -503,8 +507,9 @@
     const cert = certitude(it);
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
-    // voies « cœur de projet » : celles des 5 formations les plus pertinentes ; la première est la voie principale
-    const top5 = ok.slice().sort((a, b) => b.pertinence - a.pertinence).slice(0, 5);
+    // voies « cœur de projet » : celles des 5 formations les plus pertinentes ; la première est la voie principale.
+    // Les nouvelles formations 2026 n'y comptent pas : sans chiffres, elles ne doivent pas orienter toute la liste.
+    const top5 = ok.filter((x) => x.f.stats !== "nouvelle_2026").sort((a, b) => b.pertinence - a.pertinence).slice(0, 5);
     const coeur = new Set(top5.map(V)), principal = top5.length ? V(top5[0]) : null;
     const CAPS = { decide: [5, 3, 2], intermediaire: [4, 3, 2], indecis: [3, 2, 2], inconnu: [3, 3, 2] }[cert.niveau];
     let bonusType = 0;
@@ -514,13 +519,14 @@
     let plancher = top5.length ? topP - 20 : -Infinity;
     const choisis = [];
     const oxbridge = (x) => /Oxford|Cambridge/.test(x.f.etablissement);
+    const nouvelle = (x) => x.f.stats === "nouvelle_2026";
     const parFil = {}, parFam = {};
     let maxFil = 2;   // au plus 2 établissements pour une même formation, de catégories différentes
     const fam = (x) => (x.f.famille ? x.f.famille.id : null);
     const fil = (x) => intitule(x.f);
     const peut = (x) => (parEtab[x.f.etablissement] || 0) < 2 && (parFil[fil(x)] || 0) < maxFil && (!fam(x) || (parFam[fam(x)] || 0) < 2)
       && !choisis.some((c) => fil(c) === fil(x) && c.categorie === x.categorie && maxFil <= 2) && (parType[V(x)] || 0) < maxType(V(x)) && !choisis.includes(x)
-      && !(oxbridge(x) && choisis.some((c) => oxbridge(c)));
+      && !(oxbridge(x) && choisis.some((c) => oxbridge(c))) && !(nouvelle(x) && choisis.filter(nouvelle).length >= MAX_NOUVELLES);
     const prend = (x) => { choisis.push(x); parEtab[x.f.etablissement] = (parEtab[x.f.etablissement] || 0) + 1; parType[V(x)] = (parType[V(x)] || 0) + 1; parFil[fil(x)] = (parFil[fil(x)] || 0) + 1; if (fam(x)) parFam[fam(x)] = (parFam[fam(x)] || 0) + 1; };
     // score de choix : pertinence, bonus « cœur de projet », malus pour chaque vœu déjà pris dans la même voie ;
     // un élève indécis reçoit en priorité les formations qui laissent des portes ouvertes (polyvalence)
@@ -538,7 +544,7 @@
     const voiesDec = new Set();
     for (const x of candDec) {
       if (decouvertes.size >= nbDec) break;
-      if (voiesDec.has(V(x)) || x.categorie === "ambitieux" || !peut(x)) continue;   // une découverte doit rester atteignable
+      if (voiesDec.has(V(x)) || (x.categorie === "ambitieux" && !nouvelle(x)) || !peut(x)) continue;   // une découverte doit rester atteignable (nouvelle formation : chances inconnues, admise en découverte)
       voiesDec.add(V(x)); decouvertes.set(x.f.id, x);
     }
 
@@ -703,5 +709,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

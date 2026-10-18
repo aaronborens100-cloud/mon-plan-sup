@@ -135,7 +135,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -148,7 +148,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -161,7 +161,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -174,7 +174,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -673,21 +673,12 @@
     ]
    },
    {
-    "id": "psup-39903",
+    "id": "psup-51307",
     "categorie": "ambitieux",
-    "pertinence": 72,
+    "pertinence": 75,
     "chance": [
-     11,
-     24
-    ]
-   },
-   {
-    "id": "psup-43192",
-    "categorie": "ambitieux",
-    "pertinence": 70,
-    "chance": [
-     6,
-     14
+     null,
+     null
     ]
    },
    {
@@ -718,16 +709,25 @@
     ]
    },
    {
-    "id": "psup-2220",
-    "categorie": "ambitieux",
-    "pertinence": 65,
+    "id": "ps-12929",
+    "categorie": "realiste",
+    "pertinence": 52,
     "chance": [
-     10,
-     22
+     16,
+     38
+    ]
+   },
+   {
+    "id": "psup-51924",
+    "categorie": "ambitieux",
+    "pertinence": 79,
+    "chance": [
+     null,
+     null
     ]
    }
   ],
-  "auMoinsUne": 99,
+  "auMoinsUne": 98,
   "alertes": [],
   "certitude": {
    "niveau": "decide",
@@ -737,7 +737,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli. Un vœu « découverte » t'ouvre à formation ou titre professionnel.",
   "decouvertes": {}
  },
  "etranger": {
@@ -745,7 +745,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "442da8b1510bb72c86ec394e7197fda86dbbddb87151a6977f7ec2d5535bacdc",
-  "textes": "cf9da469015b6264cb972897b3412494b1334fbc60b178069cfe38392bcf6ca5"
+  "calculs": "d0ad3f69adb35497d84160be91c464165c6c6740158e8f3449f8fc97a972739e",
+  "textes": "612c7f1f1ef66e857c9fb4bf7cff9d8a98eac826153ccd0bdd5c52c7ac5d05b4"
  }
 }

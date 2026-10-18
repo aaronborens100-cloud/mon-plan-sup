@@ -372,7 +372,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -645,12 +645,12 @@
     ]
    },
    {
-    "id": "psup-47253",
+    "id": "psup-52050",
     "categorie": "ambitieux",
-    "pertinence": 81,
+    "pertinence": 82,
     "chance": [
-     13,
-     27
+     null,
+     null
     ]
    },
    {
@@ -830,7 +830,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "7d6b61e439cdbd064371082723ec7ae05e2e06f25abde6c942004ea6526cb241",
-  "textes": "a7278be13d0b72696c5dd3c6a966ead04a6f77a0ed6030b9799cf9da978353a0"
+  "calculs": "a92fe6556de3b8ef443d4b7219d5825503c62541a28309edabcfe8d7a3bc09ea",
+  "textes": "89c5b87a01bedc4ed9fd1decfbdb0ef160e71d228138acb673d76de6bfcb4162"
  }
 }
