@@ -1,3 +1,15 @@
+/*
+ * js/bulletin.js : lecture des bulletins PDF (CapBulletin).
+ *
+ * Rôle : extraire d'un bulletin scolaire numérique (Pronote, EcoleDirecte…) les matières,
+ * les moyennes (élève, classe, coefficients), le niveau, la période, le rang, la mention
+ * et des mots-clés des appréciations. Le fichier est lu dans le navigateur de l'élève avec
+ * pdf.js (vendor/), chargé seulement au premier import ; aucune donnée n'est envoyée.
+ *
+ * Expose : window.CapBulletin (lireFichier, analyser, analyseAppreciations, chargerPdfJs,
+ * lignesPdf, TYPES_COL, MATIERES).
+ * Ordre de chargement : 2e des 4 scripts de js/ ; utilise window.pdfjsLib une fois pdf.js chargé.
+ */
 /* Mon Plan Sup — lecture des bulletins PDF (dans le navigateur, rien n'est envoyé).
    Fonctionne avec les bulletins numériques (Pronote, EcoleDirecte…) contenant du texte.
    Un bulletin scanné (image) ne peut pas être lu : il faut alors saisir les notes à la main. */

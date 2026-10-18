@@ -1,3 +1,17 @@
+/*
+ * js/moteur.js : moteur de recommandation (CapEngine).
+ *
+ * Rôle : à partir du profil de l'élève et de ses réponses au questionnaire, noter chaque
+ * formation (intérêt, faisabilité, pertinence), estimer ses chances d'admission à partir des
+ * statistiques officielles, la classer ambitieux / réaliste / sécurité, construire la liste
+ * équilibrée de 10 vœux Parcoursup et proposer des équivalents à l'étranger.
+ * Fonctions principales : recommander, wishlist, etranger, chance, statsProfil.
+ * Aucun accès à la page : ce module ne fait que des calculs.
+ *
+ * Expose : window.CapEngine.
+ * Ordre de chargement : 3e des 4 scripts de js/ ; utilise window.CapBulletin (analyse des
+ * appréciations) s'il est présent.
+ */
 /* Mon Plan Sup — moteur de recommandation (version 2).
    - Adéquation critère par critère (notes, spécialités, langues, tests, extrascolaire, appréciations).
    - Taux d'admission réel de chaque formation (Parcoursup, UCAS…) + fourchette personnelle indicative.

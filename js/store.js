@@ -1,3 +1,14 @@
+/*
+ * js/store.js : enregistrement des données de l'élève (CapStore).
+ *
+ * Rôle : lire, écrire et effacer l'état de l'élève (profil, notes, réponses au questionnaire,
+ * vœux retenus) dans le stockage local du navigateur (localStorage, clé « capsup.v1 »).
+ * Si le stockage est indisponible, l'état est gardé en mémoire le temps de la visite.
+ * Rien n'est envoyé sur un serveur.
+ *
+ * Expose : window.CapStore (lire, ecrire, effacer, vide, fusion, stockageDisponible, KEY).
+ * Ordre de chargement : 1er des 4 scripts de js/ (aucune dépendance).
+ */
 /* Mon Plan Sup — stockage local (aucune donnée n'est envoyée sur un serveur). */
 (function () {
   "use strict";

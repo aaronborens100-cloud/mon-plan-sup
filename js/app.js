@@ -1,3 +1,15 @@
+/*
+ * js/app.js : application (routeur et vues).
+ *
+ * Rôle : charger les données (blocs intégrés à la page, sinon data/*.json), construire le
+ * catalogue (fiches Mon Plan Sup + Parcoursup), gérer la navigation par adresse (#accueil,
+ * #liste, #plan, #explorer, #profil, #formation-…, #donnees) et afficher chaque page : accueil,
+ * profil et questionnaire, Ma liste, fiche formation, catalogue, Mon plan, Mes données.
+ * Gère aussi les clics et la saisie, et enregistre l'état avec CapStore.
+ *
+ * Utilise : window.CapStore, window.CapBulletin, window.CapEngine.
+ * Ordre de chargement : 4e et dernier des scripts de js/ (démarre l'application).
+ */
 /* Mon Plan Sup — application (routeur + vues), version 2. */
 (function () {
   "use strict";
