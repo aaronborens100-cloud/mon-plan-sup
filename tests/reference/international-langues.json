@@ -1,7 +1,7 @@
 {
  "profil": "international-langues",
  "description": "15,5 de moyenne, LLCER anglais + HGGSP, veut partir étudier à l'étranger",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 15.5,
   "moyennePeriode": "Terminale – T1",
@@ -706,6 +706,15 @@
     ]
    },
    {
+    "id": "psup-36539",
+    "categorie": "realiste",
+    "pertinence": 78,
+    "chance": [
+     52,
+     75
+    ]
+   },
+   {
     "id": "sorbonne-universite-histoire",
     "categorie": "realiste",
     "pertinence": 83,
@@ -715,21 +724,12 @@
     ]
    },
    {
-    "id": "sciences-po-bordeaux-iep",
-    "categorie": "realiste",
-    "pertinence": 75,
+    "id": "psup-32304",
+    "categorie": "securite",
+    "pertinence": 79,
     "chance": [
-     66,
-     80
-    ]
-   },
-   {
-    "id": "ps-8130",
-    "categorie": "realiste",
-    "pertinence": 80,
-    "chance": [
-     57,
-     75
+     81,
+     97
     ]
    }
   ],
@@ -916,7 +916,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "a24bac7bf18c6b42de684e703909247470c24665a24fcd1f513af2d67cb9666c",
-  "textes": "f580d78c5afcabcb388a953a32f882233a4b2a39c3d114aaa0edcf0fa14cf07a"
+  "calculs": "1b45f8d612f848f18232e2afb38150e988ce9abddd1986bfa19d8d45de184e21",
+  "textes": "1d2e5a928cd16274e0bc43cc0f22e3e74c65bda70e4b8b8a34453d7936b8f53d"
  }
 }

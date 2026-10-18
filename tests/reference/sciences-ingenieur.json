@@ -1,7 +1,7 @@
 {
  "profil": "sciences-ingenieur",
  "description": "15 de moyenne, maths + physique-chimie, maths expertes, attiré par l'ingénierie et l'informatique",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 15.2,
   "moyennePeriode": "Terminale – T1",
@@ -697,6 +697,15 @@
     ]
    },
    {
+    "id": "psup-32300",
+    "categorie": "realiste",
+    "pertinence": 82,
+    "chance": [
+     27,
+     56
+    ]
+   },
+   {
     "id": "jacques-decour-paris-mpsi",
     "categorie": "realiste",
     "pertinence": 81,
@@ -706,20 +715,11 @@
     ]
    },
    {
-    "id": "u-claude-bernard-lyon-1-physique",
+    "id": "cy-cergy-paris-universite-physique",
     "categorie": "realiste",
     "pertinence": 86,
     "chance": [
-     70,
-     80
-    ]
-   },
-   {
-    "id": "cursus-en-programmation-42-angouleme-angouleme",
-    "categorie": "realiste",
-    "pertinence": 79,
-    "chance": [
-     75,
+     78,
      80
     ]
    }
@@ -734,7 +734,7 @@
     "data_informatique"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et école d'ingénieurs post-bac comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et école d'ingénieurs post-bac comme solutions de repli. Un vœu « découverte » t'ouvre à licence de sciences.",
   "decouvertes": {}
  },
  "etranger": {
@@ -776,7 +776,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "08206baa813d9be0a7c6769e859847e253670b70ee7ae7dad9c154abc4aea767",
-  "textes": "93bc78cceaaeb9b72bc86ab2d4286408f33a2d7239d2b187b9915626ad874faf"
+  "calculs": "11003e8f17babe1a94b0cca30be53600e78952cb546d1431b8bc1e15bb99085c",
+  "textes": "a0789aa24eb9415dbe1c18f0a73779edf26d4e2a2312acc136be9b2364a66987"
  }
 }

@@ -1,7 +1,7 @@
 {
  "profil": "eco-excellent-decide",
  "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 17.1,
   "moyennePeriode": "Terminale – T1",
@@ -147,19 +147,6 @@
     73
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31635",
-   "interet": 87,
-   "faisabilite": 97,
-   "pertinence": 91,
-   "chance": [
-    13,
-    26
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -643,6 +630,19 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-31479",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -666,7 +666,7 @@
     ]
    },
    {
-    "id": "psup-3277",
+    "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
     "categorie": "securite",
     "pertinence": 89,
     "chance": [
@@ -675,12 +675,12 @@
     ]
    },
    {
-    "id": "paris1-dl-histoire-scpo",
+    "id": "psup-39330",
     "categorie": "ambitieux",
-    "pertinence": 90,
+    "pertinence": 88,
     "chance": [
-     14,
-     28
+     11,
+     22
     ]
    },
    {
@@ -702,6 +702,15 @@
     ]
    },
    {
+    "id": "psup-6536",
+    "categorie": "realiste",
+    "pertinence": 88,
+    "chance": [
+     53,
+     75
+    ]
+   },
+   {
     "id": "psl-cpes-economie-societe-droit",
     "categorie": "realiste",
     "pertinence": 87,
@@ -712,15 +721,6 @@
    },
    {
     "id": "bsb-burgundy-school-of-business-bachelor-in-management",
-    "categorie": "realiste",
-    "pertinence": 87,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "essca-school-of-management-pge-post-bac",
     "categorie": "realiste",
     "pertinence": 87,
     "chance": [
@@ -748,7 +748,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, double licence et licence d'éco-gestion, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
   "decouvertes": {}
  },
  "etranger": {
@@ -765,7 +765,7 @@
      ]
     },
     "ancre": {
-     "id": "psup-3277",
+     "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
      "categorie": "securite",
      "pertinence": 89,
      "chance": [
@@ -858,7 +858,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "73ff7b2435a667553aca8cbf97574aaaef75b73b5bad27804b3ddfbf75dc59aa",
-  "textes": "9855f416ede358fb4e507ee4ad35272050f0f44cddc18e7050af1cab123d1259"
+  "calculs": "de787735ea5f67258cf8c9c7d12c6b5eb271dbccbf7c9450144cc213c4c4be31",
+  "textes": "fbf2c888aa2ee8056bdb07321ae360a14c5571cba78e54fb6081ce071538a37c"
  }
 }

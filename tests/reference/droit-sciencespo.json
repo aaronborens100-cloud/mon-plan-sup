@@ -1,7 +1,7 @@
 {
  "profil": "droit-sciencespo",
  "description": "14 de moyenne, HGGSP + HLP, sans maths, veut faire du droit ou de la science politique",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 14.1,
   "moyennePeriode": "Terminale – T1",
@@ -656,15 +656,6 @@
     ]
    },
    {
-    "id": "u-clermont-auvergne-philosophie",
-    "categorie": "securite",
-    "pertinence": 77,
-    "chance": [
-     95,
-     97
-    ]
-   },
-   {
     "id": "psup-27193",
     "categorie": "ambitieux",
     "pertinence": 87,
@@ -701,7 +692,7 @@
     ]
    },
    {
-    "id": "sciences-po-grenoble-iep",
+    "id": "sciences-po-bordeaux-iep",
     "categorie": "realiste",
     "pertinence": 81,
     "chance": [
@@ -710,21 +701,30 @@
     ]
    },
    {
-    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
+    "id": "psup-48793",
     "categorie": "realiste",
-    "pertinence": 83,
+    "pertinence": 79,
     "chance": [
-     78,
-     80
+     null,
+     null
     ]
    },
    {
-    "id": "ps-4671",
-    "categorie": "ambitieux",
-    "pertinence": 79,
+    "id": "psup-36539",
+    "categorie": "realiste",
+    "pertinence": 78,
     "chance": [
-     2,
-     5
+     32,
+     67
+    ]
+   },
+   {
+    "id": "psup-48613",
+    "categorie": "securite",
+    "pertinence": 85,
+    "chance": [
+     72,
+     97
     ]
    }
   ],
@@ -738,7 +738,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur double licence, avec licence de droit ou science po et licence de lettres ou sciences humaines comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec double licence et IEP comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
   "decouvertes": {}
  },
  "etranger": {
@@ -780,7 +780,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "78864f9b743aab42daf725e32f5a40097f3ffda95e9ccfb768664d50e6e8df90",
-  "textes": "6048599fc5ef7620738f416e9840e9671c4f8ab7b04533feaa7758cddf4e39cc"
+  "calculs": "0f61d0524e982607180f86e7c51bb5a4e3645abaf686d42b9cad45b75117a922",
+  "textes": "0a5b11221289064b9df8f93ee69e906918e9a2bf01031a6268af1482015dbe75"
  }
 }

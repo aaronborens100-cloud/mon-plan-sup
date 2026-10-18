@@ -1,7 +1,7 @@
 {
  "profil": "premiere-arts",
  "description": "Élève de première, 13 de moyenne, spécialité arts, veut un parcours créatif",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 13,
   "moyennePeriode": "Première – T1",
@@ -146,6 +146,19 @@
    "id": "u-paris-nanterre-arts-du-spectacle",
    "interet": 88,
    "faisabilite": 79,
+   "pertinence": 84,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-25320",
+   "interet": 84,
+   "faisabilite": 83,
    "pertinence": 84,
    "chance": [
     95,
@@ -364,6 +377,19 @@
    "exclu": null
   },
   {
+   "id": "psup-52050",
+   "interet": 88,
+   "faisabilite": 72,
+   "pertinence": 82,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-35250",
    "interet": 88,
    "faisabilite": 73,
@@ -380,6 +406,19 @@
    "id": "psup-9449",
    "interet": 84,
    "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47497",
+   "interet": 84,
+   "faisabilite": 78,
    "pertinence": 82,
    "chance": [
     95,
@@ -583,45 +622,6 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-9213",
-   "interet": 84,
-   "faisabilite": 77,
-   "pertinence": 81,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9270",
-   "interet": 86,
-   "faisabilite": 73,
-   "pertinence": 81,
-   "chance": [
-    57,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32335",
-   "interet": 84,
-   "faisabilite": 77,
-   "pertinence": 81,
-   "chance": [
-    45,
-    93
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -636,16 +636,7 @@
     ]
    },
    {
-    "id": "psup-35357",
-    "categorie": "securite",
-    "pertinence": 84,
-    "chance": [
-     72,
-     97
-    ]
-   },
-   {
-    "id": "psup-9450",
+    "id": "psup-25320",
     "categorie": "securite",
     "pertinence": 84,
     "chance": [
@@ -708,12 +699,21 @@
     ]
    },
    {
-    "id": "diplome-de-l-ecole-nationale-superieure-des-arts-decoratifs-arts-decoratifs-ensad-paris",
+    "id": "psup-52971",
     "categorie": "realiste",
     "pertinence": 77,
     "chance": [
-     19,
-     41
+     null,
+     null
+    ]
+   },
+   {
+    "id": "psup-35357",
+    "categorie": "securite",
+    "pertinence": 84,
+    "chance": [
+     72,
+     97
     ]
    }
   ],
@@ -726,7 +726,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à école d'art ou du spectacle.",
+  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et école d'art ou du spectacle, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de droit ou science po.",
   "decouvertes": {}
  },
  "etranger": {
@@ -830,7 +830,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "997fa25fe6dd70c3078f88e3c9ae0b7e8eade37cb9daff7b631824f6955c2cbc",
-  "textes": "f5d8e7f353beb76ca7be49a37ce6056d6e5e53cc5d44d57c979deb5ad9ca2466"
+  "calculs": "e5891947f89bcd4fa3a7061e4748709ca2ea2aa470fa636bcae2107b6ebe52cf",
+  "textes": "ff7c54a949ca2a5d3e5a64946baf79f031bd9c0570bddc0f0633f8a05d662928"
  }
 }

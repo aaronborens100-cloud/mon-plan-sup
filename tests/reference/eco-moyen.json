@@ -1,7 +1,7 @@
 {
  "profil": "eco-moyen",
  "description": "11,5 de moyenne, SES + HGGSP, maths complémentaires, intéressé par le commerce, reste près de chez lui",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 11.6,
   "moyennePeriode": "Terminale – T1",
@@ -104,6 +104,149 @@
  },
  "top": [
   {
+   "id": "psup-49978",
+   "interet": 92,
+   "faisabilite": 61,
+   "pertinence": 80,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53273",
+   "interet": 92,
+   "faisabilite": 61,
+   "pertinence": 80,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49034",
+   "interet": 89,
+   "faisabilite": 61,
+   "pertinence": 78,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "grenoble-ecole-de-management-bachelor-in-international-business",
+   "interet": 89,
+   "faisabilite": 58,
+   "pertinence": 77,
+   "chance": [
+    19,
+    42
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "kedge-business-school-bachelor",
+   "interet": 89,
+   "faisabilite": 58,
+   "pertinence": 77,
+   "chance": [
+    19,
+    42
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49141",
+   "interet": 88,
+   "faisabilite": 61,
+   "pertinence": 77,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-42301",
+   "interet": 88,
+   "faisabilite": 61,
+   "pertinence": 77,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-44377",
+   "interet": 88,
+   "faisabilite": 61,
+   "pertinence": 77,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-51869",
+   "interet": 88,
+   "faisabilite": 61,
+   "pertinence": 77,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-42618",
+   "interet": 88,
+   "faisabilite": 61,
+   "pertinence": 77,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47821",
+   "interet": 81,
+   "faisabilite": 65,
+   "pertinence": 75,
+   "chance": [
+    74,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-446",
    "interet": 81,
    "faisabilite": 66,
@@ -117,36 +260,10 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-aes",
-   "interet": 72,
-   "faisabilite": 58,
-   "pertinence": 66,
-   "chance": [
-    17,
-    38
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-8461",
-   "interet": 66,
-   "faisabilite": 63,
-   "pertinence": 65,
-   "chance": [
-    10,
-    22
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-12050",
-   "interet": 69,
-   "faisabilite": 55,
-   "pertinence": 63,
+   "id": "psup-26131",
+   "interet": 81,
+   "faisabilite": 62,
+   "pertinence": 73,
    "chance": [
     51,
     97
@@ -156,51 +273,12 @@
    "exclu": null
   },
   {
-   "id": "ps-12025",
-   "interet": 65,
-   "faisabilite": 56,
-   "pertinence": 61,
-   "chance": [
-    7,
-    16
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-economie-et-gestion",
-   "interet": 63,
-   "faisabilite": 58,
-   "pertinence": 61,
-   "chance": [
-    54,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1223",
-   "interet": 51,
-   "faisabilite": 72,
-   "pertinence": 59,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-clermont-auvergne-aes",
-   "interet": 55,
+   "id": "psup-26149",
+   "interet": 81,
    "faisabilite": 62,
-   "pertinence": 58,
+   "pertinence": 73,
    "chance": [
-    95,
+    91,
     97
    ],
    "categorie": "securite",
@@ -208,12 +286,25 @@
    "exclu": null
   },
   {
-   "id": "u-de-bourgogne-aes",
-   "interet": 55,
+   "id": "psup-12065",
+   "interet": 81,
+   "faisabilite": 61,
+   "pertinence": 73,
+   "chance": [
+    72,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26271",
+   "interet": 81,
    "faisabilite": 62,
-   "pertinence": 58,
+   "pertinence": 73,
    "chance": [
-    95,
+    76,
     97
    ],
    "categorie": "securite",
@@ -221,168 +312,64 @@
    "exclu": null
   },
   {
-   "id": "u-de-caen-normandie-aes",
-   "interet": 55,
-   "faisabilite": 62,
-   "pertinence": 58,
+   "id": "psup-53040",
+   "interet": 80,
+   "faisabilite": 61,
+   "pertinence": 72,
    "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "bath-management",
-   "interet": 51,
-   "faisabilite": 67,
-   "pertinence": 57,
-   "chance": [
-    31,
-    68
+    null,
+    null
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
+   "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-lea",
-   "interet": 52,
+   "id": "psup-46898",
+   "interet": 79,
+   "faisabilite": 61,
+   "pertinence": 72,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53074",
+   "interet": 80,
+   "faisabilite": 61,
+   "pertinence": 72,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49952",
+   "interet": 72,
+   "faisabilite": 70,
+   "pertinence": 71,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26115",
+   "interet": 75,
    "faisabilite": 65,
-   "pertinence": 57,
+   "pertinence": 71,
    "chance": [
-    58,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-10038",
-   "interet": 55,
-   "faisabilite": 57,
-   "pertinence": 56,
-   "chance": [
-    5,
-    10
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "avignon-universite-avignon-licence-science-politique",
-   "interet": 52,
-   "faisabilite": 63,
-   "pertinence": 56,
-   "chance": [
-    13,
-    29
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-lea",
-   "interet": 52,
-   "faisabilite": 61,
-   "pertinence": 56,
-   "chance": [
-    34,
-    74
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bordeaux-bordeaux-aes",
-   "interet": 55,
-   "faisabilite": 58,
-   "pertinence": 56,
-   "chance": [
-    30,
-    67
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lille-lille-aes",
-   "interet": 55,
-   "faisabilite": 58,
-   "pertinence": 56,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-9107",
-   "interet": 49,
-   "faisabilite": 61,
-   "pertinence": 54,
-   "chance": [
-    24,
-    51
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-marseille-licence-droit-parcours-droit-et-science-politique",
-   "interet": 48,
-   "faisabilite": 63,
-   "pertinence": 54,
-   "chance": [
-    13,
-    29
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "sciences-po-campus-menton",
-   "interet": 47,
-   "faisabilite": 64,
-   "pertinence": 54,
-   "chance": [
-    30,
-    67
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-8135",
-   "interet": 49,
-   "faisabilite": 59,
-   "pertinence": 53,
-   "chance": [
-    6,
-    13
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-12929",
-   "interet": 55,
-   "faisabilite": 51,
-   "pertinence": 53,
-   "chance": [
-    24,
+    26,
     53
    ],
    "categorie": "realiste",
@@ -390,140 +377,23 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-histoire",
-   "interet": 44,
-   "faisabilite": 67,
-   "pertinence": 53,
+   "id": "psup-52828",
+   "interet": 76,
+   "faisabilite": 61,
+   "pertinence": 70,
    "chance": [
-    94,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-aix-en-provence-sociologie",
-   "interet": 44,
-   "faisabilite": 67,
-   "pertinence": 53,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-marseille-licence-droit",
-   "interet": 41,
-   "faisabilite": 71,
-   "pertinence": 53,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-histoire",
-   "interet": 44,
-   "faisabilite": 67,
-   "pertinence": 53,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-sociologie",
-   "interet": 44,
-   "faisabilite": 67,
-   "pertinence": 53,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-corse-corte-licence-droit",
-   "interet": 41,
-   "faisabilite": 71,
-   "pertinence": 53,
-   "chance": [
-    83,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-3268",
-   "interet": 43,
-   "faisabilite": 66,
-   "pertinence": 52,
-   "chance": [
-    15,
-    34
+    null,
+    null
    ],
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-9260",
-   "interet": 39,
-   "faisabilite": 71,
-   "pertinence": 52,
-   "chance": [
-    24,
-    51
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "edhec-bba",
-   "interet": 52,
-   "faisabilite": 53,
-   "pertinence": 52,
-   "chance": [
-    17,
-    38
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Frais (≈ 15 900 €/an) au-delà de ton budget."
-  },
-  {
-   "id": "u-cote-d-azur-geographie-et-amenagement",
-   "interet": 40,
-   "faisabilite": 71,
-   "pertinence": 52,
-   "chance": [
-    83,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-franche-comte-economie-et-gestion",
-   "interet": 46,
-   "faisabilite": 62,
-   "pertinence": 52,
+   "id": "psup-35399",
+   "interet": 72,
+   "faisabilite": 68,
+   "pertinence": 70,
    "chance": [
     95,
     97
@@ -533,23 +403,10 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-licence-droit",
-   "interet": 41,
-   "faisabilite": 67,
-   "pertinence": 51,
-   "chance": [
-    23,
-    50
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-aix-en-provence-geographie-et-amenagement",
-   "interet": 40,
-   "faisabilite": 67,
-   "pertinence": 51,
+   "id": "psup-39359",
+   "interet": 72,
+   "faisabilite": 65,
+   "pertinence": 69,
    "chance": [
     95,
     97
@@ -559,67 +416,210 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-psychologie",
-   "interet": 40,
-   "faisabilite": 67,
-   "pertinence": 51,
+   "id": "psup-48199",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
    "chance": [
-    39,
-    82
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-u-site-d-arles-arles-licence-droit",
-   "interet": 41,
-   "faisabilite": 67,
-   "pertinence": 51,
-   "chance": [
-    49,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "avignon-universite-avignon-licence-droit",
-   "interet": 41,
-   "faisabilite": 67,
-   "pertinence": 51,
-   "chance": [
-    95,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "inu-champollion-campus-de-rodez-rodez-licence-droit-parcours-droit-gestion",
-   "interet": 38,
-   "faisabilite": 71,
-   "pertinence": 51,
-   "chance": [
-    58,
-    80
+    null,
+    null
    ],
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "nantes-universite-economie-et-gestion",
-   "interet": 46,
-   "faisabilite": 58,
-   "pertinence": 51,
+   "id": "psup-48997",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
    "chance": [
-    47,
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49827",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-51123",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20181",
+   "interet": 72,
+   "faisabilite": 64,
+   "pertinence": 69,
+   "chance": [
+    46,
+    96
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26117",
+   "interet": 75,
+   "faisabilite": 60,
+   "pertinence": 69,
+   "chance": [
+    20,
+    41
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-41713",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-45218",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-46614",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53242",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53275",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-33555",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39082",
+   "interet": 81,
+   "faisabilite": 52,
+   "pertinence": 69,
+   "chance": [
+    3,
+    6
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-50238",
+   "interet": 72,
+   "faisabilite": 63,
+   "pertinence": 68,
+   "chance": [
+    79,
     97
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-50312",
+   "interet": 72,
+   "faisabilite": 61,
+   "pertinence": 68,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-51442",
+   "interet": 72,
+   "faisabilite": 61,
+   "pertinence": 68,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -627,39 +627,30 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-446",
+    "id": "psup-47821",
     "categorie": "securite",
     "pertinence": 75,
     "chance": [
-     95,
+     74,
      97
     ]
    },
    {
-    "id": "psup-4018",
+    "id": "psup-35399",
     "categorie": "securite",
-    "pertinence": 72,
+    "pertinence": 70,
     "chance": [
      95,
      97
     ]
    },
    {
-    "id": "psup-26113",
+    "id": "psup-44895",
     "categorie": "ambitieux",
-    "pertinence": 69,
+    "pertinence": 73,
     "chance": [
-     14,
-     30
-    ]
-   },
-   {
-    "id": "psup-48261",
-    "categorie": "ambitieux",
-    "pertinence": 63,
-    "chance": [
-     null,
-     null
+     15,
+     33
     ]
    },
    {
@@ -672,6 +663,24 @@
     ]
    },
    {
+    "id": "psup-2226",
+    "categorie": "ambitieux",
+    "pertinence": 65,
+    "chance": [
+     8,
+     17
+    ]
+   },
+   {
+    "id": "psup-49978",
+    "categorie": "realiste",
+    "pertinence": 80,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
     "id": "bachelor-management-de-l-hotellerie-et-du-tourisme-vatel-nimes",
     "categorie": "realiste",
     "pertinence": 79,
@@ -681,39 +690,30 @@
     ]
    },
    {
-    "id": "grenoble-ecole-de-management-bachelor-in-international-business",
+    "id": "psup-53273",
     "categorie": "realiste",
-    "pertinence": 77,
+    "pertinence": 80,
     "chance": [
-     19,
-     42
+     null,
+     null
     ]
    },
    {
-    "id": "psup-26115",
+    "id": "psup-49034",
     "categorie": "realiste",
-    "pertinence": 71,
+    "pertinence": 78,
     "chance": [
-     26,
-     53
+     null,
+     null
     ]
    },
    {
-    "id": "bachelor-arts-culinaires-management-hotelier-institut-paul-bocuse-ecully",
-    "categorie": "realiste",
-    "pertinence": 60,
+    "id": "psup-26296",
+    "categorie": "securite",
+    "pertinence": 74,
     "chance": [
-     33,
-     71
-    ]
-   },
-   {
-    "id": "kedge-business-school-bachelor",
-    "categorie": "realiste",
-    "pertinence": 77,
-    "chance": [
-     19,
-     42
+     64,
+     97
     ]
    }
   ],
@@ -725,7 +725,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec licence d'éco-gestion et école de commerce post-bac comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur certificat de spécialisation ou FCIL, avec formation ou titre professionnel et bachelor (France) comme solutions de repli. Un vœu « découverte » t'ouvre à école de commerce post-bac.",
   "decouvertes": {}
  },
  "etranger": {
@@ -733,7 +733,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "8f97a8666e88799835e64f6fbd192495289f186abe3f86f748ef0c5d8af06ef5",
-  "textes": "62f514623bfb0dbfe1c3e391901a05eb7f5ba5d169d0da69de5692319429f9d4"
+  "calculs": "fde1516d4704cfc037e508acb76bd704191116bcdfc411e4e0c4565dc87a87a3",
+  "textes": "8bd9d213da949c4f7997c6a93e94e2a2699695713806c989161542efa54c05be"
  }
 }
