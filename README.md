@@ -16,7 +16,7 @@ js/store.js           CapStore : enregistrement local (localStorage, clé « cap
 js/bulletin.js        CapBulletin : lecture des bulletins PDF dans le navigateur
 js/moteur.js          CapEngine : chances d'admission, liste de vœux, propositions à l'étranger
 js/app.js             navigation et vues (accueil, profil, questionnaire, ma liste, fiche, catalogue, plan, données)
-data/                 jeux de données (JSON), chargés au démarrage
+data/                 jeux de données (JSON), chargés à la demande (voir « Chargement des données »)
 vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0, voir vendor/README.md), chargé au premier import de bulletin
 scripts/              outils (construction de la version tout-en-un)
 tests/                tests (à venir)
@@ -38,6 +38,19 @@ sur `window` (`CapStore`, `CapBulletin`, `CapEngine`), utilisé par `app.js`.
 | `lieux.json` | lycées et communes avec coordonnées | annuaire de l'Éducation nationale, Parcoursup |
 | `questionnaire.json` | les 31 questions et leurs poids par domaine | éditorial |
 | `metiers.json`, `poursuites.json`, `extrascolaire.json` | métiers, poursuites d'études, engagements | sources citées |
+
+### Chargement des données
+
+Pour que la page s'ouvre vite sur téléphone, `js/app.js` ne charge pas tout au démarrage :
+
+- au démarrage : `questionnaire.json`, `metiers.json`, `poursuites.json`, `extrascolaire.json` (≈ 90 Ko) ;
+- quand l'élève cherche son lycée : `lieux.json` ;
+- pour les pages qui affichent des formations (Ma liste, Mon plan, Catalogue, fiches, résumé du profil,
+  Mes données) : `formations.json`, `parcoursup.json`, `stats.json`, `fusion.json`, `generees.json`,
+  `ajustements.json` et `lieux.json`. L'accueil lance aussi ce chargement en arrière-plan pour afficher
+  ses chiffres.
+
+Si l'attente dépasse une seconde, un message « Chargement des formations… » s'affiche.
 
 ## Lancer le site en local
 

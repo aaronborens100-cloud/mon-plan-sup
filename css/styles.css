@@ -678,6 +678,9 @@ footer.site .brand { color: #fff; }
 .surligne { background: linear-gradient(transparent 58%, var(--ambre-pale-2) 58% 92%, transparent 92%); padding: 0 .1em; }
 .star { font-size: 1.2rem; line-height: 1; }
 .famille { border-color: var(--ligne); }
+/* message de chargement : affiché seulement si l'attente dépasse une seconde */
+.chargement { animation: chargement-apparait 0s 1s both; }
+@keyframes chargement-apparait { from { visibility: hidden; } to { visibility: visible; } }
 @media print {
   .topbar, .no-print, footer.site, .faq-zone, .toast, .sommaire { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
