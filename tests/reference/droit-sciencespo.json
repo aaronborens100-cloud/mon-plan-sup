@@ -683,39 +683,39 @@
     ]
    },
    {
-    "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
-    "categorie": "realiste",
-    "pertinence": 89,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "sciences-po-bordeaux-iep",
-    "categorie": "realiste",
-    "pertinence": 81,
-    "chance": [
-     44,
-     80
-    ]
-   },
-   {
-    "id": "psup-48793",
-    "categorie": "realiste",
-    "pertinence": 79,
-    "chance": [
-     null,
-     null
-    ]
-   },
-   {
     "id": "psup-36539",
     "categorie": "realiste",
     "pertinence": 78,
     "chance": [
      32,
      67
+    ]
+   },
+   {
+    "id": "psup-11077",
+    "categorie": "realiste",
+    "pertinence": 82,
+    "chance": [
+     37,
+     75
+    ]
+   },
+   {
+    "id": "psup-28449",
+    "categorie": "realiste",
+    "pertinence": 76,
+    "chance": [
+     51,
+     75
+    ]
+   },
+   {
+    "id": "psup-48191",
+    "categorie": "realiste",
+    "pertinence": 75,
+    "chance": [
+     17,
+     36
     ]
    },
    {
@@ -746,41 +746,41 @@
   "liste": [
    {
     "x": {
-     "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-     "categorie": "realiste",
-     "pertinence": 93,
+     "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
+     "categorie": "securite",
+     "pertinence": 89,
      "chance": [
-      78,
-      80
+      95,
+      97
      ]
     }
    },
    {
     "x": {
-     "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
-     "categorie": "realiste",
-     "pertinence": 92,
+     "id": "u-de-corse-corte-double-licence-droit-administration-publique",
+     "categorie": "securite",
+     "pertinence": 88,
      "chance": [
-      60,
-      80
+      68,
+      97
      ]
     }
    },
    {
     "x": {
-     "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
-     "categorie": "realiste",
-     "pertinence": 90,
+     "id": "u-d-orleans-orleans-double-licence-droit-histoire",
+     "categorie": "securite",
+     "pertinence": 85,
      "chance": [
-      44,
-      80
+      95,
+      97
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "0f61d0524e982607180f86e7c51bb5a4e3645abaf686d42b9cad45b75117a922",
-  "textes": "0a5b11221289064b9df8f93ee69e906918e9a2bf01031a6268af1482015dbe75"
+  "calculs": "ccf90af031f3b8c38ca9885371414f971c85c75048842727885f9ec5c26a2644",
+  "textes": "cbc047e8071d6c25b80c04965f8f51db92237167e6470e4d51661c333f5d26b5"
  }
 }

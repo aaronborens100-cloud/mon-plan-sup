@@ -103,15 +103,158 @@
  },
  "top": [
   {
-   "id": "psup-23064",
+   "id": "psup-11707",
+   "interet": 90,
+   "faisabilite": 79,
+   "pertinence": 86,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-34546",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    57,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23027",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    64,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23036",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    52,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23068",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    53,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23118",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    62,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23122",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    58,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23066",
    "interet": 86,
    "faisabilite": 79,
    "pertinence": 83,
    "chance": [
-    56,
+    53,
     97
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23024",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    46,
+    95
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23065",
+   "interet": 86,
+   "faisabilite": 79,
+   "pertinence": 83,
+   "chance": [
+    54,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23070",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    45,
+    75
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23110",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    39,
+    75
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -478,149 +621,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "u-de-lille-lille-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-limoges-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lorraine-nancy-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rennes-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rouen-normandie-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-tours-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-versailles-saint-quentin-en-yvelines-montigny-le-bretonneux-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-jean-monnet-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-sorbonne-paris-nord-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -671,24 +671,6 @@
     ]
    },
    {
-    "id": "psup-36549",
-    "categorie": "realiste",
-    "pertinence": 77,
-    "chance": [
-     null,
-     null
-    ]
-   },
-   {
-    "id": "psup-51295",
-    "categorie": "realiste",
-    "pertinence": 77,
-    "chance": [
-     null,
-     null
-    ]
-   },
-   {
     "id": "psup-20458",
     "categorie": "realiste",
     "pertinence": 77,
@@ -698,18 +680,36 @@
     ]
    },
    {
-    "id": "psup-49894",
+    "id": "psup-45601",
     "categorie": "realiste",
-    "pertinence": 75,
+    "pertinence": 79,
     "chance": [
-     null,
-     null
+     23,
+     48
     ]
    },
    {
-    "id": "psup-10457",
+    "id": "psup-28721",
+    "categorie": "realiste",
+    "pertinence": 78,
+    "chance": [
+     32,
+     67
+    ]
+   },
+   {
+    "id": "psup-28840",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     29,
+     61
+    ]
+   },
+   {
+    "id": "psup-7056",
     "categorie": "securite",
-    "pertinence": 82,
+    "pertinence": 77,
     "chance": [
      95,
      97
@@ -726,7 +726,7 @@
     "ingenierie_tech"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur DEUST (diplôme universitaire bac + 2), avec diplôme d'État santé ou social et licence de sciences comme solutions de repli. Un vœu « découverte » t'ouvre à licence de sciences.",
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec DEUST (diplôme universitaire bac + 2) et licence de sciences comme solutions de repli.",
   "decouvertes": {}
  },
  "etranger": {
@@ -734,7 +734,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "b784d7e4e7562a41e352fd6f3d4978b9589344358aacf0f06a9e3e40bc96a4e4",
-  "textes": "463a8b7fe1fb45fa60a63df10fe17b429cbc0e96cf507b765893841b891f8404"
+  "calculs": "b507f153bf3e7844020a59ec0cddb477994c5218b66c6a7d972c2ab11b0c7fbb",
+  "textes": "88891b6fb3264407a1956f3a9d8d9f53c8cb07068eb2a7705a6fb1641c503400"
  }
 }

@@ -473,11 +473,33 @@
   const aLe = (t) => (/^le /.test(t) ? "au " + t.slice(3) : /^les /.test(t) ? "aux " + t.slice(4) : "à " + t);
   const minus = (t) => (/^[A-ZÉ][A-ZÉ]/.test(t) ? t : t.charAt(0).toLowerCase() + t.slice(1));
 
+  /* ---------------------------------------------------------------- garde-fou des listes de vœux */
+  // Une formation notée n'entre dans la liste de vœux (ni comme ancre des propositions à l'étranger) que si ses
+  // chiffres et sa description sont assez sûrs, et si elle s'adresse aux bacheliers généraux. Elle reste notée,
+  // visible dans le catalogue et sur sa fiche, et l'élève peut toujours l'ajouter lui-même à ses vœux.
+  const SEUIL_BAC_GENERAL = 20;   // part minimale (%) de bacheliers généraux parmi les admis 2025 (stats.json, pct_bg)
+  const CATEGORIES_BAC_PRO = ["Certificats de spécialisation et FCIL"];   // catégories Parcoursup (tf) visant les bacs pro
+  const HORS_LISTE = {
+    sans_stats: "Pas de taux d'accès 2025 publié : chances impossibles à estimer.",
+    filiere_a_relire: "Description de la filière encore à vérifier.",
+    bac_pro: "Formation qui accueille surtout des bacheliers professionnels.",
+  };
+  // Règles qui écartent la formation des listes (tableau vide : la formation peut y entrer)
+  function reglesHorsListe(f) {
+    if (f.pays !== "France") return [];
+    const r = [];
+    if (!f.admission || typeof f.admission.taux !== "number") r.push("sans_stats");
+    if (f.__gen && f.__gen.fam && f.__gen.fam.valide === false) r.push("filiere_a_relire");
+    if ((f.__tf || []).some((t) => CATEGORIES_BAC_PRO.includes(t)) || (typeof f.__pctBG === "number" && f.__pctBG < SEUIL_BAC_GENERAL)) r.push("bac_pro");
+    return r;
+  }
+  const horsListe = (f) => reglesHorsListe(f).length > 0;
+
   /* ---------------------------------------------------------------- wishlist */
   // 10 vœux Parcoursup (formations en France). Diversité adaptée au profil : un élève décidé concentre ses vœux
   // sur son projet, un élève indécis les répartit sur plus de types. Les formations à l'étranger sont proposées à part.
   function wishlist(resultats, n = 10, it = null) {
-    const ok = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France");
+    const ok = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !horsListe(x.f));
     const cert = certitude(it);
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
@@ -618,14 +640,14 @@
     if (p.etranger === 1) {
       // « seulement un échange » : formations françaises très ouvertes à l'international, dans les mêmes voies que les vœux
       const voies = new Set(W.liste.map((x) => voie(x.f))), pris = new Set(W.liste.map((x) => x.f.id));
-      const liste = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !pris.has(x.f.id) && voies.has(voie(x.f)) && ((x.f.profil || {}).international || 0) >= 2)
+      const liste = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !horsListe(x.f) && !pris.has(x.f.id) && voies.has(voie(x.f)) && ((x.f.profil || {}).international || 0) >= 2)
         .sort((a, b) => b.pertinence - a.pertinence).slice(0, 3);
       return { mode: "echange", liste: liste.map((x) => ({ x })) };
     }
     const n = p.etranger === 3 ? 5 : p.etranger === 2 ? 3 : 2;
     const budget = p.budget_max, budgetSerre = budget !== undefined && budget <= 5000;
     const anglaisFragile = p.anglais !== undefined && p.anglais <= 2;
-    const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && x.f.pays === "France").slice(0, 10);
+    const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && x.f.pays === "France" && !horsListe(x.f)).slice(0, 10);
     // seules exclusions acceptées : le budget (on propose alors les options les moins chères du pays)
     const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj))
       .map((x) => {
@@ -681,5 +703,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

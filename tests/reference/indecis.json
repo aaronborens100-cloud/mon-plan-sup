@@ -646,30 +646,21 @@
     ]
    },
    {
-    "id": "psup-21300",
+    "id": "psup-21325",
     "categorie": "ambitieux",
     "pertinence": 78,
     "chance": [
-     10,
-     20
+     4,
+     8
     ]
    },
    {
-    "id": "psup-29390",
+    "id": "psup-28409",
     "categorie": "ambitieux",
-    "pertinence": 75,
+    "pertinence": 74,
     "chance": [
-     5,
-     11
-    ]
-   },
-   {
-    "id": "psl-lycee-henri-iv-cpes",
-    "categorie": "realiste",
-    "pertinence": 71,
-    "chance": [
-     78,
-     80
+     7,
+     15
     ]
    },
    {
@@ -682,30 +673,39 @@
     ]
    },
    {
-    "id": "sciences-po-campus-dijon",
-    "categorie": "realiste",
-    "pertinence": 67,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "psup-50220",
+    "id": "psup-28463",
     "categorie": "realiste",
     "pertinence": 78,
     "chance": [
-     33,
-     68
+     25,
+     52
     ]
    },
    {
-    "id": "psup-28972",
-    "categorie": "ambitieux",
-    "pertinence": 76,
+    "id": "psup-16662",
+    "categorie": "realiste",
+    "pertinence": 75,
     "chance": [
-     5,
-     12
+     16,
+     36
+    ]
+   },
+   {
+    "id": "psup-35533",
+    "categorie": "securite",
+    "pertinence": 75,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-44539",
+    "categorie": "securite",
+    "pertinence": 70,
+    "chance": [
+     95,
+     97
     ]
    }
   ],
@@ -719,7 +719,7 @@
     "economie"
    ]
   },
-  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 6 types de formations pour garder un maximum de portes ouvertes. Un vœu « découverte » t'ouvre à diplôme du sport et de l'animation (BPJEPS, DEJEPS).",
+  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 6 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
  "etranger": {
@@ -825,7 +825,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "bb332806f0bf89638a708f8fab6bb916969ce85ad0a49bdb2db84c73095470dd",
-  "textes": "fa318e9aeb583c1d1bfa6ce62ec93c513efe66259a39f22dec0165d0abdeca68"
+  "calculs": "d4259e5a7f7588fe67ffd6d471da4b2bb2ad99acc4df9f8d7a257ec4e5a43975",
+  "textes": "5d0a9177e386b4a3b81a0d9d1e613e1cd8e4d6ce9dd4fdfd2bf2c6145c371c3c"
  }
 }

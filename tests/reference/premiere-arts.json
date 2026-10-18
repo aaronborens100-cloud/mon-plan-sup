@@ -169,19 +169,6 @@
    "exclu": null
   },
   {
-   "id": "psup-35357",
-   "interet": 88,
-   "faisabilite": 78,
-   "pertinence": 84,
-   "chance": [
-    72,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-9450",
    "interet": 86,
    "faisabilite": 80,
@@ -622,6 +609,19 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-9213",
+   "interet": 84,
+   "faisabilite": 77,
+   "pertinence": 81,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -663,30 +663,12 @@
     ]
    },
    {
-    "id": "dna-ecole-nationale-superieure-d-arts-de-paris-cergy-cergy",
+    "id": "dna-ecole-nationale-superieure-des-beaux-arts-de-lyon-lyon",
     "categorie": "ambitieux",
     "pertinence": 77,
     "chance": [
-     6,
-     12
-    ]
-   },
-   {
-    "id": "sorbonne-universite-histoire-de-l-art-et-archeologie",
-    "categorie": "realiste",
-    "pertinence": 84,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "sorbonne-universite-musicologie",
-    "categorie": "realiste",
-    "pertinence": 84,
-    "chance": [
-     78,
-     80
+     10,
+     21
     ]
    },
    {
@@ -699,21 +681,39 @@
     ]
    },
    {
-    "id": "psup-52971",
+    "id": "u-paris-1-histoire-de-l-art-et-archeologie",
     "categorie": "realiste",
-    "pertinence": 77,
+    "pertinence": 82,
     "chance": [
-     null,
-     null
+     34,
+     72
     ]
    },
    {
-    "id": "psup-35357",
-    "categorie": "securite",
-    "pertinence": 84,
+    "id": "u-sorbonne-paris-nord-villetaneuse-licence-science-politique-parcours-sociologie-politique",
+    "categorie": "realiste",
+    "pertinence": 71,
     "chance": [
-     72,
-     97
+     28,
+     59
+    ]
+   },
+   {
+    "id": "psup-4165",
+    "categorie": "realiste",
+    "pertinence": 76,
+    "chance": [
+     33,
+     69
+    ]
+   },
+   {
+    "id": "u-paris-1-arts-plastiques",
+    "categorie": "securite",
+    "pertinence": 83,
+    "chance": [
+     40,
+     83
     ]
    }
   ],
@@ -805,12 +805,12 @@
      ]
     },
     "ancre": {
-     "id": "sorbonne-universite-musicologie",
-     "categorie": "realiste",
-     "pertinence": 84,
+     "id": "u-paris-1-arts-plastiques",
+     "categorie": "securite",
+     "pertinence": 83,
      "chance": [
-      78,
-      80
+      40,
+      83
      ]
     },
     "frais": 0,
@@ -830,7 +830,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "e5891947f89bcd4fa3a7061e4748709ca2ea2aa470fa636bcae2107b6ebe52cf",
-  "textes": "ff7c54a949ca2a5d3e5a64946baf79f031bd9c0570bddc0f0633f8a05d662928"
+  "calculs": "7d6b61e439cdbd064371082723ec7ae05e2e06f25abde6c942004ea6526cb241",
+  "textes": "a7278be13d0b72696c5dd3c6a966ead04a6f77a0ed6030b9799cf9da978353a0"
  }
 }

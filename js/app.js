@@ -1166,7 +1166,7 @@
       if (f.__gen) continue;
       const x = fu && fu.anciennes[f.id];
       const ps = x && x.m === "C" ? PSBY[x.g] : null;
-      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; }
+      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); }   // __tf, __pctBG : garde-fou des listes (moteur)
       const avTxt = [];
       if (x && x.m === "P") avTxt.push("Correspondance Parcoursup probable mais non confirmée.");
       if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
@@ -1181,6 +1181,7 @@
       if (horsPerimetre(r)) continue;   // BTS, BUT : formations non proposées par Mon Plan Sup (données conservées)
       const gf = genIds.get(r.gta) || null;
       if (gf && r.nmc) gf.__nmc = r.nmc;
+      if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); }
       const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
         type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin"), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf,
@@ -1202,8 +1203,11 @@
   // chiffres officiels de la formation (stats.json, session 2025). Sans statistiques 2025, la fiche est quand même
   // créée (taux et mentions à null) : le moteur estime alors les chances d'après la sélectivité, sans « sécurité ».
   function fichGeneree(r, fil) {
-    const g = r.gta, fam = fil.filieres[r.nmc];
+    const g = r.gta;
+    let fam = fil.filieres[r.nmc];
     if (!fam) return null;
+    const va = fam.variantes && (r.fl || []).find((x) => fam.variantes[x]);   // code nmc partagé : intitulé de la formation
+    if (va) fam = fam.variantes[va];
     const v = (c) => statDe(g, c), aStats = !!STATS[g];
     const places = v("capa_fin"), voeux = v("voe_tot"), admis = v("acc_tot"), taux = v("taux_acces_ens");
     const pm = ["pct_tbf", "pct_tb", "pct_b", "pct_ab", "pct_sansmention"].map(v);

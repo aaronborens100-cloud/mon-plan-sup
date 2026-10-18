@@ -87,6 +87,13 @@ python3 scripts/construire-filieres.py
 
 Ne pas modifier `data/filieres.json` à la main : les corrections vont dans `scripts/filieres-corrections.json`.
 
+Toutes ces formations sont notées, mais la liste de 10 vœux (et les ancres des propositions à l'étranger)
+n'en retient que les plus sûres (`reglesHorsListe` dans `js/moteur.js`) : il faut un taux d'accès 2025 publié,
+une filière marquée `valide` dans `filieres.json` (faux par défaut en confiance « basse », à passer à vrai dans
+`scripts/filieres-corrections.json` après relecture), et une formation qui accueille des bacheliers généraux
+(au moins `SEUIL_BAC_GENERAL` = 20 % des admis 2025, hors certificats de spécialisation et FCIL).
+Les formations écartées restent dans le catalogue et sur leur fiche.
+
 ## Tests
 
 ```

@@ -373,10 +373,12 @@ def construire():
         filieres[nmc] = e
 
     # 2. filières déduites de l'intitulé
-    def deduire(nmc, rs):
+    def deduire(nmc, rs, lib_force=None):
         tfs = collections.Counter(t for r in rs for t in r["tf"])
         tf_princ = [t for t, _ in tfs.most_common()]
         lib, partage = libelle_de(rs)
+        if lib_force:   # variante d'un code nmc partagé : on déduit depuis son propre intitulé
+            lib, partage = lib_force, []
         base = re.sub(r"-(App|APP)$", "", nmc)
         notes = []
         # 2a. variante en apprentissage d'une filière connue : mêmes attributs que la filière de base
@@ -405,9 +407,18 @@ def construire():
                 dom, spe, met = fusionner(tr)
                 notes.append("mots-clés : " + ", ".join(f"« {mot} »" for _, _, mot, *_ in tr))
                 confiance = "moyenne"
-        if partage:
-            notes.append(f"le code {nmc} couvre aussi l'intitulé « {partage[0]} »")
-            confiance = "basse"
+        variantes = {}
+        for a in partage:
+            # code nmc partagé par plusieurs intitulés officiels (ex. L1-SS : « Sciences pour la santé » et
+            # « Sciences sociales ») : les formations de l'autre intitulé reçoivent leurs propres attributs,
+            # sauf si l'intitulé n'est qu'une autre graphie (mêmes attributs déduits).
+            rs_a = [r for r in rs if a in (r["fl"] or []) and lib not in (r["fl"] or [])]
+            v = deduire(nmc, rs_a, lib_force=a) if rs_a else None
+            if v is None or not v["domaines"] or sans_accents(a) == sans_accents(lib) or (v["type"], v["domaines"], v["specialites"]["recommandees"]) == (type_, dom, spe):
+                notes.append(f"le code {nmc} couvre aussi l'intitulé « {a} », autre graphie de la même filière")
+            else:
+                notes.append(f"le code {nmc} couvre aussi l'intitulé « {a} » ({len(rs_a)} formation(s)) : attributs propres dans « variantes »")
+                variantes[a] = v
         if not dom:
             confiance = "basse"
         e = {"nmc": nmc, "libelle": lib, "origine": "deduit_intitule", "confiance": confiance, "type": type_,
@@ -420,6 +431,8 @@ def construire():
              "justification": f"Genre « {g} » (code {nmc}, catégorie Parcoursup « {' | '.join(tf_princ)} ») ; " + " ; ".join(notes) + "."}
         if len(dom) >= 2 and g.startswith("licence") and re.search(r"[,/]", lib):
             e["profil"]["poly"] = max(e["profil"]["poly"], 1)   # licence bi-disciplinaire
+        if variantes:
+            e["variantes"] = variantes
         return e
 
     for nmc, rs in sorted(par_nmc.items()):
@@ -427,6 +440,19 @@ def construire():
             continue
         deduites[nmc] = deduire(nmc, rs)
     filieres.update(deduites)
+
+    # 2b. familles existantes dont le code nmc couvre aussi un autre intitulé (ex. L1-AP : « Arts plastiques » et
+    #     « Administration publique ») : la famille reste telle quelle, l'autre intitulé reçoit une variante déduite.
+    for nmc, e in filieres.items():
+        if e["origine"] != "famille_existante":
+            continue
+        lib, partage = libelle_de(par_nmc[nmc])
+        for a in partage:
+            rs_a = [r for r in par_nmc[nmc] if a in (r["fl"] or []) and lib not in (r["fl"] or [])]
+            v = deduire(nmc, rs_a, lib_force=a) if rs_a else None
+            if v and v["domaines"] and v["domaines"] != e["domaines"] and sans_accents(a) != sans_accents(lib):
+                e.setdefault("variantes", {})[a] = v
+                e["justification"] += f" Le code {nmc} couvre aussi l'intitulé « {a} » ({len(rs_a)} formation(s)) : attributs propres dans « variantes »."
 
     # 3. corrections à la main (scripts/filieres-corrections.json)
     for nmc, c in corr["corrections"].items():
@@ -455,9 +481,15 @@ def construire():
                 e2["confiance"] = e["confiance"]
                 e2["justification"] += f" Correction de {nmc} reportée."
 
-    # 4. contrôles
+    # 4. « valide » : la filière peut entrer dans les listes de vœux. Faux par défaut en confiance basse ;
+    #    passe à vrai par scripts/filieres-corrections.json après relecture.
+    toutes = [(nmc, e) for nmc, e in filieres.items()] + [(f"{nmc} [{a}]", v) for nmc, e in filieres.items() for a, v in e.get("variantes", {}).items()]
+    for _, e in toutes:
+        e.setdefault("valide", e["confiance"] != "basse")
+
+    # 5. contrôles
     erreurs = []
-    for nmc, e in filieres.items():
+    for nmc, e in toutes:
         if e["type"] not in types_label:
             erreurs.append(f"{nmc} : type inconnu {e['type']}")
         if not e["domaines"]:
@@ -473,10 +505,11 @@ def construire():
     if erreurs:
         sys.exit("Erreur :\n  " + "\n  ".join(erreurs))
 
-    ordre = ["nmc", "libelle", "origine", "confiance", "type", "type_label", "domaines", "profil", "specialites", "charge",
+    ordre = ["nmc", "libelle", "origine", "confiance", "valide", "type", "type_label", "domaines", "profil", "specialites", "charge",
              "dossier_poids", "duree_ans", "langue", "metiers", "poursuites", "anglais_cecrl", "cout_public", "nb", "exemples",
-             "justification", "sources"]
-    sortie = {nmc: {k: filieres[nmc][k] for k in ordre if k in filieres[nmc]} for nmc in sorted(filieres)}
+             "justification", "sources", "variantes"]
+    trier = lambda e: {k: ({a: trier(v) for a, v in sorted(e[k].items())} if k == "variantes" else e[k]) for k in ordre if k in e}
+    sortie = {nmc: trier(filieres[nmc]) for nmc in sorted(filieres)}
     cpt = collections.Counter((e["origine"], e["confiance"]) for e in sortie.values())
     meta = {
         "version": VERSION,
@@ -487,6 +520,10 @@ def construire():
                  "déduit de l'intitulé officiel Parcoursup (nm, fl) et de la catégorie Parcoursup (tf) par les règles de "
                  "scripts/construire-filieres.py, corrigé par scripts/filieres-corrections.json. Aucun chiffre (taux, moyenne, frais, "
                  "salaire) ne vient de cette table : les chiffres des fiches viennent des statistiques officielles de chaque formation.",
+        "valide": "true : la filière peut entrer dans les listes de vœux (wishlist) et servir d'ancre aux propositions à l'étranger. "
+                  "false par défaut en confiance basse ; à passer à true dans scripts/filieres-corrections.json après relecture.",
+        "variantes": "Code nmc partagé par plusieurs intitulés officiels : les formations dont un intitulé (fl) est une clé de « variantes » "
+                     "prennent les attributs de cette variante.",
         "confiance": {"haute": "famille existante d'au moins 2 fiches, ou variante en apprentissage d'une telle famille",
                       "moyenne": "famille existante d'une seule fiche, ou intitulé de filière précis reconnu par les règles",
                       "basse": "intitulé générique, intitulé sans mot-clé reconnu, ou code nmc partagé par plusieurs intitulés : à relire"},

@@ -377,6 +377,19 @@
    "exclu": null
   },
   {
+   "id": "psup-12539",
+   "interet": 72,
+   "faisabilite": 67,
+   "pertinence": 70,
+   "chance": [
+    55,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-52828",
    "interet": 76,
    "faisabilite": 61,
@@ -609,19 +622,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-51442",
-   "interet": 72,
-   "faisabilite": 61,
-   "pertinence": 68,
-   "chance": [
-    null,
-    null
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -636,11 +636,11 @@
     ]
    },
    {
-    "id": "psup-35399",
+    "id": "psup-26131",
     "categorie": "securite",
-    "pertinence": 70,
+    "pertinence": 73,
     "chance": [
-     95,
+     51,
      97
     ]
    },
@@ -672,47 +672,47 @@
     ]
    },
    {
-    "id": "psup-49978",
+    "id": "psup-39903",
     "categorie": "realiste",
-    "pertinence": 80,
+    "pertinence": 73,
     "chance": [
-     null,
-     null
+     27,
+     56
     ]
    },
    {
-    "id": "bachelor-management-de-l-hotellerie-et-du-tourisme-vatel-nimes",
+    "id": "psup-12910",
     "categorie": "realiste",
-    "pertinence": 79,
+    "pertinence": 66,
     "chance": [
-     33,
-     71
+     21,
+     45
     ]
    },
    {
-    "id": "psup-53273",
+    "id": "psup-2220",
     "categorie": "realiste",
-    "pertinence": 80,
+    "pertinence": 60,
     "chance": [
-     null,
-     null
+     30,
+     63
     ]
    },
    {
-    "id": "psup-49034",
+    "id": "psup-28490",
     "categorie": "realiste",
-    "pertinence": 78,
+    "pertinence": 65,
     "chance": [
-     null,
-     null
+     24,
+     52
     ]
    },
    {
-    "id": "psup-26296",
+    "id": "psup-43423",
     "categorie": "securite",
-    "pertinence": 74,
+    "pertinence": 72,
     "chance": [
-     64,
+     95,
      97
     ]
    }
@@ -725,7 +725,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur certificat de spécialisation ou FCIL, avec formation ou titre professionnel et bachelor (France) comme solutions de repli. Un vœu « découverte » t'ouvre à école de commerce post-bac.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec école de commerce post-bac et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
  "etranger": {
@@ -733,7 +733,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "fde1516d4704cfc037e508acb76bd704191116bcdfc411e4e0c4565dc87a87a3",
-  "textes": "8bd9d213da949c4f7997c6a93e94e2a2699695713806c989161542efa54c05be"
+  "calculs": "03e2ab667de72158c039b9bd6dd5d6d667436440ea5dcda368e2e9002b46fc73",
+  "textes": "270b1c05b7670ecac958a4d271fd8f1523ebae6005f58e1b163764aac060914b"
  }
 }
