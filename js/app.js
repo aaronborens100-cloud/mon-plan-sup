@@ -40,6 +40,35 @@
     if (!r.ok) throw new Error(`Impossible de charger ${url}`);
     return r.json();
   }
+  // Chargement à la demande, pour que la page s'ouvre vite sur téléphone :
+  // - au démarrage, seulement les petits fichiers (questionnaire, métiers, poursuites, engagement) ;
+  // - les lycées (lieux.json) quand l'élève cherche son lycée, ou avec les formations (distances) ;
+  // - les formations (≈ 11 Mo : formations, Parcoursup, statistiques…) pour les pages qui affichent
+  //   des formations ou des recommandations. Chaque groupe n'est chargé qu'une fois.
+  const chargements = {};
+  function une(cle, f) {
+    if (!chargements[cle]) chargements[cle] = f().catch((e) => { delete chargements[cle]; throw e; });   // nouvel essai à la page suivante
+    return chargements[cle];
+  }
+  const chargerLycees = () => une("lieux", async () => { if (!LIEUX) chargerLieux(await charger("data-lieux", "data/lieux.json")); });
+  const chargerFormations = () => une("formations", async () => {
+    const [d, ps, fu, st, gen, aj] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-generees", "data/generees.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), chargerLycees().catch(() => null)]);
+    construireCatalogue(d, ps, fu, st, gen, aj);
+    etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
+    const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
+    DATA = d; window.__DATA = DATA;
+  });
+  // Pages qui ont besoin des formations : toutes sauf l'accueil (chiffres complétés à l'arrivée des données)
+  // et le profil en cours de saisie (le résumé du profil, lui, affiche une analyse).
+  function besoinFormations(v) {
+    if (v === "profil") return !app.profilEdition && etat.profilTermine === true;
+    return v === "liste" || v === "plan" || v === "explorer" || v === "donnees" || v.startsWith("formation-");
+  }
+  // Message affiché seulement si l'attente dépasse une seconde (délai géré par la classe CSS « chargement »).
+  const CHARGEMENT = '<p class="muted chargement" role="status">Chargement des formations… Sur téléphone, cela peut prendre quelques secondes.</p>';
+  function erreurDonnees(e) {
+    return `<div class="notice bad"><strong>Les données n'ont pas pu être chargées.</strong> Si tu as ouvert index.html directement, lance plutôt un petit serveur local (voir le README) ou ouvre dist/mon-plan-sup.html. Détail : ${esc(e.message)}</div>`;
+  }
   let sauvegardeT = null;
   function sauver(immediat) { clearTimeout(sauvegardeT); const go = () => S.ecrire(etat); if (immediat) go(); else sauvegardeT = setTimeout(go, 250); }
   function toast(msg) { const t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
@@ -62,7 +91,7 @@
   }
   function remplaceHash(h) { try { history.replaceState(null, "", h); } catch (e) { /* bac à sable */ } }
   function route() {
-    if (!DATA) return;
+    if (!QUEST) return;
     const av = app.vue;
     let v = (location.hash || "#accueil").slice(1) || "accueil";
     // anciennes adresses (pages supprimées ou fusionnées)
@@ -75,6 +104,11 @@
   function rendre() {
     rendreNav();
     const m = $("#main"), v = app.vue;
+    if (!DATA && besoinFormations(v)) {
+      if (!m.querySelector(".chargement")) m.innerHTML = CHARGEMENT;
+      chargerFormations().then(() => { if (app.vue === v) rendre(); }, (e) => { if (app.vue === v) m.innerHTML = erreurDonnees(e); });
+      return;
+    }
     if (v === "profil") m.innerHTML = vueProfil();
     else if (v.startsWith("formation-")) {
       let id = v.slice(10);
@@ -86,7 +120,11 @@
     else if (v === "liste") m.innerHTML = vueListe();
     else if (v === "plan") m.innerHTML = vuePlan();
     else if (v === "donnees") m.innerHTML = vueDonnees();
-    else m.innerHTML = vueAccueil();
+    else {
+      m.innerHTML = vueAccueil();
+      if (!DATA) chargerFormations().then(() => { const b = $(".bande-chiffres"); if (b) b.outerHTML = bandeChiffres(); }, () => {});   // chiffres de l'accueil
+    }
+    if (!LIEUX && $("#lyceeq")) chargerLycees().then(() => { if (app.lyceeQ && $("#lyceeq")) rendreRechercheLycee(); }, () => {});
     const h1 = m.querySelector("h1");
     document.title = h1 && app.vue !== "accueil" ? `${h1.textContent} · Mon Plan Sup` : "Mon Plan Sup";
   }
@@ -205,9 +243,18 @@
   const miniStat = (val, lib, ton) => `<div class="mini-stat ton-${ton || "bleu"}"><b>${val}</b><span>${lib}</span></div>`;
 
   /* ================================================================ ACCUEIL */
+  // Chiffres de l'accueil : « … » tant que les formations ne sont pas chargées.
+  function bandeChiffres() {
+    const n = (f) => (DATA ? f().toLocaleString("fr-FR") : "…");
+    return `<section class="bande-chiffres" aria-label="Mon Plan Sup en chiffres">
+        <div><b>${n(() => CAT.length)}</b><span>formations dans le catalogue</span></div>
+        <div><b>${n(() => CAT.filter((e) => e.ps).length)}</b><span>avec leur fiche officielle Parcoursup</span></div>
+        <div><b>${n(() => DATA.formations.length)}</b><span>fiches détaillées pour les recommandations</span></div>
+        <div><b>10</b><span>vœux équilibrés proposés</span></div>
+      </section>`;
+  }
   function vueAccueil() {
     const pp = progressionProfil(), nr = nbReponses(), demarre = pp || nr;
-    const nbOff = CAT.filter((e) => e.ps).length;
     return `<div class="accueil">
       <section class="hero">
         <div class="hero-txt">
@@ -243,12 +290,7 @@
           <li class="ton-ambre"><span class="etape-ico">${ico("agenda")}</span><span class="etape-num">3</span><h3>Ton plan</h3><p>Les étapes et les dates à ne pas manquer, mois par mois, jusqu'aux résultats.</p></li>
         </ol>
       </section>
-      <section class="bande-chiffres" aria-label="Mon Plan Sup en chiffres">
-        <div><b>${CAT.length.toLocaleString("fr-FR")}</b><span>formations dans le catalogue</span></div>
-        <div><b>${nbOff.toLocaleString("fr-FR")}</b><span>avec leur fiche officielle Parcoursup</span></div>
-        <div><b>${DATA.formations.length.toLocaleString("fr-FR")}</b><span>fiches détaillées pour les recommandations</span></div>
-        <div><b>10</b><span>vœux équilibrés proposés</span></div>
-      </section>
+      ${bandeChiffres()}
       <section class="cta-bande">
         <div><h2>Prêt à construire ta liste ?</h2><p>Tu peux t'arrêter et reprendre quand tu veux : tout est enregistré sur ton appareil.</p></div>
         <a class="btn blanc lg" href="#profil">${demarre ? "Reprendre" : "Créer mon profil"}${ico("fleche")}</a>
@@ -289,6 +331,7 @@
   }
 
   /* ---------- résumé du profil (affiché une fois les informations principales saisies) */
+  function rendreRechercheLycee() { rendre(); const el = $("#lyceeq"); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
   function champLycee(p) {
     const l = p.lycee;
     if (l && !app.lyceeEdition) return `<div class="field"><label>Ton lycée <span class="hint">(sert à calculer les distances, reste sur ton appareil)</span></label>
@@ -1447,7 +1490,7 @@
     if (t.dataset.list) { p[t.dataset.list][+t.dataset.i][t.dataset.k] = t.value; sauver(); return; }
     if (t.dataset.lyceeQ !== undefined) {
       app.lyceeQ = t.value; clearTimeout(app.lt);
-      app.lt = setTimeout(() => { rendre(); const el = $("#lyceeq"); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }, 200);
+      app.lt = setTimeout(rendreRechercheLycee, 200);
       return;
     }
     if (t.dataset.cfiltre) {
@@ -1577,17 +1620,13 @@
 
   (async function init() {
     try {
-      const [d, q, m, p, x, ps, fu, st, gen, aj, li] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-questionnaire", "data/questionnaire.json"), charger("data-metiers", "data/metiers.json"), charger("data-poursuites", "data/poursuites.json"), charger("data-extrascolaire", "data/extrascolaire.json").catch(() => null), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-generees", "data/generees.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-lieux", "data/lieux.json").catch(() => null)]);
-      chargerLieux(li);
-      construireCatalogue(d, ps, fu, st, gen, aj);
-      etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
-      const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
-      DATA = d; QUEST = q; migrer(); METIERS = m.metiers; POURS = p.poursuites; EXTRA = x; window.__METIERS_REPERES = m.reperes;
+      const [q, m, p, x] = await Promise.all([charger("data-questionnaire", "data/questionnaire.json"), charger("data-metiers", "data/metiers.json"), charger("data-poursuites", "data/poursuites.json"), charger("data-extrascolaire", "data/extrascolaire.json").catch(() => null)]);
+      QUEST = q; migrer(); METIERS = m.metiers; POURS = p.poursuites; EXTRA = x; window.__METIERS_REPERES = m.reperes;
       E.init({ metiers: METIERS, poursuites: POURS });
-      window.__DATA = DATA; window.__QUEST = QUEST;
+      window.__QUEST = QUEST;
       route();
     } catch (e) {
-      $("#main").innerHTML = `<div class="notice bad"><strong>Les données n'ont pas pu être chargées.</strong> Si tu as ouvert index.html directement, lance plutôt un petit serveur local (voir le README) ou ouvre dist/mon-plan-sup.html. Détail : ${esc(e.message)}</div>`;
+      $("#main").innerHTML = erreurDonnees(e);
     }
   })();
 })();
