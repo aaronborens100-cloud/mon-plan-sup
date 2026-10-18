@@ -89,6 +89,8 @@ de l'élève (`percentileAdmis`).
   inverse, sans source. La valeur 0,5 correspond au quart d'une tranche de mention : assez pour
   ne pas classer en « sécurité » un élève tout juste au bord d'une tranche, pas assez pour changer
   la position d'un élève nettement au-dessus.
+- Le percentile est arrondi au pour cent avant d'appliquer les seuils, pour que la phrase affichée
+  (« environ 30 % ») et le niveau ne se contredisent jamais.
 - Trois niveaux, seuils en constantes (`SEUIL_AU_DESSUS`, `SEUIL_EN_DESSOUS`) :
 
   | Position (`percentile`)   | Niveau                                  |

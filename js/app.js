@@ -133,7 +133,7 @@
   }
 
   /* ---------------------------------------------------------------- utilitaires */
-  const AVERT = `<p class="notice small"><strong>Outil d'aide à la réflexion.</strong> Mon Plan Sup ne garantit aucune admission. Les pourcentages personnels sont des estimations construites à partir des statistiques d'admission publiées et de ton dossier : vérifie toujours sur les sites officiels et sur Parcoursup.</p>`;
+  const AVERT = `<p class="notice small"><strong>Outil d'aide à la réflexion.</strong> Mon Plan Sup ne garantit aucune admission. Les catégories ambitieux, réaliste et sécurité sont des repères construits à partir des statistiques Parcoursup 2025, pas des probabilités : les jurys regardent aussi ton dossier complet. Vérifie toujours sur les sites officiels et sur Parcoursup.</p>`;
   let cacheA = null, cacheCle = "";
   function analyse() {
     const cle = JSON.stringify([etat.profil, etat.reponses]);
@@ -165,10 +165,41 @@
     return `<div class="note5"><span class="note5-g">${etoiles(g, "Note Mon Plan Sup")}<strong>${f5(g)}/5</strong></span><span class="small muted">Intérêt <strong>${f5(sur5(x.interet))}/5</strong> · Faisabilité <strong>${f5(sur5(x.faisabilite))}/5</strong></span></div>`;
   }
   const CRIT5 = { fort: "5/5", conforme: "4/5", preparer: "3/5", renforcer: "2/5", faible: "1/5", bloquant: "0/5", inconnu: "?/5", na: "—" };
-  function chanceTxt(ch) { if (ch && ch.nouvelle) return "pas encore de chiffres"; if (ch && ch.sansStats) return "impossibles à estimer"; if (!ch || ch.bas === null) return "à calculer"; return `${ch.bas}–${ch.haut} %`; }
-  function jauge(ch) {
-    if (!ch || ch.bas === null) return "";
-    return `<div class="jauge" role="img" aria-label="Estimation entre ${ch.bas} et ${ch.haut} %"><div class="jauge-plage" style="left:${ch.bas}%;width:${Math.max(2, ch.haut - ch.bas)}%"></div></div>`;
+  // Repères d'admission (E.repere, docs/modele-chances.md) : taux d'accès officiel, position parmi les admis 2025 et
+  // catégorie. Aucun pourcentage de chances : le site n'en calcule plus.
+  const POSITION_COURT = { au_dessus: "au-dessus des admis", moyenne: "dans la moyenne des admis", en_dessous: "en dessous des admis", inconnue: "position inconnue" };
+  const tauxFr = (t) => `${String(t).replace(".", ",")} %`;
+  function repereTxt(r) {
+    if (r && r.nouvelle) return "pas encore de chiffres";
+    if (r && r.sansStats) return "pas de statistiques";
+    if (!r) return "à calculer";
+    return [r.taux !== null ? `accès ${tauxFr(r.taux)}` : "taux non publié", r.sansNotes ? "notes à renseigner" : POSITION_COURT[r.position]].join(" · ");
+  }
+  // Source affichée pour le taux d'accès : une fiche Mon Plan Sup fusionnée avec Parcoursup dont le taux est identique
+  // à celui de stats.json cite l'open data Parcoursup 2025 plutôt que le média repris dans la fiche (Thotis, OptionMétier).
+  function sourceTaux(f) {
+    const a = f.admission || {}, e = CATBY[f.id], g = e && e.ps && e.ps.gta;
+    if (g && STATS[g] && statDe(g, "taux_acces_ens") === a.taux) return { source: e.ps.dataviz || e.ps.fiche, consulte_le: STCONS, statut: "officiel" };
+    return { source: a.source, consulte_le: a.consulte_le, statut: a.statut };
+  }
+  const libTauxAcces = (r) => `Taux d'accès${r.session ? " " + r.session : ""}`;
+  // Ligne courte des cartes : taux d'accès (session, source) et position de l'élève en une phrase
+  function ligneRepere(x) {
+    const r = x.repere;
+    if (r.nouvelle || r.sansStats) return "";
+    const st = sourceTaux(x.f);
+    return `<p class="small repere-ligne">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong>${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"} ${esc(r.texte)}</p>`;
+  }
+  // Bloc de la fiche : position, taux d'accès, catégorie et sa règle, limite du repère
+  function blocRepere(x) {
+    const r = x.repere;
+    if (r.nouvelle || r.sansStats) return `<div class="chances-detail"><div><h4>Ta position parmi les admis</h4><p class="small">${esc(r.texte)}</p></div></div>`;
+    const st = sourceTaux(x.f);
+    return `<div class="chances-detail ton-${CAT_TON[x.categorie]}">
+            <div><h4>Ta position parmi les admis</h4><p class="small">${esc(r.texte)}</p>${r.percentile !== null ? `<p class="tiny muted">${esc(E.METHODE_POSITION)}</p>` : ""}</div>
+            <p class="small">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong> des candidats ont reçu une proposition.${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"}</p>
+            <p class="small">${catPill(x.categorie)} ${esc(r.pourquoi)}</p>
+            <p class="small muted">${esc(E.LIMITE_REPERE)}</p></div>`;
   }
   function libTaux(a) {
     if (!a || !a.places) return "Places non communiquées";
@@ -209,14 +240,14 @@
   };
   const ico = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ""}</svg>`;
   const CAT_TON = { ambitieux: "corail", realiste: "ambre", securite: "menthe" };
-  // anneau de chances : arc clair jusqu'au haut de la fourchette, arc plein jusqu'au milieu, couleur de la catégorie
-  function anneau(ch, cat, taille = 84) {
-    const ton = CAT_TON[cat] || "bleu";
-    if (!ch || ch.bas === null) return `<div class="anneau ton-${ton}" style="--t:${taille}px"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="anneau-fond" cx="32" cy="32" r="27"/></svg><span class="anneau-txt"><b>?</b><small>chances</small></span></div>`;
-    const C = 2 * Math.PI * 27, mid = ch.mid != null ? ch.mid : (ch.bas + ch.haut) / 2;
-    return `<div class="anneau ton-${ton}" style="--t:${taille}px" role="img" aria-label="Chances estimées entre ${ch.bas} et ${ch.haut} %">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><circle class="anneau-fond" cx="32" cy="32" r="27"/><circle class="anneau-plage" cx="32" cy="32" r="27" stroke-dasharray="${((ch.haut / 100) * C).toFixed(1)} ${C.toFixed(1)}"/><circle class="anneau-val" cx="32" cy="32" r="27" stroke-dasharray="${((mid / 100) * C).toFixed(1)} ${C.toFixed(1)}"/></svg>
-      <span class="anneau-txt"><b>${ch.bas}–${ch.haut}</b><small>${taille >= 110 ? "% de chances" : "%"}</small></span></div>`;
+  // anneau du taux d'accès officiel de la formation (pas une probabilité personnelle), couleur de la catégorie
+  function anneau(r, cat, taille = 84) {
+    const ton = CAT_TON[cat] || "bleu", fond = '<circle class="anneau-fond" cx="32" cy="32" r="27"/>';
+    if (!r || r.taux === null) return `<div class="anneau ton-${ton}" style="--t:${taille}px" role="img" aria-label="Taux d'accès non publié"><svg viewBox="0 0 64 64" aria-hidden="true">${fond}</svg><span class="anneau-txt"><b>?</b><small>taux d'accès</small></span></div>`;
+    const C = 2 * Math.PI * 27;
+    return `<div class="anneau ton-${ton}" style="--t:${taille}px" role="img" aria-label="${libTauxAcces(r)} : ${tauxFr(r.taux)} des candidats ont reçu une proposition">
+      <svg viewBox="0 0 64 64" aria-hidden="true">${fond}<circle class="anneau-val" cx="32" cy="32" r="27" stroke-dasharray="${((r.taux / 100) * C).toFixed(1)} ${C.toFixed(1)}"/></svg>
+      <span class="anneau-txt"><b>${Math.round(r.taux)} %</b><small>${taille >= 110 ? "taux d'accès" : "d'accès"}</small></span></div>`;
   }
   // tonalité d'un type de formation (couleurs secondaires de la palette)
   function tonType(type, label) {
@@ -263,7 +294,7 @@
         <div class="hero-txt">
           <span class="hero-badge">${ico("boussole")}Orientation post-bac, de la seconde à la terminale</span>
           <h1>Trouve en quelques clics les formations <span class="souligne">faites pour toi</span></h1>
-          <p class="hero-sous">Parle-nous de ton parcours et de tes envies. Mon Plan Sup te propose les formations qui te correspondent, avec tes chances d'admission et les étapes à suivre.</p>
+          <p class="hero-sous">Parle-nous de ton parcours et de tes envies. Mon Plan Sup te propose les formations qui te correspondent, avec des repères sur l'admission et les étapes à suivre.</p>
           <div class="row hero-actions">
             <a class="btn primary lg" href="#profil">${demarre ? "Reprendre mon profil" : "Commencer"}${ico("fleche")}</a>
             ${demarre ? `<a class="btn lg" href="#liste">Voir ma liste</a>` : `<a class="btn lg" href="#explorer">Explorer le catalogue</a>`}
@@ -289,7 +320,7 @@
         <div class="titre-section"><span class="eyebrow">En trois étapes</span><h2 id="etapes-titre">Comment ça marche</h2></div>
         <ol class="etapes-accueil">
           <li class="ton-bleu"><span class="etape-ico">${ico("personne")}</span><span class="etape-num">1</span><h3>Ton profil</h3><p>Tes notes (tu peux importer tes bulletins PDF), tes spécialités, puis un questionnaire sur tes envies.</p></li>
-          <li class="ton-violet"><span class="etape-ico">${ico("etoile")}</span><span class="etape-num">2</span><h3>Ta liste</h3><p>Tes 10 formations les plus adaptées, avec une estimation de tes chances pour chacune.</p></li>
+          <li class="ton-violet"><span class="etape-ico">${ico("etoile")}</span><span class="etape-num">2</span><h3>Ta liste</h3><p>Tes 10 formations les plus adaptées, avec pour chacune le taux d'accès et ta position parmi les admis.</p></li>
           <li class="ton-ambre"><span class="etape-ico">${ico("agenda")}</span><span class="etape-num">3</span><h3>Ton plan</h3><p>Les étapes et les dates à ne pas manquer, mois par mois, jusqu'aux résultats.</p></li>
         </ol>
       </section>
@@ -610,13 +641,14 @@
       <div class="f-head">
         ${rang ? `<span class="f-rang" aria-label="Rang ${rang}">${rang}</span>` : ""}
         <div class="f-titre">
-          <div class="row badges">${x.chance.nouvelle || x.chance.sansStats ? "" : catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${x.exclu ? '<span class="pill bad">Hors de tes critères</span>' : ""}</div>
+          <div class="row badges">${x.repere.nouvelle || x.repere.sansStats ? "" : catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${x.exclu ? '<span class="pill bad">Hors de tes critères</span>' : ""}</div>
           <h3><a href="#formation-${f.id}">${esc(f.nom)}</a></h3>
           <p class="f-lieu"><span>${ico("ecole")}${esc(f.etablissement)}</span><span>${ico("pin")}${esc(f.ville)}${f.pays !== "France" ? ", " + esc(f.pays) : ""}</span></p>
         </div>
-        ${anneau(x.chance, x.categorie)}
+        ${anneau(x.repere, x.categorie)}
       </div>
       <div class="f-faits">${faits.map(([i, t]) => `<span>${ico(i)}${esc(t)}</span>`).join("")}</div>
+      ${ligneRepere(x)}
       ${notesSur5(x)}
       <div class="crit">${C.map(([l, c]) => `<div class="crit-item" title="${esc(c.texte)}"><span class="crit-l">${l}</span>${niveauBarre(c.niveau)}<span class="crit-v lvl-${c.niveau}">${E.NIVEAUX[c.niveau].label}</span></div>`).join("")}</div>
       ${x.raisons.length ? `<ul class="why coche">${x.raisons.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
@@ -642,13 +674,13 @@
           <h3>${esc(fam.nom)}</h3>
           <p class="small muted">${esc(fam.description)}</p>
         </div>
-        <div class="anneau-legende">${anneau(best.chance, best.categorie)}<span>meilleures chances</span></div>
+        <div class="anneau-legende">${anneau(best.repere, best.categorie)}<span>${esc(court(best))}</span></div>
       </div>
       <div class="f-faits"><span>${ico("groupe")}Places : ${rangeTxt(membres.map((x) => x.f.admission && x.f.admission.places).filter((v) => v), (v) => String(v))}</span><span>${ico("courbe")}Repère de moyenne des admis : ${rangeTxt(moys, E.fmt)}</span></div>
       ${notesSur5(best)}
       <div class="crit">${C.map(([l, c]) => `<div class="crit-item" title="${esc(c.texte)}"><span class="crit-l">${l}</span>${niveauBarre(c.niveau)}<span class="crit-v lvl-${c.niveau}">${E.NIVEAUX[c.niveau].label}</span></div>`).join("")}</div>
-      ${(() => { const tete = `<div class="table-wrap"><table class="fam-table"><thead><tr><th scope="col">${prepa ? "Lycée" : "Établissement"}</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Tes chances</th></tr></thead><tbody>`;
-        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div><div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${chanceTxt(x.chance)}</span></td></tr>`; };
+      ${(() => { const tete = `<div class="table-wrap"><table class="fam-table"><thead><tr><th scope="col">${prepa ? "Lycée" : "Établissement"}</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th></tr></thead><tbody>`;
+        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div><div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td></tr>`; };
         const VIS = 5, debut = membres.slice(0, VIS), reste = membres.slice(VIS);
         return tete + debut.map(ligne).join("") + "</tbody></table></div>" + (reste.length ? `<details class="fam-plus"><summary>${ico("groupe")}Voir les ${reste.length} autres ${lieu}</summary>${tete}${reste.map(ligne).join("")}</tbody></table></div></details>` : ""); })()}
       <p class="tiny muted">Sur Parcoursup, chaque ${prepa ? "lycée" : "établissement"} est un vœu distinct : choisis-en un ou deux dans cette famille et complète avec d'autres niveaux d'exigence.</p>
@@ -764,7 +796,7 @@
           <div><dt>Vie sur place</dt><dd>${vie}</dd></div>
           <div><dt>Langue</dt><dd>${esc(f.langue || "n. c.")}${lr.anglais_cecrl ? ` · anglais ${esc(lr.anglais_cecrl)} demandé` : ""}</dd></div>
           <div><dt>Candidature</dt><dd>${esc(plat)}${e.date ? ` · avant le ${fmtDate(e.date)}` : ""}</dd></div>
-          <div><dt>Tes chances</dt><dd>Non estimées : peu d'universités publient leurs statistiques.${taux} Repère : ${esc((f.notes && f.notes.texte) || "voir la fiche").slice(0, 140)}${f.notes && f.notes.texte && f.notes.texte.length > 140 ? "…" : ""}</dd></div>
+          <div><dt>Admission</dt><dd>Pas de repère : peu d'universités publient leurs statistiques.${taux} Repère : ${esc((f.notes && f.notes.texte) || "voir la fiche").slice(0, 140)}${f.notes && f.notes.texte && f.notes.texte.length > 140 ? "…" : ""}</dd></div>
         </dl>
         ${(f.cout && f.cout.texte && /réduction|Scholarship|bourse/i.test(f.cout.texte)) ? `<p class="tiny muted">${esc(f.cout.texte)}</p>` : ""}
         <div class="row f-actions"><a class="btn sm" href="#formation-${f.id}">Voir la fiche${ico("fleche")}</a>${btnRetenir(e.x)}</div>
@@ -781,19 +813,19 @@
     </section>`;
   }
   const btnRetenir = (x) => { const r = etat.retenus.includes(x.f.id); return `<button class="btn sm ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}">${ico("etoile", r ? "plein" : "")}${r ? "Dans mes vœux" : "Ajouter à mes vœux"}</button>`; };
-  // Section « Nouvelles à la rentrée 2026 » (E.nouvelles) : sans catégorie ni fourchette de chances
+  // Section « Nouvelles à la rentrée 2026 » (E.nouvelles) : sans catégorie ni repère d'admission
   function blocNouvelles(A) {
     const N = E.nouvelles(A.resultats, A.interets);
     if (!N.length) return "";
     return `<section class="card stack" aria-labelledby="nouv-titre"><div class="row" style="justify-content:space-between"><h3 id="nouv-titre">Nouvelles à la rentrée 2026</h3><span class="pill ton-menthe">${N.length} formation${N.length > 1 ? "s" : ""}</span></div>
-      <p class="small">Ces formations ouvrent cette année : elles correspondent à ton profil, mais on n'a encore aucune statistique pour estimer tes chances.</p>
+      <p class="small">Ces formations ouvrent cette année : elles correspondent à ton profil, mais on n'a encore aucune statistique pour te situer parmi les admis.</p>
       <ul class="wish" style="list-style:none;padding-left:0">${N.map((x) => `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span></span><span class="no-print">${btnRetenir(x)}</span></li>`).join("")}</ul>
     </section>`;
   }
   // Protection de la liste (E.protection) : nombre de vœux sûrs et conseil, sans probabilité globale
   const PROTECTION_TON = { sans_notes: "", securite_fragile: "bad", aucun: "bad", insuffisant: "", minimum: "", bon: "info" };
   function blocProtection(P) {
-    return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)}</p></div>`;
+    return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)} ${esc(E.LIMITE_REPERE)}</p></div>`;
   }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
@@ -804,14 +836,14 @@
     const btnAuto = `<button class="btn ${sel.length ? "" : "primary"}" data-action="auto-retenir">${ico("etoile")}${sel.length ? "Recalculer une liste équilibrée de 10 vœux" : "Générer une liste équilibrée de 10 vœux"}</button>`;
     if (!sel.length) {
       return `<section class="stack">${intro}
-        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${W.liste.map((x) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${W.decouvertes.has(x.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(x.f.id))}</span>` : ""}</span><span class="chance-txt ton-${CAT_TON[x.categorie]}">${chanceTxt(x.chance)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
+        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${W.liste.map((x) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${ligneRepere(x)}${W.decouvertes.has(x.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(x.f.id))}</span>` : ""}</span><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
           ${W.liste.length ? blocProtection(W.protection) : ""}
           ${W.alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
           <div class="row no-print">${btnAuto}</div></div>${etr}</section>`;
     }
     const compte = { ambitieux: 0, realiste: 0, securite: 0 }; sel.forEach((x) => compte[x.categorie]++);
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
-    const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.chance.mid || 0) - (b.chance.mid || 0));
+    const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.repere.taux ?? 101) - (b.repere.taux ?? 101));
     const alertes = [];
     if (compte.ambitieux === 0) alertes.push("Aucun vœu ambitieux : tu peux tenter une ou deux formations plus sélectives.");
     const ucas = sel.filter((x) => x.f.plateforme === "ucas");
@@ -822,14 +854,14 @@
         <div class="card stack"><h3>Équilibre de ta liste</h3>${equilibre(compte)}</div>
         <div class="stats tuiles-mini">
           ${miniStat(sel.length, "vœux retenus", "bleu")}
-          ${miniStat(sel.filter((x) => (x.chance.mid || 0) >= 50).length, "à plus de 50 %", "menthe")}
+          ${miniStat(compte.securite, compte.securite > 1 ? "vœux « sécurité »" : "vœu « sécurité »", "menthe")}
         </div>
       </div>
       ${blocProtection(E.protection(sel))}
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
-        <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Tes chances</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
-          ${tri.map((x) => `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${chanceTxt(x.chance)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`).join("")}
+        <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
+          ${tri.map((x) => `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${ligneRepere(x)}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`).join("")}
         </tbody></table></div>
         <div class="row no-print">${btnAuto}<a class="btn ghost" href="#plan">Voir mon plan${ico("fleche")}</a></div>
       </div>${etr}</section>`;
@@ -848,7 +880,7 @@
         <button role="tab" aria-selected="${o === "voeux"}" data-action="onglet-liste" data-o="voeux">${ico("check")}Mes vœux <span class="compteur">${nbVoeux}</span></button>
       </div>
       ${o === "reco" ? vueRecommandations(A) : vueVoeux(A)}
-      <details class="card-flat aide-lecture"><summary>${ico("ampoule")}Comment lire ces résultats ?</summary><p class="small muted">Classement par pertinence (60 % intérêt, 40 % faisabilité), avec une note sur 5. Les prépas aux attentes comparables sont regroupées par famille. Tes chances : fourchette indicative calculée à partir des statistiques d'admission 2025 de la formation et de ta position par rapport aux admis. Moins de 25 % = ambitieux, 25 à 55 % = réaliste, plus de 55 % = sécurité.</p></details>
+      <details class="card-flat aide-lecture"><summary>${ico("ampoule")}Comment lire ces résultats ?</summary><p class="small muted">Classement par pertinence (60 % intérêt, 40 % faisabilité), avec une note sur 5. Les prépas aux attentes comparables sont regroupées par famille. Repères : le taux d'accès officiel de la formation (part des candidats qui ont reçu une proposition) et ta position parmi les admis 2025, d'après leurs mentions au bac et ta moyenne moins 0,5 point par prudence. Sécurité = taux d'accès d'au moins 50 % et moyenne au-dessus de la plupart des admis ; ambitieux = taux d'accès de moins de 20 %, moyenne en dessous de la plupart des admis ou point bloquant ; réaliste = tout le reste. Sans notes, jamais « sécurité ». Ce ne sont pas des probabilités.</p></details>
       ${AVERT}
     </div>`;
   }
@@ -918,18 +950,18 @@
         <a href="#liste" class="lien-retour">${ico("retour")}Ma liste</a>
         <div class="fiche-hero-grille">
           <div class="fiche-hero-txt">
-            <div class="row badges">${x.chance.nouvelle || x.chance.sansStats ? "" : catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${CATBY[f.id] && CATBY[f.id].av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
+            <div class="row badges">${x.repere.nouvelle || x.repere.sansStats ? "" : catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${CATBY[f.id] && CATBY[f.id].av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
             <h1>${esc(f.nom)}</h1>
             <p class="f-lieu"><span>${ico("ecole")}${esc(f.etablissement)}</span><span>${ico("pin")}${esc(f.ville)} · ${esc(f.pays)}</span></p>
             <div class="row"><button class="btn ${retenu ? "primary" : "blanc"}" data-action="retenir" data-id="${f.id}" aria-pressed="${retenu}">${ico("etoile", retenu ? "plein" : "")}${retenu ? "Dans mes vœux" : "Ajouter à mes vœux"}</button></div>
           </div>
-          <div class="fiche-hero-score">${anneau(x.chance, x.categorie, 120)}<div class="stack" style="gap:6px"><span class="tiny muted">Pertinence pour toi</span>${notesSur5(x)}</div></div>
+          <div class="fiche-hero-score">${anneau(x.repere, x.categorie, 120)}<div class="stack" style="gap:6px"><span class="tiny muted">Pertinence pour toi</span>${notesSur5(x)}</div></div>
         </div>
         <div class="tuiles">${tuiles.map(([i, l, v, s, t]) => `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(i)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${esc(v)}</span>${s ? `<span class="tuile-s">${esc(s)}</span>` : ""}</div>`).join("")}</div>
       </header>
       ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelles à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
       ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
-      ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${chanceTxt(r.chance)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
+      ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${E.CAT_LABEL[r.categorie].toLowerCase()} · ${repereTxt(r.repere)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
       <nav class="sommaire" aria-label="Sur cette fiche"><button data-action="ancre" data-cible="sec-formation"><span>1</span>Formation</button><button data-action="ancre" data-cible="sec-poursuites"><span>2</span>Poursuite d'études</button><button data-action="ancre" data-cible="sec-metiers"><span>3</span>Métiers et débouchés</button></nav>
 
       <section class="partie stack" id="sec-formation" aria-labelledby="t-formation">
@@ -942,11 +974,9 @@
         <div class="card stack"><div class="carte-tete"><span class="info-ico ton-violet">${ico("courbe")}</span><h3>Admission : les chiffres</h3></div>
           ${chiffres.length ? `<div class="stats stats-couleur">${chiffres.map(([l, v, i, t]) => `<div class="ton-${t}">${ico(i)}<span class="tiny">${l}</span><strong>${typeof v === "number" ? v.toLocaleString("fr-FR") : v}</strong></div>`).join("")}</div>` : ""}
           <p class="small">${esc(a.texte || "Statistiques non communiquées.")} ${a.libelle && !MENTION_STATS[f.stats] ? `<span class="muted">(${esc(a.libelle)})</span>` : ""}${statutBadge(a.statut)}${srcLien(a)}</p>
-          ${f.stats_anciennes ? (() => { const o = f.stats_anciennes, l = [o.places != null ? `${nbFr(o.places)} places` : null, o.voeux != null ? `${nbFr(o.voeux)} vœux` : null, o.admis != null ? `${nbFr(o.admis)} admis` : null, o.taux != null ? `taux d'accès ${String(o.taux).replace(".", ",")} %` : null].filter(Boolean).join(" · "); return `<p class="small">Statistiques de la session ${esc(o.session)} : ${esc(l || "chiffres non communiqués")}. Elles ne servent pas au calcul de tes chances.${statutBadge(o.statut)}${srcLien(o)}</p>`; })() : ""}
+          ${f.stats_anciennes ? (() => { const o = f.stats_anciennes, l = [o.places != null ? `${nbFr(o.places)} places` : null, o.voeux != null ? `${nbFr(o.voeux)} vœux` : null, o.admis != null ? `${nbFr(o.admis)} admis` : null, o.taux != null ? `taux d'accès ${String(o.taux).replace(".", ",")} %` : null].filter(Boolean).join(" · "); return `<p class="small">Statistiques de la session ${esc(o.session)} : ${esc(l || "chiffres non communiqués")}. Elles ne servent pas à classer cette formation.${statutBadge(o.statut)}${srcLien(o)}</p>`; })() : ""}
           ${f.mentions_admis ? `<h4>Mentions au bac des admis 2025</h4>${barreMentions(f.mentions_admis)}` : ""}
-          ${x.chance.sansStats ? `<div class="chances-detail"><div><h4>Tes chances</h4><p class="small">${esc(x.chance.methode)}</p></div></div>` : `<div class="chances-detail ton-${CAT_TON[x.categorie]}"><div><h4>Tes chances (estimation)</h4><p><span class="big">${chanceTxt(x.chance)}</span> ${x.chance.nouvelle ? "" : x.chance.approx ? '<span class="badge-statut estimation">très approximatif</span>' : '<span class="badge-statut estimation">estimation</span>'}</p></div>
-            ${jauge(x.chance)}${x.chance.bas === null ? "" : '<div class="jauge-leg tiny"><span>Ambitieux</span><span>Réaliste</span><span>Sécurité</span></div>'}
-            <p class="small muted">${esc(x.chance.methode)}${x.chance.nouvelle ? "" : " Fourchette volontairement large : les jurys regardent aussi la progression, la motivation et le lycée d'origine."}</p></div>`}
+          ${blocRepere(x)}
         </div>
 
         <div class="card stack"><div class="carte-tete"><span class="info-ico ton-menthe">${ico("cible")}</span><h3>Ton adéquation</h3></div>
@@ -1225,7 +1255,7 @@
   // Fiche d'une formation Parcoursup : attributs éditoriaux de sa filière (data/filieres.json, code nmc),
   // chiffres officiels de la formation (stats.json, session 2025) ou, à défaut, relevé manuel sourcé
   // (stats-manuelles.json). Sans chiffres, la fiche est quand même créée (taux et mentions à null), avec le statut
-  // de data/statuts-stats.json : « nouvelle_2026 » (pas de fourchette de chances, vœu ambitieux ou découverte
+  // de data/statuts-stats.json : « nouvelle_2026 » (pas de repère d'admission, vœu ambitieux ou découverte
   // seulement) ou « sans_stats » (hors des listes de vœux).
   function fichGeneree(r, fil) {
     const g = r.gta;
@@ -1268,8 +1298,8 @@
           : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
         ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
         ...(man ? [`Pas de statistiques Parcoursup 2025 : chiffres ${man === anc ? "de la session" : "relevés à la main (session"} ${man.session}${man === anc ? "" : ")"}, sans les mentions des admis.`] : []),
-        ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas d'estimation de tes chances. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelles à la rentrée 2026 »)."] : []),
-        ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : chances impossibles à estimer, et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
+        ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère d'admission. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelles à la rentrée 2026 »)."] : []),
+        ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : aucun repère d'admission, et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
         ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
       domaines: fam.domaines,
       cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: r.tc === "Publics" ? "Frais non relevés pour cette formation : vérifie sur le site de l'établissement." : "Établissement privé : frais non relevés, vérifie sur le site de l'établissement.", statut: "non_communique" },
@@ -1477,7 +1507,7 @@
         ${m.acts.map((a) => `<li class="${etat.faits[a.cle] ? "done" : ""}"><input type="checkbox" id="fa-${esc(a.cle)}" data-fait="${esc(a.cle)}" ${etat.faits[a.cle] ? "checked" : ""}><label for="fa-${esc(a.cle)}" style="font-weight:400"><span>${esc(a.texte)}</span> <span class="tiny muted">— ${esc([...a.pour].slice(0, 3).join(", "))}${a.pour.size > 3 ? "…" : ""}</span></label></li>`).join("")}
       </ul>` : `<p class="small muted">Rien de prévu : travail régulier.</p>`}</div>`).join("");
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
-    const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.chance.mid || 0) - (b.chance.mid || 0));
+    const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.repere.taux ?? 101) - (b.repere.taux ?? 101));
     const nbFaits = [...new Set(P.liste.flatMap((m) => m.acts.map((a) => a.cle)))].filter((k) => etat.faits[k]).length;
     const nbActs = new Set(P.liste.flatMap((m) => m.acts.map((a) => a.cle))).size;
     const pc = nbActs ? Math.round((nbFaits / nbActs) * 100) : 0, CP = 2 * Math.PI * 27;
@@ -1498,7 +1528,7 @@
   function planTexte() {
     const P = construirePlan();
     const l = [`PLAN D'ORIENTATION — Mon Plan Sup${etat.profil.prenom ? " — " + etat.profil.prenom : ""}`, `Généré le ${new Date().toLocaleDateString("fr-FR")}. Outil d'aide : aucune admission garantie.`, "", "MES VŒUX"];
-    P.sel.forEach((x) => { l.push(`- [${E.CAT_LABEL[x.categorie]}] ${x.f.nom} — ${x.f.etablissement} — chances estimées ${chanceTxt(x.chance)}`); x.actions.forEach((a) => l.push(`    • ${a.texte}`)); });
+    P.sel.forEach((x) => { l.push(`- [${E.CAT_LABEL[x.categorie]}] ${x.f.nom} — ${x.f.etablissement} — ${repereTxt(x.repere)}`); x.actions.forEach((a) => l.push(`    • ${a.texte}`)); });
     l.push("", "CALENDRIER");
     P.liste.forEach((m) => { if (!m.evts.length && !m.acts.length) return; l.push(MOIS(m.date).toUpperCase()); m.evts.forEach((e) => l.push(`  [${e.date.toLocaleDateString("fr-FR")}] ${e.texte}`)); m.acts.forEach((a) => l.push(`  [${etat.faits[a.cle] ? "x" : " "}] ${a.texte}`)); });
     return l.join("\n");
@@ -1527,8 +1557,8 @@
         <p><strong>Intérêt.</strong> Le questionnaire construit ton profil de domaines (maths, économie, droit…), tes préférences de formation (dose de maths, d'écrit, encadrement, type d'établissement) et les métiers visés. On les compare à chaque formation, puis on applique tes contraintes : étranger, budget, ville, rythme.</p>
         <p><strong>Faisabilité.</strong> Six critères notés séparément : notes, spécialités, appréciations (analyse de mots-clés des bulletins), langues, tests, extrascolaire.</p>
         <p><strong>Places et vœux.</strong> Pour les formations Parcoursup, le nombre de places et de vœux 2025 et la répartition des mentions des admis viennent de Parcoursup (via OptionMétier et les annuaires Thotis). Attention : un même établissement propose souvent plusieurs vœux (parcours, internat, option) ; chaque fiche indique les places du vœu concerné. Le nombre de vœux ne se compare pas directement aux places : chaque candidat fait jusqu'à 10 vœux et beaucoup refusent les propositions reçues.</p>
-        <p><strong>Tes chances.</strong> On part des statistiques d'admission publiées (non affichées, car difficiles à interpréter), puis on le module selon ta place parmi les admis (estimée à partir de leurs mentions et de ta moyenne + 0,4 point, car la moyenne au bac dépasse souvent celle des bulletins), tes spécialités, tes appréciations et ton anglais. Le résultat est une fourchette, jamais une promesse.</p>
-        <p><strong>Wishlist.</strong> 3 ambitieux (moins de 25 %), 4 réalistes (25 à 55 %), 3 sûrs (plus de 55 %), au plus 2 vœux par établissement, en privilégiant ton cœur de projet.</p>
+        <p><strong>Catégories.</strong> Aucune donnée publique ne donne tes chances d'admission : les statistiques décrivent les admis, pas les refusés. On s'appuie donc sur deux mesures : le taux d'accès officiel de la formation (part des candidats qui ont reçu une proposition) et ta position parmi les admis 2025, calculée à partir de leurs mentions au bac et de ta moyenne moins 0,5 point (par prudence : la moyenne des bulletins n'est pas la note du bac). Sécurité : taux d'accès d'au moins 50 % et moyenne au-dessus d'au moins 60 % des admis, sans point bloquant. Ambitieux : taux d'accès de moins de 20 %, moyenne au-dessus de moins de 30 % des admis, ou point bloquant. Réaliste : tout le reste. Sans notes, jamais « sécurité ». Tes spécialités, ton anglais et tes appréciations restent affichés comme critères, mais seul un point bloquant change la catégorie.</p>
+        <p><strong>Wishlist.</strong> 3 ambitieux, 4 réalistes et 3 sûrs (selon les catégories ci-dessus), au plus 2 vœux par établissement, en privilégiant ton cœur de projet.</p>
         <p><strong>Statuts des données :</strong> ${statutBadge("officiel")} site officiel ou open data public · ${statutBadge("source_secondaire")} média spécialisé · ${statutBadge("estimation")} calculé par nous · ${statutBadge("non_communique")} introuvable.</p>
         <p><strong>Catalogue et Parcoursup.</strong> Le catalogue réunit les fiches de Mon Plan Sup et la cartographie officielle des formations Parcoursup 2026. Quand une fiche de Mon Plan Sup correspond de façon certaine à une formation Parcoursup (même établissement, même commune, même intitulé), une seule fiche est affichée, avec les deux séries d'informations. En cas de doute, les fiches restent séparées et sont marquées « À vérifier ». Quand deux sources se contredisent, les deux valeurs sont affichées avec leur origine : ${srcBadge("P")} cartographie Parcoursup · ${srcBadge("O")} site officiel cité · ${srcBadge("A")} autre source citée · ${srcBadge("E")} donnée saisie ou estimée par Mon Plan Sup.</p>
         <p class="small muted">${esc(DATA.meta.methode_moyenne)} Base du ${esc(fmtDate(DATA.meta.version))}.</p>

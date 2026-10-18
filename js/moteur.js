@@ -2,10 +2,11 @@
  * js/moteur.js : moteur de recommandation (CapEngine).
  *
  * Rôle : à partir du profil de l'élève et de ses réponses au questionnaire, noter chaque
- * formation (intérêt, faisabilité, pertinence), estimer ses chances d'admission à partir des
- * statistiques officielles, la classer ambitieux / réaliste / sécurité, construire la liste
+ * formation (intérêt, faisabilité, pertinence), la situer à partir des statistiques officielles
+ * (taux d'accès, position parmi les admis 2025), la classer ambitieux / réaliste / sécurité, construire la liste
  * équilibrée de 10 vœux Parcoursup et proposer des équivalents à l'étranger.
- * Fonctions principales : recommander, wishlist (et protection), etranger, chance, statsProfil.
+ * Fonctions principales : recommander, wishlist (et protection), etranger, repere, statsProfil.
+ * Modèle des catégories : docs/modele-chances.md.
  * Aucun accès à la page : ce module ne fait que des calculs.
  *
  * Expose : window.CapEngine.
@@ -14,8 +15,8 @@
  */
 /* Mon Plan Sup — moteur de recommandation (version 2).
    - Adéquation critère par critère (notes, spécialités, langues, tests, extrascolaire, appréciations).
-   - Taux d'admission réel de chaque formation (Parcoursup, UCAS…) + fourchette personnelle indicative.
-   - Catégories ambitieux / réaliste / sécurité déduites de cette fourchette.
+   - Taux d'accès officiel de chaque formation et position de l'élève parmi les admis 2025 (sans pourcentage de chances).
+   - Catégories ambitieux / réaliste / sécurité déduites de ces deux mesures (REGLES_CATEGORIE).
    - Wishlist équilibrée de 10 vœux. */
 (function () {
   "use strict";
@@ -223,7 +224,15 @@
     return { niveau, texte: `${a.nb} appréciation(s) analysée(s) : ${a.positifs} signal(aux) positif(s), ${a.negatifs} point(s) de vigilance${a.mentions.length ? " ; " + a.mentions.join(", ") : ""}.${poidsFort ? " Critère très regardé pour cette formation." : ""}` };
   }
 
-  /* ---------------------------------------------------------------- chances */
+  /* ---------------------------------------------------------------- repères d'admission et catégories */
+  // Modèle décrit dans docs/modele-chances.md. Aucune donnée publique ne donne la chance d'admission d'un élève
+  // précis (les statistiques décrivent les admis, pas les refusés) : pas de pourcentage personnel. Deux mesures
+  // vérifiables seulement : le taux d'accès officiel de la formation et la position de l'élève parmi les admis 2025.
+  const MARGE_BULLETIN = 0.5;   // points retirés à la moyenne des bulletins avant de la comparer aux mentions au bac (prudence)
+  const SEUIL_AU_DESSUS = 0.6, SEUIL_EN_DESSOUS = 0.3;   // part des admis sous la moyenne de l'élève
+  const SEUIL_TAUX_SECURITE = 50, SEUIL_TAUX_AMBITIEUX = 20;   // taux d'accès (%)
+  const POSITION_LABEL = { au_dessus: "au-dessus de la plupart des admis", moyenne: "dans la moyenne des admis", en_dessous: "en dessous de la plupart des admis", inconnue: "position inconnue" };
+  const LIMITE_REPERE = "Ce n'est pas une probabilité : les jurys regardent aussi ton dossier complet.";
   function percentileAdmis(m, x) {
     // part des admis dont la moyenne est inférieure à x (répartition uniforme dans chaque tranche de mention)
     const tot = BANDES.reduce((a, [k]) => a + (m[k] || 0), 0);
@@ -235,37 +244,54 @@
     }
     return clamp(cum, 0, 1);
   }
-  function chance(f, s, crit) {
-    // nouvelle formation (statut « stats » de la fiche, data/statuts-stats.json) : aucune fourchette affichée
-    if (f.stats === "nouvelle_2026") return { bas: null, haut: null, mid: null, base: null, approx: true, nouvelle: true,
-      methode: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas d'estimation de tes chances." };
-    // statistiques non publiées : aucune estimation (pas de calcul d'après un niveau de sélectivité par défaut)
-    if (f.stats === "sans_stats") return { bas: null, haut: null, mid: null, base: null, approx: true, sansStats: true, methode: HORS_LISTE.sans_stats };
-    const a = f.admission || {};
-    let T = typeof a.taux === "number" ? a.taux : null, approx = false, methode;   // le taux d'accès sert au calcul mais n'est plus affiché   // le taux d'accès sert au calcul mais n'est plus affiché
-    if (T === null) {
-      T = { tres_haute: 8, haute: 20, moyenne: 40, ouverte: 70 }[f.selectivite.niveau] || 30; approx = true;
-      methode = "Statistiques d'admission non publiées : estimation à partir du niveau de sélectivité.";
-    } else methode = a.session ? `Point de départ : les statistiques d'admission de la session ${a.session} de la formation${a.statut === "releve_manuel" ? " (relevé manuel)" : ""}.` : "Point de départ : les statistiques d'admission 2025 de la formation.";
-    let p = null;
-    const m = f.mentions_admis;
-    const moyEleve = s.moyenneGenerale !== null ? s.moyenneGenerale + 0.4 : null; // la moyenne au bac dépasse en général celle des bulletins
-    if (m && moyEleve !== null) { p = percentileAdmis(m, moyEleve); methode += ` Ta moyenne te place devant environ ${Math.round(p * 100)} % des admis de 2025 (d'après leurs mentions).`; }
-    else if (crit.notes.ecart !== undefined && crit.notes.ecart !== null) { p = clamp(0.5 + crit.notes.ecart * 0.22, 0.05, 0.95); methode += " Position estimée d'après l'écart entre tes notes et le repère."; }
-    if (p === null) return { bas: null, haut: null, mid: null, base: T, approx: true, methode: methode + " Renseigne tes notes pour obtenir une estimation personnelle." };
-    let bas = T * (0.35 + 1.6 * p), haut = T * (0.8 + 3.2 * p);
-    if (crit.specialites.niveau === "bloquant") { bas = Math.min(bas, 1); haut = Math.min(haut, 5); methode += " Point bloquant sur les spécialités : chances très faibles."; }
-    else if (crit.specialites.niveau === "renforcer") { bas *= 0.7; haut *= 0.8; }
-    if (crit.appreciations.niveau === "faible") { bas *= 0.7; haut *= 0.8; } else if (crit.appreciations.niveau === "fort") { bas *= 1.1; haut *= 1.1; }
-    if (crit.langues.niveau === "faible") { bas *= 0.6; haut *= 0.7; }
-    if (f.plateforme === "ucas") methode += " Au Royaume-Uni, l'offre est conditionnelle : il faudra obtenir les notes demandées au bac.";
-    bas = clamp(Math.round(bas), 1, 95); haut = clamp(Math.round(haut), bas + 2, 97);
-    if (approx) haut = Math.min(haut, 80);   // taux non publié : fourchette plafonnée
-    if (T <= 12) haut = Math.min(haut, 60);
-    else if (T <= 30) haut = Math.min(haut, 75);
-    bas = Math.min(bas, haut - 2);
-    return { bas, haut, mid: Math.round((bas + haut) / 2), base: T, approx, methode };
+  const positionDe = (p) => (p === null ? "inconnue" : p >= SEUIL_AU_DESSUS ? "au_dessus" : p >= SEUIL_EN_DESSOUS ? "moyenne" : "en_dessous");
+  function phrasePosition(r) {
+    if (r.sansNotes) return "Renseigne tes bulletins pour te situer parmi les admis.";
+    if (r.percentile === null) return "Mentions au bac des admis non publiées : impossible de te situer parmi eux.";
+    const pc = Math.round(r.percentile * 100);
+    const debut = pc >= 98 ? "Ta moyenne te place au-dessus de presque tous les admis" : pc <= 2 ? "Ta moyenne te place en dessous de presque tous les admis"
+      : `Ta moyenne te place au-dessus d'environ ${pc} % des admis`;
+    return `${debut} de ${r.sessionMentions}.`;
   }
+  const METHODE_POSITION = `Position calculée à partir des mentions au bac des admis 2025 et de ta moyenne des bulletins moins ${fmt(MARGE_BULLETIN)} point, par prudence : la moyenne des bulletins n'est pas la note du bac, et les mentions sont des tranches de 2 points.`;
+  // Repères affichés et utilisés pour la catégorie : { taux, session, source, consulte_le, statut, percentile, position,
+  // sansNotes, nouvelle, sansStats, texte }. position : au_dessus, moyenne, en_dessous, inconnue (null sans notes).
+  function repere(f, s) {
+    const sansNotes = s.moyenneGenerale === null;
+    const r = { taux: null, session: null, source: null, consulte_le: null, statut: null, percentile: null, position: sansNotes ? null : "inconnue", sansNotes, sessionMentions: null };
+    if (f.stats === "nouvelle_2026") return Object.assign(r, { nouvelle: true, texte: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère." });
+    if (f.stats === "sans_stats") return Object.assign(r, { sansStats: true, texte: HORS_LISTE.sans_stats });
+    const a = f.admission || {};
+    if (typeof a.taux === "number") Object.assign(r, { taux: a.taux, session: a.session || (f.pays === "France" ? "2025" : null), source: a.source || null, consulte_le: a.consulte_le || null, statut: a.statut || null });
+    const m = f.mentions_admis;
+    if (m && !sansNotes) {
+      // arrondi au pour cent affiché, pour que la phrase et le niveau ne se contredisent jamais (29,6 % → 30 % → « moyenne »)
+      r.percentile = Math.round(percentileAdmis(m, s.moyenneGenerale - MARGE_BULLETIN) * 100) / 100;
+      r.position = positionDe(r.percentile);
+      r.sessionMentions = "2025";
+    }
+    r.texte = phrasePosition(r);
+    return r;
+  }
+  // Table des catégories : la première règle vérifiée donne la catégorie et l'explication affichée sur la fiche.
+  const REGLES_CATEGORIE = [
+    { cle: "nouvelle", categorie: "ambitieux", si: (r) => r.nouvelle, texte: "Nouvelle formation 2026, sans statistiques : toujours « ambitieux »." },
+    { cle: "bloquant", categorie: "ambitieux", si: (r, bloque) => bloque, texte: "Point bloquant dans ton dossier (voir les critères) : « ambitieux »." },
+    { cle: "sans_notes_ouverte", categorie: "realiste", si: (r) => r.sansNotes && r.taux !== null && r.taux >= SEUIL_TAUX_SECURITE,
+      texte: `Sans tes notes, on ne peut pas te situer parmi les admis : catégorie déduite du seul taux d'accès (au moins ${SEUIL_TAUX_SECURITE} %), jamais « sécurité ». Renseigne tes bulletins.` },
+    { cle: "sans_notes", categorie: "ambitieux", si: (r) => r.sansNotes,
+      texte: `Sans tes notes, on ne peut pas te situer parmi les admis : catégorie déduite du seul taux d'accès (moins de ${SEUIL_TAUX_SECURITE} % ou non publié). Renseigne tes bulletins.` },
+    { cle: "taux_bas", categorie: "ambitieux", si: (r) => r.taux !== null && r.taux < SEUIL_TAUX_AMBITIEUX,
+      texte: `Moins de ${SEUIL_TAUX_AMBITIEUX} % des candidats ont reçu une proposition : « ambitieux », même avec un très bon dossier.` },
+    { cle: "en_dessous", categorie: "ambitieux", si: (r) => r.position === "en_dessous", texte: "Ta moyenne est en dessous de celle de la plupart des admis 2025 : « ambitieux »." },
+    { cle: "securite", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_SECURITE && r.position === "au_dessus",
+      texte: `Au moins ${SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition et ta moyenne est au-dessus de celle de la plupart des admis : « sécurité ».` },
+    { cle: "sans_taux", categorie: "realiste", si: (r) => r.taux === null, texte: "Taux d'accès non publié : jamais « sécurité »." },
+    { cle: "position_inconnue", categorie: "realiste", si: (r) => r.position === "inconnue", texte: "Impossible de te situer parmi les admis : jamais « sécurité »." },
+    { cle: "realiste", categorie: "realiste", si: () => true,
+      texte: `Pour être « sécurité », il faut un taux d'accès d'au moins ${SEUIL_TAUX_SECURITE} % et une moyenne au-dessus de celle de la plupart des admis : « réaliste ».` },
+  ];
+  const regleCategorie = (r, bloque) => REGLES_CATEGORIE.find((g) => g.si(r, bloque));
 
   /* ---------------------------------------------------------------- évaluation */
   function lieuDe(f) {
@@ -345,16 +371,14 @@
     if (p.salaire >= 4) { const sm = salaireMoyen(f); if (sm && sm >= 46) interet += 4; }
     interet = clamp(Math.round(interet), 0, 100);
 
-    const ch = chance(f, s, crit);
-    let categorie;
-    if (ch.mid === null) categorie = { tres_haute: "ambitieux", haute: "ambitieux", moyenne: "realiste", ouverte: "securite" }[sel] || "realiste";
-    else categorie = ch.mid >= 55 && ch.base > 30 && !ch.approx ? "securite" : ch.mid >= 25 ? "realiste" : "ambitieux";   // pas de « sécurité » sans taux publié
-    if (bloque || ch.nouvelle) categorie = "ambitieux";   // nouvelle formation : jamais « réaliste » ni « sécurité »
+    const rep = repere(f, s), regle = regleCategorie(rep, bloque);
+    rep.regle = regle.cle; rep.pourquoi = regle.texte;
+    const categorie = regle.categorie;
     const pertinence = Math.round(it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite);
-    return { f, crit, interet, faisabilite, pertinence, chance: ch, categorie, bloque, exclu, ajust, dist, raisons: raisons(f, s, it, crit, cout, ch), actions: actions(f, s, crit) };
+    return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
   }
 
-  function raisons(f, s, it, crit, cout, ch) {
+  function raisons(f, s, it, crit, cout) {
     const out = [];
     if (it.repondues) {
       const top = f.domaines.filter((k) => (it.domaines[k] || 0) >= 0.55).slice(0, 2);
@@ -491,7 +515,7 @@
     "Formations des écoles de commerce et de management", "Etudes de santé", "Sciences Po - Instituts d'études politiques",
     "C.M.I - Cursus Master en Ingénierie", "DEUST", "Formations d'art, de design et du spectacle vivant"];
   const HORS_LISTE = {
-    sans_stats: "Statistiques d'admission non publiées : chances impossibles à estimer.",
+    sans_stats: "Statistiques d'admission non publiées : aucun repère d'admission.",
     filiere_a_relire: "Description de la filière encore à vérifier.",
     bac_pro: "Formation qui accueille surtout des bacheliers professionnels.",
     nouvelle_2026: "Nouvelle formation 2026 : proposée à part, dans « Nouvelles à la rentrée 2026 ».",
@@ -572,7 +596,7 @@
           plancher -= 10;
           while (k < q) { const x = meilleur(ok.filter((y) => y.categorie === "realiste" && !decouvertes.has(y.f.id))); if (!x) break; prend(x); k++; }
           plancher += 10;
-          alertes.push("Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès > 60 %).");
+          alertes.push("Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).");
         } else alertes.push(`Moins de ${q} vœux « ${CAT_LABEL[cat].toLowerCase()} » disponibles avec tes critères.`);
       }
     }
@@ -613,35 +637,25 @@
 
   /* ---------------------------------------------------------------- protection de la liste */
   // Repère sans probabilité globale : pas de « chances d'avoir au moins une admission », car les vœux ne sont pas
-  // indépendants (les formations lisent le même dossier) et les chances par formation restent des estimations.
-  // Un vœu « solide » est un vœu « sécurité » dont le bas de la fourchette atteint SEUIL_SOLIDE ; les autres vœux
-  // « sécurité » sont « fragiles » (la catégorie, elle, n'est pas modifiée ici).
-  const SEUIL_SOLIDE = 60;
+  // indépendants (les formations lisent le même dossier). Avec la table des catégories (REGLES_CATEGORIE), un vœu
+  // « sécurité » est solide par construction (taux d'accès d'au moins 50 %, moyenne au-dessus de la plupart des
+  // admis, aucun point bloquant) : on compte simplement les vœux « sécurité ».
   const PROTECTION_REPERE = "Aucun site ne peut calculer tes chances exactes d'admission : ces repères viennent des résultats Parcoursup 2025.";
   function protection(liste) {
-    const bas = (x) => (x.chance && x.chance.bas != null ? x.chance.bas : null);
-    const secu = liste.filter((x) => x.categorie === "securite");
-    const nbSolides = secu.filter((x) => bas(x) !== null && bas(x) >= SEUIL_SOLIDE).length;
-    const fragiles = secu.filter((x) => !(bas(x) !== null && bas(x) >= SEUIL_SOLIDE));
-    const nbSecuriteFragiles = fragiles.length;
-    const r = (niveau, message) => ({ nbSolides, nbSecuriteFragiles, niveau, message });
-    if (liste.length && liste.every((x) => bas(x) === null))
+    const nbSecurite = liste.filter((x) => x.categorie === "securite").length;
+    const r = (niveau, message) => ({ nbSecurite, niveau, message });
+    if (liste.length && liste.every((x) => x.repere && x.repere.sansNotes))
       return r("sans_notes", "Renseigne tes bulletins : sans tes notes, on ne peut pas savoir quels vœux sont sûrs pour toi.");
-    if (nbSolides === 0 && nbSecuriteFragiles) {
-      const connus = fragiles.map(bas).filter((v) => v !== null);
-      const risque = connus.length ? ` (jusqu'à ${100 - Math.min(...connus)} % de risque de refus chacun)` : "";
-      return r("securite_fragile", `Attention : tes vœux « sécurité » restent incertains pour ton profil${risque}. Ajoute des formations où tes notes sont nettement au-dessus de celles des admis, par exemple des licences de ton académie peu demandées.`);
-    }
-    if (nbSolides === 0) return r("aucun", "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition.");
-    if (nbSolides === 1) return r("insuffisant", "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre.");
-    if (nbSolides === 2) return r("minimum", "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage.");
-    return r("bon", `Ta liste a ${nbSolides} vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas.`);
+    if (nbSecurite === 0) return r("aucun", "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition.");
+    if (nbSecurite === 1) return r("insuffisant", "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre.");
+    if (nbSecurite === 2) return r("minimum", "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage.");
+    return r("bon", `Ta liste a ${nbSecurite} vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas.`);
   }
 
   /* ---------------------------------------------------------------- nouvelles formations 2026 */
   // Section « Nouvelles à la rentrée 2026 », sous la liste de 10 vœux : au plus n formations « nouvelle_2026 »,
   // triées uniquement par intérêt (sans chiffres, leur faisabilité est artificiellement haute), sans catégorie ni
-  // fourchette. Mêmes règles du garde-fou que la liste (filière à relire, liste blanche des catégories), sauf la
+  // repère d'admission. Mêmes règles du garde-fou que la liste (filière à relire, liste blanche des catégories), sauf la
   // règle « nouvelle_2026 » elle-même. Sans réponse au questionnaire, l'intérêt ne distingue rien : section vide.
   function nouvelles(resultats, it, n = MAX_NOUVELLES) {
     if (!it || !it.repondues) return [];
@@ -757,5 +771,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, SEUIL_SOLIDE, PROTECTION_REPERE, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
