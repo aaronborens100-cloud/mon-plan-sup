@@ -1,3 +1,10 @@
+/* ---------- base minimale reprise de la version hébergée sur Claude (placée en premier : les règles suivantes la complètent) */
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}
+img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}
+
 /* Mon Plan Sup — identité v6 (refonte « site web » colorée)
    Mise en page : site centré (1120 px), en-tête blanc collant avec navigation horizontale, menu déroulant sur mobile
    (aucune barre fixe en bas), bandeaux d'en-tête de page teintés, cartes blanches sur fond bleuté, pied de page complet.
