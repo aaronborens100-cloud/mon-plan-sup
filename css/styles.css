@@ -162,6 +162,7 @@ details > summary::-webkit-details-marker { display: none; }
 .notice.info { border-color: var(--bleu-pale-2); background: var(--bleu-pale); }
 .notice.bad { border-color: var(--corail-pale-2); background: var(--corail-pale); }
 .notice.sun { border-color: var(--bleu-pale-2); background: var(--bleu-pale); }
+.notice.protection p + p { margin-top: 6px; }
 .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px; border-radius: 999px; font-size: .77rem; font-weight: 600; white-space: nowrap; background: var(--c-pale, var(--surface-2)); color: var(--c, var(--gris)); line-height: 1.5; }
 .pill .ico { width: 14px; height: 14px; }
 .pill.neutral { background: var(--surface-2); color: var(--gris); }

@@ -5,7 +5,7 @@
  * formation (intérêt, faisabilité, pertinence), estimer ses chances d'admission à partir des
  * statistiques officielles, la classer ambitieux / réaliste / sécurité, construire la liste
  * équilibrée de 10 vœux Parcoursup et proposer des équivalents à l'étranger.
- * Fonctions principales : recommander, wishlist, etranger, chance, statsProfil.
+ * Fonctions principales : recommander, wishlist (et protection), etranger, chance, statsProfil.
  * Aucun accès à la page : ce module ne fait que des calculs.
  *
  * Expose : window.CapEngine.
@@ -583,8 +583,6 @@
     if (choisis.length < n) { bonusType = 2; maxFil = 3; plancher -= 10; while (choisis.length < n) { const x = meilleur(ok); if (!x) break; prend(x); } }
     if (choisis.length < n) { bonusType = 10; plancher = -Infinity; while (choisis.length < n) { const x = meilleur(ok); if (!x) break; prend(x); } }
 
-    const mids = choisis.map((x) => (x.chance.mid || 0) / 100);
-    const auMoinsUne = mids.length ? Math.round((1 - mids.reduce((acc, m) => acc * (1 - m), 1)) * 100) : null;
     const ps = choisis.filter((x) => x.f.plateforme === "parcoursup").length;
     if (ps > 10) alertes.push("Parcoursup limite à 10 vœux (plus des sous-vœux) : regroupe ou réduis.");
 
@@ -609,8 +607,21 @@
         ? `Tu n'avais pas coché ce type de formation (${t}), mais il correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`
         : `Un type de formation auquel tu n'as peut-être pas pensé (${t}), mais qui correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`;
     };
-    return { liste: choisis, auMoinsUne: auMoinsUne !== null ? Math.min(auMoinsUne, 99) : null, alertes, certitude: cert, explication,
+    return { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
+  }
+
+  /* ---------------------------------------------------------------- protection de la liste */
+  // Repère sans probabilité : on compte les vœux « sécurité » (catégorie qui exige déjà un taux d'accès publié).
+  // Pas de « chances d'avoir au moins une admission » : les vœux ne sont pas indépendants (les formations lisent
+  // le même dossier) et les chances par formation restent des estimations.
+  const PROTECTION_REPERE = "Aucun site ne peut calculer tes chances exactes d'admission : ces repères viennent des résultats Parcoursup 2025.";
+  function protection(liste) {
+    const nbSurs = liste.filter((x) => x.categorie === "securite").length;
+    if (nbSurs === 0) return { nbSurs, niveau: "aucun", message: "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition." };
+    if (nbSurs === 1) return { nbSurs, niveau: "insuffisant", message: "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre." };
+    if (nbSurs === 2) return { nbSurs, niveau: "minimum", message: "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage." };
+    return { nbSurs, niveau: "bon", message: `Ta liste a ${nbSurs} vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas.` };
   }
 
   /* ---------------------------------------------------------------- nouvelles formations 2026 */
@@ -732,5 +743,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
