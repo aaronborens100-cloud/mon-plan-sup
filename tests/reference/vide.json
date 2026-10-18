@@ -670,7 +670,12 @@
     ]
    }
   ],
-  "auMoinsUne": 0,
+  "protection": {
+   "nbSolides": 0,
+   "nbSecuriteFragiles": 3,
+   "niveau": "sans_notes",
+   "message": "Renseigne tes bulletins : sans tes notes, on ne peut pas savoir quels vœux sont sûrs pour toi."
+  },
   "alertes": [],
   "certitude": {
    "niveau": "inconnu",

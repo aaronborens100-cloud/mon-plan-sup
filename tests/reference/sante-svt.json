@@ -716,7 +716,12 @@
     ]
    }
   ],
-  "auMoinsUne": 99,
+  "protection": {
+   "nbSolides": 2,
+   "nbSecuriteFragiles": 1,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+  },
   "alertes": [],
   "certitude": {
    "niveau": "decide",

@@ -790,6 +790,11 @@
       <ul class="wish" style="list-style:none;padding-left:0">${N.map((x) => `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span></span><span class="no-print">${btnRetenir(x)}</span></li>`).join("")}</ul>
     </section>`;
   }
+  // Protection de la liste (E.protection) : nombre de vœux sûrs et conseil, sans probabilité globale
+  const PROTECTION_TON = { sans_notes: "", securite_fragile: "bad", aucun: "bad", insuffisant: "", minimum: "", bon: "info" };
+  function blocProtection(P) {
+    return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)}</p></div>`;
+  }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
     const X = E.etranger(A.resultats, W, A.interets);
@@ -800,16 +805,14 @@
     if (!sel.length) {
       return `<section class="stack">${intro}
         <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${W.liste.map((x) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${W.decouvertes.has(x.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(x.f.id))}</span>` : ""}</span><span class="chance-txt ton-${CAT_TON[x.categorie]}">${chanceTxt(x.chance)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
+          ${W.liste.length ? blocProtection(W.protection) : ""}
           ${W.alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
           <div class="row no-print">${btnAuto}</div></div>${etr}</section>`;
     }
-    const mids = sel.map((x) => (x.chance.mid || 0) / 100);
-    const auMoinsUne = mids.length ? Math.min(99, Math.round((1 - mids.reduce((a, m) => a * (1 - m), 1)) * 100)) : null;
     const compte = { ambitieux: 0, realiste: 0, securite: 0 }; sel.forEach((x) => compte[x.categorie]++);
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
     const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.chance.mid || 0) - (b.chance.mid || 0));
     const alertes = [];
-    if (compte.securite < 2) alertes.push("Moins de 2 vœux sûrs : ajoute des formations où tes chances dépassent 55 % (licences de ton académie, BUT…).");
     if (compte.ambitieux === 0) alertes.push("Aucun vœu ambitieux : tu peux tenter une ou deux formations plus sélectives.");
     const ucas = sel.filter((x) => x.f.plateforme === "ucas");
     if (ucas.length > 5) alertes.push(`UCAS limite à 5 choix : tu en as ${ucas.length}.`);
@@ -820,10 +823,9 @@
         <div class="stats tuiles-mini">
           ${miniStat(sel.length, "vœux retenus", "bleu")}
           ${miniStat(sel.filter((x) => (x.chance.mid || 0) >= 50).length, "à plus de 50 %", "menthe")}
-          ${auMoinsUne !== null ? miniStat(auMoinsUne + " %", "au moins une proposition (estimation)", auMoinsUne < 90 ? "ambre" : "violet") : ""}
         </div>
       </div>
-      ${auMoinsUne !== null && auMoinsUne < 90 ? `<p class="notice small">Avec cette liste, la probabilité d'obtenir au moins une proposition est estimée à environ ${auMoinsUne} % seulement : ajoute des vœux sûrs.</p>` : ""}
+      ${blocProtection(E.protection(sel))}
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
         <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Tes chances</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
