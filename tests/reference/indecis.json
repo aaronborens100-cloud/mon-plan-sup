@@ -722,6 +722,20 @@
   "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 6 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51300",
+   "interet": 85
+  },
+  {
+   "id": "psup-51256",
+   "interet": 85
+  },
+  {
+   "id": "psup-52022",
+   "interet": 85
+  }
+ ],
  "etranger": {
   "mode": "decouverte",
   "liste": [
@@ -825,7 +839,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "d4259e5a7f7588fe67ffd6d471da4b2bb2ad99acc4df9f8d7a257ec4e5a43975",
-  "textes": "5d0a9177e386b4a3b81a0d9d1e613e1cd8e4d6ce9dd4fdfd2bf2c6145c371c3c"
+  "calculs": "1512fc69ff1d8bd1e7b388c66edf4b93853e47a321427f42882cc389a9461dd6",
+  "textes": "3ffe5fb8d4f94c5af406d76ca92a13dc3506cb13f448b1b07640fefa57935e6c"
  }
 }

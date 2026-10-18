@@ -737,6 +737,20 @@
   "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec école d'ingénieurs post-bac et licence de sciences comme solutions de repli. Un vœu « découverte » t'ouvre à licence de sciences.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51931",
+   "interet": 86
+  },
+  {
+   "id": "psup-50895",
+   "interet": 86
+  },
+  {
+   "id": "psup-51627",
+   "interet": 86
+  }
+ ],
  "etranger": {
   "mode": "echange",
   "liste": [
@@ -776,7 +790,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "01f7921dc74b6e0181b99f6ffa28c0b42278051e3652b21618151114a378f3fa",
-  "textes": "a75316c3db42868075c58af1d66a1abbe277d38cc4e777ffb7c298cfec54da49"
+  "calculs": "30681f1e7bdc93c6d8a1f98bf3b061c5b376a3378f6e61be2214eac665c9bc37",
+  "textes": "d0e722125dab5bf52f0e9473e8fa651c636c52d955ca163c5ed3dbe631c4798b"
  }
 }

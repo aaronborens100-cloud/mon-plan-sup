@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "description": "Statistiques d'admission relevées à la main pour des formations Parcoursup sans statistiques 2025 dans stats.json. Le site les traite comme des statistiques normales et affiche leur source sur la fiche.",
+    "format": "Une entrée par code gta dans « formations » : taux (taux d'accès en %, obligatoire), places, voeux, admis (entiers ou null), session (année, par exemple \"2024\"), source (adresse web de la page consultée, obligatoire), consulte_le (date AAAA-MM-JJ, obligatoire), statut (\"releve_manuel\").",
+    "verification": "python3 scripts/construire-statuts-stats.py refuse toute entrée sans source, sans date ou mal formée, puis régénère data/statuts-stats.json et docs/formations-sans-stats.csv.",
+    "exemple": { "12345": { "taux": 42, "places": 30, "voeux": 410, "admis": 31, "session": "2024", "source": "https://…", "consulte_le": "2026-10-18", "statut": "releve_manuel" } }
+  },
+  "formations": {}
+}

@@ -729,12 +729,26 @@
   "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec DEUST (diplôme universitaire bac + 2) et licence de sciences comme solutions de repli.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-53243",
+   "interet": 81
+  },
+  {
+   "id": "psup-50635",
+   "interet": 78
+  },
+  {
+   "id": "psup-50680",
+   "interet": 77
+  }
+ ],
  "etranger": {
   "mode": "non",
   "liste": []
  },
  "empreintes": {
-  "calculs": "b507f153bf3e7844020a59ec0cddb477994c5218b66c6a7d972c2ab11b0c7fbb",
-  "textes": "88891b6fb3264407a1956f3a9d8d9f53c8cb07068eb2a7705a6fb1641c503400"
+  "calculs": "fcd44f4df1473a2edc17148b32bda24fedd7c21eb98c84fd325c576c02afe95d",
+  "textes": "aea7fb8603aa1aef2c44dd1c6efdc934a52804977f1bf856ea0608263bbcef66"
  }
 }

@@ -125,7 +125,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -216,7 +216,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -320,7 +320,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -346,7 +346,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -398,7 +398,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -476,7 +476,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -554,7 +554,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -567,7 +567,7 @@
     null,
     null
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -728,12 +728,26 @@
   "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec école de commerce post-bac et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51307",
+   "interet": 81
+  },
+  {
+   "id": "psup-52795",
+   "interet": 81
+  },
+  {
+   "id": "psup-53120",
+   "interet": 72
+  }
+ ],
  "etranger": {
   "mode": "non",
   "liste": []
  },
  "empreintes": {
-  "calculs": "03e2ab667de72158c039b9bd6dd5d6d667436440ea5dcda368e2e9002b46fc73",
-  "textes": "270b1c05b7670ecac958a4d271fd8f1523ebae6005f58e1b163764aac060914b"
+  "calculs": "a7865a37bf2d943f085c01105fa1a436e9f40ee478c1e8502778ee0242a03c02",
+  "textes": "14dba89ae017ec43cefda356ac8e8624837bfb93b4dfa0c49edea723ea94d8cb"
  }
 }

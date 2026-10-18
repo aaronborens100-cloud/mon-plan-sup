@@ -751,6 +751,20 @@
   "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, double licence et licence d'éco-gestion, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-52112",
+   "interet": 83
+  },
+  {
+   "id": "psup-52111",
+   "interet": 83
+  },
+  {
+   "id": "psup-51565",
+   "interet": 82
+  }
+ ],
  "etranger": {
   "mode": "decouverte",
   "liste": [
@@ -858,7 +872,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "6622ba6c799d7bb2a886a2ad8d359a5697963707bc365cd356a29b026156052b",
-  "textes": "34189214f8cf92c061c3442cbb1aa927cf28b209e6e590eb2e920f8e7660e7da"
+  "calculs": "70e30472810163bd501b8ec6d492c601a5dfd18f9f927eb4cca40f638b5ba41c",
+  "textes": "08a48cc61e4cdd9d5ec137fe538969f754114247d4142cca81b85ac64d9d799a"
  }
 }

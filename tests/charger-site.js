@@ -37,7 +37,8 @@ function boucheTrou() {
   return p;
 }
 
-async function chargerSite() {
+// remplacements : { "data/fichier.json": objet } pour charger un jeu de données modifié (tests du garde-fou).
+async function chargerSite(remplacements = {}) {
   const stockage = new Map();
   const doc = boucheTrou();
   const fenetre = {
@@ -54,8 +55,8 @@ async function chargerSite() {
     // Ni document.getElementById ni balise <script> de données : charger() passe par fetch.
     document: new Proxy(doc, { get: (t, c) => (c === "getElementById" ? () => null : t[c]) }),
     fetch: async (url) => {
-      const fichier = path.join(RACINE, String(url).split("?")[0]);
-      const texte = fs.readFileSync(fichier, "utf8");
+      const rel = String(url).split("?")[0];
+      const texte = rel in remplacements ? JSON.stringify(remplacements[rel]) : fs.readFileSync(path.join(RACINE, rel), "utf8");
       return { ok: true, json: async () => JSON.parse(texte), text: async () => texte };
     },
   };
