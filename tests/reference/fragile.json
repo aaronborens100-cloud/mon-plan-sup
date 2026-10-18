@@ -1,0 +1,751 @@
+{
+ "profil": "fragile",
+ "description": "9,5 de moyenne, SES + AMC, appréciations négatives : la liste doit rester prudente",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 9.5,
+  "moyennePeriode": "Terminale – T1",
+  "maths": 7,
+  "mathsSpe": 7,
+  "expertes": null,
+  "compl": null,
+  "anglais": "B1",
+  "anglaisCertifie": false,
+  "ecartClasse": -2,
+  "rangRelatif": null,
+  "nbExperiences": 0,
+  "nbExperiencesFortes": 0,
+  "geo": {
+   "lat": 43.6985,
+   "lon": 7.2737,
+   "nom": "Lycée Masséna (Nice)"
+  },
+  "certifications": [],
+  "specialites": [
+   "SES",
+   "AMC"
+  ],
+  "abandonnee": "HGGSP",
+  "optionMaths": "aucune",
+  "niveau": "terminale",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": {
+   "niveau": "faible",
+   "nb": 1,
+   "positifs": 1,
+   "negatifs": 2,
+   "mentions": [
+    "Terminale – T1 : Avertissement travail"
+   ],
+   "extraits": [
+    {
+     "per": "Terminale – T1",
+     "mat": "generale",
+     "txt": "Trimestre insuffisant, manque de travail et de sérieux.",
+     "type": "neg"
+    }
+   ]
+  }
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.04,
+   "economie": 0.76,
+   "gestion_commerce": 1,
+   "finance": 0.56,
+   "droit": 0.24,
+   "sciences_politiques": 0.44,
+   "international": 0.48,
+   "ingenierie_tech": 0,
+   "data_informatique": 0,
+   "sciences_humaines": 0.6,
+   "langues": 0.72,
+   "arts": 0.24,
+   "sante": 0.16,
+   "vivant": 0.12,
+   "sport": 0,
+   "communication": 0.32
+  },
+  "prefs": {
+   "matieres": [
+    "ses",
+    "langues"
+   ],
+   "secteurs": [
+    "marketing",
+    "medias"
+   ],
+   "salaire": 4,
+   "pratique": 5,
+   "maths_niv": 0,
+   "ecrit_niv": 1,
+   "encadrement": 4,
+   "poly": 2,
+   "charge": 1,
+   "ambition": 2,
+   "tests": 1,
+   "long": 1,
+   "etranger": 0,
+   "anglais": 3,
+   "pays": [
+    "aucun"
+   ],
+   "budget_max": 1000,
+   "lieu": [
+    "regions"
+   ],
+   "mobilite": 0
+  },
+  "types": [],
+  "metiers": [
+   "communicant",
+   "controle_gestion",
+   "journaliste",
+   "marketing"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "bath-management",
+   "interet": 79,
+   "faisabilite": 58,
+   "pertinence": 71,
+   "chance": [
+    28,
+    62
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ehl-lausanne-bachelor-of-science-in-international-hospitality-management",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "lesroches-crans-montana-bba-in-global-hospitality-management",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "glion-glion-bachelor-in-international-hospitality-business",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "hotelschool-la-haye-bba-international-hospitality-management",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "buas-breda-bachelor-tourism",
+   "interet": 75,
+   "faisabilite": 61,
+   "pertinence": 69,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "brunel-business",
+   "interet": 75,
+   "faisabilite": 57,
+   "pertinence": 68,
+   "chance": [
+    17,
+    38
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "uva-amsterdam-bsc-communication-science",
+   "interet": 65,
+   "faisabilite": 70,
+   "pertinence": 67,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "leeds-accounting-finance",
+   "interet": 71,
+   "faisabilite": 56,
+   "pertinence": 65,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ps-12050",
+   "interet": 74,
+   "faisabilite": 49,
+   "pertinence": 64,
+   "chance": [
+    19,
+    44
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-economie-et-gestion",
+   "interet": 69,
+   "faisabilite": 56,
+   "pertinence": 64,
+   "chance": [
+    18,
+    41
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-15111",
+   "interet": 69,
+   "faisabilite": 56,
+   "pertinence": 64,
+   "chance": [
+    19,
+    43
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "luiss-economics-management",
+   "interet": 67,
+   "faisabilite": 57,
+   "pertinence": 63,
+   "chance": [
+    17,
+    38
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "u-cote-d-azur-lettres",
+   "interet": 69,
+   "faisabilite": 53,
+   "pertinence": 63,
+   "chance": [
+    35,
+    80
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-22666",
+   "interet": 67,
+   "faisabilite": 57,
+   "pertinence": 63,
+   "chance": [
+    30,
+    70
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-22670",
+   "interet": 67,
+   "faisabilite": 58,
+   "pertinence": 63,
+   "chance": [
+    35,
+    80
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "lse-management",
+   "interet": 75,
+   "faisabilite": 42,
+   "pertinence": 62,
+   "chance": [
+    4,
+    10
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "sciences-po-campus-menton",
+   "interet": 66,
+   "faisabilite": 57,
+   "pertinence": 62,
+   "chance": [
+    30,
+    67
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-philosophie",
+   "interet": 65,
+   "faisabilite": 57,
+   "pertinence": 62,
+   "chance": [
+    35,
+    80
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-information-communication",
+   "interet": 65,
+   "faisabilite": 58,
+   "pertinence": 62,
+   "chance": [
+    24,
+    55
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "warwick-accounting-finance",
+   "interet": 71,
+   "faisabilite": 48,
+   "pertinence": 62,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "warwick-politics-international-studies",
+   "interet": 62,
+   "faisabilite": 61,
+   "pertinence": 62,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "bath-politics-economics",
+   "interet": 66,
+   "faisabilite": 56,
+   "pertinence": 62,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "manchester-accounting",
+   "interet": 69,
+   "faisabilite": 49,
+   "pertinence": 61,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "lancaster-accounting-finance",
+   "interet": 69,
+   "faisabilite": 50,
+   "pertinence": 61,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ie-bba",
+   "interet": 74,
+   "faisabilite": 42,
+   "pertinence": 61,
+   "chance": [
+    17,
+    38
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "umontreal-etudes-internationales",
+   "interet": 59,
+   "faisabilite": 64,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "u-cote-d-azur-lea",
+   "interet": 67,
+   "faisabilite": 53,
+   "pertinence": 61,
+   "chance": [
+    30,
+    67
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "leiden-international-studies",
+   "interet": 59,
+   "faisabilite": 64,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "durham-ppe",
+   "interet": 65,
+   "faisabilite": 56,
+   "pertinence": 61,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "exeter-ppe",
+   "interet": 65,
+   "faisabilite": 56,
+   "pertinence": 61,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "univie-vienne-ba-publizistik-und-kommunikationswissenschaft",
+   "interet": 57,
+   "faisabilite": 68,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "loughborough-economics",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "bristol-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "manchester-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "exeter-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "nottingham-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "birmingham-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "qmul-politics-ir",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-22662",
+   "interet": 62,
+   "faisabilite": 56,
+   "pertinence": 60,
+   "chance": [
+    33,
+    74
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "psup-12819",
+    "categorie": "securite",
+    "pertinence": 64,
+    "chance": [
+     35,
+     80
+    ]
+   },
+   {
+    "id": "u-cote-d-azur-lettres",
+    "categorie": "securite",
+    "pertinence": 63,
+    "chance": [
+     35,
+     80
+    ]
+   },
+   {
+    "id": "psup-28974",
+    "categorie": "securite",
+    "pertinence": 54,
+    "chance": [
+     33,
+     76
+    ]
+   },
+   {
+    "id": "psup-26115",
+    "categorie": "ambitieux",
+    "pertinence": 70,
+    "chance": [
+     6,
+     14
+    ]
+   },
+   {
+    "id": "psup-39903",
+    "categorie": "ambitieux",
+    "pertinence": 72,
+    "chance": [
+     11,
+     24
+    ]
+   },
+   {
+    "id": "ps-12025",
+    "categorie": "ambitieux",
+    "pertinence": 52,
+    "chance": [
+     7,
+     16
+    ]
+   },
+   {
+    "id": "ps-12050",
+    "categorie": "realiste",
+    "pertinence": 64,
+    "chance": [
+     19,
+     44
+    ]
+   },
+   {
+    "id": "sciences-po-campus-menton",
+    "categorie": "realiste",
+    "pertinence": 62,
+    "chance": [
+     30,
+     67
+    ]
+   },
+   {
+    "id": "skema-business-school-global-bba",
+    "categorie": "realiste",
+    "pertinence": 59,
+    "chance": [
+     17,
+     38
+    ]
+   },
+   {
+    "id": "bachelor-management-de-l-hotellerie-et-du-tourisme-vatel-bordeaux",
+    "categorie": "realiste",
+    "pertinence": 53,
+    "chance": [
+     17,
+     38
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "decide",
+   "top": [
+    "gestion_commerce",
+    "economie",
+    "langues"
+   ]
+  },
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec école de commerce post-bac et licence de langues comme solutions de repli.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "non",
+  "liste": []
+ },
+ "empreintes": {
+  "calculs": "976b79d79a5bdedd94552f27728e377e8b444f115d714887cc538e235371a5b6",
+  "textes": "30100e6b1c9a5788a8fd8faa5389549f586f07526cde7d2c976704dcabf4c5d5"
+ }
+}

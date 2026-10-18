@@ -19,7 +19,7 @@ js/app.js             navigation et vues (accueil, profil, questionnaire, ma lis
 data/                 jeux de données (JSON), chargés à la demande (voir « Chargement des données »)
 vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0, voir vendor/README.md), chargé au premier import de bulletin
 scripts/              outils (construction de la version tout-en-un)
-tests/                tests (à venir)
+tests/                tests de non-régression du moteur (npm test)
 ```
 
 Les scripts de `js/` sont des scripts classiques, chargés dans cet ordre ; chacun expose son module
@@ -73,6 +73,18 @@ python3 scripts/build-standalone.py
 
 Le fichier `dist/index.html` (≈ 13,6 Mo) intègre le CSS, les scripts, les données et pdf.js.
 Le dossier `dist/` n'est pas versionné.
+
+## Tests
+
+```
+npm test
+```
+
+Les tests chargent le vrai site dans Node (sans navigateur ni dépendance) et vérifient que,
+pour 10 élèves fictifs (`tests/profils.js`), le moteur produit exactement les mêmes
+recommandations, la même liste de 10 vœux et les mêmes propositions à l'étranger que les
+références de `tests/reference/`. Si un changement de résultats est voulu, régénérer les
+références avec `node tests/generer-reference.js` et expliquer le changement dans la PR.
 
 ## Avertissement
 

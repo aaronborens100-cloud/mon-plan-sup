@@ -1,0 +1,864 @@
+{
+ "profil": "eco-excellent-decide",
+ "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 17.1,
+  "moyennePeriode": "Terminale – T1",
+  "maths": 17.3,
+  "mathsSpe": 17.7,
+  "expertes": 16.5,
+  "compl": null,
+  "anglais": "C1",
+  "anglaisCertifie": true,
+  "ecartClasse": 4.3,
+  "rangRelatif": null,
+  "nbExperiences": 2,
+  "nbExperiencesFortes": 2,
+  "geo": {
+   "lat": 43.6985,
+   "lon": 7.2737,
+   "nom": "Lycée Masséna (Nice)"
+  },
+  "certifications": [
+   {
+    "type": "Cambridge",
+    "score": "185"
+   }
+  ],
+  "specialites": [
+   "maths",
+   "SES"
+  ],
+  "abandonnee": "HGGSP",
+  "optionMaths": "expertes",
+  "niveau": "terminale",
+  "nbPeriodes": 2,
+  "bacPremiere": {
+   "francaisEcrit": 16,
+   "francaisOral": 17,
+   "maths": 18,
+   "scoreSciencesPo": 16.7
+  },
+  "appreciations": {
+   "niveau": "fort",
+   "nb": 1,
+   "positifs": 5,
+   "negatifs": 0,
+   "mentions": [
+    "Première – T3 : Félicitations"
+   ],
+   "extraits": [
+    {
+     "per": "Terminale – T1",
+     "mat": "generale",
+     "txt": "Excellent trimestre, élève brillante et investie.",
+     "type": "pos"
+    }
+   ]
+  }
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.775,
+   "economie": 0.975,
+   "gestion_commerce": 0.825,
+   "finance": 1,
+   "droit": 0.275,
+   "sciences_politiques": 0.35,
+   "international": 0.3,
+   "ingenierie_tech": 0.175,
+   "data_informatique": 0.325,
+   "sciences_humaines": 0.225,
+   "langues": 0.1,
+   "arts": 0.075,
+   "sante": 0,
+   "vivant": 0,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "maths",
+    "ses"
+   ],
+   "secteurs": [
+    "finance",
+    "conseil",
+    "entrepreneuriat"
+   ],
+   "salaire": 4,
+   "pratique": 3,
+   "maths_niv": 3,
+   "ecrit_niv": 2,
+   "encadrement": 5,
+   "poly": 2,
+   "charge": 3,
+   "ambition": 5,
+   "tests": 4,
+   "long": 5,
+   "etranger": 2,
+   "anglais": 5,
+   "pays": [
+    "Royaume-Uni",
+    "Pays-Bas"
+   ],
+   "budget_max": 20000,
+   "lieu": [
+    "partout"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "actuaire",
+   "audit",
+   "banque_affaires",
+   "business_analyst",
+   "conseil",
+   "entrepreneur",
+   "marketing",
+   "trader"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "psup-31598",
+   "interet": 87,
+   "faisabilite": 100,
+   "pertinence": 92,
+   "chance": [
+    16,
+    33
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "york-economics",
+   "interet": 86,
+   "faisabilite": 99,
+   "pertinence": 91,
+   "chance": [
+    35,
+    73
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31635",
+   "interet": 87,
+   "faisabilite": 97,
+   "pertinence": 91,
+   "chance": [
+    13,
+    26
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7917",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1063",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    74,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7919",
+   "interet": 87,
+   "faisabilite": 94,
+   "pertinence": 90,
+   "chance": [
+    9,
+    19
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10249",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1030",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7974",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5067",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13649",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1051",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13643",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    62,
+    75
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "paris1-dl-histoire-scpo",
+   "interet": 86,
+   "faisabilite": 96,
+   "pertinence": 90,
+   "chance": [
+    14,
+    28
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "birmingham-economics",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    41,
+    75
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31274",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31276",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31283",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31284",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31293",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31329",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31330",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31341",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31342",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31343",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    57,
+    75
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31350",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31353",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31361",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31364",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31371",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31380",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    94,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31385",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31398",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31400",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    73,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31407",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31463",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    59,
+    75
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31464",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31470",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31474",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31476",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "ps-7917",
+    "categorie": "securite",
+    "pertinence": 90,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "ps-1063",
+    "categorie": "securite",
+    "pertinence": 90,
+    "chance": [
+     74,
+     97
+    ]
+   },
+   {
+    "id": "psup-3277",
+    "categorie": "securite",
+    "pertinence": 89,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "paris1-dl-histoire-scpo",
+    "categorie": "ambitieux",
+    "pertinence": 90,
+    "chance": [
+     14,
+     28
+    ]
+   },
+   {
+    "id": "licence-mathematiques-portail-rene-descartes-luminy-aix-marseille-universite-marseille",
+    "categorie": "ambitieux",
+    "pertinence": 86,
+    "chance": [
+     12,
+     25
+    ]
+   },
+   {
+    "id": "psup-31635",
+    "categorie": "ambitieux",
+    "pertinence": 91,
+    "chance": [
+     13,
+     26
+    ]
+   },
+   {
+    "id": "psl-cpes-economie-societe-droit",
+    "categorie": "realiste",
+    "pertinence": 87,
+    "chance": [
+     34,
+     70
+    ]
+   },
+   {
+    "id": "bsb-burgundy-school-of-business-bachelor-in-management",
+    "categorie": "realiste",
+    "pertinence": 87,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "essca-school-of-management-pge-post-bac",
+    "categorie": "realiste",
+    "pertinence": 87,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "psup-28381",
+    "categorie": "realiste",
+    "pertinence": 90,
+    "chance": [
+     19,
+     40
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "intermediaire",
+   "top": [
+    "finance",
+    "economie",
+    "gestion_commerce"
+   ]
+  },
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "decouverte",
+  "liste": [
+   {
+    "x": {
+     "id": "birmingham-economics",
+     "categorie": "realiste",
+     "pertinence": 90,
+     "chance": [
+      41,
+      75
+     ]
+    },
+    "ancre": {
+     "id": "psup-3277",
+     "categorie": "securite",
+     "pertinence": 89,
+     "chance": [
+      95,
+      97
+     ]
+    },
+    "frais": null,
+    "vie": {
+     "min": 1370,
+     "max": 1370,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   },
+   {
+    "x": {
+     "id": "durham-economics",
+     "categorie": "realiste",
+     "pertinence": 89,
+     "chance": [
+      34,
+      70
+     ]
+    },
+    "ancre": {
+     "id": "psl-cpes-economie-societe-droit",
+     "categorie": "realiste",
+     "pertinence": 87,
+     "chance": [
+      34,
+      70
+     ]
+    },
+    "frais": null,
+    "vie": {
+     "min": 1370,
+     "max": 1370,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   },
+   {
+    "x": {
+     "id": "uva-bsc-economics-business-economics",
+     "categorie": "realiste",
+     "pertinence": 86,
+     "chance": [
+      78,
+      80
+     ]
+    },
+    "ancre": {
+     "id": "psup-28381",
+     "categorie": "realiste",
+     "pertinence": 90,
+     "chance": [
+      19,
+      40
+     ]
+    },
+    "frais": 2694,
+    "vie": {
+     "min": 1200,
+     "max": 1800,
+     "texte": "1 200 à 1 800 €/mois selon l'université d'Amsterdam (AUAS), un peu moins hors Amsterdam",
+     "source": "https://www.amsterdamuas.com/study/international-admissions/financial-matters/cost-of-living",
+     "statut": "source_secondaire"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": "2027-01-15",
+    "bientot": false,
+    "jours": 106
+   }
+  ],
+  "budgetSerre": false,
+  "anglaisFragile": false
+ },
+ "empreintes": {
+  "calculs": "73ff7b2435a667553aca8cbf97574aaaef75b73b5bad27804b3ddfbf75dc59aa",
+  "textes": "9855f416ede358fb4e507ee4ad35272050f0f44cddc18e7050af1cab123d1259"
+ }
+}

@@ -1,0 +1,786 @@
+{
+ "profil": "droit-sciencespo",
+ "description": "14 de moyenne, HGGSP + HLP, sans maths, veut faire du droit ou de la science politique",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 14.1,
+  "moyennePeriode": "Terminale – T1",
+  "maths": null,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": null,
+  "anglais": "B2",
+  "anglaisCertifie": false,
+  "ecartClasse": 2.1,
+  "rangRelatif": null,
+  "nbExperiences": 1,
+  "nbExperiencesFortes": 1,
+  "geo": {
+   "lat": 43.6985,
+   "lon": 7.2737,
+   "nom": "Lycée Masséna (Nice)"
+  },
+  "certifications": [],
+  "specialites": [
+   "HGGSP",
+   "HLP"
+  ],
+  "abandonnee": "SES",
+  "optionMaths": "aucune",
+  "niveau": "terminale",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": 15,
+   "francaisOral": 16,
+   "maths": 12,
+   "scoreSciencesPo": 14.2
+  },
+  "appreciations": {
+   "niveau": "fort",
+   "nb": 1,
+   "positifs": 2,
+   "negatifs": 0,
+   "mentions": [],
+   "extraits": [
+    {
+     "per": "Terminale – T1",
+     "mat": "generale",
+     "txt": "Très bon trimestre, élève motivée et rigoureuse.",
+     "type": "pos"
+    }
+   ]
+  }
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0,
+   "economie": 0.13636363636363635,
+   "gestion_commerce": 0.06818181818181818,
+   "finance": 0.11363636363636363,
+   "droit": 1,
+   "sciences_politiques": 1,
+   "international": 0.7954545454545454,
+   "ingenierie_tech": 0,
+   "data_informatique": 0,
+   "sciences_humaines": 0.7272727272727273,
+   "langues": 0.3409090909090909,
+   "arts": 0.06818181818181818,
+   "sante": 0.06818181818181818,
+   "vivant": 0,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "hg",
+    "lettres",
+    "langues"
+   ],
+   "secteurs": [
+    "droit",
+    "public"
+   ],
+   "salaire": 3,
+   "pratique": 2,
+   "maths_niv": 0,
+   "ecrit_niv": 3,
+   "encadrement": 3,
+   "poly": 2,
+   "charge": 2,
+   "ambition": 4,
+   "tests": 3,
+   "long": 5,
+   "etranger": 1,
+   "anglais": 4,
+   "pays": [
+    "Espagne",
+    "Italie"
+   ],
+   "budget_max": 5000,
+   "lieu": [
+    "idf",
+    "regions"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "avocat",
+   "diplomate",
+   "haut_fonctionnaire",
+   "juriste"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
+   "interet": 89,
+   "faisabilite": 100,
+   "pertinence": 93,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
+   "interet": 89,
+   "faisabilite": 96,
+   "pertinence": 92,
+   "chance": [
+    60,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
+   "interet": 87,
+   "faisabilite": 94,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
+   "interet": 89,
+   "faisabilite": 92,
+   "pertinence": 90,
+   "chance": [
+    44,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "cy-cergy-paris-universite-cergy-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "cy-cergy-paris-universite-cergy-licence-droit-du-droit-espagnol-et-latino-americain",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-rennes-bruz-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-toulouse-toulouse-licence-droit-parcours-culture-juridique",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-universite-le-mans-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-u-campus-de-laval-laval-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-bourgogne-europe-dijon-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-bourgogne-europe-site-de-nevers-nevers-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-catholique-de-lille-faculte-de-droit-issy-issy-les-moulineaux-licence-droit-parcours-dro",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-catholique-de-lille-faculte-libre-de-droit-lille-licence-droit-parcours-droit-et-culture",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-clermont-auvergne-clermont-ferrand-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-angers-campus-de-cholet-cholet-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-artois-douai-douai-licence-droit-classique",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-bourges-bourges-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-chateauroux-chateauroux-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-brest-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-caen-normandie-caen-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-corse-corte-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-guyane-cayenne-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-la-polynesie-francaise-faaa-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-la-polynesie-francaise-faaa-licence-droit-parcours-excellence",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-la-reunion-saint-denis-la-reunion-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-la-reunion-le-tampon-le-tampon-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-limoges-limoges-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-limoges-antenne-de-brive-brive-la-gaillarde-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-mayotte-dembeni-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-nimes-nimes-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-perpignan-antenne-de-narbonne-narbonne-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-amiens-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    87,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-poitiers-poitiers-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    80,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-poitiers-site-d-angouleme-la-couronne-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-reims-champagne-ardenne-reims-licence-droit",
+   "interet": 82,
+   "faisabilite": 100,
+   "pertinence": 89,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
+    "categorie": "securite",
+    "pertinence": 90,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-26895",
+    "categorie": "securite",
+    "pertinence": 89,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "u-clermont-auvergne-philosophie",
+    "categorie": "securite",
+    "pertinence": 77,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-27193",
+    "categorie": "ambitieux",
+    "pertinence": 87,
+    "chance": [
+     6,
+     13
+    ]
+   },
+   {
+    "id": "assas-dl-droit-scpo",
+    "categorie": "ambitieux",
+    "pertinence": 84,
+    "chance": [
+     3,
+     6
+    ]
+   },
+   {
+    "id": "psup-35695",
+    "categorie": "ambitieux",
+    "pertinence": 81,
+    "chance": [
+     13,
+     27
+    ]
+   },
+   {
+    "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
+    "categorie": "realiste",
+    "pertinence": 89,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "sciences-po-grenoble-iep",
+    "categorie": "realiste",
+    "pertinence": 81,
+    "chance": [
+     44,
+     80
+    ]
+   },
+   {
+    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
+    "categorie": "realiste",
+    "pertinence": 83,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "ps-4671",
+    "categorie": "ambitieux",
+    "pertinence": 79,
+    "chance": [
+     2,
+     5
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "decide",
+   "top": [
+    "droit",
+    "sciences_politiques",
+    "sciences_humaines"
+   ]
+  },
+  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur double licence, avec licence de droit ou science po et licence de lettres ou sciences humaines comme solutions de repli.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "echange",
+  "liste": [
+   {
+    "x": {
+     "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
+     "categorie": "realiste",
+     "pertinence": 93,
+     "chance": [
+      78,
+      80
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
+     "categorie": "realiste",
+     "pertinence": 92,
+     "chance": [
+      60,
+      80
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
+     "categorie": "realiste",
+     "pertinence": 90,
+     "chance": [
+      44,
+      80
+     ]
+    }
+   }
+  ]
+ },
+ "empreintes": {
+  "calculs": "78864f9b743aab42daf725e32f5a40097f3ffda95e9ccfb768664d50e6e8df90",
+  "textes": "6048599fc5ef7620738f416e9840e9671c4f8ab7b04533feaa7758cddf4e39cc"
+ }
+}

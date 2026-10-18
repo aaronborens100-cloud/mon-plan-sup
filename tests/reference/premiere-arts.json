@@ -1,0 +1,836 @@
+{
+ "profil": "premiere-arts",
+ "description": "Élève de première, 13 de moyenne, spécialité arts, veut un parcours créatif",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 13,
+  "moyennePeriode": "Première – T1",
+  "maths": null,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": null,
+  "anglais": "B1",
+  "anglaisCertifie": false,
+  "ecartClasse": 1,
+  "rangRelatif": null,
+  "nbExperiences": 0,
+  "nbExperiencesFortes": 0,
+  "geo": null,
+  "certifications": [],
+  "specialites": [
+   "arts",
+   "HLP",
+   "SES"
+  ],
+  "abandonnee": "",
+  "optionMaths": "aucune",
+  "niveau": "premiere",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": null
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.025,
+   "economie": 0.075,
+   "gestion_commerce": 0.15,
+   "finance": 0.1,
+   "droit": 0.225,
+   "sciences_politiques": 0.325,
+   "international": 0.2,
+   "ingenierie_tech": 0.075,
+   "data_informatique": 0,
+   "sciences_humaines": 0.9,
+   "langues": 0.15,
+   "arts": 1,
+   "sante": 0.025,
+   "vivant": 0.075,
+   "sport": 0,
+   "communication": 0.3
+  },
+  "prefs": {
+   "matieres": [
+    "arts",
+    "lettres"
+   ],
+   "secteurs": [
+    "arts",
+    "medias",
+    "culture"
+   ],
+   "salaire": 2,
+   "pratique": 4,
+   "maths_niv": 0,
+   "ecrit_niv": 2,
+   "encadrement": 2,
+   "poly": 0,
+   "charge": 1,
+   "ambition": 3,
+   "tests": 2,
+   "long": 3,
+   "etranger": 2,
+   "anglais": 3,
+   "pays": [
+    "Italie",
+    "Espagne"
+   ],
+   "budget_max": 5000,
+   "lieu": [
+    "idf",
+    "lyon"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "architecte_interieur",
+   "artisan_art",
+   "artiste_plasticien",
+   "communicant",
+   "conservateur",
+   "designer_produit",
+   "enseignant",
+   "graphiste",
+   "journaliste",
+   "mediateur_culturel"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "psup-10954",
+   "interet": 88,
+   "faisabilite": 81,
+   "pertinence": 85,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "sorbonne-universite-histoire-de-l-art-et-archeologie",
+   "interet": 86,
+   "faisabilite": 81,
+   "pertinence": 84,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "sorbonne-universite-musicologie",
+   "interet": 88,
+   "faisabilite": 79,
+   "pertinence": 84,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-nanterre-arts-du-spectacle",
+   "interet": 88,
+   "faisabilite": 79,
+   "pertinence": 84,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35357",
+   "interet": 88,
+   "faisabilite": 78,
+   "pertinence": 84,
+   "chance": [
+    72,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9450",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11083",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-1-arts-plastiques",
+   "interet": 88,
+   "faisabilite": 75,
+   "pertinence": 83,
+   "chance": [
+    40,
+    83
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-cite-sciences-de-l-education",
+   "interet": 84,
+   "faisabilite": 81,
+   "pertinence": 83,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-sorbonne-nouvelle-arts-du-spectacle",
+   "interet": 88,
+   "faisabilite": 75,
+   "pertinence": 83,
+   "chance": [
+    68,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35335",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20972",
+   "interet": 88,
+   "faisabilite": 76,
+   "pertinence": 83,
+   "chance": [
+    60,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35451",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9448",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "cy-cergy-paris-universite-histoire",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "sorbonne-universite-histoire",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-1-histoire",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    81,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-1-histoire-de-l-art-et-archeologie",
+   "interet": 86,
+   "faisabilite": 75,
+   "pertinence": 82,
+   "chance": [
+    34,
+    72
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-sorbonne-paris-nord-histoire",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-evry-paris-saclay-histoire",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35250",
+   "interet": 88,
+   "faisabilite": 73,
+   "pertinence": 82,
+   "chance": [
+    73,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9449",
+   "interet": 84,
+   "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19346",
+   "interet": 81,
+   "faisabilite": 83,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43314",
+   "interet": 84,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9266",
+   "interet": 88,
+   "faisabilite": 72,
+   "pertinence": 82,
+   "chance": [
+    35,
+    74
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9307",
+   "interet": 84,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35336",
+   "interet": 86,
+   "faisabilite": 76,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43316",
+   "interet": 84,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47565",
+   "interet": 88,
+   "faisabilite": 74,
+   "pertinence": 82,
+   "chance": [
+    51,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-17273",
+   "interet": 84,
+   "faisabilite": 80,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19362",
+   "interet": 81,
+   "faisabilite": 83,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20896",
+   "interet": 84,
+   "faisabilite": 77,
+   "pertinence": 81,
+   "chance": [
+    67,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28447",
+   "interet": 84,
+   "faisabilite": 76,
+   "pertinence": 81,
+   "chance": [
+    46,
+    95
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35333",
+   "interet": 86,
+   "faisabilite": 74,
+   "pertinence": 81,
+   "chance": [
+    63,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9308",
+   "interet": 81,
+   "faisabilite": 80,
+   "pertinence": 81,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9314",
+   "interet": 84,
+   "faisabilite": 76,
+   "pertinence": 81,
+   "chance": [
+    87,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47253",
+   "interet": 88,
+   "faisabilite": 70,
+   "pertinence": 81,
+   "chance": [
+    13,
+    27
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9213",
+   "interet": 84,
+   "faisabilite": 77,
+   "pertinence": 81,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9270",
+   "interet": 86,
+   "faisabilite": 73,
+   "pertinence": 81,
+   "chance": [
+    57,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32335",
+   "interet": 84,
+   "faisabilite": 77,
+   "pertinence": 81,
+   "chance": [
+    45,
+    93
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "psup-10954",
+    "categorie": "securite",
+    "pertinence": 85,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-35357",
+    "categorie": "securite",
+    "pertinence": 84,
+    "chance": [
+     72,
+     97
+    ]
+   },
+   {
+    "id": "psup-9450",
+    "categorie": "securite",
+    "pertinence": 84,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-47253",
+    "categorie": "ambitieux",
+    "pertinence": 81,
+    "chance": [
+     13,
+     27
+    ]
+   },
+   {
+    "id": "psup-47256",
+    "categorie": "ambitieux",
+    "pertinence": 81,
+    "chance": [
+     13,
+     27
+    ]
+   },
+   {
+    "id": "dna-ecole-nationale-superieure-d-arts-de-paris-cergy-cergy",
+    "categorie": "ambitieux",
+    "pertinence": 77,
+    "chance": [
+     6,
+     12
+    ]
+   },
+   {
+    "id": "sorbonne-universite-histoire-de-l-art-et-archeologie",
+    "categorie": "realiste",
+    "pertinence": 84,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "sorbonne-universite-musicologie",
+    "categorie": "realiste",
+    "pertinence": 84,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "psup-43530",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     21,
+     44
+    ]
+   },
+   {
+    "id": "diplome-de-l-ecole-nationale-superieure-des-arts-decoratifs-arts-decoratifs-ensad-paris",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     19,
+     41
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "intermediaire",
+   "top": [
+    "arts",
+    "sciences_humaines"
+   ]
+  },
+  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à école d'art ou du spectacle.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "decouverte",
+  "liste": [
+   {
+    "x": {
+     "id": "mdw-vienne-bachelor-konzertfach",
+     "categorie": "ambitieux",
+     "pertinence": 59,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "psup-10954",
+     "categorie": "securite",
+     "pertinence": 85,
+     "chance": [
+      95,
+      97
+     ]
+    },
+    "frais": 52.4,
+    "vie": {
+     "min": 1000,
+     "max": 1300,
+     "statut": "estimation"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   },
+   {
+    "x": {
+     "id": "mozarteum-salzbourg-bachelor-konzertfach",
+     "categorie": "ambitieux",
+     "pertinence": 59,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "psup-10954",
+     "categorie": "securite",
+     "pertinence": 85,
+     "chance": [
+      95,
+      97
+     ]
+    },
+    "frais": 52.4,
+    "vie": {
+     "min": 1000,
+     "max": 1300,
+     "statut": "estimation"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   },
+   {
+    "x": {
+     "id": "dkdm-copenhague-bachelor-of-music",
+     "categorie": "ambitieux",
+     "pertinence": 59,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "sorbonne-universite-musicologie",
+     "categorie": "realiste",
+     "pertinence": 84,
+     "chance": [
+      78,
+      80
+     ]
+    },
+    "frais": 0,
+    "vie": {
+     "min": 1100,
+     "max": 1500,
+     "statut": "estimation"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   }
+  ],
+  "budgetSerre": true,
+  "anglaisFragile": false
+ },
+ "empreintes": {
+  "calculs": "997fa25fe6dd70c3078f88e3c9ae0b7e8eade37cb9daff7b631824f6955c2cbc",
+  "textes": "f5d8e7f353beb76ca7be49a37ce6056d6e5e53cc5d44d57c979deb5ad9ca2466"
+ }
+}

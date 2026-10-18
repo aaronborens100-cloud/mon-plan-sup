@@ -1,0 +1,782 @@
+{
+ "profil": "sciences-ingenieur",
+ "description": "15 de moyenne, maths + physique-chimie, maths expertes, attiré par l'ingénierie et l'informatique",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 15.2,
+  "moyennePeriode": "Terminale – T1",
+  "maths": 15.5,
+  "mathsSpe": 15.8,
+  "expertes": 15,
+  "compl": null,
+  "anglais": "B2",
+  "anglaisCertifie": false,
+  "ecartClasse": 3.1,
+  "rangRelatif": null,
+  "nbExperiences": 1,
+  "nbExperiencesFortes": 1,
+  "geo": {
+   "lat": 45.7689,
+   "lon": 4.8519,
+   "nom": "Lycée du Parc (Lyon)"
+  },
+  "certifications": [],
+  "specialites": [
+   "maths",
+   "physique_chimie"
+  ],
+  "abandonnee": "NSI",
+  "optionMaths": "expertes",
+  "niveau": "terminale",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": {
+   "niveau": "conforme",
+   "nb": 1,
+   "positifs": 1,
+   "negatifs": 0,
+   "mentions": [],
+   "extraits": []
+  }
+ },
+ "interets": {
+  "domaines": {
+   "maths": 1,
+   "economie": 0.14035087719298245,
+   "gestion_commerce": 0.10526315789473684,
+   "finance": 0.19298245614035087,
+   "droit": 0.14035087719298245,
+   "sciences_politiques": 0.05263157894736842,
+   "international": 0.05263157894736842,
+   "ingenierie_tech": 0.7017543859649122,
+   "data_informatique": 0.7017543859649122,
+   "sciences_humaines": 0.14035087719298245,
+   "langues": 0.05263157894736842,
+   "arts": 0.10526315789473684,
+   "sante": 0.017543859649122806,
+   "vivant": 0.05263157894736842,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "maths",
+    "pc",
+    "nsi"
+   ],
+   "secteurs": [
+    "ingenierie",
+    "data",
+    "recherche"
+   ],
+   "salaire": 3,
+   "pratique": 4,
+   "maths_niv": 3,
+   "ecrit_niv": 1,
+   "encadrement": 4,
+   "poly": 0,
+   "charge": 2,
+   "ambition": 4,
+   "tests": 3,
+   "long": 4,
+   "etranger": 1,
+   "anglais": 4,
+   "pays": [
+    "Allemagne",
+    "Suisse"
+   ],
+   "budget_max": 20000,
+   "lieu": [
+    "lyon",
+    "partout"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "chercheur",
+   "data_analyst",
+   "data_scientist",
+   "economiste",
+   "ingenieur_logiciel",
+   "ingenieur_rd"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "aix-marseille-universite-marseille-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-parcours-ia-et-sciences-des-donnees-ices-institut-catholique-de-vendee-la",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-parcours-fondamentales-et-appliquees-ices-institut-catholique-de-vendee-l",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-inu-champollion-albi",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    70,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-la-rochelle-universite-la-rochelle",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-le-mans-universite-le-mans",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-claude-bernard-lyon-1-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    70,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-clermont-auvergne-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-angers-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-d-artois-lens-lens",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bourgogne-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-caen-normandie-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-franche-comte-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-parcours-mathematiques-et-applications-universite-de-haute-alsace-mulhous",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-la-polynesie-francaise-faaa",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-la-reunion-saint-denis-la-reunion",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lille-villeneuve-d-ascq-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    70,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-limoges-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lorraine-metz-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lorraine-nancy-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    70,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-mayotte-dembeni",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-nimes-nimes",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-pau-et-des-pays-de-l-adour-pau",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-de-perpignan-via-domitia-perpignan",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-poitiers-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-reims-champagne-ardenne-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rennes-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    70,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rouen-normandie-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-strasbourg-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-toulon-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-du-littoral-cote-d-opale-calais",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-le-havre-normandie-mathematiques",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-mathematiques-universite-polytechnique-hauts-de-france-valenciennes",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-7017",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-8343",
+   "interet": 86,
+   "faisabilite": 95,
+   "pertinence": 90,
+   "chance": [
+    90,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
+    "categorie": "securite",
+    "pertinence": 90,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "nantes-universite-informatique",
+    "categorie": "securite",
+    "pertinence": 86,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "nantes-universite-physique",
+    "categorie": "securite",
+    "pertinence": 86,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-15418",
+    "categorie": "ambitieux",
+    "pertinence": 88,
+    "chance": [
+     8,
+     16
+    ]
+   },
+   {
+    "id": "ps-8242",
+    "categorie": "ambitieux",
+    "pertinence": 82,
+    "chance": [
+     4,
+     9
+    ]
+   },
+   {
+    "id": "double-licence-mathematiques-informatique-cy-cergy-paris-universite-cergy",
+    "categorie": "ambitieux",
+    "pertinence": 80,
+    "chance": [
+     6,
+     12
+    ]
+   },
+   {
+    "id": "ps-11322",
+    "categorie": "realiste",
+    "pertinence": 84,
+    "chance": [
+     30,
+     61
+    ]
+   },
+   {
+    "id": "jacques-decour-paris-mpsi",
+    "categorie": "realiste",
+    "pertinence": 81,
+    "chance": [
+     27,
+     57
+    ]
+   },
+   {
+    "id": "u-claude-bernard-lyon-1-physique",
+    "categorie": "realiste",
+    "pertinence": 86,
+    "chance": [
+     70,
+     80
+    ]
+   },
+   {
+    "id": "cursus-en-programmation-42-angouleme-angouleme",
+    "categorie": "realiste",
+    "pertinence": 79,
+    "chance": [
+     75,
+     80
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "decide",
+   "top": [
+    "maths",
+    "ingenierie_tech",
+    "data_informatique"
+   ]
+  },
+  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et école d'ingénieurs post-bac comme solutions de repli.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "echange",
+  "liste": [
+   {
+    "x": {
+     "id": "licence-mathematiques-portail-mpcsi-option-bilingue-universite-de-lille-villeneuve-d-ascq",
+     "categorie": "realiste",
+     "pertinence": 88,
+     "chance": [
+      70,
+      80
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
+     "categorie": "ambitieux",
+     "pertinence": 87,
+     "chance": [
+      10,
+      21
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "reseau-polytech-parcours-des-ecoles-d-ingenieurs-polytech",
+     "categorie": "realiste",
+     "pertinence": 82,
+     "chance": [
+      56,
+      80
+     ]
+    }
+   }
+  ]
+ },
+ "empreintes": {
+  "calculs": "08206baa813d9be0a7c6769e859847e253670b70ee7ae7dad9c154abc4aea767",
+  "textes": "93bc78cceaaeb9b72bc86ab2d4286408f33a2d7239d2b187b9915626ad874faf"
+ }
+}

@@ -1,0 +1,757 @@
+{
+ "profil": "vide",
+ "description": "Profil vide : rien de renseigné, aucune réponse",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": null,
+  "moyennePeriode": "",
+  "maths": null,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": null,
+  "anglais": null,
+  "anglaisCertifie": false,
+  "ecartClasse": null,
+  "rangRelatif": null,
+  "nbExperiences": 0,
+  "nbExperiencesFortes": 0,
+  "geo": null,
+  "certifications": [],
+  "specialites": [],
+  "abandonnee": "",
+  "optionMaths": "aucune",
+  "niveau": "terminale",
+  "nbPeriodes": 0,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": null
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0,
+   "economie": 0,
+   "gestion_commerce": 0,
+   "finance": 0,
+   "droit": 0,
+   "sciences_politiques": 0,
+   "international": 0,
+   "ingenierie_tech": 0,
+   "data_informatique": 0,
+   "sciences_humaines": 0,
+   "langues": 0,
+   "arts": 0,
+   "sante": 0,
+   "vivant": 0,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {},
+  "types": [],
+  "metiers": [],
+  "repondues": 0,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "ps-7917",
+   "interet": 49,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7918",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10210",
+   "interet": 49,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1063",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7919",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5824",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5087",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13659",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10249",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7931",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1030",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10222",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13666",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1029",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7974",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5067",
+   "interet": 49,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13649",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-13692",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-4210",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-12411",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-12409",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-3254",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-3235",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7049",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-6707",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-7369",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5121",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10201",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-12025",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-8417",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-10694",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-9010",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-3268",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-2775",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1720",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-4674",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1286",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1621",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-8130",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-12265",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "ps-7917",
+    "categorie": "securite",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-7918",
+    "categorie": "securite",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-5824",
+    "categorie": "securite",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-12409",
+    "categorie": "ambitieux",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-12025",
+    "categorie": "ambitieux",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-2775",
+    "categorie": "ambitieux",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "ps-8417",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "aix-marseille-universite-aix-en-provence-psychologie",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "aix-marseille-universite-marseille-chimie",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   },
+   {
+    "id": "cy-cergy-paris-universite-mathematiques",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "chance": [
+     null,
+     null
+    ]
+   }
+  ],
+  "auMoinsUne": 0,
+  "alertes": [],
+  "certitude": {
+   "niveau": "inconnu",
+   "top": []
+  },
+  "explication": "Sans tes réponses au questionnaire, on a réparti tes vœux sur 9 types de formations. Réponds-y pour une liste vraiment personnalisée.",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "decouverte",
+  "liste": [
+   {
+    "x": {
+     "id": "durham-mathematics",
+     "categorie": "ambitieux",
+     "pertinence": 61,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "cy-cergy-paris-universite-mathematiques",
+     "categorie": "realiste",
+     "pertinence": 61,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "frais": null,
+    "vie": {
+     "min": 1370,
+     "max": 1370,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   },
+   {
+    "x": {
+     "id": "uclouvain-droit",
+     "categorie": "securite",
+     "pertinence": 61,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "ps-2775",
+     "categorie": "ambitieux",
+     "pertinence": 61,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "frais": 1194,
+    "vie": {
+     "min": 900,
+     "max": 1200,
+     "statut": "estimation"
+    },
+    "francais": true,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   }
+  ],
+  "budgetSerre": false,
+  "anglaisFragile": false
+ },
+ "empreintes": {
+  "calculs": "0519e3946ed66d6db754d41739c60842f8839d78b6bcd083cf18d459122d0ce7",
+  "textes": "528351a0c8678c6b0ac3d9de55d6c6ba1dc561b893a1986e4634cd9fbfa1ce6e"
+ }
+}

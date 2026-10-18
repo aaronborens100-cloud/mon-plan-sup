@@ -1,0 +1,833 @@
+{
+ "profil": "indecis",
+ "description": "12,5 de moyenne, SES + SVT, ne sait pas ce qu'il veut : réponses neutres",
+ "nbFormationsNotees": 7101,
+ "statsEleve": {
+  "moyenneGenerale": 12.5,
+  "moyennePeriode": "Terminale – T1",
+  "maths": null,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": null,
+  "anglais": "B1",
+  "anglaisCertifie": false,
+  "ecartClasse": 0.3,
+  "rangRelatif": null,
+  "nbExperiences": 0,
+  "nbExperiencesFortes": 0,
+  "geo": null,
+  "certifications": [],
+  "specialites": [
+   "SES",
+   "SVT"
+  ],
+  "abandonnee": "LLCER_anglais",
+  "optionMaths": "aucune",
+  "niveau": "terminale",
+  "nbPeriodes": 1,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": null
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.5,
+   "economie": 0.8333333333333334,
+   "gestion_commerce": 0.4166666666666667,
+   "finance": 0.6666666666666666,
+   "droit": 0.5,
+   "sciences_politiques": 0.5,
+   "international": 0.4166666666666667,
+   "ingenierie_tech": 0.5,
+   "data_informatique": 0.25,
+   "sciences_humaines": 0.6666666666666666,
+   "langues": 0.25,
+   "arts": 0.25,
+   "sante": 1,
+   "vivant": 0.75,
+   "sport": 1,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "ses",
+    "svt",
+    "eps"
+   ],
+   "secteurs": [
+    "sport",
+    "culture"
+   ],
+   "salaire": 3,
+   "pratique": 3,
+   "maths_niv": 1,
+   "ecrit_niv": 1,
+   "encadrement": 3,
+   "poly": 2,
+   "charge": 1,
+   "ambition": 3,
+   "tests": 3,
+   "long": 3,
+   "etranger": 2,
+   "anglais": 3,
+   "pays": [
+    "autre_europe"
+   ],
+   "budget_max": 5000,
+   "lieu": [
+    "partout"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "coach_sportif",
+   "conservateur",
+   "enseignant",
+   "mediateur_culturel",
+   "professeur_eps"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "psup-29102",
+   "interet": 85,
+   "faisabilite": 80,
+   "pertinence": 83,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    64,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-franche-comte-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    88,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-reims-champagne-ardenne-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rouen-normandie-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    86,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-strasbourg-staps",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    71,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "nantes-universite-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    32,
+    68
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-claude-bernard-lyon-1-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-clermont-auvergne-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bourgogne-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    47,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-caen-normandie-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lille-villeneuve-d-ascq-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    32,
+    68
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-limoges-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lorraine-nancy-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    58,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-montpellier-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    32,
+    66
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-poitiers-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    26,
+    54
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-toulon-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    50,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    56,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-jean-monnet-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    59,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-saclay-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    32,
+    68
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-rennes-2-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    42,
+    87
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-toulouse-iii-paul-sabatier-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    25,
+    52
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-evry-paris-saclay-staps",
+   "interet": 85,
+   "faisabilite": 73,
+   "pertinence": 80,
+   "chance": [
+    64,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bordeaux-pessac-staps",
+   "interet": 85,
+   "faisabilite": 69,
+   "pertinence": 79,
+   "chance": [
+    17,
+    35
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-cite-staps",
+   "interet": 85,
+   "faisabilite": 69,
+   "pertinence": 79,
+   "chance": [
+    30,
+    63
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-nanterre-staps",
+   "interet": 85,
+   "faisabilite": 69,
+   "pertinence": 79,
+   "chance": [
+    27,
+    57
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-est-creteil-staps",
+   "interet": 85,
+   "faisabilite": 69,
+   "pertinence": 79,
+   "chance": [
+    18,
+    40
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-sorbonne-paris-nord-staps",
+   "interet": 85,
+   "faisabilite": 69,
+   "pertinence": 79,
+   "chance": [
+    50,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "licence-psychologie-universite-catholique-de-lille-faculte-des-lettres-et-sciences-humaines-lil",
+   "interet": 76,
+   "faisabilite": 77,
+   "pertinence": 76,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-cite-sciences-de-l-education",
+   "interet": 70,
+   "faisabilite": 79,
+   "pertinence": 74,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-est-creteil-sciences-de-l-education",
+   "interet": 70,
+   "faisabilite": 77,
+   "pertinence": 73,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-saclay-las",
+   "interet": 68,
+   "faisabilite": 79,
+   "pertinence": 72,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psl-lycee-henri-iv-cpes",
+   "interet": 65,
+   "faisabilite": 79,
+   "pertinence": 71,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-rennes-2-sciences-de-l-education",
+   "interet": 70,
+   "faisabilite": 73,
+   "pertinence": 71,
+   "chance": [
+    54,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-toulouse-jean-jaures-sciences-de-l-education",
+   "interet": 70,
+   "faisabilite": 73,
+   "pertinence": 71,
+   "chance": [
+    32,
+    68
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-pass",
+   "interet": 64,
+   "faisabilite": 79,
+   "pertinence": 70,
+   "chance": [
+    78,
+    80
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "psup-29102",
+    "categorie": "securite",
+    "pertinence": 83,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-25336",
+    "categorie": "securite",
+    "pertinence": 75,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-23471",
+    "categorie": "ambitieux",
+    "pertinence": 81,
+    "chance": [
+     13,
+     28
+    ]
+   },
+   {
+    "id": "psup-28381",
+    "categorie": "ambitieux",
+    "pertinence": 67,
+    "chance": [
+     15,
+     31
+    ]
+   },
+   {
+    "id": "psup-27198",
+    "categorie": "ambitieux",
+    "pertinence": 66,
+    "chance": [
+     15,
+     32
+    ]
+   },
+   {
+    "id": "sciences-po-campus-dijon",
+    "categorie": "realiste",
+    "pertinence": 67,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "double-licence-sociologie-economie-et-gestion-universite-de-lille-lille",
+    "categorie": "realiste",
+    "pertinence": 63,
+    "chance": [
+     18,
+     40
+    ]
+   },
+   {
+    "id": "psl-lycee-henri-iv-cpes",
+    "categorie": "realiste",
+    "pertinence": 71,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "u-paris-saclay-las",
+    "categorie": "realiste",
+    "pertinence": 72,
+    "chance": [
+     78,
+     80
+    ]
+   },
+   {
+    "id": "psup-35252",
+    "categorie": "securite",
+    "pertinence": 71,
+    "chance": [
+     95,
+     97
+    ]
+   }
+  ],
+  "auMoinsUne": 99,
+  "alertes": [],
+  "certitude": {
+   "niveau": "indecis",
+   "top": [
+    "sante",
+    "sport",
+    "economie"
+   ]
+  },
+  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 7 types de formations pour garder un maximum de portes ouvertes. Un vœu « découverte » t'ouvre à PASS ou LAS (santé).",
+  "decouvertes": {}
+ },
+ "etranger": {
+  "mode": "decouverte",
+  "liste": [
+   {
+    "x": {
+     "id": "portsmouth-economics",
+     "categorie": "realiste",
+     "pertinence": 59,
+     "chance": [
+      78,
+      80
+     ]
+    },
+    "ancre": {
+     "id": "psup-28381",
+     "categorie": "ambitieux",
+     "pertinence": 67,
+     "chance": [
+      15,
+      31
+     ]
+    },
+    "frais": 12753,
+    "vie": {
+     "min": 1370,
+     "max": 1370,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": true,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   },
+   {
+    "x": {
+     "id": "uclouvain-louvain-la-neuve-bachelier-en-sciences-de-la-motricite-orientation-edu",
+     "categorie": "securite",
+     "pertinence": 80,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "psup-29102",
+     "categorie": "securite",
+     "pertinence": 83,
+     "chance": [
+      95,
+      97
+     ]
+    },
+    "frais": 1194,
+    "vie": {
+     "min": 900,
+     "max": 1200,
+     "statut": "estimation"
+    },
+    "francais": true,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   },
+   {
+    "x": {
+     "id": "brunel-economics",
+     "categorie": "realiste",
+     "pertinence": 59,
+     "chance": [
+      39,
+      80
+     ]
+    },
+    "ancre": {
+     "id": "psup-28381",
+     "categorie": "ambitieux",
+     "pertinence": 67,
+     "chance": [
+      15,
+      31
+     ]
+    },
+    "frais": 14508,
+    "vie": {
+     "min": 1790,
+     "max": 1790,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": true,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   }
+  ],
+  "budgetSerre": true,
+  "anglaisFragile": false
+ },
+ "empreintes": {
+  "calculs": "828871991bf2ae6dd3b55d41f4bcabe62b27ab9ae25d35cbb8e1fcf4bf9f375c",
+  "textes": "1a52221468f6f884a58d569ea4d0b9cef06242489110966cf7e2da8b723169b5"
+ }
+}
