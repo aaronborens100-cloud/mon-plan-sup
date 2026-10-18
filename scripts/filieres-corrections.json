@@ -1,0 +1,310 @@
+{
+  "meta": {
+    "role": "Corrections à la main de data/filieres.json, relues et appliquées en dernier par scripts/construire-filieres.py. Ne jamais modifier data/filieres.json directement.",
+    "regle": "Une entrée par code nmc. Les champs donnés remplacent ceux déduits (profil et specialites : fusion champ par champ). « note » explique la correction. Les familles existantes (origine famille_existante) ne se corrigent pas ici. Les variantes en apprentissage (-App) suivent la correction de leur filière de base. Aucun chiffre (taux, moyenne, frais, salaire) n'est autorisé.",
+    "consulte_le": "2026-10-18"
+  },
+  "corrections": {
+    "CPGE-MP2I": {
+      "type": "prepa_scientifique",
+      "domaines": [
+        "maths",
+        "data_informatique",
+        "ingenierie_tech"
+      ],
+      "profil": {
+        "maths": 3
+      },
+      "specialites": {
+        "recommandees": [
+          "maths",
+          "NSI",
+          "physique_chimie"
+        ]
+      },
+      "metiers": [
+        "ingenieur_logiciel",
+        "ingenieur_rd",
+        "chercheur"
+      ],
+      "confiance": "moyenne",
+      "note": "MP2I = mathématiques, physique, ingénierie et informatique (intitulé officiel de la voie de CPGE) : profil des prépas scientifiques, à dominante maths et informatique."
+    },
+    "CPGE-PTSI": {
+      "type": "prepa_scientifique",
+      "domaines": [
+        "ingenierie_tech",
+        "maths"
+      ],
+      "specialites": {
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SI"
+        ]
+      },
+      "metiers": [
+        "ingenieur_mecanique",
+        "ingenieur_rd",
+        "technicien_superieur"
+      ],
+      "confiance": "moyenne",
+      "note": "PTSI = physique, technologie et sciences de l'ingénieur : prépa scientifique tournée vers les sciences de l'ingénieur."
+    },
+    "CPGE-TSI": {
+      "type": "prepa_scientifique",
+      "type_label": "Prépa scientifique (bac technologique STI2D/STL)",
+      "domaines": [
+        "ingenierie_tech",
+        "maths"
+      ],
+      "specialites": {
+        "recommandees": []
+      },
+      "metiers": [
+        "ingenieur_electronique",
+        "ingenieur_rd"
+      ],
+      "confiance": "basse",
+      "note": "TSI = technologie et sciences industrielles, voie de CPGE réservée aux bacheliers technologiques : les spécialités du bac général ne s'appliquent pas, d'où une liste vide."
+    },
+    "CPGE-TPC": {
+      "type": "prepa_scientifique",
+      "type_label": "Prépa scientifique (bac technologique STL)",
+      "domaines": [
+        "ingenierie_tech",
+        "vivant"
+      ],
+      "specialites": {
+        "recommandees": []
+      },
+      "metiers": [
+        "ingenieur_chimiste",
+        "chimiste"
+      ],
+      "confiance": "basse",
+      "note": "TPC = technologie, physique et chimie, voie de CPGE pour bacheliers technologiques STL : pas de spécialité du bac général attendue."
+    },
+    "CPGE-TB": {
+      "type": "prepa_scientifique",
+      "type_label": "Prépa scientifique (bac technologique STL/STAV)",
+      "domaines": [
+        "vivant",
+        "ingenierie_tech"
+      ],
+      "specialites": {
+        "recommandees": []
+      },
+      "metiers": [
+        "ingenieur_agronome",
+        "veterinaire",
+        "biologiste"
+      ],
+      "confiance": "basse",
+      "note": "TB = technologie et biologie, voie de CPGE pour bacheliers technologiques (STL, STAV) : pas de spécialité du bac général attendue."
+    },
+    "CPGE-ECT": {
+      "type": "prepa_ecg",
+      "type_label": "Prépa ECT (bac technologique STMG)",
+      "domaines": [
+        "gestion_commerce",
+        "economie",
+        "droit"
+      ],
+      "profil": {
+        "maths": 2,
+        "ecrit": 2,
+        "poly": 2
+      },
+      "specialites": {
+        "recommandees": []
+      },
+      "metiers": [
+        "marketing",
+        "audit",
+        "controle_gestion",
+        "conseil"
+      ],
+      "confiance": "basse",
+      "note": "ECT = prépa économique et commerciale, option technologique, pour bacheliers STMG : profil des prépas ECG, sans spécialité du bac général attendue."
+    },
+    "CPGE-Cachan-D2": {
+      "type": "prepa_ecg",
+      "type_label": "Prépa ENS D2 (économie et gestion)",
+      "domaines": [
+        "economie",
+        "gestion_commerce",
+        "maths"
+      ],
+      "profil": {
+        "maths": 2,
+        "ecrit": 2,
+        "poly": 2
+      },
+      "specialites": {
+        "recommandees": [
+          "maths",
+          "SES"
+        ]
+      },
+      "metiers": [
+        "economiste",
+        "enseignant",
+        "controle_gestion"
+      ],
+      "confiance": "basse",
+      "note": "Prépa au concours D2 (économie-gestion) de l'ENS Paris-Saclay (ex-Cachan), d'après l'intitulé : domaines économie et gestion."
+    },
+    "CPGE-Rennes-D1": {
+      "type": "prepa_ecg",
+      "type_label": "Prépa ENS D1 (droit, économie)",
+      "domaines": [
+        "droit",
+        "economie",
+        "sciences_politiques"
+      ],
+      "profil": {
+        "maths": 1,
+        "ecrit": 3,
+        "poly": 2
+      },
+      "specialites": {
+        "recommandees": [
+          "SES",
+          "HGGSP"
+        ]
+      },
+      "metiers": [
+        "juriste",
+        "enseignant",
+        "haut_fonctionnaire"
+      ],
+      "confiance": "basse",
+      "note": "Prépa au concours D1 (droit-économie) de l'ENS Rennes, d'après l'intitulé : domaines droit et économie."
+    },
+    "CPGE-CHARTES": {
+      "type": "prepa_litteraire",
+      "type_label": "Prépa École nationale des chartes",
+      "domaines": [
+        "sciences_humaines",
+        "langues"
+      ],
+      "profil": {
+        "maths": 0,
+        "ecrit": 3
+      },
+      "specialites": {
+        "recommandees": [
+          "HLP",
+          "HGGSP",
+          "LLCA"
+        ]
+      },
+      "metiers": [
+        "conservateur",
+        "historien"
+      ],
+      "confiance": "moyenne",
+      "note": "Prépa au concours de l'École nationale des chartes (histoire, patrimoine, archives) : profil des prépas littéraires."
+    },
+    "CPGE-LSH-Cyr": {
+      "type": "prepa_litteraire",
+      "type_label": "Prépa Saint-Cyr (lettres et sciences humaines)",
+      "domaines": [
+        "sciences_humaines",
+        "sciences_politiques",
+        "sport"
+      ],
+      "profil": {
+        "maths": 1,
+        "ecrit": 3
+      },
+      "specialites": {
+        "recommandees": [
+          "HGGSP",
+          "HLP"
+        ]
+      },
+      "metiers": [],
+      "confiance": "basse",
+      "note": "Prépa au concours de Saint-Cyr, option lettres et sciences humaines, d'après l'intitulé. Le métier d'officier n'existe pas dans metiers.json : liste vide."
+    },
+    "CPGE-PS-AD": {
+      "type": "prepa_litteraire",
+      "type_label": "Prépa ENS Paris-Saclay arts et design",
+      "domaines": [
+        "arts",
+        "ingenierie_tech"
+      ],
+      "profil": {
+        "maths": 1,
+        "ecrit": 2,
+        "pratique": 1
+      },
+      "specialites": {
+        "recommandees": [
+          "arts",
+          "SI"
+        ]
+      },
+      "metiers": [
+        "designer_produit",
+        "enseignant"
+      ],
+      "confiance": "basse",
+      "note": "Prépa au concours arts et design de l'ENS Paris-Saclay, d'après l'intitulé : rythme de prépa, domaines arts et design."
+    },
+    "CLPES-Générale": {
+      "domaines": [
+        "sciences_humaines",
+        "economie",
+        "maths"
+      ],
+      "specialites": {
+        "recommandees": []
+      },
+      "metiers": [],
+      "confiance": "basse",
+      "note": "Classe préparatoire aux études supérieures « générale » : intitulé sans discipline, domaines larges à relire."
+    },
+    "CUPGE-ISIMA": {
+      "domaines": [
+        "data_informatique",
+        "maths"
+      ],
+      "profil": {
+        "maths": 2,
+        "ecrit": 1
+      },
+      "specialites": {
+        "recommandees": [
+          "maths",
+          "NSI"
+        ]
+      },
+      "metiers": [
+        "ingenieur_logiciel",
+        "developpeur"
+      ],
+      "confiance": "basse",
+      "note": "Prép'ISIMA : cycle préparatoire à l'ISIMA, école d'ingénieurs en informatique (d'après l'intitulé)."
+    },
+    "MAN-MASEN": {
+      "domaines": [
+        "vivant",
+        "ingenierie_tech"
+      ],
+      "specialites": {
+        "recommandees": [
+          "SVT",
+          "physique_chimie"
+        ]
+      },
+      "metiers": [
+        "charge_environnement"
+      ],
+      "confiance": "basse",
+      "note": "Mise à niveau avant le BTS MASEN (métiers des services à l'environnement) : l'intitulé ne cite que le sigle, domaines de l'environnement à relire."
+    }
+  }
+}

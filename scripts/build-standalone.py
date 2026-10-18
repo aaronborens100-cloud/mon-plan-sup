@@ -13,7 +13,7 @@ import sys
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 
 # Ordre des blocs dans la page (identique à la version d'origine).
-DONNEES = ["formations", "questionnaire", "parcoursup", "fusion", "stats", "generees",
+DONNEES = ["formations", "questionnaire", "parcoursup", "fusion", "stats", "generees", "filieres",
            "ajustements", "lieux", "metiers", "poursuites", "extrascolaire"]
 SCRIPTS = ["store", "bulletin", "moteur", "app"]
 
