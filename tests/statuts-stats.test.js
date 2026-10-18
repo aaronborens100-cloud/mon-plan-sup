@@ -6,7 +6,7 @@
  *   - aucune formation « nouvelle_2026 » ni « sans_stats » dans la liste de 10 vœux (wishlist) ;
  *   - la section « Nouvelles à la rentrée 2026 » (nouvelles) compte au plus 3 formations, toutes
  *     « nouvelle_2026 », d'une catégorie Parcoursup de la liste blanche, triées par intérêt ;
- *   - ni fourchette de chances pour une nouvelle formation, ni estimation pour une « sans_stats » ;
+ *   - ni repère d'admission pour une nouvelle formation, ni taux ni « sécurité » pour une « sans_stats » ;
  *   - un relevé manuel sourcé fait passer la formation en « avec_stats », un relevé sans source est ignoré ;
  *   - des statistiques de la session 2024 rendent la formation éligible, pas celles de 2023.
  *
@@ -39,7 +39,7 @@ function verifier({ W, N }, E) {
   for (const x of N) {
     assert.equal(x.f.stats, "nouvelle_2026", `${x.f.id} : pas une nouvelle formation.`);
     assert.ok((x.f.__tf || []).some((t) => E.CATEGORIES_NOUVELLES.includes(t)), `${x.f.id} : catégorie hors liste blanche (${x.f.__tf}).`);
-    assert.equal(x.chance.bas, null, `${x.f.id} : fourchette de chances pour une nouvelle formation.`);
+    assert.ok(x.repere.nouvelle && x.repere.taux === null && x.repere.percentile === null, `${x.f.id} : repère d'admission pour une nouvelle formation.`);
   }
   for (let i = 1; i < N.length; i++) assert.ok(N[i - 1].interet >= N[i].interet, "Section « Nouvelles » non triée par intérêt.");
 }
@@ -58,7 +58,7 @@ for (const p of PROFILS) {
   test(`profil « ${p.id} » : ni nouvelle ni « sans_stats » dans les vœux, section « Nouvelles » limitée`, () => {
     const a = analyser(site, site.DATA.formations, p);
     verifier(a, site.E);
-    for (const x of a.R.resultats) if (x.f.stats === "sans_stats") assert.equal(x.chance.mid, null, `${x.f.id} : estimation de chances sans statistiques.`);
+    for (const x of a.R.resultats) if (x.f.stats === "sans_stats") assert.ok(x.repere.sansStats && x.repere.taux === null && x.categorie !== "securite", `${x.f.id} : repère d'admission sans statistiques.`);
   });
 }
 

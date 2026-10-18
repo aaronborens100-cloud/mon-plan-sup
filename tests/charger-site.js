@@ -6,8 +6,10 @@
  * Le catalogue est donc construit exactement comme sur le site (construireCatalogue dans
  * app.js), sans recopier sa logique ici.
  *
- * Renvoie { E, DATA, QUEST } : E = CapEngine, DATA.formations = catalogue complet,
- * QUEST = questionnaire.
+ * Renvoie { E, DATA, QUEST, afficher, cliquer } : E = CapEngine, DATA.formations = catalogue complet,
+ * QUEST = questionnaire. Pour lire les pages : passer l'état de l'élève (options.etat, même forme que
+ * CapStore), puis afficher("#liste") renvoie le HTML de la page, et cliquer({ action, ... }) simule un
+ * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }).
  */
 "use strict";
 const fs = require("fs");
@@ -38,9 +40,17 @@ function boucheTrou() {
 }
 
 // remplacements : { "data/fichier.json": objet } pour charger un jeu de données modifié (tests du garde-fou).
-async function chargerSite(remplacements = {}) {
+// options.etat : état de l'élève enregistré avant le chargement (profil, réponses, vœux retenus…).
+async function chargerSite(remplacements = {}, options = {}) {
   const stockage = new Map();
+  if (options.etat) stockage.set("capsup.v1", JSON.stringify(options.etat));
   const doc = boucheTrou();
+  // #main garde le HTML de la page affichée ; les écouteurs (changement d'adresse, clics) sont gardés pour afficher()
+  // et cliquer(). Les autres éléments restent des bouche-trous.
+  let html = "";
+  const main = { get innerHTML() { return html; }, set innerHTML(v) { html = String(v); }, querySelector: () => null, querySelectorAll: () => [] };
+  const ecouteurs = {};
+  const ecouter = (type, f) => { (ecouteurs[type] = ecouteurs[type] || []).push(f); };
   const fenetre = {
     console,
     setTimeout: (f) => 0, clearTimeout() {}, setInterval: () => 0, clearInterval() {},
@@ -50,10 +60,11 @@ async function chargerSite(remplacements = {}) {
     },
     location: { hash: "", href: "http://localhost/", pathname: "/" },
     history: boucheTrou(), navigator: boucheTrou(), matchMedia: () => boucheTrou(),
-    addEventListener() {}, removeEventListener() {}, scrollTo() {}, requestAnimationFrame: () => 0,
+    addEventListener: ecouter, removeEventListener() {}, scrollTo() {}, requestAnimationFrame: () => 0,
     getComputedStyle: () => boucheTrou(), CSS: { escape: (s) => s },
     // Ni document.getElementById ni balise <script> de données : charger() passe par fetch.
-    document: new Proxy(doc, { get: (t, c) => (c === "getElementById" ? () => null : t[c]) }),
+    document: new Proxy(doc, { get: (t, c) => (c === "getElementById" ? () => null : c === "querySelector" ? (sel) => (sel === "#main" ? main : t.querySelector(sel))
+      : c === "addEventListener" ? ecouter : t[c]) }),
     fetch: async (url) => {
       const rel = String(url).split("?")[0];
       const texte = rel in remplacements ? JSON.stringify(remplacements[rel]) : fs.readFileSync(path.join(RACINE, rel), "utf8");
@@ -69,7 +80,13 @@ async function chargerSite(remplacements = {}) {
   // app.js charge les données de façon asynchrone puis publie window.__DATA
   for (let i = 0; i < 600 && !fenetre.__DATA; i++) await new Promise((r) => setImmediate(r));
   if (!fenetre.__DATA) throw new Error("Le site n'a pas fini de charger ses données (window.__DATA absent).");
-  return { E: fenetre.CapEngine, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST };
+  const afficher = (hash) => { fenetre.location.hash = hash; (ecouteurs.hashchange || []).forEach((f) => f()); return html; };
+  const cliquer = ({ action, ...data }) => {
+    const bouton = { dataset: { action, ...data }, getAttribute: () => null, setAttribute() {}, closest: () => null };
+    (ecouteurs.click || []).forEach((f) => f({ target: { closest: (s) => (s === "[data-action]" ? bouton : null) }, preventDefault() {} }));
+    return html;
+  };
+  return { E: fenetre.CapEngine, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer };
 }
 
 module.exports = { chargerSite };

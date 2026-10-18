@@ -129,11 +129,13 @@
    "interet": 87,
    "faisabilite": 100,
    "pertinence": 92,
-   "chance": [
-    16,
-    33
+   "repere": [
+    8,
+    0.76,
+    "au_dessus",
+    "taux_bas"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -142,9 +144,11 @@
    "interet": 86,
    "faisabilite": 99,
    "pertinence": 91,
-   "chance": [
-    35,
-    73
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -155,9 +159,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    66,
+    0.88,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -168,11 +174,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    74,
-    97
+   "repere": [
+    38,
+    0.74,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -181,9 +189,11 @@
    "interet": 87,
    "faisabilite": 94,
    "pertinence": 90,
-   "chance": [
-    9,
-    19
+   "repere": [
+    6,
+    0.3,
+    "moyenne",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -194,9 +204,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    63,
+    0.89,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -207,9 +219,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    51,
+    0.8,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -220,9 +234,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -233,9 +249,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    64,
+    0.84,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -246,9 +264,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    70,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -259,9 +279,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    53,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -272,9 +294,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    62,
-    75
+   "repere": [
+    30,
+    0.88,
+    "au_dessus",
+    "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -285,9 +309,11 @@
    "interet": 86,
    "faisabilite": 96,
    "pertinence": 90,
-   "chance": [
-    14,
-    28
+   "repere": [
+    10,
+    0.3,
+    "moyenne",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -298,9 +324,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    41,
-    75
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -311,9 +339,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    82,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -324,9 +354,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    51,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -337,9 +369,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    52,
+    0.93,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -350,9 +384,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    78,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -363,9 +399,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    50,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -376,9 +414,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    71,
+    0.94,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -389,11 +429,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    49,
+    0.87,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -402,9 +444,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    64,
+    0.9,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -415,9 +459,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    64,
+    0.85,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -428,9 +474,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    57,
-    75
+   "repere": [
+    28,
+    0.82,
+    "au_dessus",
+    "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -441,9 +489,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    52,
+    0.96,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -454,9 +504,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    53,
+    0.9,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -467,9 +519,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    54,
+    0.92,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -480,11 +534,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    45,
+    0.95,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -493,9 +549,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    52,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -506,11 +564,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    94,
-    97
+   "repere": [
+    46,
+    0.83,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -519,9 +579,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    59,
+    0.91,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -532,9 +594,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    64,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -545,11 +609,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    73,
-    97
+   "repere": [
+    34,
+    1,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -558,9 +624,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    74,
+    0.97,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -571,9 +639,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    59,
-    75
+   "repere": [
+    30,
+    0.71,
+    "au_dessus",
+    "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -584,9 +654,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    59,
+    0.89,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -597,9 +669,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    62,
+    0.9,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -610,9 +684,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    61,
+    0.73,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -623,9 +699,11 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    61,
+    1,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -636,11 +714,13 @@
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    47,
+    0.9,
+    "au_dessus",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -651,96 +731,95 @@
     "id": "ps-7917",
     "categorie": "securite",
     "pertinence": 90,
-    "chance": [
-     95,
-     97
+    "repere": [
+     66,
+     "au_dessus"
     ]
    },
    {
-    "id": "ps-1063",
+    "id": "ps-10249",
     "categorie": "securite",
     "pertinence": 90,
-    "chance": [
-     74,
-     97
-    ]
-   },
-   {
-    "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
-    "categorie": "securite",
-    "pertinence": 89,
-    "chance": [
-     95,
-     97
-    ]
-   },
-   {
-    "id": "psup-39330",
-    "categorie": "ambitieux",
-    "pertinence": 88,
-    "chance": [
-     11,
-     22
-    ]
-   },
-   {
-    "id": "psup-31635",
-    "categorie": "ambitieux",
-    "pertinence": 91,
-    "chance": [
-     13,
-     26
+    "repere": [
+     63,
+     "au_dessus"
     ]
    },
    {
     "id": "paris1-dl-histoire-scpo",
     "categorie": "ambitieux",
     "pertinence": 90,
-    "chance": [
-     14,
-     28
+    "repere": [
+     10,
+     "moyenne"
     ]
    },
    {
-    "id": "psup-6536",
-    "categorie": "realiste",
+    "id": "psup-28381",
+    "categorie": "ambitieux",
+    "pertinence": 90,
+    "repere": [
+     9,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-8952",
+    "categorie": "ambitieux",
     "pertinence": 88,
-    "chance": [
-     53,
-     75
+    "repere": [
+     11,
+     "au_dessus"
     ]
    },
    {
     "id": "ps-9107",
     "categorie": "realiste",
     "pertinence": 86,
-    "chance": [
-     62,
-     75
+    "repere": [
+     29,
+     "au_dessus"
     ]
    },
    {
-    "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
+    "id": "psup-47262",
     "categorie": "realiste",
-    "pertinence": 86,
-    "chance": [
-     25,
-     51
+    "pertinence": 85,
+    "repere": [
+     37,
+     "au_dessus"
     ]
    },
    {
-    "id": "psup-28381",
+    "id": "ps-1063",
     "categorie": "realiste",
     "pertinence": 90,
-    "chance": [
-     19,
-     40
+    "repere": [
+     38,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "ps-5824",
+    "categorie": "realiste",
+    "pertinence": 84,
+    "repere": [
+     30,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
+    "categorie": "securite",
+    "pertinence": 89,
+    "repere": [
+     54,
+     "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSolides": 3,
-   "nbSecuriteFragiles": 0,
+   "nbSecurite": 3,
    "niveau": "bon",
    "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
@@ -753,7 +832,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, double licence et licence d'éco-gestion, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, double licence et licence d'éco-gestion, plus quelques autres pistes. Un vœu « découverte » t'ouvre à double licence.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -778,18 +857,18 @@
      "id": "birmingham-economics",
      "categorie": "realiste",
      "pertinence": 90,
-     "chance": [
-      41,
-      75
+     "repere": [
+      null,
+      "inconnue"
      ]
     },
     "ancre": {
      "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
      "categorie": "securite",
      "pertinence": 89,
-     "chance": [
-      95,
-      97
+     "repere": [
+      54,
+      "au_dessus"
      ]
     },
     "frais": null,
@@ -811,18 +890,18 @@
      "id": "durham-mathematics",
      "categorie": "realiste",
      "pertinence": 85,
-     "chance": [
-      26,
-      54
+     "repere": [
+      null,
+      "inconnue"
      ]
     },
     "ancre": {
-     "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
+     "id": "psup-47262",
      "categorie": "realiste",
-     "pertinence": 86,
-     "chance": [
-      25,
-      51
+     "pertinence": 85,
+     "repere": [
+      37,
+      "au_dessus"
      ]
     },
     "frais": null,
@@ -844,18 +923,18 @@
      "id": "uva-bsc-economics-business-economics",
      "categorie": "realiste",
      "pertinence": 86,
-     "chance": [
-      78,
-      80
+     "repere": [
+      null,
+      "inconnue"
      ]
     },
     "ancre": {
      "id": "psup-28381",
-     "categorie": "realiste",
+     "categorie": "ambitieux",
      "pertinence": 90,
-     "chance": [
-      19,
-      40
+     "repere": [
+      9,
+      "au_dessus"
      ]
     },
     "frais": 2694,
@@ -877,7 +956,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "70e30472810163bd501b8ec6d492c601a5dfd18f9f927eb4cca40f638b5ba41c",
-  "textes": "08a48cc61e4cdd9d5ec137fe538969f754114247d4142cca81b85ac64d9d799a"
+  "calculs": "abbd2ffbec845e6c7292ae5c90465cf354f4e6da075fce298e484a55733904bf",
+  "textes": "d1e27fe6d19f4cb25f773edb0c5dd327ea2dd01e88a315f4f30efde63bc84f69"
  }
 }
