@@ -65,7 +65,8 @@
     return v === "liste" || v === "plan" || v === "explorer" || v === "donnees" || v.startsWith("formation-");
   }
   // Message affiché seulement si l'attente dépasse une seconde (délai géré par la classe CSS « chargement »).
-  const CHARGEMENT = '<p class="muted chargement" role="status">Chargement des formations… Sur téléphone, cela peut prendre quelques secondes.</p>';
+  const TEXTE_CHARGEMENT = "Chargement des formations… Sur téléphone, cela peut prendre quelques secondes.";
+  const CHARGEMENT = `<p class="muted chargement" role="status">${TEXTE_CHARGEMENT}</p>`;
   function erreurDonnees(e) {
     return `<div class="notice bad"><strong>Les données n'ont pas pu être chargées.</strong> Si tu as ouvert index.html directement, lance plutôt un petit serveur local (voir le README) ou ouvre dist/mon-plan-sup.html. Détail : ${esc(e.message)}</div>`;
   }
@@ -105,7 +106,9 @@
     rendreNav();
     const m = $("#main"), v = app.vue;
     if (!DATA && besoinFormations(v)) {
-      if (!m.querySelector(".chargement")) m.innerHTML = CHARGEMENT;
+      // le message déjà affiché (celui de index.html) est complété plutôt que remplacé : son délai d'une seconde continue
+      const c = m.querySelector(".chargement");
+      if (c) c.textContent = TEXTE_CHARGEMENT; else m.innerHTML = CHARGEMENT;
       chargerFormations().then(() => { if (app.vue === v) rendre(); }, (e) => { if (app.vue === v) m.innerHTML = erreurDonnees(e); });
       return;
     }
