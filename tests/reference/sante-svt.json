@@ -717,9 +717,10 @@
    }
   ],
   "protection": {
-   "nbSurs": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSolides": 2,
+   "nbSecuriteFragiles": 1,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {

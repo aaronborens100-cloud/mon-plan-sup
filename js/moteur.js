@@ -612,16 +612,30 @@
   }
 
   /* ---------------------------------------------------------------- protection de la liste */
-  // Repère sans probabilité : on compte les vœux « sécurité » (catégorie qui exige déjà un taux d'accès publié).
-  // Pas de « chances d'avoir au moins une admission » : les vœux ne sont pas indépendants (les formations lisent
-  // le même dossier) et les chances par formation restent des estimations.
+  // Repère sans probabilité globale : pas de « chances d'avoir au moins une admission », car les vœux ne sont pas
+  // indépendants (les formations lisent le même dossier) et les chances par formation restent des estimations.
+  // Un vœu « solide » est un vœu « sécurité » dont le bas de la fourchette atteint SEUIL_SOLIDE ; les autres vœux
+  // « sécurité » sont « fragiles » (la catégorie, elle, n'est pas modifiée ici).
+  const SEUIL_SOLIDE = 60;
   const PROTECTION_REPERE = "Aucun site ne peut calculer tes chances exactes d'admission : ces repères viennent des résultats Parcoursup 2025.";
   function protection(liste) {
-    const nbSurs = liste.filter((x) => x.categorie === "securite").length;
-    if (nbSurs === 0) return { nbSurs, niveau: "aucun", message: "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition." };
-    if (nbSurs === 1) return { nbSurs, niveau: "insuffisant", message: "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre." };
-    if (nbSurs === 2) return { nbSurs, niveau: "minimum", message: "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage." };
-    return { nbSurs, niveau: "bon", message: `Ta liste a ${nbSurs} vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas.` };
+    const bas = (x) => (x.chance && x.chance.bas != null ? x.chance.bas : null);
+    const secu = liste.filter((x) => x.categorie === "securite");
+    const nbSolides = secu.filter((x) => bas(x) !== null && bas(x) >= SEUIL_SOLIDE).length;
+    const fragiles = secu.filter((x) => !(bas(x) !== null && bas(x) >= SEUIL_SOLIDE));
+    const nbSecuriteFragiles = fragiles.length;
+    const r = (niveau, message) => ({ nbSolides, nbSecuriteFragiles, niveau, message });
+    if (liste.length && liste.every((x) => bas(x) === null))
+      return r("sans_notes", "Renseigne tes bulletins : sans tes notes, on ne peut pas savoir quels vœux sont sûrs pour toi.");
+    if (nbSolides === 0 && nbSecuriteFragiles) {
+      const connus = fragiles.map(bas).filter((v) => v !== null);
+      const risque = connus.length ? ` (jusqu'à ${100 - Math.min(...connus)} % de risque de refus chacun)` : "";
+      return r("securite_fragile", `Attention : tes vœux « sécurité » restent incertains pour ton profil${risque}. Ajoute des formations où tes notes sont nettement au-dessus de celles des admis, par exemple des licences de ton académie peu demandées.`);
+    }
+    if (nbSolides === 0) return r("aucun", "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition.");
+    if (nbSolides === 1) return r("insuffisant", "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre.");
+    if (nbSolides === 2) return r("minimum", "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage.");
+    return r("bon", `Ta liste a ${nbSolides} vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas.`);
   }
 
   /* ---------------------------------------------------------------- nouvelles formations 2026 */
@@ -743,5 +757,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, SEUIL_SOLIDE, PROTECTION_REPERE, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

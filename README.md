@@ -139,10 +139,13 @@ dans un dossier, puis lancer `python3 scripts/construire-statuts-stats.py --hist
 
 Le site n'affiche aucune probabilité globale d'admission pour la liste : les vœux ne sont pas indépendants
 (les formations lisent le même dossier) et les chances par formation restent des estimations.
-`wishlist()` renvoie à la place `protection = { nbSurs, niveau, message }` (`CapEngine.protection(liste)`,
-aussi appelé sur les vœux retenus par l'élève) : `nbSurs` compte les vœux de catégorie « sécurité », `niveau`
-vaut `aucun` (0), `insuffisant` (1), `minimum` (2) ou `bon` (3 ou plus). Ma liste affiche le message, suivi
-de `PROTECTION_REPERE` (« Aucun site ne peut calculer tes chances exactes d'admission… »).
+`wishlist()` renvoie à la place `protection = { nbSolides, nbSecuriteFragiles, niveau, message }`
+(`CapEngine.protection(liste)`, aussi appelé sur les vœux retenus par l'élève). Un vœu est « solide » s'il est
+de catégorie « sécurité » et que le bas de sa fourchette (`chance.bas`) atteint `SEUIL_SOLIDE` = 60 % ; les autres
+vœux « sécurité » sont comptés dans `nbSecuriteFragiles`. `niveau` vaut `sans_notes` (aucune chance calculée),
+`securite_fragile` (aucun vœu solide mais des vœux « sécurité » incertains), `aucun` (0 solide), `insuffisant` (1),
+`minimum` (2) ou `bon` (3 ou plus). Ma liste affiche le message, suivi de `PROTECTION_REPERE`
+(« Aucun site ne peut calculer tes chances exactes d'admission… »).
 
 ## Tests
 

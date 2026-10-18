@@ -791,7 +791,7 @@
     </section>`;
   }
   // Protection de la liste (E.protection) : nombre de vœux sûrs et conseil, sans probabilité globale
-  const PROTECTION_TON = { aucun: "bad", insuffisant: "", minimum: "", bon: "info" };
+  const PROTECTION_TON = { sans_notes: "", securite_fragile: "bad", aucun: "bad", insuffisant: "", minimum: "", bon: "info" };
   function blocProtection(P) {
     return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)}</p></div>`;
   }

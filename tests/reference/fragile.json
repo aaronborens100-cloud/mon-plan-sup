@@ -728,9 +728,10 @@
    }
   ],
   "protection": {
-   "nbSurs": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSolides": 0,
+   "nbSecuriteFragiles": 3,
+   "niveau": "securite_fragile",
+   "message": "Attention : tes vœux « sécurité » restent incertains pour ton profil (jusqu'à 67 % de risque de refus chacun). Ajoute des formations où tes notes sont nettement au-dessus de celles des admis, par exemple des licences de ton académie peu demandées."
   },
   "alertes": [],
   "certitude": {
