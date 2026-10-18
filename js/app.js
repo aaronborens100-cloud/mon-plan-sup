@@ -20,7 +20,7 @@
 
   let DATA = null, QUEST = null, METIERS = null, POURS = null, EXTRA = null, etat = S.lire();
   // Base fusionnée : CAT = toutes les fiches affichées (ancienne base + Parcoursup), sans doublon certain
-  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], GEN = null, LIEUX = null, VILLES_GPS = {};
+  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, FIL = null, LIEUX = null, VILLES_GPS = {};
   const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
   migrer();
 
@@ -52,8 +52,8 @@
   }
   const chargerLycees = () => une("lieux", async () => { if (!LIEUX) chargerLieux(await charger("data-lieux", "data/lieux.json")); });
   const chargerFormations = () => une("formations", async () => {
-    const [d, ps, fu, st, gen, aj] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-generees", "data/generees.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), chargerLycees().catch(() => null)]);
-    construireCatalogue(d, ps, fu, st, gen, aj);
+    const [d, ps, fu, st, fil, aj] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), chargerLycees().catch(() => null)]);
+    construireCatalogue(d, ps, fu, st, fil, aj);
     etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
     const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
     DATA = d; window.__DATA = DATA;
@@ -888,7 +888,7 @@
     const tuiles = [
       ["horloge", "Durée", `${String(f.duree_ans).replace(".", ",")} an${f.duree_ans > 1 ? "s" : ""}`, f.langue ? `en ${f.langue}` : "", "bleu"],
       ["euro", "Coût annuel", cout != null ? E.fmtEur(cout) : "n. c.", cout === 0 ? "gratuit" : "", "ambre"],
-      ["cible", "Sélectivité", E.SEL_LABEL[f.selectivite.niveau] || "n. c.", tx ? `${tx} d'accès` : "", "violet"],
+      ["cible", "Sélectivité", (!f.selectivite.estimee && E.SEL_LABEL[f.selectivite.niveau]) || "n. c.", tx ? `${tx} d'accès` : f.selectivite.estimee ? "taux non publié" : "", "violet"],
       ["groupe", "Places", a.places ? nbFr(a.places) : "n. c.", a.candidats ? `${nbFr(a.candidats)} vœux` : "", "ciel"],
       ["envoi", "Candidature", plat, "", "menthe"],
     ];
@@ -1060,7 +1060,9 @@
     if (f.__gen) {
       const e = CATBY[f.id], fam = f.__gen.fam, prob = (FU && FU.ps_probables[f.__gen.gta]) || [], dup = (FU && FU.ps_doublons[f.__gen.gta]) || [];
       return `<div class="card stack" id="sec-fusion"><h3>Sources et données officielles</h3>
-        <p class="small">Fiche construite à partir de Parcoursup. Chiffres d'admission et mentions : statistiques officielles 2025${srcBadge("P")}. Profil, domaines, spécialités, métiers et poursuites : repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière (code ${esc(fam.nmc)})${srcBadge("E")}, par exemple ${fam.exemples.slice(0, 3).map((id) => lienFiche(id)).join(", ")}. Ces éléments décrivent la filière, pas cet établissement en particulier : à vérifier.</p>
+        <p class="small">Fiche construite à partir de Parcoursup. Chiffres d'admission et mentions : ${STATS[f.__gen.gta] ? `statistiques officielles 2025${srcBadge("P")}` : "pas de statistiques Parcoursup 2025 pour cette formation"}. ${fam.origine === "deduit_intitule"
+          ? `Profil, domaines, spécialités et métiers : déduits de l'intitulé officiel de la filière (« ${esc(fam.libelle)} », code ${esc(fam.nmc)})${srcBadge("E")}, confiance ${esc(fam.confiance)}.`
+          : `Profil, domaines, spécialités, métiers et poursuites : repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière (code ${esc(fam.nmc)})${srcBadge("E")}, par exemple ${fam.exemples.slice(0, 3).map((id) => lienFiche(id)).join(", ")}.`} Ces éléments décrivent la filière, pas cet établissement en particulier : à vérifier.</p>
         ${prob.length ? `<div class="notice small"><strong>À vérifier : fiche peut-être déjà présente.</strong> ${prob.map((id) => lienFiche(id)).join(", ")}.</div>` : ""}
         ${dup.length ? `<div class="notice small"><strong>À vérifier : doublon Parcoursup possible.</strong> ${dup.map((g) => lienFiche("psup-" + g)).join(", ")}.</div>` : ""}
         <h4>Données Parcoursup</h4>${e && e.ps ? blocParcoursup(e.ps) : ""}</div>`;
@@ -1122,10 +1124,12 @@
     const c = VILLES_GPS[sansAccents(String(f.ville).split(/\s*[/(]/)[0].trim())];
     return c ? { lat: c.lat, lon: c.lon } : null;
   }
-  function construireCatalogue(d, psc, fu, st, gen, aj) {
-    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; GEN = gen; REMPL = {};
-    if (psc) for (const r of decodePs(psc)) PSBY[r.gta] = r;
-    if (st) { STATS = st.rows; STCOLS = st.meta.cols; }
+  function construireCatalogue(d, psc, fu, st, fil, aj) {
+    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
+    const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
+    for (const r of lignesPs) PSBY[r.gta] = r;
+    if (st) { STATS = st.rows; STCOLS = st.meta.cols; STCONS = st.meta.consulte_le; }
+    if (fil) for (const [k, l] of Object.entries(fil.meta.types_label)) if (!d.meta.types[k]) d.meta.types[k] = l;   // types ajoutés par la table des filières
     // compléments officiels (champs vides de l'ancienne base) : on ne remplace jamais une valeur existante
     if (fu) for (const f of d.formations) {
       const k = fu.anciennes[f.id] && fu.anciennes[f.id].k;
@@ -1149,14 +1153,20 @@
     if (Object.keys(REMPL).length) d.formations = d.formations.filter((f) => !REMPL[f.id]);
     const genIds = new Map();
     for (const [g, o] of Object.entries(modeles)) { const f = fichDepuisModele(o, g); if (f) { d.formations.push(f); genIds.set(g, f); } }
-    if (gen) for (const L of gen.fiches) { if (modeles[L[0]]) continue; const g = fichGeneree(L, gen); if (g) { d.formations.push(g); genIds.set(g.__gen.gta, g); } }
+    // Toute formation Parcoursup du périmètre reçoit une fiche notable par le moteur, à partir de la table des filières,
+    // sauf si elle a déjà une fiche : fusion certaine avec data/formations.json ou fiche remplacée (ajustements.json).
+    const fusionnees = new Set(fu ? Object.values(fu.anciennes).filter((x) => x.m === "C").map((x) => x.g) : []);
+    if (fil) for (const r of lignesPs) {
+      if (modeles[r.gta] || fusionnees.has(r.gta) || horsPerimetre(r)) continue;
+      const g = fichGeneree(r, fil); if (g) { d.formations.push(g); genIds.set(g.__gen.gta, g); }
+    }
     for (const [oid, ids] of Object.entries(REMPL)) ALIAS[oid] = ids[0];
     const merged = new Set();
     for (const f of d.formations) {
       if (f.__gen) continue;
       const x = fu && fu.anciennes[f.id];
       const ps = x && x.m === "C" ? PSBY[x.g] : null;
-      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; }
+      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); }   // __tf, __pctBG : garde-fou des listes (moteur)
       const avTxt = [];
       if (x && x.m === "P") avTxt.push("Correspondance Parcoursup probable mais non confirmée.");
       if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
@@ -1171,6 +1181,7 @@
       if (horsPerimetre(r)) continue;   // BTS, BUT : formations non proposées par Mon Plan Sup (données conservées)
       const gf = genIds.get(r.gta) || null;
       if (gf && r.nmc) gf.__nmc = r.nmc;
+      if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); }
       const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
         type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin"), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf,
@@ -1188,10 +1199,21 @@
   function horsPerimetre(r) { const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || []; return r.tf.some((t) => cats.includes(t)); }
   const NIV_TAUX = (t) => (t == null ? null : t < 10 ? "tres_haute" : t < 25 ? "haute" : t < 50 ? "moyenne" : "ouverte");
   const TC_ETAB = { "Publics": "public", "Privés en contrat avec l’Etat / EESC": "prive_sous_contrat", "Privés": "prive" };
-  function fichGeneree(L, gen) {
-    const [g, fi, places, voeux, admis, taux, men] = L, fam = gen.familles[fi], r = PSBY[g];
-    if (!r || !fam) return null;
-    const src = r.dataviz || r.fiche, cons = gen.meta.consulte_le;
+  // Fiche d'une formation Parcoursup : attributs éditoriaux de sa filière (data/filieres.json, code nmc),
+  // chiffres officiels de la formation (stats.json, session 2025). Sans statistiques 2025, la fiche est quand même
+  // créée (taux et mentions à null) : le moteur estime alors les chances d'après la sélectivité, sans « sécurité ».
+  function fichGeneree(r, fil) {
+    const g = r.gta;
+    let fam = fil.filieres[r.nmc];
+    if (!fam) return null;
+    const va = fam.variantes && (r.fl || []).find((x) => fam.variantes[x]);   // code nmc partagé : intitulé de la formation
+    if (va) fam = fam.variantes[va];
+    const v = (c) => statDe(g, c), aStats = !!STATS[g];
+    const places = v("capa_fin"), voeux = v("voe_tot"), admis = v("acc_tot"), taux = v("taux_acces_ens");
+    const pm = ["pct_tbf", "pct_tb", "pct_b", "pct_ab", "pct_sansmention"].map(v);
+    const men = admis && pm.every((x) => x != null) && pm.some((x) => x > 0) ? pm : null;   // répartition vide = non publiée
+    const deduite = fam.origine === "deduit_intitule";
+    const src = r.dataviz || r.fiche, cons = STCONS || fil.meta.consulte_le;
     const m = men ? { TBF: men[0], TB: men[1], B: men[2], AB: men[3], sans: men[4], source: src, consulte_le: cons, statut: "officiel" } : null;
     const MID = { TBF: 18.6, TB: 16.9, B: 14.9, AB: 12.9, sans: 11.2 };
     const moy = m ? Math.round((["TBF", "TB", "B", "AB", "sans"].reduce((a, k) => a + MID[k] * m[k], 0) / ["TBF", "TB", "B", "AB", "sans"].reduce((a, k) => a + m[k], 0)) * 10) / 10 : null;
@@ -1202,21 +1224,25 @@
     const pub = r.tc === "Publics" && fam.cout_public;
     const chiffres = [places != null ? `${places} places` : null, voeux != null ? `${voeux} vœux reçus` : null, admis != null ? `${admis} admis` : null].filter(Boolean).join(" · ");
     return {
-      id: "psup-" + g, type: fam.type, type_label: gen.meta.types_label[fam.type] || fam.type, nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
+      id: "psup-" + g, type: fam.type, type_label: fam.type_label || fil.meta.types_label[fam.type] || fam.type, nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
       ville: r.commune || r.departement || "Non renseigné", pays: "France", duree_ans: fam.duree_ans, langue: fam.langue, charge: fam.charge,
       dossier_poids: fam.dossier_poids, profil: fam.profil, plateforme: hors ? "propre" : "parcoursup",
       tests: epreuves ? [{ nom: "Épreuves de sélection", obligatoire: true, texte: "Des épreuves de sélection sont mises en place pour candidater (fiche Parcoursup).", source: r.fiche, consulte_le: cons, statut: "officiel" }] : [],
       pieces: ["dossier Parcoursup", "projet de formation motivé"],
       langue_requise: { anglais_cecrl: fam.anglais_cecrl, texte: fam.anglais_cecrl ? `Niveau ${fam.anglais_cecrl} habituellement attendu dans cette filière (estimation).` : "Pas de certification exigée relevée pour cette filière.", statut: "estimation" },
-      admission: { taux, libelle: "Taux d'accès 2025", candidats: voeux, places, admis, texte: `${chiffres} (Parcoursup 2025).${taux != null ? ` Taux d'accès : ${taux} %.` : ""}`, source: src, consulte_le: cons, statut: "officiel" },
+      admission: aStats ? { taux, libelle: "Taux d'accès 2025", candidats: voeux, places, admis, texte: `${chiffres} (Parcoursup 2025).${taux != null ? ` Taux d'accès : ${taux} %.` : ""}`, source: src, consulte_le: cons, statut: "officiel" }
+        : { taux: null, libelle: "Taux d'accès 2025", candidats: null, places: null, admis: null, texte: "Pas de statistiques d'admission Parcoursup 2025 pour cette formation (formation nouvelle ou chiffres non publiés).", source: src, consulte_le: cons, statut: "non_communique" },
       mentions_admis: m, classement: null, integrations: [],
-      incertitudes: [`Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
-        ...(moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
+      incertitudes: [deduite ? `Profil, domaines, spécialités et métiers déduits de l'intitulé officiel de la filière Parcoursup (« ${fam.libelle} », ${fam.nmc}) : estimation à vérifier pour cet établissement.`
+          : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
+        ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
+        ...(!aStats ? ["Pas de statistiques d'admission Parcoursup 2025 : tes chances sont estimées d'après un niveau de sélectivité moyen par défaut, et cette formation n'est jamais classée « sécurité »."] : []),
+        ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
       domaines: fam.domaines,
       cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: r.tc === "Publics" ? "Frais non relevés pour cette formation : vérifie sur le site de l'établissement." : "Établissement privé : frais non relevés, vérifie sur le site de l'établissement.", statut: "non_communique" },
       specialites: { obligatoires: sp.obligatoires, recommandees: sp.recommandees, maths_expertes: sp.maths_expertes,
-        texte: [sp.obligatoires.length ? `Attendues : ${spLib(sp.obligatoires)}.` : "", sp.recommandees.length ? `Conseillées : ${spLib(sp.recommandees)}.` : "", sp.maths_expertes ? "Option maths expertes " + { indispensable: "indispensable", fortement_conseillee: "fortement conseillée", conseillee: "conseillée" }[sp.maths_expertes] + "." : ""].filter(Boolean).join(" ") + ` (repris des fiches Mon Plan Sup de la même filière)`, statut: "estimation" },
-      statut_etab: TC_ETAB[r.tc] || "public", selectivite: { niveau: NIV_TAUX(taux) || "moyenne" },
+        texte: ([sp.obligatoires.length ? `Attendues : ${spLib(sp.obligatoires)}.` : "", sp.recommandees.length ? `Conseillées : ${spLib(sp.recommandees)}.` : "", sp.maths_expertes ? "Option maths expertes " + { indispensable: "indispensable", fortement_conseillee: "fortement conseillée", conseillee: "conseillée" }[sp.maths_expertes] + "." : ""].filter(Boolean).join(" ") || "Pas de spécialité conseillée relevée pour cette filière.") + (deduite ? " (déduit de l'intitulé de la filière)" : " (repris des fiches Mon Plan Sup de la même filière)"), statut: "estimation" },
+      statut_etab: TC_ETAB[r.tc] || "public", selectivite: taux != null ? { niveau: NIV_TAUX(taux) } : { niveau: "moyenne", estimee: true },   // niveau par défaut pour le calcul, non affiché
       notes: { moyenne_cible: moy, maths_cible: null, texte: moy != null ? `Moyenne au bac estimée des admis 2025 : ${String(moy).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions (Parcoursup 2025).` : "Pas de repère chiffré.", statut: "estimation", source: src, consulte_le: cons },
       metiers: fam.metiers, poursuites: fam.poursuites,
       __gen: { gta: g, fam },

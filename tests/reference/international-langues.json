@@ -1,7 +1,7 @@
 {
  "profil": "international-langues",
  "description": "15,5 de moyenne, LLCER anglais + HGGSP, veut partir étudier à l'étranger",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 15.5,
   "moyennePeriode": "Terminale – T1",
@@ -661,21 +661,12 @@
     ]
    },
    {
-    "id": "u-de-montpellier-montpellier-licence-science-politique",
+    "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
     "categorie": "ambitieux",
     "pertinence": 87,
     "chance": [
-     7,
-     15
-    ]
-   },
-   {
-    "id": "sciencespo-doubles-diplomes-internationaux",
-    "categorie": "ambitieux",
-    "pertinence": 78,
-    "chance": [
-     5,
-     12
+     4,
+     8
     ]
    },
    {
@@ -688,48 +679,57 @@
     ]
    },
    {
-    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
-    "categorie": "realiste",
-    "pertinence": 82,
+    "id": "ps-4671",
+    "categorie": "ambitieux",
+    "pertinence": 77,
     "chance": [
-     78,
-     80
+     3,
+     6
     ]
    },
    {
-    "id": "u-bordeaux-montaigne-sciences-du-langage",
+    "id": "psup-48191",
     "categorie": "realiste",
     "pertinence": 80,
     "chance": [
-     78,
-     80
+     28,
+     58
     ]
    },
    {
-    "id": "sorbonne-universite-histoire",
+    "id": "psup-36539",
+    "categorie": "realiste",
+    "pertinence": 78,
+    "chance": [
+     52,
+     75
+    ]
+   },
+   {
+    "id": "psup-17198",
     "categorie": "realiste",
     "pertinence": 83,
     "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "sciences-po-bordeaux-iep",
-    "categorie": "realiste",
-    "pertinence": 75,
-    "chance": [
-     66,
-     80
-    ]
-   },
-   {
-    "id": "ps-8130",
-    "categorie": "realiste",
-    "pertinence": 80,
-    "chance": [
-     57,
+     50,
      75
+    ]
+   },
+   {
+    "id": "psup-32709",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     43,
+     75
+    ]
+   },
+   {
+    "id": "psup-32304",
+    "categorie": "securite",
+    "pertinence": 79,
+    "chance": [
+     81,
+     97
     ]
    }
   ],
@@ -742,7 +742,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la science politique et les sciences humaines : tes vœux se partagent entre licence de droit ou science po, licence de lettres ou sciences humaines et sciences Po, plus quelques autres pistes.",
+  "explication": "Tu t'intéresses surtout à la science politique et les sciences humaines : tes vœux se partagent entre licence de droit ou science po, licence de lettres ou sciences humaines et IEP, plus quelques autres pistes.",
   "decouvertes": {}
  },
  "etranger": {
@@ -750,21 +750,21 @@
   "liste": [
    {
     "x": {
-     "id": "york-politics",
+     "id": "birmingham-politics-ir",
      "categorie": "realiste",
-     "pertinence": 94,
+     "pertinence": 95,
      "chance": [
       37,
       75
      ]
     },
     "ancre": {
-     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
-     "categorie": "realiste",
-     "pertinence": 82,
+     "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+     "categorie": "securite",
+     "pertinence": 89,
      "chance": [
-      78,
-      80
+      70,
+      97
      ]
     },
     "frais": null,
@@ -783,27 +783,27 @@
    },
    {
     "x": {
-     "id": "glasgow-politics",
+     "id": "qmul-politics-ir",
      "categorie": "realiste",
-     "pertinence": 94,
+     "pertinence": 95,
      "chance": [
       37,
       75
      ]
     },
     "ancre": {
-     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
-     "categorie": "realiste",
-     "pertinence": 82,
+     "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+     "categorie": "securite",
+     "pertinence": 89,
      "chance": [
-      78,
-      80
+      70,
+      97
      ]
     },
     "frais": null,
     "vie": {
-     "min": 1370,
-     "max": 1370,
+     "min": 1790,
+     "max": 1790,
      "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
      "source": "https://www.gov.uk/student-visa/money",
      "statut": "officiel"
@@ -825,12 +825,12 @@
      ]
     },
     "ancre": {
-     "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
-     "categorie": "securite",
-     "pertinence": 89,
+     "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+     "categorie": "ambitieux",
+     "pertinence": 87,
      "chance": [
-      70,
-      97
+      4,
+      8
      ]
     },
     "frais": 6520,
@@ -858,12 +858,12 @@
      ]
     },
     "ancre": {
-     "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
-     "categorie": "securite",
-     "pertinence": 89,
+     "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+     "categorie": "ambitieux",
+     "pertinence": 87,
      "chance": [
-      70,
-      97
+      4,
+      8
      ]
     },
     "frais": 6520,
@@ -891,12 +891,12 @@
      ]
     },
     "ancre": {
-     "id": "u-de-montpellier-montpellier-licence-science-politique",
-     "categorie": "ambitieux",
-     "pertinence": 87,
+     "id": "psup-36539",
+     "categorie": "realiste",
+     "pertinence": 78,
      "chance": [
-      7,
-      15
+      52,
+      75
      ]
     },
     "frais": 1015,
@@ -916,7 +916,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "a24bac7bf18c6b42de684e703909247470c24665a24fcd1f513af2d67cb9666c",
-  "textes": "f580d78c5afcabcb388a953a32f882233a4b2a39c3d114aaa0edcf0fa14cf07a"
+  "calculs": "9f5aa507293189619c89745248db8887c59d83c8754bb24775ebc62c5138857d",
+  "textes": "73700d243b9a794e38efe8afd0025758547ac2b89a451ccc1d27084de7befd9d"
  }
 }

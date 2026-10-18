@@ -1,7 +1,7 @@
 {
  "profil": "indecis",
  "description": "12,5 de moyenne, SES + SVT, ne sait pas ce qu'il veut : réponses neutres",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 12.5,
   "moyennePeriode": "Terminale – T1",
@@ -95,6 +95,32 @@
   "total": 31
  },
  "top": [
+  {
+   "id": "psup-21762",
+   "interet": 85,
+   "faisabilite": 79,
+   "pertinence": 83,
+   "chance": [
+    83,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-21091",
+   "interet": 85,
+   "faisabilite": 80,
+   "pertinence": 83,
+   "chance": [
+    89,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
   {
    "id": "psup-29102",
    "interet": 85,
@@ -200,64 +226,12 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-marseille-staps",
+   "id": "psup-31005",
    "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
+   "faisabilite": 78,
+   "pertinence": 82,
    "chance": [
-    56,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "nantes-universite-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    32,
-    68
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-claude-bernard-lyon-1-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-clermont-auvergne-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
+    55,
     97
    ],
    "categorie": "securite",
@@ -265,179 +239,10 @@
    "exclu": null
   },
   {
-   "id": "u-de-bourgogne-staps",
+   "id": "psup-32587",
    "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    47,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-caen-normandie-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lille-villeneuve-d-ascq-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    32,
-    68
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-limoges-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lorraine-nancy-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    58,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    32,
-    66
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-poitiers-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    26,
-    54
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    50,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    56,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-jean-monnet-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    59,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-saclay-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    32,
-    68
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-rennes-2-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    42,
-    87
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-toulouse-iii-paul-sabatier-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
-   "chance": [
-    25,
-    52
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-evry-paris-saclay-staps",
-   "interet": 85,
-   "faisabilite": 73,
-   "pertinence": 80,
+   "faisabilite": 78,
+   "pertinence": 82,
    "chance": [
     64,
     97
@@ -447,64 +252,12 @@
    "exclu": null
   },
   {
-   "id": "u-de-bordeaux-pessac-staps",
+   "id": "psup-36152",
    "interet": 85,
-   "faisabilite": 69,
-   "pertinence": 79,
+   "faisabilite": 77,
+   "pertinence": 82,
    "chance": [
-    17,
-    35
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-cite-staps",
-   "interet": 85,
-   "faisabilite": 69,
-   "pertinence": 79,
-   "chance": [
-    30,
-    63
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-nanterre-staps",
-   "interet": 85,
-   "faisabilite": 69,
-   "pertinence": 79,
-   "chance": [
-    27,
-    57
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-est-creteil-staps",
-   "interet": 85,
-   "faisabilite": 69,
-   "pertinence": 79,
-   "chance": [
-    18,
-    40
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-sorbonne-paris-nord-staps",
-   "interet": 85,
-   "faisabilite": 69,
-   "pertinence": 79,
-   "chance": [
-    50,
+    70,
     97
    ],
    "categorie": "securite",
@@ -512,10 +265,10 @@
    "exclu": null
   },
   {
-   "id": "licence-psychologie-universite-catholique-de-lille-faculte-des-lettres-et-sciences-humaines-lil",
-   "interet": 76,
-   "faisabilite": 77,
-   "pertinence": 76,
+   "id": "psup-12795",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
    "chance": [
     95,
     97
@@ -525,64 +278,12 @@
    "exclu": null
   },
   {
-   "id": "u-paris-cite-sciences-de-l-education",
-   "interet": 70,
-   "faisabilite": 79,
-   "pertinence": 74,
+   "id": "psup-6613",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
    "chance": [
     78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-est-creteil-sciences-de-l-education",
-   "interet": 70,
-   "faisabilite": 77,
-   "pertinence": 73,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-saclay-las",
-   "interet": 68,
-   "faisabilite": 79,
-   "pertinence": 72,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psl-lycee-henri-iv-cpes",
-   "interet": 65,
-   "faisabilite": 79,
-   "pertinence": 71,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-rennes-2-sciences-de-l-education",
-   "interet": 70,
-   "faisabilite": 73,
-   "pertinence": 71,
-   "chance": [
-    54,
     97
    ],
    "categorie": "securite",
@@ -590,26 +291,325 @@
    "exclu": null
   },
   {
-   "id": "u-toulouse-jean-jaures-sciences-de-l-education",
-   "interet": 70,
-   "faisabilite": 73,
-   "pertinence": 71,
+   "id": "psup-8747",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
    "chance": [
-    32,
-    68
+    60,
+    97
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-marseille-pass",
-   "interet": 64,
-   "faisabilite": 79,
-   "pertinence": 70,
+   "id": "psup-9937",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    49,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-22966",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29100",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    87,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29101",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-33488",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    71,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-3171",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    48,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11967",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47436",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    90,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-14043",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23303",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    52,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13707",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    87,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20422",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    75,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23301",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    60,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10199",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    76,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31002",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    65,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31782",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    55,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32585",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-36150",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-4756",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    75,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31800",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
    "chance": [
     78,
-    80
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-36267",
+   "interet": 85,
+   "faisabilite": 77,
+   "pertinence": 82,
+   "chance": [
+    74,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-18647",
+   "interet": 85,
+   "faisabilite": 78,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10922",
+   "interet": 85,
+   "faisabilite": 76,
+   "pertinence": 81,
+   "chance": [
+    48,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11469",
+   "interet": 85,
+   "faisabilite": 76,
+   "pertinence": 81,
+   "chance": [
+    38,
+    75
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -619,20 +619,20 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-29102",
+    "id": "psup-21762",
     "categorie": "securite",
     "pertinence": 83,
     "chance": [
-     95,
+     83,
      97
     ]
    },
    {
-    "id": "psup-25336",
+    "id": "psup-21193",
     "categorie": "securite",
-    "pertinence": 75,
+    "pertinence": 79,
     "chance": [
-     95,
+     59,
      97
     ]
    },
@@ -646,63 +646,63 @@
     ]
    },
    {
-    "id": "psup-28381",
+    "id": "psup-21325",
     "categorie": "ambitieux",
-    "pertinence": 67,
+    "pertinence": 78,
     "chance": [
-     15,
-     31
+     4,
+     8
     ]
    },
    {
-    "id": "psup-27198",
+    "id": "psup-28409",
     "categorie": "ambitieux",
-    "pertinence": 66,
+    "pertinence": 74,
     "chance": [
-     15,
-     32
+     7,
+     15
     ]
    },
    {
-    "id": "sciences-po-campus-dijon",
+    "id": "psup-21476",
     "categorie": "realiste",
-    "pertinence": 67,
+    "pertinence": 79,
     "chance": [
-     78,
-     80
+     22,
+     44
     ]
    },
    {
-    "id": "double-licence-sociologie-economie-et-gestion-universite-de-lille-lille",
+    "id": "psup-28463",
     "categorie": "realiste",
-    "pertinence": 63,
+    "pertinence": 78,
     "chance": [
-     18,
-     40
+     25,
+     52
     ]
    },
    {
-    "id": "psl-lycee-henri-iv-cpes",
+    "id": "psup-16662",
     "categorie": "realiste",
-    "pertinence": 71,
+    "pertinence": 75,
     "chance": [
-     78,
-     80
+     16,
+     36
     ]
    },
    {
-    "id": "u-paris-saclay-las",
-    "categorie": "realiste",
-    "pertinence": 72,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "psup-35252",
+    "id": "psup-35533",
     "categorie": "securite",
-    "pertinence": 71,
+    "pertinence": 75,
+    "chance": [
+     95,
+     97
+    ]
+   },
+   {
+    "id": "psup-44539",
+    "categorie": "securite",
+    "pertinence": 70,
     "chance": [
      95,
      97
@@ -719,45 +719,12 @@
     "economie"
    ]
   },
-  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 7 types de formations pour garder un maximum de portes ouvertes. Un vœu « découverte » t'ouvre à PASS ou LAS (santé).",
+  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 6 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
  "etranger": {
   "mode": "decouverte",
   "liste": [
-   {
-    "x": {
-     "id": "portsmouth-economics",
-     "categorie": "realiste",
-     "pertinence": 59,
-     "chance": [
-      78,
-      80
-     ]
-    },
-    "ancre": {
-     "id": "psup-28381",
-     "categorie": "ambitieux",
-     "pertinence": 67,
-     "chance": [
-      15,
-      31
-     ]
-    },
-    "frais": 12753,
-    "vie": {
-     "min": 1370,
-     "max": 1370,
-     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
-     "source": "https://www.gov.uk/student-visa/money",
-     "statut": "officiel"
-    },
-    "francais": false,
-    "moinsCher": true,
-    "date": "2027-01-13",
-    "bientot": false,
-    "jours": 104
-   },
    {
     "x": {
      "id": "uclouvain-louvain-la-neuve-bachelier-en-sciences-de-la-motricite-orientation-edu",
@@ -769,11 +736,11 @@
      ]
     },
     "ancre": {
-     "id": "psup-29102",
+     "id": "psup-21762",
      "categorie": "securite",
      "pertinence": 83,
      "chance": [
-      95,
+      83,
       97
      ]
     },
@@ -791,43 +758,74 @@
    },
    {
     "x": {
-     "id": "brunel-economics",
-     "categorie": "realiste",
-     "pertinence": 59,
+     "id": "nih-oslo-bachelor-i-idrettsvitenskap",
+     "categorie": "ambitieux",
+     "pertinence": 79,
      "chance": [
-      39,
-      80
+      null,
+      null
      ]
     },
     "ancre": {
-     "id": "psup-28381",
-     "categorie": "ambitieux",
-     "pertinence": 67,
+     "id": "psup-21762",
+     "categorie": "securite",
+     "pertinence": 83,
      "chance": [
-      15,
-      31
+      83,
+      97
      ]
     },
-    "frais": 14508,
+    "frais": null,
     "vie": {
-     "min": 1790,
-     "max": 1790,
-     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
-     "source": "https://www.gov.uk/student-visa/money",
-     "statut": "officiel"
+     "min": 1200,
+     "max": 1600,
+     "statut": "estimation"
     },
     "francais": false,
-    "moinsCher": true,
-    "date": "2027-01-13",
+    "moinsCher": false,
+    "date": null,
     "bientot": false,
-    "jours": 104
+    "jours": null
+   },
+   {
+    "x": {
+     "id": "dshs-cologne-bsc-sport-und-leistung",
+     "categorie": "ambitieux",
+     "pertinence": 70,
+     "chance": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "psup-23471",
+     "categorie": "ambitieux",
+     "pertinence": 81,
+     "chance": [
+      13,
+      28
+     ]
+    },
+    "frais": null,
+    "vie": {
+     "min": 992,
+     "max": 992,
+     "texte": "992 €/mois : montant du compte bloqué exigé pour le visa étudiant",
+     "source": "https://www.expatrio.com/about-germany/blocked-amount-2025",
+     "statut": "source_secondaire"
+    },
+    "francais": false,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
    }
   ],
   "budgetSerre": true,
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "828871991bf2ae6dd3b55d41f4bcabe62b27ab9ae25d35cbb8e1fcf4bf9f375c",
-  "textes": "1a52221468f6f884a58d569ea4d0b9cef06242489110966cf7e2da8b723169b5"
+  "calculs": "d4259e5a7f7588fe67ffd6d471da4b2bb2ad99acc4df9f8d7a257ec4e5a43975",
+  "textes": "5d0a9177e386b4a3b81a0d9d1e613e1cd8e4d6ce9dd4fdfd2bf2c6145c371c3c"
  }
 }

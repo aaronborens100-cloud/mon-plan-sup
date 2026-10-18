@@ -1,7 +1,7 @@
 {
  "profil": "sante-svt",
  "description": "13 de moyenne, SVT + physique-chimie, veut travailler dans la santé",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 13.2,
   "moyennePeriode": "Terminale – T1",
@@ -103,26 +103,156 @@
  },
  "top": [
   {
-   "id": "diplome-d-etat-d-infirmier-ifsi-de-l-ap-hm-marseille",
+   "id": "psup-11707",
+   "interet": 90,
+   "faisabilite": 79,
+   "pertinence": 86,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-34546",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    57,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23027",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    64,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23036",
+   "interet": 86,
+   "faisabilite": 80,
+   "pertinence": 84,
+   "chance": [
+    52,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23068",
    "interet": 86,
    "faisabilite": 78,
    "pertinence": 83,
    "chance": [
-    49,
-    80
+    53,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23118",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    62,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23122",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    58,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23066",
+   "interet": 86,
+   "faisabilite": 79,
+   "pertinence": 83,
+   "chance": [
+    53,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23024",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    46,
+    95
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23065",
+   "interet": 86,
+   "faisabilite": 79,
+   "pertinence": 83,
+   "chance": [
+    54,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23070",
+   "interet": 86,
+   "faisabilite": 78,
+   "pertinence": 83,
+   "chance": [
+    45,
+    75
    ],
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-de-nice-nice",
+   "id": "psup-23110",
    "interet": 86,
    "faisabilite": 78,
    "pertinence": 83,
    "chance": [
-    26,
-    55
+    39,
+    75
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -168,19 +298,6 @@
    "exclu": null
   },
   {
-   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-grenoble-alpes-grenoble",
-   "interet": 86,
-   "faisabilite": 68,
-   "pertinence": 79,
-   "chance": [
-    38,
-    79
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "aix-marseille-universite-marseille-sciences-de-la-vie",
    "interet": 78,
    "faisabilite": 77,
@@ -203,19 +320,6 @@
     59
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "diplome-d-etat-d-educateur-specialise-irts-paca-et-corse-marseille",
-   "interet": 79,
-   "faisabilite": 72,
-   "pertinence": 76,
-   "chance": [
-    65,
-    97
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -304,32 +408,6 @@
    "pertinence": 73,
    "chance": [
     78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-de-nantes-nantes",
-   "interet": 69,
-   "faisabilite": 78,
-   "pertinence": 73,
-   "chance": [
-    35,
-    72
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "diplome-d-etat-d-ergotherapeute-institut-de-formation-en-ergotherapie-de-marseille-marseil",
-   "interet": 69,
-   "faisabilite": 78,
-   "pertinence": 73,
-   "chance": [
-    49,
     80
    ],
    "categorie": "realiste",
@@ -543,103 +621,25 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "u-de-lille-lille-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-limoges-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lorraine-nancy-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rennes-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "chance": [
-    78,
-    80
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
+   {
+    "id": "psup-11707",
+    "categorie": "securite",
+    "pertinence": 86,
+    "chance": [
+     95,
+     97
+    ]
+   },
    {
     "id": "psup-34546",
     "categorie": "securite",
     "pertinence": 84,
     "chance": [
      57,
-     97
-    ]
-   },
-   {
-    "id": "psup-4021",
-    "categorie": "securite",
-    "pertinence": 81,
-    "chance": [
-     95,
      97
     ]
    },
@@ -653,39 +653,21 @@
     ]
    },
    {
+    "id": "psup-27214",
+    "categorie": "ambitieux",
+    "pertinence": 77,
+    "chance": [
+     14,
+     30
+    ]
+   },
+   {
     "id": "psup-31846",
     "categorie": "ambitieux",
     "pertinence": 76,
     "chance": [
      15,
      31
-    ]
-   },
-   {
-    "id": "psup-27761",
-    "categorie": "ambitieux",
-    "pertinence": 73,
-    "chance": [
-     13,
-     29
-    ]
-   },
-   {
-    "id": "aix-marseille-universite-marseille-pass",
-    "categorie": "realiste",
-    "pertinence": 80,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "u-de-toulon-sciences-de-la-vie",
-    "categorie": "realiste",
-    "pertinence": 79,
-    "chance": [
-     42,
-     80
     ]
    },
    {
@@ -698,20 +680,38 @@
     ]
    },
    {
-    "id": "psup-39146",
+    "id": "psup-45601",
     "categorie": "realiste",
-    "pertinence": 70,
+    "pertinence": 79,
     "chance": [
-     28,
-     58
+     23,
+     48
     ]
    },
    {
-    "id": "diplome-d-etat-d-educateur-specialise-irts-paca-et-corse-marseille",
-    "categorie": "securite",
-    "pertinence": 76,
+    "id": "psup-28721",
+    "categorie": "realiste",
+    "pertinence": 78,
     "chance": [
-     65,
+     32,
+     67
+    ]
+   },
+   {
+    "id": "psup-28840",
+    "categorie": "realiste",
+    "pertinence": 77,
+    "chance": [
+     29,
+     61
+    ]
+   },
+   {
+    "id": "psup-7056",
+    "categorie": "securite",
+    "pertinence": 77,
+    "chance": [
+     95,
      97
     ]
    }
@@ -726,7 +726,7 @@
     "ingenierie_tech"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et PASS ou LAS (santé) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec DEUST (diplôme universitaire bac + 2) et licence de sciences comme solutions de repli.",
   "decouvertes": {}
  },
  "etranger": {
@@ -734,7 +734,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "36bc36d6dfc334eeb65c6cb0247e2cb3cdfcad2fd00054482493f1c46b6e4039",
-  "textes": "a4e545f8db55cfb29f4a7e8655fb8a4a3ccd776065b55f1e197b8e4817bb3c1c"
+  "calculs": "b507f153bf3e7844020a59ec0cddb477994c5218b66c6a7d972c2ab11b0c7fbb",
+  "textes": "88891b6fb3264407a1956f3a9d8d9f53c8cb07068eb2a7705a6fb1641c503400"
  }
 }

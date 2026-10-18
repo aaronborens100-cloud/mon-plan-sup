@@ -1,7 +1,7 @@
 {
  "profil": "sciences-ingenieur",
  "description": "15 de moyenne, maths + physique-chimie, maths expertes, attiré par l'ingénierie et l'informatique",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 15.2,
   "moyennePeriode": "Terminale – T1",
@@ -652,15 +652,6 @@
     ]
    },
    {
-    "id": "nantes-universite-physique",
-    "categorie": "securite",
-    "pertinence": 86,
-    "chance": [
-     95,
-     97
-    ]
-   },
-   {
     "id": "psup-15418",
     "categorie": "ambitieux",
     "pertinence": 88,
@@ -679,12 +670,12 @@
     ]
    },
    {
-    "id": "double-licence-mathematiques-informatique-cy-cergy-paris-universite-cergy",
+    "id": "psup-39587",
     "categorie": "ambitieux",
-    "pertinence": 80,
+    "pertinence": 82,
     "chance": [
-     6,
-     12
+     3,
+     8
     ]
    },
    {
@@ -697,6 +688,24 @@
     ]
    },
    {
+    "id": "psup-32300",
+    "categorie": "realiste",
+    "pertinence": 82,
+    "chance": [
+     27,
+     56
+    ]
+   },
+   {
+    "id": "double-licence-mathematiques-informatique-universite-d-angers-angers",
+    "categorie": "realiste",
+    "pertinence": 81,
+    "chance": [
+     35,
+     72
+    ]
+   },
+   {
     "id": "jacques-decour-paris-mpsi",
     "categorie": "realiste",
     "pertinence": 81,
@@ -706,21 +715,12 @@
     ]
    },
    {
-    "id": "u-claude-bernard-lyon-1-physique",
-    "categorie": "realiste",
+    "id": "nantes-universite-physique",
+    "categorie": "securite",
     "pertinence": 86,
     "chance": [
-     70,
-     80
-    ]
-   },
-   {
-    "id": "cursus-en-programmation-42-angouleme-angouleme",
-    "categorie": "realiste",
-    "pertinence": 79,
-    "chance": [
-     75,
-     80
+     95,
+     97
     ]
    }
   ],
@@ -734,23 +734,12 @@
     "data_informatique"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et école d'ingénieurs post-bac comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec école d'ingénieurs post-bac et licence de sciences comme solutions de repli. Un vœu « découverte » t'ouvre à licence de sciences.",
   "decouvertes": {}
  },
  "etranger": {
   "mode": "echange",
   "liste": [
-   {
-    "x": {
-     "id": "licence-mathematiques-portail-mpcsi-option-bilingue-universite-de-lille-villeneuve-d-ascq",
-     "categorie": "realiste",
-     "pertinence": 88,
-     "chance": [
-      70,
-      80
-     ]
-    }
-   },
    {
     "x": {
      "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
@@ -764,19 +753,30 @@
    },
    {
     "x": {
-     "id": "reseau-polytech-parcours-des-ecoles-d-ingenieurs-polytech",
-     "categorie": "realiste",
-     "pertinence": 82,
+     "id": "double-licence-mathematiques-informatique-le-mans-universite-le-mans",
+     "categorie": "securite",
+     "pertinence": 81,
      "chance": [
-      56,
-      80
+      83,
+      97
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "double-licence-mathematiques-informatique-universite-clermont-auvergne-clermont-ferrand",
+     "categorie": "securite",
+     "pertinence": 81,
+     "chance": [
+      95,
+      97
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "08206baa813d9be0a7c6769e859847e253670b70ee7ae7dad9c154abc4aea767",
-  "textes": "93bc78cceaaeb9b72bc86ab2d4286408f33a2d7239d2b187b9915626ad874faf"
+  "calculs": "01f7921dc74b6e0181b99f6ffa28c0b42278051e3652b21618151114a378f3fa",
+  "textes": "a75316c3db42868075c58af1d66a1abbe277d38cc4e777ffb7c298cfec54da49"
  }
 }

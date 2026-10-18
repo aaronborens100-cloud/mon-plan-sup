@@ -1,7 +1,7 @@
 {
  "profil": "eco-excellent-decide",
  "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 17.1,
   "moyennePeriode": "Terminale – T1",
@@ -147,19 +147,6 @@
     73
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31635",
-   "interet": 87,
-   "faisabilite": 97,
-   "pertinence": 91,
-   "chance": [
-    13,
-    26
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -643,6 +630,19 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-31479",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -666,7 +666,7 @@
     ]
    },
    {
-    "id": "psup-3277",
+    "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
     "categorie": "securite",
     "pertinence": 89,
     "chance": [
@@ -675,21 +675,12 @@
     ]
    },
    {
-    "id": "paris1-dl-histoire-scpo",
+    "id": "psup-39330",
     "categorie": "ambitieux",
-    "pertinence": 90,
+    "pertinence": 88,
     "chance": [
-     14,
-     28
-    ]
-   },
-   {
-    "id": "licence-mathematiques-portail-rene-descartes-luminy-aix-marseille-universite-marseille",
-    "categorie": "ambitieux",
-    "pertinence": 86,
-    "chance": [
-     12,
-     25
+     11,
+     22
     ]
    },
    {
@@ -702,30 +693,39 @@
     ]
    },
    {
-    "id": "psl-cpes-economie-societe-droit",
-    "categorie": "realiste",
-    "pertinence": 87,
+    "id": "paris1-dl-histoire-scpo",
+    "categorie": "ambitieux",
+    "pertinence": 90,
     "chance": [
-     34,
-     70
+     14,
+     28
     ]
    },
    {
-    "id": "bsb-burgundy-school-of-business-bachelor-in-management",
+    "id": "psup-6536",
     "categorie": "realiste",
-    "pertinence": 87,
+    "pertinence": 88,
     "chance": [
-     78,
-     80
+     53,
+     75
     ]
    },
    {
-    "id": "essca-school-of-management-pge-post-bac",
+    "id": "ps-9107",
     "categorie": "realiste",
-    "pertinence": 87,
+    "pertinence": 86,
     "chance": [
-     78,
-     80
+     62,
+     75
+    ]
+   },
+   {
+    "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
+    "categorie": "realiste",
+    "pertinence": 86,
+    "chance": [
+     25,
+     51
     ]
    },
    {
@@ -748,7 +748,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, double licence et licence d'éco-gestion, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
   "decouvertes": {}
  },
  "etranger": {
@@ -765,7 +765,7 @@
      ]
     },
     "ancre": {
-     "id": "psup-3277",
+     "id": "double-licence-mathematiques-economie-sciences-actuarielles-et-financieres-le-mans-universite-l",
      "categorie": "securite",
      "pertinence": 89,
      "chance": [
@@ -789,21 +789,21 @@
    },
    {
     "x": {
-     "id": "durham-economics",
+     "id": "durham-mathematics",
      "categorie": "realiste",
-     "pertinence": 89,
+     "pertinence": 85,
      "chance": [
-      34,
-      70
+      26,
+      54
      ]
     },
     "ancre": {
-     "id": "psl-cpes-economie-societe-droit",
+     "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
      "categorie": "realiste",
-     "pertinence": 87,
+     "pertinence": 86,
      "chance": [
-      34,
-      70
+      25,
+      51
      ]
     },
     "frais": null,
@@ -858,7 +858,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "73ff7b2435a667553aca8cbf97574aaaef75b73b5bad27804b3ddfbf75dc59aa",
-  "textes": "9855f416ede358fb4e507ee4ad35272050f0f44cddc18e7050af1cab123d1259"
+  "calculs": "6622ba6c799d7bb2a886a2ad8d359a5697963707bc365cd356a29b026156052b",
+  "textes": "34189214f8cf92c061c3442cbb1aa927cf28b209e6e590eb2e920f8e7660e7da"
  }
 }

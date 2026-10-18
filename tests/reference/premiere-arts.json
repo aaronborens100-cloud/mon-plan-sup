@@ -1,7 +1,7 @@
 {
  "profil": "premiere-arts",
  "description": "Élève de première, 13 de moyenne, spécialité arts, veut un parcours créatif",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 13,
   "moyennePeriode": "Première – T1",
@@ -156,12 +156,12 @@
    "exclu": null
   },
   {
-   "id": "psup-35357",
-   "interet": 88,
-   "faisabilite": 78,
+   "id": "psup-25320",
+   "interet": 84,
+   "faisabilite": 83,
    "pertinence": 84,
    "chance": [
-    72,
+    95,
     97
    ],
    "categorie": "securite",
@@ -364,6 +364,19 @@
    "exclu": null
   },
   {
+   "id": "psup-52050",
+   "interet": 88,
+   "faisabilite": 72,
+   "pertinence": 82,
+   "chance": [
+    null,
+    null
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-35250",
    "interet": 88,
    "faisabilite": 73,
@@ -380,6 +393,19 @@
    "id": "psup-9449",
    "interet": 84,
    "faisabilite": 79,
+   "pertinence": 82,
+   "chance": [
+    95,
+    97
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47497",
+   "interet": 84,
+   "faisabilite": 78,
    "pertinence": 82,
    "chance": [
     95,
@@ -596,32 +622,6 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-9270",
-   "interet": 86,
-   "faisabilite": 73,
-   "pertinence": 81,
-   "chance": [
-    57,
-    97
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32335",
-   "interet": 84,
-   "faisabilite": 77,
-   "pertinence": 81,
-   "chance": [
-    45,
-    93
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -636,16 +636,7 @@
     ]
    },
    {
-    "id": "psup-35357",
-    "categorie": "securite",
-    "pertinence": 84,
-    "chance": [
-     72,
-     97
-    ]
-   },
-   {
-    "id": "psup-9450",
+    "id": "psup-25320",
     "categorie": "securite",
     "pertinence": 84,
     "chance": [
@@ -672,30 +663,12 @@
     ]
    },
    {
-    "id": "dna-ecole-nationale-superieure-d-arts-de-paris-cergy-cergy",
+    "id": "dna-ecole-nationale-superieure-des-beaux-arts-de-lyon-lyon",
     "categorie": "ambitieux",
     "pertinence": 77,
     "chance": [
-     6,
-     12
-    ]
-   },
-   {
-    "id": "sorbonne-universite-histoire-de-l-art-et-archeologie",
-    "categorie": "realiste",
-    "pertinence": 84,
-    "chance": [
-     78,
-     80
-    ]
-   },
-   {
-    "id": "sorbonne-universite-musicologie",
-    "categorie": "realiste",
-    "pertinence": 84,
-    "chance": [
-     78,
-     80
+     10,
+     21
     ]
    },
    {
@@ -708,12 +681,39 @@
     ]
    },
    {
-    "id": "diplome-de-l-ecole-nationale-superieure-des-arts-decoratifs-arts-decoratifs-ensad-paris",
+    "id": "u-paris-1-histoire-de-l-art-et-archeologie",
     "categorie": "realiste",
-    "pertinence": 77,
+    "pertinence": 82,
     "chance": [
-     19,
-     41
+     34,
+     72
+    ]
+   },
+   {
+    "id": "u-sorbonne-paris-nord-villetaneuse-licence-science-politique-parcours-sociologie-politique",
+    "categorie": "realiste",
+    "pertinence": 71,
+    "chance": [
+     28,
+     59
+    ]
+   },
+   {
+    "id": "psup-4165",
+    "categorie": "realiste",
+    "pertinence": 76,
+    "chance": [
+     33,
+     69
+    ]
+   },
+   {
+    "id": "u-paris-1-arts-plastiques",
+    "categorie": "securite",
+    "pertinence": 83,
+    "chance": [
+     40,
+     83
     ]
    }
   ],
@@ -726,7 +726,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à école d'art ou du spectacle.",
+  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et école d'art ou du spectacle, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de droit ou science po.",
   "decouvertes": {}
  },
  "etranger": {
@@ -805,12 +805,12 @@
      ]
     },
     "ancre": {
-     "id": "sorbonne-universite-musicologie",
-     "categorie": "realiste",
-     "pertinence": 84,
+     "id": "u-paris-1-arts-plastiques",
+     "categorie": "securite",
+     "pertinence": 83,
      "chance": [
-      78,
-      80
+      40,
+      83
      ]
     },
     "frais": 0,
@@ -830,7 +830,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "997fa25fe6dd70c3078f88e3c9ae0b7e8eade37cb9daff7b631824f6955c2cbc",
-  "textes": "f5d8e7f353beb76ca7be49a37ce6056d6e5e53cc5d44d57c979deb5ad9ca2466"
+  "calculs": "7d6b61e439cdbd064371082723ec7ae05e2e06f25abde6c942004ea6526cb241",
+  "textes": "a7278be13d0b72696c5dd3c6a966ead04a6f77a0ed6030b9799cf9da978353a0"
  }
 }

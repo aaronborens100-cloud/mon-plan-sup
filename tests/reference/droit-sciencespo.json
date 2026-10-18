@@ -1,7 +1,7 @@
 {
  "profil": "droit-sciencespo",
  "description": "14 de moyenne, HGGSP + HLP, sans maths, veut faire du droit ou de la science politique",
- "nbFormationsNotees": 7101,
+ "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 14.1,
   "moyennePeriode": "Terminale – T1",
@@ -656,15 +656,6 @@
     ]
    },
    {
-    "id": "u-clermont-auvergne-philosophie",
-    "categorie": "securite",
-    "pertinence": 77,
-    "chance": [
-     95,
-     97
-    ]
-   },
-   {
     "id": "psup-27193",
     "categorie": "ambitieux",
     "pertinence": 87,
@@ -692,39 +683,48 @@
     ]
    },
    {
-    "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
+    "id": "psup-36539",
     "categorie": "realiste",
-    "pertinence": 89,
+    "pertinence": 78,
     "chance": [
-     78,
-     80
+     32,
+     67
     ]
    },
    {
-    "id": "sciences-po-grenoble-iep",
+    "id": "psup-11077",
     "categorie": "realiste",
-    "pertinence": 81,
+    "pertinence": 82,
     "chance": [
-     44,
-     80
+     37,
+     75
     ]
    },
    {
-    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-science-politique-lettr",
+    "id": "psup-28449",
     "categorie": "realiste",
-    "pertinence": 83,
+    "pertinence": 76,
     "chance": [
-     78,
-     80
+     51,
+     75
     ]
    },
    {
-    "id": "ps-4671",
-    "categorie": "ambitieux",
-    "pertinence": 79,
+    "id": "psup-48191",
+    "categorie": "realiste",
+    "pertinence": 75,
     "chance": [
-     2,
-     5
+     17,
+     36
+    ]
+   },
+   {
+    "id": "psup-48613",
+    "categorie": "securite",
+    "pertinence": 85,
+    "chance": [
+     72,
+     97
     ]
    }
   ],
@@ -738,7 +738,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur double licence, avec licence de droit ou science po et licence de lettres ou sciences humaines comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec double licence et IEP comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
   "decouvertes": {}
  },
  "etranger": {
@@ -746,41 +746,41 @@
   "liste": [
    {
     "x": {
-     "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-     "categorie": "realiste",
-     "pertinence": 93,
+     "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
+     "categorie": "securite",
+     "pertinence": 89,
      "chance": [
-      78,
-      80
+      95,
+      97
      ]
     }
    },
    {
     "x": {
-     "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
-     "categorie": "realiste",
-     "pertinence": 92,
+     "id": "u-de-corse-corte-double-licence-droit-administration-publique",
+     "categorie": "securite",
+     "pertinence": 88,
      "chance": [
-      60,
-      80
+      68,
+      97
      ]
     }
    },
    {
     "x": {
-     "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
-     "categorie": "realiste",
-     "pertinence": 90,
+     "id": "u-d-orleans-orleans-double-licence-droit-histoire",
+     "categorie": "securite",
+     "pertinence": 85,
      "chance": [
-      44,
-      80
+      95,
+      97
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "78864f9b743aab42daf725e32f5a40097f3ffda95e9ccfb768664d50e6e8df90",
-  "textes": "6048599fc5ef7620738f416e9840e9671c4f8ab7b04533feaa7758cddf4e39cc"
+  "calculs": "ccf90af031f3b8c38ca9885371414f971c85c75048842727885f9ec5c26a2644",
+  "textes": "cbc047e8071d6c25b80c04965f8f51db92237167e6470e4d51661c333f5d26b5"
  }
 }
