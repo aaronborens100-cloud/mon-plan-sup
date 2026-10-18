@@ -36,6 +36,7 @@ for (const p of PROFILS) {
       assert.deepEqual(obtenu.interets, attendu.interets);
     });
     await t.test("liste des 10 vœux", () => assert.deepEqual(obtenu.voeux, attendu.voeux));
+    await t.test("section « Nouvelles à la rentrée 2026 »", () => assert.deepEqual(obtenu.nouvelles, attendu.nouvelles));
     await t.test("propositions à l'étranger", () => assert.deepEqual(obtenu.etranger, attendu.etranger));
     await t.test("40 premières recommandations", () => assert.deepEqual(obtenu.top, attendu.top));
     await t.test("chiffres de toutes les formations", () => {

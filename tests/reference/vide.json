@@ -679,6 +679,7 @@
   "explication": "Sans tes réponses au questionnaire, on a réparti tes vœux sur 9 types de formations. Réponds-y pour une liste vraiment personnalisée.",
   "decouvertes": {}
  },
+ "nouvelles": [],
  "etranger": {
   "mode": "decouverte",
   "liste": [
@@ -752,6 +753,6 @@
  },
  "empreintes": {
   "calculs": "06c3e9d212dc5cecd8afa3718c8071b43bcf50a332b79e3d5ac1d2a092c1f13e",
-  "textes": "f068afae231b948c5c06b950231b972b4c3a0f694f9f5e0d3e28c5ecfbdc948c"
+  "textes": "1ed281848cc9c4cc948502d4531460f53f4b883996b603d2622e1ac569d84d9a"
  }
 }

@@ -745,6 +745,20 @@
   "explication": "Tu t'intéresses surtout à la science politique et les sciences humaines : tes vœux se partagent entre licence de droit ou science po, licence de lettres ou sciences humaines et IEP, plus quelques autres pistes.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-52221",
+   "interet": 81
+  },
+  {
+   "id": "psup-51022",
+   "interet": 71
+  },
+  {
+   "id": "psup-51491",
+   "interet": 71
+  }
+ ],
  "etranger": {
   "mode": "oui",
   "liste": [
@@ -917,6 +931,6 @@
  },
  "empreintes": {
   "calculs": "f79da567cf58f9970df7bb350ade541aa0345540b45271eec93590d0f8bf862a",
-  "textes": "265dd6333b148fae36985c31227b10d5014211561fe8ee464199a5c3373e24b6"
+  "textes": "a74a8ac0d2cf7e384a726c7fc93bcbb13f315af14d136018074b1784686e5b0f"
  }
 }

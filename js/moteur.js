@@ -239,12 +239,14 @@
     // nouvelle formation (statut « stats » de la fiche, data/statuts-stats.json) : aucune fourchette affichée
     if (f.stats === "nouvelle_2026") return { bas: null, haut: null, mid: null, base: null, approx: true, nouvelle: true,
       methode: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas d'estimation de tes chances." };
+    // statistiques non publiées : aucune estimation (pas de calcul d'après un niveau de sélectivité par défaut)
+    if (f.stats === "sans_stats") return { bas: null, haut: null, mid: null, base: null, approx: true, sansStats: true, methode: HORS_LISTE.sans_stats };
     const a = f.admission || {};
     let T = typeof a.taux === "number" ? a.taux : null, approx = false, methode;   // le taux d'accès sert au calcul mais n'est plus affiché   // le taux d'accès sert au calcul mais n'est plus affiché
     if (T === null) {
       T = { tres_haute: 8, haute: 20, moyenne: 40, ouverte: 70 }[f.selectivite.niveau] || 30; approx = true;
       methode = "Statistiques d'admission non publiées : estimation à partir du niveau de sélectivité.";
-    } else methode = a.statut === "releve_manuel" ? `Point de départ : les statistiques d'admission de la session ${a.session} de la formation (relevé manuel).` : "Point de départ : les statistiques d'admission 2025 de la formation.";
+    } else methode = a.session ? `Point de départ : les statistiques d'admission de la session ${a.session} de la formation${a.statut === "releve_manuel" ? " (relevé manuel)" : ""}.` : "Point de départ : les statistiques d'admission 2025 de la formation.";
     let p = null;
     const m = f.mentions_admis;
     const moyEleve = s.moyenneGenerale !== null ? s.moyenneGenerale + 0.4 : null; // la moyenne au bac dépasse en général celle des bulletins
@@ -482,17 +484,27 @@
   // visible dans le catalogue et sur sa fiche, et l'élève peut toujours l'ajouter lui-même à ses vœux.
   const SEUIL_BAC_GENERAL = 20;   // part minimale (%) de bacheliers généraux parmi les admis 2025 (stats.json, pct_bg)
   const CATEGORIES_BAC_PRO = ["Certificats de spécialisation et FCIL"];   // catégories Parcoursup (tf) visant les bacs pro
-  const MAX_NOUVELLES = 2;   // nouvelles formations 2026 (sans statistiques) : au plus 2 par liste, en ambitieux ou découverte
+  // Nouvelles formations 2026 (sans statistiques) : jamais dans la liste de 10 vœux, proposées à part (nouvelles()),
+  // et seulement si leur catégorie Parcoursup (tf) vise les bacheliers généraux (sans statistiques, pas de pct_bg).
+  const MAX_NOUVELLES = 3;
+  const CATEGORIES_NOUVELLES = ["Licence", "Licence sélective", "CPGE", "Formations des écoles d'ingénieurs",
+    "Formations des écoles de commerce et de management", "Etudes de santé", "Sciences Po - Instituts d'études politiques",
+    "C.M.I - Cursus Master en Ingénierie", "DEUST", "Formations d'art, de design et du spectacle vivant"];
   const HORS_LISTE = {
     sans_stats: "Statistiques d'admission non publiées : chances impossibles à estimer.",
     filiere_a_relire: "Description de la filière encore à vérifier.",
     bac_pro: "Formation qui accueille surtout des bacheliers professionnels.",
+    nouvelle_2026: "Nouvelle formation 2026 : proposée à part, dans « Nouvelles à la rentrée 2026 ».",
+    nouvelle_hors_categories: "Nouvelle formation 2026 d'une catégorie qui ne vise pas d'abord les bacheliers généraux.",
   };
   // Règles qui écartent la formation des listes (tableau vide : la formation peut y entrer)
   function reglesHorsListe(f) {
     if (f.pays !== "France") return [];
     const r = [];
-    if (f.stats !== "nouvelle_2026" && (!f.admission || typeof f.admission.taux !== "number")) r.push("sans_stats");
+    if (f.stats === "nouvelle_2026") {
+      r.push("nouvelle_2026");
+      if (!(f.__tf || []).some((t) => CATEGORIES_NOUVELLES.includes(t))) r.push("nouvelle_hors_categories");
+    } else if (!f.admission || typeof f.admission.taux !== "number") r.push("sans_stats");
     if (f.__gen && f.__gen.fam && f.__gen.fam.valide === false) r.push("filiere_a_relire");
     if ((f.__tf || []).some((t) => CATEGORIES_BAC_PRO.includes(t)) || (typeof f.__pctBG === "number" && f.__pctBG < SEUIL_BAC_GENERAL)) r.push("bac_pro");
     return r;
@@ -507,9 +519,8 @@
     const cert = certitude(it);
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
-    // voies « cœur de projet » : celles des 5 formations les plus pertinentes ; la première est la voie principale.
-    // Les nouvelles formations 2026 n'y comptent pas : sans chiffres, elles ne doivent pas orienter toute la liste.
-    const top5 = ok.filter((x) => x.f.stats !== "nouvelle_2026").sort((a, b) => b.pertinence - a.pertinence).slice(0, 5);
+    // voies « cœur de projet » : celles des 5 formations les plus pertinentes ; la première est la voie principale
+    const top5 = ok.slice().sort((a, b) => b.pertinence - a.pertinence).slice(0, 5);
     const coeur = new Set(top5.map(V)), principal = top5.length ? V(top5[0]) : null;
     const CAPS = { decide: [5, 3, 2], intermediaire: [4, 3, 2], indecis: [3, 2, 2], inconnu: [3, 3, 2] }[cert.niveau];
     let bonusType = 0;
@@ -519,14 +530,13 @@
     let plancher = top5.length ? topP - 20 : -Infinity;
     const choisis = [];
     const oxbridge = (x) => /Oxford|Cambridge/.test(x.f.etablissement);
-    const nouvelle = (x) => x.f.stats === "nouvelle_2026";
     const parFil = {}, parFam = {};
     let maxFil = 2;   // au plus 2 établissements pour une même formation, de catégories différentes
     const fam = (x) => (x.f.famille ? x.f.famille.id : null);
     const fil = (x) => intitule(x.f);
     const peut = (x) => (parEtab[x.f.etablissement] || 0) < 2 && (parFil[fil(x)] || 0) < maxFil && (!fam(x) || (parFam[fam(x)] || 0) < 2)
       && !choisis.some((c) => fil(c) === fil(x) && c.categorie === x.categorie && maxFil <= 2) && (parType[V(x)] || 0) < maxType(V(x)) && !choisis.includes(x)
-      && !(oxbridge(x) && choisis.some((c) => oxbridge(c))) && !(nouvelle(x) && choisis.filter(nouvelle).length >= MAX_NOUVELLES);
+      && !(oxbridge(x) && choisis.some((c) => oxbridge(c)));
     const prend = (x) => { choisis.push(x); parEtab[x.f.etablissement] = (parEtab[x.f.etablissement] || 0) + 1; parType[V(x)] = (parType[V(x)] || 0) + 1; parFil[fil(x)] = (parFil[fil(x)] || 0) + 1; if (fam(x)) parFam[fam(x)] = (parFam[fam(x)] || 0) + 1; };
     // score de choix : pertinence, bonus « cœur de projet », malus pour chaque vœu déjà pris dans la même voie ;
     // un élève indécis reçoit en priorité les formations qui laissent des portes ouvertes (polyvalence)
@@ -544,7 +554,7 @@
     const voiesDec = new Set();
     for (const x of candDec) {
       if (decouvertes.size >= nbDec) break;
-      if (voiesDec.has(V(x)) || (x.categorie === "ambitieux" && !nouvelle(x)) || !peut(x)) continue;   // une découverte doit rester atteignable (nouvelle formation : chances inconnues, admise en découverte)
+      if (voiesDec.has(V(x)) || x.categorie === "ambitieux" || !peut(x)) continue;   // une découverte doit rester atteignable
       voiesDec.add(V(x)); decouvertes.set(x.f.id, x);
     }
 
@@ -601,6 +611,19 @@
     };
     return { liste: choisis, auMoinsUne: auMoinsUne !== null ? Math.min(auMoinsUne, 99) : null, alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
+  }
+
+  /* ---------------------------------------------------------------- nouvelles formations 2026 */
+  // Section « Nouvelles à la rentrée 2026 », sous la liste de 10 vœux : au plus n formations « nouvelle_2026 »,
+  // triées uniquement par intérêt (sans chiffres, leur faisabilité est artificiellement haute), sans catégorie ni
+  // fourchette. Mêmes règles du garde-fou que la liste (filière à relire, liste blanche des catégories), sauf la
+  // règle « nouvelle_2026 » elle-même. Sans réponse au questionnaire, l'intérêt ne distingue rien : section vide.
+  function nouvelles(resultats, it, n = MAX_NOUVELLES) {
+    if (!it || !it.repondues) return [];
+    return resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && x.f.stats === "nouvelle_2026"
+      && reglesHorsListe(x.f).every((r) => r === "nouvelle_2026"))
+      .sort((a, b) => b.interet - a.interet)   // tri stable : à intérêt égal, l'ordre de recommander() est conservé
+      .slice(0, n);
   }
 
   /* ---------------------------------------------------------------- étranger */
@@ -709,5 +732,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, chance, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

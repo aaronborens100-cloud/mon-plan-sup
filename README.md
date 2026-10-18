@@ -102,10 +102,19 @@ Les formations écartées restent dans le catalogue et sur leur fiche.
 Les formations du périmètre absentes de `stats.json` ont un statut (`data/statuts-stats.json`) :
 
 - `nouvelle_2026` : formation qui n'a jamais eu de session Parcoursup. Mention « Nouvelle formation à la rentrée
-  2026 : pas encore de statistiques d'admission ». Pas de fourchette de chances ; elle peut entrer dans la liste
-  de vœux, mais seulement en « ambitieux » ou en vœu « découverte », au plus `MAX_NOUVELLES` = 2 par liste ;
-- `sans_stats` : formation qui existait, statistiques non publiées ou non retrouvées. Mention « Statistiques
-  d'admission non publiées ». Hors des listes de vœux tant qu'il n'y a pas de chiffres sourcés.
+  2026 : pas encore de statistiques d'admission ». Pas de catégorie ni de fourchette de chances. Jamais dans la
+  liste de 10 vœux (`wishlist`) : `CapEngine.nouvelles(resultats, it, n)` en propose au plus `MAX_NOUVELLES` = 3
+  dans une section à part, « Nouvelles à la rentrée 2026 », sous la liste. Tri par intérêt seulement (sans
+  chiffres, la faisabilité est artificiellement haute), section vide sans réponse au questionnaire. Seules les
+  catégories Parcoursup de `CATEGORIES_NOUVELLES` (licences, CPGE, ingénieurs, commerce, santé, IEP, CMI, DEUST,
+  arts) sont proposées : sans statistiques, le filtre sur la part de bacheliers généraux ne peut pas jouer ;
+- `sans_stats` : formation qui existait, statistiques non publiées, non retrouvées, ou antérieures à 2024.
+  Mention « Statistiques d'admission non publiées : chances impossibles à estimer » (aucune estimation).
+  Hors des listes de vœux tant qu'il n'y a pas de chiffres sourcés.
+
+Des statistiques officielles de la session 2024 (retrouvées par le script avec `--historique`) rendent la
+formation éligible, comme des statistiques 2025 : statut `avec_stats`, fiche « statistiques de la session 2024 »
+avec source et date. Plus anciennes, elles sont seulement affichées pour information.
 
 Un relevé ajouté dans `data/stats-manuelles.json` (taux, places, vœux, admis, session, source, date de
 consultation, `"statut": "releve_manuel"`) est traité comme une statistique normale, avec sa source sur la fiche :

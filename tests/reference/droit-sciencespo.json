@@ -741,6 +741,20 @@
   "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec double licence et IEP comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51754",
+   "interet": 82
+  },
+  {
+   "id": "psup-52010",
+   "interet": 82
+  },
+  {
+   "id": "psup-53196",
+   "interet": 82
+  }
+ ],
  "etranger": {
   "mode": "echange",
   "liste": [
@@ -781,6 +795,6 @@
  },
  "empreintes": {
   "calculs": "75688d806b46ad45d51cc72341222d1cf8d1686a6e5565277acd18d7551a9b3c",
-  "textes": "93a56b3345f0faa8060e956afb9083df2cc6dbd5d3056d27dbd476c33556f8da"
+  "textes": "2de9203f4840d6b57b9275ee1f3513e50fd90359d149fc846a702ca9c36d6058"
  }
 }

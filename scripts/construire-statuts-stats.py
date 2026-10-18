@@ -4,8 +4,10 @@
 Produit :
   - data/statuts-stats.json : un statut par code gta sans statistiques 2025 :
       « nouvelle_2026 » : formation qui n'a jamais eu de session Parcoursup ;
-      « sans_stats »    : formation qui existait, mais dont les statistiques ne sont pas publiées
-                          ou pas retrouvées.
+      « avec_stats »    : statistiques retrouvées dans la session SESSION_RECENTE (2024) : elles servent
+                          comme des statistiques normales (« statistiques de la session 2024 ») ;
+      « sans_stats »    : formation qui existait, mais dont les statistiques ne sont pas publiées,
+                          pas retrouvées, ou plus anciennes que 2024 (affichées pour information seulement).
     avec une certitude :
       « verifiee » : le code a été cherché dans les fichiers officiels des sessions antérieures ;
       « probable » : seulement d'après le code (sans les sessions antérieures) : les codes gta sont
@@ -59,6 +61,8 @@ PRIORITE_2 = {"Formations diplômantes du travail social", "DCG", "DEUST",
 
 # Format d'une entrée de data/stats-manuelles.json (même ordre que les colonnes vides du CSV)
 CHAMPS_MANUELS = ["taux", "places", "voeux", "admis", "session", "source", "consulte_le", "statut"]
+# Session antérieure la plus ancienne dont les statistiques rendent la formation éligible aux listes
+SESSION_RECENTE = "2024"
 # Colonnes du fichier officiel reprises pour les sessions antérieures
 COLS_HISTO = {"taux": "taux_acces_ens", "places": "capa_fin", "voeux": "voe_tot", "admis": "acc_tot"}
 
@@ -197,7 +201,7 @@ def main():
         trouve = next(((s, histo[s][g]) for s in sorted(histo, reverse=True) if g in histo[s]), None)
         if trouve:
             s, L = trouve
-            e = {"stats": "sans_stats", "certitude": "verifiee",
+            e = {"stats": "avec_stats" if s >= SESSION_RECENTE else "sans_stats", "certitude": "verifiee",
                  "anciennes": {**{k: nombre(L.get(c)) for k, c in COLS_HISTO.items()}, "session": s,
                                "source": URL_STATS, "consulte_le": a.consulte_le, "statut": "officiel"}}
         elif histo:

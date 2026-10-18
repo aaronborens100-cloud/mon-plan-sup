@@ -653,21 +653,21 @@
     ]
    },
    {
-    "id": "psup-50635",
-    "categorie": "ambitieux",
-    "pertinence": 78,
-    "chance": [
-     null,
-     null
-    ]
-   },
-   {
-    "id": "psup-50680",
+    "id": "psup-27214",
     "categorie": "ambitieux",
     "pertinence": 77,
     "chance": [
-     null,
-     null
+     14,
+     30
+    ]
+   },
+   {
+    "id": "psup-31846",
+    "categorie": "ambitieux",
+    "pertinence": 76,
+    "chance": [
+     15,
+     31
     ]
    },
    {
@@ -729,12 +729,26 @@
   "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec DEUST (diplôme universitaire bac + 2) et licence de sciences comme solutions de repli.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-53243",
+   "interet": 81
+  },
+  {
+   "id": "psup-50635",
+   "interet": 78
+  },
+  {
+   "id": "psup-50680",
+   "interet": 77
+  }
+ ],
  "etranger": {
   "mode": "non",
   "liste": []
  },
  "empreintes": {
   "calculs": "fcd44f4df1473a2edc17148b32bda24fedd7c21eb98c84fd325c576c02afe95d",
-  "textes": "763f9c8907c63183fa17ae5176608c31b8ddae67b98c5a32fefc0fe3c4d6e241"
+  "textes": "aea7fb8603aa1aef2c44dd1c6efdc934a52804977f1bf856ea0608263bbcef66"
  }
 }

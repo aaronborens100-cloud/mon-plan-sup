@@ -645,12 +645,12 @@
     ]
    },
    {
-    "id": "psup-52050",
+    "id": "psup-47253",
     "categorie": "ambitieux",
-    "pertinence": 82,
+    "pertinence": 81,
     "chance": [
-     null,
-     null
+     13,
+     27
     ]
    },
    {
@@ -729,6 +729,20 @@
   "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et école d'art ou du spectacle, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de droit ou science po.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-52050",
+   "interet": 88
+  },
+  {
+   "id": "psup-52043",
+   "interet": 84
+  },
+  {
+   "id": "psup-50774",
+   "interet": 84
+  }
+ ],
  "etranger": {
   "mode": "decouverte",
   "liste": [
@@ -831,6 +845,6 @@
  },
  "empreintes": {
   "calculs": "a92fe6556de3b8ef443d4b7219d5825503c62541a28309edabcfe8d7a3bc09ea",
-  "textes": "89c5b87a01bedc4ed9fd1decfbdb0ef160e71d228138acb673d76de6bfcb4162"
+  "textes": "4586ae19b928681869bb7c41677e7d674592a598741370ef7873e2f572677ea5"
  }
 }

@@ -655,21 +655,12 @@
     ]
    },
    {
-    "id": "psup-51987",
+    "id": "psup-28409",
     "categorie": "ambitieux",
-    "pertinence": 73,
+    "pertinence": 74,
     "chance": [
-     null,
-     null
-    ]
-   },
-   {
-    "id": "psup-35636",
-    "categorie": "realiste",
-    "pertinence": 77,
-    "chance": [
-     57,
-     75
+     7,
+     15
     ]
    },
    {
@@ -691,12 +682,21 @@
     ]
    },
    {
-    "id": "psup-28972",
-    "categorie": "ambitieux",
-    "pertinence": 76,
+    "id": "psup-16662",
+    "categorie": "realiste",
+    "pertinence": 75,
     "chance": [
-     5,
-     12
+     16,
+     36
+    ]
+   },
+   {
+    "id": "psup-35533",
+    "categorie": "securite",
+    "pertinence": 75,
+    "chance": [
+     95,
+     97
     ]
    },
    {
@@ -722,6 +722,20 @@
   "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 6 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51300",
+   "interet": 85
+  },
+  {
+   "id": "psup-51256",
+   "interet": 85
+  },
+  {
+   "id": "psup-52022",
+   "interet": 85
+  }
+ ],
  "etranger": {
   "mode": "decouverte",
   "liste": [
@@ -826,6 +840,6 @@
  },
  "empreintes": {
   "calculs": "1512fc69ff1d8bd1e7b388c66edf4b93853e47a321427f42882cc389a9461dd6",
-  "textes": "3dbc00167998ad11d5e2c28a71f8d593eaed210d538cea5675e208fbe5ee5c33"
+  "textes": "3ffe5fb8d4f94c5af406d76ca92a13dc3506cb13f448b1b07640fefa57935e6c"
  }
 }

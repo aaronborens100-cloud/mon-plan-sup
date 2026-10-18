@@ -673,12 +673,21 @@
     ]
    },
    {
-    "id": "psup-51307",
+    "id": "psup-39903",
     "categorie": "ambitieux",
-    "pertinence": 75,
+    "pertinence": 72,
     "chance": [
-     null,
-     null
+     11,
+     24
+    ]
+   },
+   {
+    "id": "psup-43192",
+    "categorie": "ambitieux",
+    "pertinence": 70,
+    "chance": [
+     6,
+     14
     ]
    },
    {
@@ -709,25 +718,16 @@
     ]
    },
    {
-    "id": "ps-12929",
-    "categorie": "realiste",
-    "pertinence": 52,
-    "chance": [
-     16,
-     38
-    ]
-   },
-   {
-    "id": "psup-51924",
+    "id": "psup-2220",
     "categorie": "ambitieux",
-    "pertinence": 79,
+    "pertinence": 65,
     "chance": [
-     null,
-     null
+     10,
+     22
     ]
    }
   ],
-  "auMoinsUne": 98,
+  "auMoinsUne": 99,
   "alertes": [],
   "certitude": {
    "niveau": "decide",
@@ -737,15 +737,29 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli. Un vœu « découverte » t'ouvre à formation ou titre professionnel.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli.",
   "decouvertes": {}
  },
+ "nouvelles": [
+  {
+   "id": "psup-51307",
+   "interet": 84
+  },
+  {
+   "id": "psup-52795",
+   "interet": 84
+  },
+  {
+   "id": "psup-52341",
+   "interet": 50
+  }
+ ],
  "etranger": {
   "mode": "non",
   "liste": []
  },
  "empreintes": {
   "calculs": "d0ad3f69adb35497d84160be91c464165c6c6740158e8f3449f8fc97a972739e",
-  "textes": "612c7f1f1ef66e857c9fb4bf7cff9d8a98eac826153ccd0bdd5c52c7ac5d05b4"
+  "textes": "aaa1cd9120df87f8371bb94cb418dc50e49316511df180e62e982d464b7db44d"
  }
 }
