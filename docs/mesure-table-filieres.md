@@ -32,7 +32,13 @@ chaque modification de la table : il réécrit seulement la partie « Résultats
    Pour les 10 profils de `tests/profils.js`, on compare les listes de 10 vœux (et, en plus, les 40 premières
    recommandations et les propositions à l'étranger). Contrôle intégré : avec la vraie table, on retrouve
    exactement les vœux de `tests/reference/`.
-3. **Échantillon à relire** : `docs/relecture-filieres.csv`, à remplir par un humain (voir la partie 3).
+3. **Échantillon à relire** : `docs/relecture-filieres.csv`, à remplir par un humain (voir la partie 3). Les 30
+   filières sont tirées **uniquement parmi les filières déduites qui ont au moins une formation recommandable**
+   (formation qui peut entrer dans une liste de vœux : `CapEngine.horsListe(f)` faux, calculé avec le vrai site),
+   avec une probabilité proportionnelle au nombre de ces formations. Une première version tirait au hasard parmi
+   toutes les filières déduites, réparties comme les catégories Parcoursup : 24 des 30 filières tirées n'avaient
+   aucune formation recommandable (certificats de spécialisation et FCIL, formations en apprentissage sans
+   statistiques, filières non valides…). La relecture aurait mesuré des filières qu'aucun élève ne voit dans sa liste.
 
 ## Résumé
 
@@ -329,31 +335,42 @@ _Partie générée par `python3 scripts/mesurer-filieres.py` : ne pas modifier �
 
 ### 3. Échantillon à relire
 
-30 filières tirées parmi les 448 déduites qui passent par les règles d'intitulé (460 déduites, moins 12 variantes en apprentissage qui recopient une famille écrite à la main : DE-ASS-App, DE-EJE-App, DE-ES-App, DE-MEM-App, DNM-Animation-App, DNM-Graphisme-App, DNM-Matériaux-App, DNM-Numérique-App, DNM-Objet-App, EI-BAC3-App, FECM-B3-App, L1-Gestion-App). Graine `20261019`, répartition proportionnelle aux catégories Parcoursup (plus forts restes) : `docs/relecture-filieres.csv`.
+460 filières déduites, moins 12 variantes en apprentissage qui recopient une famille écrite à la main (DE-ASS-App, DE-EJE-App, DE-ES-App, DE-MEM-App, DNM-Animation-App, DNM-Graphisme-App, DNM-Matériaux-App, DNM-Numérique-App, DNM-Objet-App, EI-BAC3-App, FECM-B3-App, L1-Gestion-App) : 448 filières passent par les règles d'intitulé. **146 d'entre elles seulement ont au moins une formation recommandable** (fiche notée par la table, en France, pour laquelle `CapEngine.horsListe(f)` est faux, calculé avec le vrai site chargé par `tests/charger-site.js`) ; les autres n'apparaissent dans aucune liste de vœux.
 
-| Catégorie Parcoursup | Filières déduites | Tirées |
+| Formations recommandables | Nombre | Part |
 |---|---|---|
-| C.M.I - Cursus Master en Ingénierie | 17 | 1 |
-| CPGE | 11 | 1 |
-| Certificats de spécialisation et FCIL | 84 | 6 |
-| DCG | 2 | 0 |
-| DEUST | 18 | 1 |
-| Diplômes d'université ou d'établissement | 18 | 1 |
-| Etudes de santé | 9 | 1 |
-| Formations aux métiers de l'hôtellerie restauration | 2 | 0 |
-| Formations aux métiers du sport | 33 | 2 |
-| Formations d'architecture, du paysage et du patrimoine | 6 | 0 |
-| Formations d'art, de design et du spectacle vivant | 12 | 1 |
-| Formations des écoles d'ingénieurs | 1 | 0 |
-| Formations des écoles de commerce et de management | 1 | 0 |
-| Formations des écoles vétérinaires | 1 | 0 |
-| Formations diplômantes du travail social | 4 | 0 |
-| Formations professionnelles | 130 | 9 |
-| Formations préparatoires à l'enseignement supérieur | 12 | 1 |
-| Licence | 29 | 2 |
-| Licence professionnelle | 4 | 0 |
-| Licence sélective | 53 | 4 |
-| Sciences Po - Instituts d'études politiques | 1 | 0 |
+| Toutes, en France (toutes origines de fiche) | 6396 | 100 % |
+| Notées par la table `data/filieres.json` | 5563 | 87,0 % |
+| … par les 87 familles écrites à la main (81 familles en ont) | 4630 | 72,4 % |
+| … par les 146 filières déduites tirables | 933 | 14,6 % |
+| … par les variantes en apprentissage qui recopient une famille (exclues du tirage) | 0 | 0,0 % |
+| **Couvertes par l'échantillon de 30 filières** | **624** | **66,9 % des formations recommandables des filières déduites** |
+
+Tirage : 30 filières parmi les 146, sans remise, avec une probabilité proportionnelle au nombre de formations recommandables (tirages successifs), graine `20261019` : `docs/relecture-filieres.csv`. La formation d'exemple de chaque ligne est tirée parmi les formations recommandables de la filière.
+
+| Catégorie Parcoursup | Filières déduites | dont avec formation recommandable | Tirées | Formations recommandables des filières tirées |
+|---|---|---|---|---|
+| C.M.I - Cursus Master en Ingénierie | 17 | 14 | 1 | 6 |
+| CPGE | 11 | 3 | 2 | 108 |
+| Certificats de spécialisation et FCIL | 84 | 0 | 0 | 0 |
+| DCG | 2 | 1 | 1 | 96 |
+| DEUST | 18 | 10 | 0 | 0 |
+| Diplômes d'université ou d'établissement | 18 | 6 | 3 | 3 |
+| Etudes de santé | 9 | 8 | 3 | 64 |
+| Formations aux métiers de l'hôtellerie restauration | 2 | 2 | 1 | 52 |
+| Formations aux métiers du sport | 33 | 11 | 3 | 23 |
+| Formations d'architecture, du paysage et du patrimoine | 6 | 5 | 2 | 28 |
+| Formations d'art, de design et du spectacle vivant | 12 | 4 | 0 | 0 |
+| Formations des écoles d'ingénieurs | 1 | 0 | 0 | 0 |
+| Formations des écoles de commerce et de management | 1 | 1 | 1 | 33 |
+| Formations des écoles vétérinaires | 1 | 1 | 0 | 0 |
+| Formations diplômantes du travail social | 4 | 3 | 1 | 6 |
+| Formations professionnelles | 130 | 0 | 0 | 0 |
+| Formations préparatoires à l'enseignement supérieur | 12 | 8 | 2 | 29 |
+| Licence | 29 | 27 | 6 | 172 |
+| Licence professionnelle | 4 | 0 | 0 | 0 |
+| Licence sélective | 53 | 41 | 4 | 4 |
+| Sciences Po - Instituts d'études politiques | 1 | 1 | 0 | 0 |
 
 ### 4. Seuils proposés, appliqués à cette mesure
 
@@ -437,11 +454,15 @@ Les numéros `REGLES[i]` / `REPLI[i]` sont les positions (à partir de 0) dans l
   [aaronborens100-cloud/mon-plan-sup#5](https://github.com/aaronborens100-cloud/mon-plan-sup/issues/5)). Certains
   « désaccords » sont peut-être des erreurs de la référence (`L1-LPE` à dominante maths, par exemple). La mesure
   dit « accord avec la saisie à la main », pas « exactitude ».
+- **Certaines valeurs de référence écrites à la main sont elles-mêmes douteuses.** Exemple à vérifier : `L1-LPE`
+  (Professorat des écoles) a « maths » comme premier domaine dans `data/generees.json` (issue #5).
 - **Les familles sont les filières les plus courantes et les plus nettes** (licences générales, CPGE, D.E de santé,
   DN MADE, écoles d'ingénieurs et de commerce). Les 460 filières déduites sont surtout des formations
   professionnelles, certificats de spécialisation, DEUST, diplômes d'établissement, aux intitulés plus variés : le
   résultat sur elles sera **probablement moins bon**. À l'inverse, certains défauts trouvés ici (types `dn_made`,
-  `prepa_ecg`…) concernent surtout les familles et peu les 460.
+  `prepa_ecg`…) concernent surtout les familles et peu les 460. Mais seules 146 des 448 filières déduites tirables
+  ont une formation recommandable (aucune parmi les formations professionnelles, certificats de spécialisation et
+  licences professionnelles) : ce sont surtout des licences, licences sélectives, CMI et DEUST (partie 3).
 - **Les gabarits ont été calés sur les familles** (« valeurs alignées sur les familles existantes du même type »,
   dit le script) : le profil est en partie appris de la référence, ce qui flatte les taux d'accord sur le profil.
 - **10 profils seulement** pour la partie 2, et des profils pensés pour les tests, pas un échantillon d'élèves.
@@ -464,19 +485,35 @@ Les numéros `REGLES[i]` / `REPLI[i]` sont les positions (à partir de 0) dans l
 | Spécialité obligatoire inventée | 0 | une obligatoire inventée bloque à tort un élève |
 | Spécialité obligatoire oubliée | à décider (aujourd'hui 5 sur 5) | une obligatoire oubliée laisse passer un élève sans les maths exigées |
 | Vœux inchangés (table « attributs », 10 profils) | ≥ 80 % | mesure directe de l'effet pour l'élève |
-| Relecture humaine : filières jugées « correctes » | ≥ 80 % des 30 | seule mesure qui porte sur les 460 filières déduites |
+| Relecture humaine : filières jugées « correctes » | ≥ 80 % des 30 | seule mesure qui porte sur les filières déduites que les élèves voient dans leurs vœux |
 
 La partie 4 des résultats applique les seuils mesurables aujourd'hui.
 
 ## Partie 3 : échantillon à relire
 
+**Ce qui est tiré, et pourquoi.** Seules les filières déduites qui ont au moins une formation recommandable
+(formation en France notée par la table, qui peut entrer dans une liste de vœux : `CapEngine.horsListe(f)` faux)
+sont tirables : 146 sur 448 (résultats, partie 3). Le calcul utilise le vrai moteur (`tests/charger-site.js`),
+comme pour les listes de vœux de la partie 2. Le tirage est sans remise, avec une probabilité proportionnelle au
+nombre de formations recommandables de la filière : une filière présente dans 96 établissements pèse plus qu'une
+filière présente dans un seul, parce qu'elle touche plus d'élèves. Les 30 filières tirées couvrent ainsi environ
+deux tiers des formations recommandables notées par des filières déduites.
+
+La première version de l'échantillon (tirage uniforme, réparti comme les catégories Parcoursup) a été remplacée :
+24 des 30 filières tirées (par exemple CS-SNO, CS-Som-App, FP-ASR-App, BPJEPS-MASEC-App, CUPGE-GTMPI) n'avaient
+aucune formation recommandable. La règle de décision sur la relecture aurait jugé la table sur des filières
+qu'aucun élève ne voit dans sa liste de vœux. Limite du nouveau tirage : il ne dit rien des filières jamais
+recommandées (elles restent visibles dans la recherche et sur les fiches), et les 302 filières déduites sans
+formation recommandable ne sont pas relues.
+
 `docs/relecture-filieres.csv` (séparateur virgule, UTF-8). Une ligne par filière tirée : code nmc, intitulé
-officiel, catégorie Parcoursup, lien vers la fiche Parcoursup d'une formation de la filière (tirée au hasard), puis
+officiel, catégorie Parcoursup, lien vers la fiche Parcoursup d'une formation recommandable de la filière (tirée au hasard), puis
 les attributs déduits tels qu'ils sont dans `data/filieres.json` (corrections à la main comprises : c'est ce que le
 site utilise), puis trois colonnes vides : « correct (oui/non) », « champ faux », « commentaire ».
 Colonnes d'aide : `confiance` et `valide` (une filière `valide = non` n'entre pas dans les listes de vœux),
 `autres_intitules_du_code` (le code couvre aussi d'autres intitulés, avec leurs propres attributs) et
-`attributs_repris_de` (variante en apprentissage qui recopie une filière déduite).
+`attributs_repris_de` (variante en apprentissage qui recopie une filière déduite) et `formations_recommandables`
+(nombre de formations de la filière qui peuvent entrer dans une liste de vœux : poids de la filière dans le tirage).
 
 Le script ne réécrit pas ce fichier s'il existe déjà, pour ne pas effacer la relecture
 (`--echantillon` pour le refaire, même graine donc même tirage tant que la table ne change pas).

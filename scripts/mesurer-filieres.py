@@ -9,9 +9,10 @@
    vraie table puis avec une table temporaire où les familles sont remplacées par leur version
    déduite. Les listes de 10 vœux des profils de tests/profils.js sont comparées. La table
    temporaire est écrite dans un dossier temporaire, jamais dans data/.
-3. Échantillon à relire : 30 filières déduites tirées au hasard (graine fixe), réparties à peu près
-   comme les catégories Parcoursup, écrites dans docs/relecture-filieres.csv. Le fichier n'est écrit
-   que s'il n'existe pas (ou avec --echantillon), pour ne pas effacer une relecture en cours.
+3. Échantillon à relire : 30 filières déduites tirées au hasard (graine fixe), uniquement parmi celles qui ont
+   au moins une formation recommandable (CapEngine.horsListe faux, calculé avec le vrai site), avec une
+   probabilité proportionnelle au nombre de ces formations, écrites dans docs/relecture-filieres.csv. Le fichier
+   n'est écrit que s'il n'existe pas (ou avec --echantillon), pour ne pas effacer une relecture en cours.
 
 Le rapport docs/mesure-table-filieres.md garde le texte écrit à la main ; seule la partie entre
 les balises <!-- debut resultats --> et <!-- fin resultats --> est réécrite par ce script.
@@ -292,33 +293,93 @@ def comparer_voeux(R, variante, codes):
 
 
 # ---------------------------------------------------------------- partie 3 : échantillon
-def echantillon(table_reelle, lignes_ps):
+# Formations « recommandables » : fiches du catalogue notées par la table (f.__gen.fam) qui peuvent entrer dans
+# une liste de vœux, c'est-à-dire pour lesquelles CapEngine.horsListe(f) est faux. Calculé avec le vrai site.
+JS_RECOMMANDABLES = r"""
+"use strict";
+const path = require("path");
+const RACINE = process.argv[2];
+const { chargerSite } = require(path.join(RACINE, "tests", "charger-site.js"));
+(async () => {
+  const { E, DATA } = await chargerSite({});
+  const parNmc = {};
+  let total = 0;
+  for (const f of DATA.formations) {
+    if (f.pays !== "France" || E.horsListe(f)) continue;
+    total += 1;
+    if (!(f.__gen && f.__gen.fam)) continue;   // fiche éditoriale ou reprise d'un modèle : la table ne sert pas
+    const nmc = f.__nmc || f.__gen.fam.nmc;
+    (parNmc[nmc] = parNmc[nmc] || []).push(String(f.__gen.gta));
+  }
+  process.stdout.write(JSON.stringify({ total, parNmc }));
+})().catch((e) => { console.error(e); process.exit(1); });
+"""
+
+
+def formations_recommandables():
+    """{nmc: [gta des formations recommandables notées par la table]} et nombre total de formations recommandables
+    en France (toutes origines de fiche confondues)."""
+    with tempfile.TemporaryDirectory(prefix="mesure-filieres-") as tmp:
+        js = pathlib.Path(tmp) / "recommandables.js"
+        js.write_text(JS_RECOMMANDABLES, encoding="utf-8")
+        res = subprocess.run(["node", str(js), str(RACINE)], capture_output=True, text=True, check=True)
+    R = json.loads(res.stdout)
+    return R["parNmc"], R["total"]
+
+
+def echantillon(table_reelle, lignes_ps, reco, total_reco):
     par_nmc = collections.defaultdict(list)
     for r in lignes_ps:
         par_nmc[r["nmc"]].append(r)
     F = table_reelle["filieres"]
     base = lambda k: re.sub(r"-(App|APP)$", "", k)
     toutes = sorted(k for k, e in F.items() if e["origine"] == "deduit_intitule")
+    familles = sorted(k for k, e in F.items() if e["origine"] == "famille_existante")
     # variantes en apprentissage d'une famille écrite à la main : attributs recopiés de la famille, aucune règle
     # d'intitulé n'est appliquée ; les relire reviendrait à relire la famille. Elles sont exclues du tirage.
     copies = [k for k in toutes if base(k) != k and F.get(base(k), {}).get("origine") == "famille_existante"]
     deduites = [k for k in toutes if k not in copies]
+    # Seules les filières qu'un élève peut voir dans sa liste de vœux comptent : au moins une formation recommandable.
+    poids = {k: len(reco.get(k, [])) for k in deduites if reco.get(k)}
     cat = {k: collections.Counter(t for r in par_nmc[k] for t in r["tf"]).most_common(1)[0][0] for k in deduites}
-    groupes = collections.defaultdict(list)
-    for k in deduites:
-        groupes[cat[k]].append(k)
-    # répartition proportionnelle (plus forts restes), au moins une filière par catégorie quand c'est possible
-    quotas = {c: TAILLE_ECHANTILLON * len(v) / len(deduites) for c, v in groupes.items()}
-    nb = {c: int(q) for c, q in quotas.items()}
-    for c in sorted(quotas, key=lambda c: (-(quotas[c] - nb[c]), c))[:TAILLE_ECHANTILLON - sum(nb.values())]:
-        nb[c] += 1
+    # Tirage sans remise, probabilité proportionnelle au nombre de formations recommandables (tirages successifs :
+    # à chaque tirage, une filière restante est choisie avec une probabilité proportionnelle à son poids).
     rng = random.Random(GRAINE)
+    restantes = sorted(poids)
+    choisies = []
+    for _ in range(min(TAILLE_ECHANTILLON, len(restantes))):
+        u = rng.random() * sum(poids[k] for k in restantes)
+        for k in restantes:
+            u -= poids[k]
+            if u < 0:
+                break
+        restantes.remove(k)
+        choisies.append(k)
+    lignes_par_gta = {str(r["gta"]): r for r in lignes_ps}
     tires = []
-    for c in sorted(groupes):
-        for k in sorted(rng.sample(groupes[c], nb[c])):
-            rs = sorted(par_nmc[k], key=lambda r: int(r["gta"]))
-            tires.append((k, c, rng.choice(rs)))
-    return tires, {c: (len(groupes[c]), nb[c]) for c in sorted(groupes)}, (len(toutes), copies)
+    for k in sorted(choisies, key=lambda k: (cat[k], k)):
+        # formation d'exemple tirée parmi les formations recommandables de la filière (celles qu'un élève peut voir)
+        gta = rng.choice(sorted(reco[k], key=int))
+        tires.append((k, cat[k], lignes_par_gta[gta], poids[k]))
+    rep = collections.defaultdict(lambda: [0, 0, 0, 0])   # filières déduites, dont recommandables, tirées, formations reco tirées
+    for k in deduites:
+        rep[cat[k]][0] += 1
+        rep[cat[k]][1] += k in poids
+    for k, c, _, p in tires:
+        rep[c][2] += 1
+        rep[c][3] += p
+    couverture = {
+        "nb_deduites": len(deduites),
+        "nb_deduites_reco": len(poids),
+        "reco_deduites": sum(poids.values()),
+        "reco_copies": sum(len(reco.get(k, [])) for k in copies),
+        "reco_familles": sum(len(reco.get(k, [])) for k in familles),
+        "nb_familles_reco": sum(1 for k in familles if reco.get(k)),
+        "reco_table": sum(len(v) for v in reco.values()),
+        "reco_total": total_reco,
+        "reco_echantillon": sum(p for *_, p in tires),
+    }
+    return tires, {c: tuple(rep[c]) for c in sorted(rep)}, (len(toutes), copies), couverture
 
 
 def ecrire_csv(table_reelle, tires):
@@ -326,11 +387,11 @@ def ecrire_csv(table_reelle, tires):
     entete = ["nmc", "intitule_officiel", "categorie_parcoursup", "fiche_parcoursup", "formation_exemple", "confiance", "valide",
               "type", "domaine_1", "domaine_2", "domaine_3"] + [f"profil_{k}" for k in DIMENSIONS] + \
              ["specialites_obligatoires", "specialites_recommandees", "maths_expertes", "autres_intitules_du_code", "attributs_repris_de",
-              "correct (oui/non)", "champ faux", "commentaire"]
+              "formations_recommandables", "correct (oui/non)", "champ faux", "commentaire"]
     with CSV_RELECTURE.open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(entete)
-        for k, c, r in tires:
+        for k, c, r, p in tires:
             e = F[k]
             dom = (e["domaines"] + ["", "", ""])[:3]
             sp = e["specialites"]
@@ -338,7 +399,7 @@ def ecrire_csv(table_reelle, tires):
                         "oui" if e.get("valide") else "non", e["type"], *dom, *[e["profil"][d] for d in DIMENSIONS],
                         " ".join(sp["obligatoires"]), " ".join(sp["recommandees"]), sp["maths_expertes"] or "",
                         " | ".join(sorted(e.get("variantes", {}))),
-                        (re.search(r"attributs repris de ([^ ]+) ", e["justification"]) or [None, ""])[1], "", "", ""])
+                        (re.search(r"attributs repris de ([^ ]+) ", e["justification"]) or [None, ""])[1], p, "", "", ""])
 
 
 # ---------------------------------------------------------------- rapport
@@ -436,14 +497,27 @@ def section_resultats(C, V, ech):
                              + " — entrent " + " ; ".join(f"{s['nom']} ({s['etab']}, {s['nmc'] or 'fiche éditoriale'})" for s in x["entres"]) + ".")
             L.append("")
 
-    tires, rep, (nded, copies) = ech
-    L.append(f"### 3. Échantillon à relire\n\n{len(tires)} filières tirées parmi les {nded - len(copies)} déduites qui passent par les règles "
-             f"d'intitulé ({nded} déduites, moins {len(copies)} variantes en apprentissage qui recopient une famille écrite à la main : "
-             f"{', '.join(copies)}). Graine `{GRAINE}`, répartition proportionnelle aux catégories Parcoursup (plus forts restes) : "
-             "`docs/relecture-filieres.csv`.\n")
-    L.append("| Catégorie Parcoursup | Filières déduites | Tirées |\n|---|---|---|")
-    for c, (k, m) in rep.items():
-        L.append(f"| {c} | {k} | {m} |")
+    tires, rep, (nded, copies), cv = ech
+    L.append(f"### 3. Échantillon à relire\n\n{nded} filières déduites, moins {len(copies)} variantes en apprentissage qui recopient "
+             f"une famille écrite à la main ({', '.join(copies)}) : {cv['nb_deduites']} filières passent par les règles d'intitulé. "
+             f"**{cv['nb_deduites_reco']} d'entre elles seulement ont au moins une formation recommandable** (fiche notée par la "
+             "table, en France, pour laquelle `CapEngine.horsListe(f)` est faux, calculé avec le vrai site chargé par "
+             "`tests/charger-site.js`) ; les autres n'apparaissent dans aucune liste de vœux.\n")
+    pt = lambda a, b: f"{100 * a / b:.1f} %".replace(".", ",") if b else "—"
+    L.append("| Formations recommandables | Nombre | Part |\n|---|---|---|")
+    L.append(f"| Toutes, en France (toutes origines de fiche) | {cv['reco_total']} | 100 % |")
+    L.append(f"| Notées par la table `data/filieres.json` | {cv['reco_table']} | {pt(cv['reco_table'], cv['reco_total'])} |")
+    L.append(f"| … par les 87 familles écrites à la main ({cv['nb_familles_reco']} familles en ont) | {cv['reco_familles']} | {pt(cv['reco_familles'], cv['reco_total'])} |")
+    L.append(f"| … par les {cv['nb_deduites_reco']} filières déduites tirables | {cv['reco_deduites']} | {pt(cv['reco_deduites'], cv['reco_total'])} |")
+    L.append(f"| … par les variantes en apprentissage qui recopient une famille (exclues du tirage) | {cv['reco_copies']} | {pt(cv['reco_copies'], cv['reco_total'])} |")
+    L.append(f"| **Couvertes par l'échantillon de {len(tires)} filières** | **{cv['reco_echantillon']}** | "
+             f"**{pt(cv['reco_echantillon'], cv['reco_deduites'])} des formations recommandables des filières déduites** |")
+    L.append(f"\nTirage : {len(tires)} filières parmi les {cv['nb_deduites_reco']}, sans remise, avec une probabilité proportionnelle "
+             f"au nombre de formations recommandables (tirages successifs), graine `{GRAINE}` : `docs/relecture-filieres.csv`. "
+             "La formation d'exemple de chaque ligne est tirée parmi les formations recommandables de la filière.\n")
+    L.append("| Catégorie Parcoursup | Filières déduites | dont avec formation recommandable | Tirées | Formations recommandables des filières tirées |\n|---|---|---|---|---|")
+    for c, (k, kr, m, p) in rep.items():
+        L.append(f"| {c} | {k} | {kr} | {m} | {p} |")
 
     L.append("\n### 4. Seuils proposés, appliqués à cette mesure\n\n| Critère | Seuil proposé | Mesuré | Atteint |\n|---|---|---|---|")
     mes = {"dom1": t["dom1"], "type": t["type"], "maths_pm1": t["maths_pm1"], "ecrit_pm1": t["ecrit_pm1"], "oblig_inventees": a["oblig_inventees"]}
@@ -496,7 +570,8 @@ def main():
     if "--sans-voeux" not in args:
         R = mesurer_voeux(table, aveugle, testes)
         V = {v: comparer_voeux(R, v, set(testes)) for v in ("attributs", "complete")}
-    ech = echantillon(table, lignes_ps)
+    reco, total_reco = formations_recommandables()
+    ech = echantillon(table, lignes_ps, reco, total_reco)
     if "--echantillon" in args or not CSV_RELECTURE.exists():
         ecrire_csv(table, ech[0])
         print(f"{CSV_RELECTURE.relative_to(RACINE)} écrit ({len(ech[0])} filières).")
