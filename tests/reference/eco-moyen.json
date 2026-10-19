@@ -432,6 +432,21 @@
    "exclu": null
   },
   {
+   "id": "aix-marseille-universite-aix-en-provence-aes",
+   "interet": 72,
+   "faisabilite": 66,
+   "pertinence": 70,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-12539",
    "interet": 72,
    "faisabilite": 66,
@@ -672,21 +687,6 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-aes",
-   "interet": 72,
-   "faisabilite": 62,
-   "pertinence": 68,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-50238",
    "interet": 72,
    "faisabilite": 62,
@@ -844,7 +844,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "98d38183f3cdf2bdbc51d4b941ded426710614dee2976277d6e4fc165c576064",
-  "textes": "a1abf46792bd37b2c99f0e041d751c9b717302d3203249944b3d2bb84e685fff"
+  "calculs": "7f86cedbdd1f9a071e15a8462ba7346c01dea6183b10b84edd16d6b9d5083cc3",
+  "textes": "90f112a831d53c3f966b59964924b14a9b58a4c9fc9813e04d5ab097a4f55d50"
  }
 }
