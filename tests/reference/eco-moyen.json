@@ -3,12 +3,25 @@
  "description": "11,5 de moyenne, SES + HGGSP, maths complémentaires, intéressé par le commerce, reste près de chez lui",
  "nbFormationsNotees": 11530,
  "statsEleve": {
-  "moyenneGenerale": 11.6,
-  "moyennePeriode": "Terminale – T1",
-  "maths": 9.5,
+  "moyenneGenerale": 11.4,
+  "moyennePeriodes": [
+   "Première – T3",
+   "Terminale – T1"
+  ],
+  "periodesSansMoyenne": [],
+  "dernierBulletin": {
+   "moyenne": 11.6,
+   "periode": "Terminale – T1"
+  },
+  "maths": 10.5,
+  "mathsMatiere": "maths_complementaires",
+  "mathsPeriodes": [
+   "Terminale – T1"
+  ],
   "mathsSpe": 9.5,
-  "expertes": null,
   "compl": 10.5,
+  "expertes": null,
+  "expertesPeriodes": [],
   "anglais": "B1",
   "anglaisCertifie": false,
   "ecartClasse": -0.5,
@@ -254,13 +267,13 @@
    "exclu": null
   },
   {
-   "id": "psup-47821",
+   "id": "psup-446",
    "interet": 81,
-   "faisabilite": 65,
+   "faisabilite": 66,
    "pertinence": 75,
    "repere": [
-    52,
-    0.37,
+    62,
+    0.45,
     "moyenne",
     "realiste"
    ],
@@ -269,13 +282,13 @@
    "exclu": null
   },
   {
-   "id": "psup-446",
+   "id": "psup-47821",
    "interet": 81,
-   "faisabilite": 66,
-   "pertinence": 75,
+   "faisabilite": 64,
+   "pertinence": 74,
    "repere": [
-    62,
-    0.55,
+    52,
+    0.3,
     "moyenne",
     "realiste"
    ],
@@ -286,11 +299,11 @@
   {
    "id": "psup-26131",
    "interet": 81,
-   "faisabilite": 62,
+   "faisabilite": 61,
    "pertinence": 73,
    "repere": [
     55,
-    0.2,
+    0.16,
     "en_dessous",
     "en_dessous"
    ],
@@ -301,11 +314,11 @@
   {
    "id": "psup-26149",
    "interet": 81,
-   "faisabilite": 62,
+   "faisabilite": 61,
    "pertinence": 73,
    "repere": [
     86,
-    0.24,
+    0.2,
     "en_dessous",
     "tres_ouverte_en_dessous"
    ],
@@ -320,7 +333,7 @@
    "pertinence": 73,
    "repere": [
     81,
-    0.18,
+    0.15,
     "en_dessous",
     "en_dessous"
    ],
@@ -331,11 +344,11 @@
   {
    "id": "psup-26271",
    "interet": 81,
-   "faisabilite": 62,
+   "faisabilite": 61,
    "pertinence": 73,
    "repere": [
     74,
-    0.23,
+    0.19,
     "en_dessous",
     "en_dessous"
    ],
@@ -406,11 +419,11 @@
   {
    "id": "psup-26115",
    "interet": 75,
-   "faisabilite": 65,
+   "faisabilite": 64,
    "pertinence": 71,
    "repere": [
     18,
-    0.37,
+    0.3,
     "moyenne",
     "taux_bas"
    ],
@@ -421,11 +434,11 @@
   {
    "id": "psup-12539",
    "interet": 72,
-   "faisabilite": 67,
+   "faisabilite": 66,
    "pertinence": 70,
    "repere": [
     73,
-    0.14,
+    0.11,
     "en_dessous",
     "en_dessous"
    ],
@@ -451,11 +464,11 @@
   {
    "id": "psup-35399",
    "interet": 72,
-   "faisabilite": 68,
+   "faisabilite": 67,
    "pertinence": 70,
    "repere": [
     100,
-    0.55,
+    0.45,
     "moyenne",
     "tres_ouverte"
    ],
@@ -466,11 +479,11 @@
   {
    "id": "psup-39359",
    "interet": 72,
-   "faisabilite": 65,
+   "faisabilite": 64,
    "pertinence": 69,
    "repere": [
     75,
-    0.37,
+    0.3,
     "moyenne",
     "realiste"
    ],
@@ -539,28 +552,13 @@
    "exclu": null
   },
   {
-   "id": "psup-20181",
-   "interet": 72,
-   "faisabilite": 64,
-   "pertinence": 69,
-   "repere": [
-    40,
-    0.27,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-26117",
    "interet": 75,
    "faisabilite": 60,
    "pertinence": 69,
    "repere": [
     14,
-    0.37,
+    0.3,
     "moyenne",
     "taux_bas"
    ],
@@ -661,7 +659,7 @@
   {
    "id": "psup-39082",
    "interet": 81,
-   "faisabilite": 52,
+   "faisabilite": 51,
    "pertinence": 69,
    "repere": [
     6,
@@ -674,13 +672,28 @@
    "exclu": null
   },
   {
+   "id": "aix-marseille-universite-aix-en-provence-aes",
+   "interet": 72,
+   "faisabilite": 62,
+   "pertinence": 68,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-50238",
    "interet": 72,
-   "faisabilite": 63,
+   "faisabilite": 62,
    "pertinence": 68,
    "repere": [
     82,
-    0.21,
+    0.17,
     "en_dessous",
     "en_dessous"
    ],
@@ -709,7 +722,7 @@
    {
     "id": "psup-28974",
     "categorie": "securite",
-    "pertinence": 70,
+    "pertinence": 69,
     "repere": [
      95,
      "moyenne"
@@ -718,89 +731,89 @@
    {
     "id": "psup-43423",
     "categorie": "securite",
-    "pertinence": 72,
+    "pertinence": 71,
     "repere": [
      99,
      "moyenne"
     ]
    },
    {
-    "id": "psup-4018",
-    "categorie": "securite",
-    "pertinence": 72,
-    "repere": [
-     98,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "psup-26270",
+    "id": "psup-26296",
     "categorie": "ambitieux",
     "pertinence": 74,
     "repere": [
-     73,
+     52,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-26131",
+    "id": "psup-12065",
     "categorie": "ambitieux",
     "pertinence": 73,
     "repere": [
-     55,
+     81,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-43011",
+    "id": "psup-26115",
     "categorie": "ambitieux",
-    "pertinence": 67,
+    "pertinence": 71,
     "repere": [
-     43,
-     "en_dessous"
+     18,
+     "moyenne"
     ]
    },
    {
     "id": "psup-10451",
     "categorie": "realiste",
-    "pertinence": 72,
+    "pertinence": 71,
     "repere": [
      88,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-3636",
+    "id": "psup-10367",
     "categorie": "realiste",
     "pertinence": 67,
     "repere": [
-     48,
-     "moyenne"
+     90,
+     "en_dessous"
     ]
    },
    {
-    "id": "psup-26373",
+    "id": "psup-26370",
     "categorie": "realiste",
-    "pertinence": 65,
+    "pertinence": 64,
     "repere": [
-     71,
+     79,
      "moyenne"
     ]
    },
    {
-    "id": "psup-12539",
-    "categorie": "ambitieux",
-    "pertinence": 70,
+    "id": "psup-22670",
+    "categorie": "realiste",
+    "pertinence": 58,
     "repere": [
-     73,
+     100,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-2592",
+    "categorie": "ambitieux",
+    "pertinence": 66,
+    "repere": [
+     44,
      "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -809,7 +822,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec licence de droit ou science po et licence d'éco-gestion comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec bachelor (France) et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -831,7 +844,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "3dec4a5b335794f4477ed768b56a17af660f888bf51d0cd1bce7ca9f94edb23d",
-  "textes": "6c90b1c8e30de17725984d572ea08e9dc514e2db86133ca0413c9c124a0d0605"
+  "calculs": "98d38183f3cdf2bdbc51d4b941ded426710614dee2976277d6e4fc165c576064",
+  "textes": "a1abf46792bd37b2c99f0e041d751c9b717302d3203249944b3d2bb84e685fff"
  }
 }

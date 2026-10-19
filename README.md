@@ -135,6 +135,18 @@ Pour vérifier dans les fichiers officiels, télécharger les exports CSV de fr-
 dans un dossier, puis lancer `python3 scripts/construire-statuts-stats.py --historique DOSSIER --consulte-le AAAA-MM-JJ`
 (le script compare aussi `stats.json` au fichier 2025 complet).
 
+## Moyennes du profil
+
+`CapEngine.statsProfil(profil)` (détails : `docs/modele-chances.md`, « Comment on calcule ta moyenne ») :
+moyenne générale = moyenne simple des moyennes générales des bulletins de première et de terminale, chaque
+période avec le même poids (`POIDS_PERIODE`), sans coefficient. Une période sans moyenne générale n'est pas
+comptée ni reconstituée (`periodesSansMoyenne`, message `MESSAGE_SANS_MOYENNE`) ; l'import PDF suit la même règle.
+La moyenne du dernier bulletin est gardée à part (`dernierBulletin`) et ne sert à aucun calcul. Maths
+(`maths`, ou maths complémentaires sans la spécialité : `mathsMatiere`) et maths expertes (`expertes`) sont deux
+moyennes séparées, chacune avec ses périodes. Critère « spécialités » des formations qui demandent l'option maths
+expertes : note sous `SEUIL_EXPERTES_FAIBLE` (10) → « à renforcer », à partir de `SEUIL_EXPERTES_FORT` (14) →
+« atout fort » (seuils éditoriaux). Aucune prédiction : seule `MARGE_BULLETIN` corrige la moyenne, dans `repere()`.
+
 ## Catégories ambitieux / réaliste / sécurité
 
 Le modèle est décrit dans `docs/modele-chances.md`. Le site n'affiche aucun pourcentage de chances : aucune
@@ -163,10 +175,13 @@ npm test
 ```
 
 Les tests chargent le vrai site dans Node (sans navigateur ni dépendance) et vérifient que,
-pour 10 élèves fictifs (`tests/profils.js`), le moteur produit exactement les mêmes
+pour 14 élèves fictifs (`tests/profils.js`), le moteur produit exactement les mêmes
 recommandations, la même liste de 10 vœux et les mêmes propositions à l'étranger que les
 références de `tests/reference/`. Si un changement de résultats est voulu, régénérer les
 références avec `node tests/generer-reference.js` et expliquer le changement dans la PR.
+`tests/moyennes.test.js` vérifie le calcul des moyennes du profil (moyenne simple des périodes, aucune
+reconstitution ni coefficient, maths et maths expertes séparées, seuils 10 et 14) et que l'import d'un
+bulletin PDF donne la même moyenne que la saisie manuelle.
 
 ## Avertissement
 

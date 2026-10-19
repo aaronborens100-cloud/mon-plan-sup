@@ -431,15 +431,12 @@
     }
     for (const x of Object.values(res.notes)) { if (!x.coef && x._coefSous) x.coef = String(x._coefSous); delete x._coefSous; }
     const nb = Object.keys(res.notes).length;
-    if (!res.moyenneGenerale && nb) {
-      let sp = 0, sc = 0;
-      for (const [k, x] of Object.entries(res.notes)) { const v = Number(x.moy), c = Number(x.coef) || 1; if (x.moy !== "" && !isNaN(v)) { sp += v * c; sc += c; } }
-      if (sc) { res.moyenneGenerale = String(Math.round((sp / sc) * 100) / 100); res.moyenneCalculee = true; }
-    }
     if (!nb) res.alertes.push("Aucune matière reconnue. Vérifie que le PDF est bien un bulletin, ou saisis les notes à la main.");
     else if (nb < 5) res.alertes.push(`Seulement ${nb} matière(s) reconnue(s) : vérifie et complète.`);
     if (!res.label) res.alertes.push("Période non détectée : choisis-la dans la liste.");
-    if (res.moyenneCalculee) res.alertes.push("Moyenne générale absente du bulletin : calculée à partir des matières, en tenant compte des coefficients.");
+    // Pas de moyenne générale lue : on n'en reconstitue pas à partir des matières (même règle que
+    // CapEngine.statsProfil) ; la période ne comptera pas dans la moyenne tant qu'elle n'est pas saisie.
+    if (nb && !res.moyenneGenerale) res.alertes.push("Moyenne générale non trouvée dans le bulletin : recopie-la dans le champ « Moyenne générale ». Sans elle, cette période ne compte pas dans ta moyenne.");
     return res;
   }
 

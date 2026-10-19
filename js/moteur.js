@@ -75,21 +75,44 @@
   const estAnglais = (c) => /ielts|toefl|cambridge|toeic|anglais/i.test((c.type || "") + " " + (c.langue || ""));
 
   /* ---------------------------------------------------------------- profil */
+  // Comment on calcule ta moyenne (règles éditoriales, détaillées dans docs/modele-chances.md) :
+  // - moyenne générale = moyenne simple des moyennes générales écrites sur tes bulletins de première
+  //   et de terminale : chaque période compte pour POIDS_PERIODE, sans coefficient ;
+  // - une période sans moyenne générale saisie n'est pas comptée : on ne la reconstitue pas à partir
+  //   des matières (le profil affiche MESSAGE_SANS_MOYENNE) ;
+  // - maths et maths expertes sont deux matières distinctes, chacune moyenne simple de ses périodes ;
+  // - aucune prédiction (tendance, extrapolation, bonus) : seule la marge MARGE_BULLETIN de repere()
+  //   corrige la moyenne, et seulement pour la comparer aux mentions des admis.
+  const POIDS_PERIODE = 1;   // même poids pour toutes les périodes (trimestres et semestres, première et terminale)
+  // Bulletins pris en compte : ceux de première et de terminale (ceux que lisent les formations sur
+  // Parcoursup). Ceux de seconde ne comptent que pour un élève qui n'en a pas d'autre.
+  const NIVEAUX_BULLETINS = ["Première", "Terminale"];
+  const MESSAGE_SANS_MOYENNE = (periode) => `Moyenne générale non renseignée pour ${periode} : ajoute-la depuis ton bulletin.`;
+  // Seuils sur la note de maths expertes, pour les formations qui demandent l'option (critère
+  // « spécialités ») : règles éditoriales de Mon Plan Sup, pas des exigences publiées par les formations.
+  const SEUIL_EXPERTES_FAIBLE = 10;   // sous 10 : « à renforcer »
+  const SEUIL_EXPERTES_FORT = 14;     // 14 ou plus : « atout fort »
+  function periodesComptees(periodes) {
+    const niveau = (x) => String(x.label || "").split(" – ")[0];
+    const lycee = periodes.filter((x) => NIVEAUX_BULLETINS.includes(niveau(x)));
+    return lycee.length ? lycee : periodes;
+  }
+  // moyenne simple d'une matière sur les périodes où elle a une note, avec la liste de ces périodes
+  function moyenneMatiere(periodes, m) {
+    const notes = periodes.map((x) => ({ periode: x.label || "", v: num(((x.notes || {})[m] || {}).moy) })).filter((x) => x.v !== null);
+    return { moyenne: r1(moyenne(notes.map((x) => x.v))), periodes: notes.map((x) => x.periode) };
+  }
   function statsProfil(p) {
     const periodes = p.periodes || [];
-    const mgPer = periodes.map((x) => {
-      const g = num(x.moyenneGenerale); if (g !== null) return g;
-      // sinon : moyenne des matières pondérée par les coefficients (1 par défaut)
-      let sp = 0, sc = 0;
-      for (const [k, n] of Object.entries(x.notes || {})) { const v = num(n.moy); if (v === null) continue; const c = num(n.coef) || 1; sp += v * c; sc += c; }
-      return sc ? sp / sc : null;
-    });
-    // Moyenne générale retenue = celle de la dernière période renseignée (comme sur le bulletin)
-    let mg = null, mgPeriode = "";
-    for (let i = mgPer.length - 1; i >= 0; i--) if (mgPer[i] !== null) { mg = mgPer[i]; mgPeriode = periodes[i].label || ""; break; }
-    const noteMat = (m) => moyenne(periodes.map((x) => num(((x.notes || {})[m] || {}).moy)));
-    const maths = noteMat("maths"), expertes = noteMat("maths_expertes"), compl = noteMat("maths_complementaires");
-    const mathsRef = maths !== null ? (expertes !== null ? (maths * 2 + expertes) / 3 : maths) : compl;
+    const comptees = periodesComptees(periodes);
+    const avecMoyenne = comptees.filter((x) => num(x.moyenneGenerale) !== null);
+    const sp = avecMoyenne.reduce((a, x) => a + num(x.moyenneGenerale) * POIDS_PERIODE, 0), sc = avecMoyenne.length * POIDS_PERIODE;
+    const mg = sc ? sp / sc : null;
+    const dernier = avecMoyenne[avecMoyenne.length - 1];
+    const spe = moyenneMatiere(comptees, "maths"), exp = moyenneMatiere(comptees, "maths_expertes"), cpl = moyenneMatiere(comptees, "maths_complementaires");
+    // maths retenues : la spécialité maths ; sinon les maths complémentaires ; sinon les notes de maths saisies
+    const mathsMatiere = (p.specialites || []).includes("maths") ? "maths" : cpl.moyenne !== null ? "maths_complementaires" : spe.moyenne !== null ? "maths" : null;
+    const mathsRef = mathsMatiere === "maths_complementaires" ? cpl : mathsMatiere ? spe : { moyenne: null, periodes: [] };
     const ecartsClasse = periodes.map((x) => { const g = num(x.moyenneGenerale), c = num(x.moyenneClasse); return g !== null && c !== null ? g - c : null; });
     const rangs = periodes.map((x) => { const r = num(x.rang), e = num(x.effectif); return r && e ? r / e : null; });
     const certs = p.certifications || [];
@@ -102,7 +125,11 @@
     const eaf = fe !== null && fo !== null && ma !== null ? 0.6 * fe + 0.1 * fo + 0.3 * ma : null;
     const appr = window.CapBulletin ? window.CapBulletin.analyseAppreciations(periodes) : null;
     return {
-      moyenneGenerale: mg === null ? null : Math.round(mg * 100) / 100, moyennePeriode: mgPeriode, maths: r1(mathsRef), mathsSpe: r1(maths), expertes: r1(expertes), compl: r1(compl),
+      moyenneGenerale: mg === null ? null : Math.round(mg * 100) / 100, moyennePeriodes: avecMoyenne.map((x) => x.label || ""),
+      periodesSansMoyenne: comptees.filter((x) => num(x.moyenneGenerale) === null).map((x) => x.label || ""),
+      dernierBulletin: dernier ? { moyenne: num(dernier.moyenneGenerale), periode: dernier.label || "" } : null,
+      maths: mathsRef.moyenne, mathsMatiere, mathsPeriodes: mathsRef.periodes, mathsSpe: spe.moyenne, compl: cpl.moyenne,
+      expertes: exp.moyenne, expertesPeriodes: exp.periodes,
       anglais, anglaisCertifie: !!niv[0], ecartClasse: r1(moyenne(ecartsClasse)), rangRelatif: moyenne(rangs),
       nbExperiences: exps.length, nbExperiencesFortes: exps.filter((e) => ["competition", "responsabilite", "projet", "stage"].includes(e.type)).length,
       geo: p.lycee && p.lycee.lat != null ? { lat: p.lycee.lat, lon: p.lycee.lon, nom: p.lycee.nom } : null,
@@ -152,13 +179,15 @@
     const cible = [n.moyenne_cible != null ? `${fmt(n.moyenne_cible)} de moyenne` : null, n.maths_cible != null ? `${fmt(n.maths_cible)} en maths` : null].filter(Boolean).join(" et ");
     const lib = n.statut === "officiel" ? "exigence officielle" : n.statut === "source_secondaire" ? "repère publié" : "repère estimé";
     const niveau = e >= 0.7 ? "fort" : e >= -0.3 ? "conforme" : e >= -1.5 ? "renforcer" : "faible";
-    return { niveau, ecart: r1(e), texte: `Visé : ${cible} (${lib}) — toi : ${fmt(s.moyenneGenerale)}${s.maths !== null ? ` / maths ${fmt(s.maths)}` : ""}.` };
+    return { niveau, ecart: r1(e), texte: `Visé : ${cible} (${lib}) — toi : ${fmt(s.moyenneGenerale)}${s.maths !== null ? ` / ${s.mathsMatiere === "maths_complementaires" ? "maths complémentaires" : "maths"} ${fmt(s.maths)}` : ""}.` };
   }
   function aMaths(s) {
     if (s.specialites.includes("maths")) return "spe";
     if (s.niveau === "terminale" && s.optionMaths === "complementaires") return "compl";
     return "non";
   }
+  // niveau donné par la note de maths expertes (seuils éditoriaux SEUIL_EXPERTES_FAIBLE et SEUIL_EXPERTES_FORT)
+  const niveauExpertes = (note) => (note === null || note === undefined ? null : note < SEUIL_EXPERTES_FAIBLE ? "renforcer" : note >= SEUIL_EXPERTES_FORT ? "fort" : "conforme");
   function worst(a, b) { const O = ["bloquant", "faible", "renforcer", "preparer", "inconnu", "conforme", "fort", "na"]; return O.indexOf(a) <= O.indexOf(b) ? a : b; }
   function critSpecialites(f, s) {
     const sp = f.specialites || {};
@@ -176,14 +205,22 @@
       else { niveau = "bloquant"; manque.push(SPEC_COURT[o] || o); }
     }
     const exp = sp.maths_expertes;
+    let noteExpertes = "", atoutExpertes = false;
     if (exp) {
-      if (s.optionMaths === "expertes") ok.push("maths expertes");
+      if (s.optionMaths === "expertes") {
+        ok.push("maths expertes");
+        // l'option est suivie : on regarde aussi la note
+        const ne = niveauExpertes(s.expertes);
+        if (ne) noteExpertes = `Maths expertes : ${fmt(s.expertes)} (${NIVEAUX[ne].label.toLowerCase()}).`;
+        if (ne === "renforcer") niveau = worst(niveau, "renforcer");
+        atoutExpertes = ne === "fort";
+      }
       else if (s.niveau !== "terminale") { niveau = worst(niveau, exp === "indispensable" ? "renforcer" : "conforme"); actions.push("Choisir l'option maths expertes en terminale"); manque.push("maths expertes (à choisir en terminale)"); }
       else { niveau = worst(niveau, exp === "indispensable" ? "bloquant" : exp === "fortement_conseillee" ? "renforcer" : "conforme"); manque.push(exp === "conseillee" ? "maths expertes (conseillée)" : "option maths expertes"); }
     }
     const reco = (sp.recommandees || []).filter((r) => s.specialites.includes(r) || s.abandonnee === r);
-    if (niveau === "conforme" && (reco.length || (!(sp.recommandees || []).length && ok.length))) niveau = "fort";
-    const txt = [ok.length || reco.length ? `Tu as : ${[...ok, ...reco.map((r) => SPEC_COURT[r] || r)].join(", ")}.` : "", manque.length ? `Manque : ${manque.join(", ")}.` : ""].filter(Boolean).join(" ");
+    if (niveau === "conforme" && (reco.length || atoutExpertes || (!(sp.recommandees || []).length && ok.length))) niveau = "fort";
+    const txt = [ok.length || reco.length ? `Tu as : ${[...ok, ...reco.map((r) => SPEC_COURT[r] || r)].join(", ")}.` : "", noteExpertes, manque.length ? `Manque : ${manque.join(", ")}.` : ""].filter(Boolean).join(" ");
     return { niveau, texte: txt || "Pas de spécialité imposée.", manque, actions };
   }
   function critLangues(f, s) {
@@ -347,7 +384,8 @@
     if (TYPE_GROUPES.prepa.includes(f.type)) {
       if (p.charge === 1) { interet -= 22; ajust.push("rythme de prépa très intense"); } else if (p.charge === 2) interet -= 6;
       if (f.type === "prepa_ecg" && f.option === "appro" && s.optionMaths !== "expertes" && s.niveau === "terminale") interet -= 6;
-      if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && (s.maths || 0) >= 15) { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
+      // maths (sans les maths expertes) d'au moins 15, et maths expertes pas sous SEUIL_EXPERTES_FAIBLE
+      if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && (s.maths || 0) >= 15 && niveauExpertes(s.expertes) !== "renforcer") { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
     }
     if (etranger) {
       const voulus = (p.pays || []).filter((x) => x !== "aucun");
@@ -782,5 +820,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

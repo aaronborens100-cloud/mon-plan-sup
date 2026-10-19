@@ -4,11 +4,23 @@
  "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 9.5,
-  "moyennePeriode": "Terminale – T1",
+  "moyennePeriodes": [
+   "Terminale – T1"
+  ],
+  "periodesSansMoyenne": [],
+  "dernierBulletin": {
+   "moyenne": 9.5,
+   "periode": "Terminale – T1"
+  },
   "maths": 7,
+  "mathsMatiere": "maths",
+  "mathsPeriodes": [
+   "Terminale – T1"
+  ],
   "mathsSpe": 7,
-  "expertes": null,
   "compl": null,
+  "expertes": null,
+  "expertesPeriodes": [],
   "anglais": "B1",
   "anglaisCertifie": false,
   "ecartClasse": -2,

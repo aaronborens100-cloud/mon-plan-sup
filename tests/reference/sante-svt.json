@@ -4,11 +4,23 @@
  "nbFormationsNotees": 11530,
  "statsEleve": {
   "moyenneGenerale": 13.2,
-  "moyennePeriode": "Terminale – T1",
+  "moyennePeriodes": [
+   "Terminale – T1"
+  ],
+  "periodesSansMoyenne": [],
+  "dernierBulletin": {
+   "moyenne": 13.2,
+   "periode": "Terminale – T1"
+  },
   "maths": 12,
+  "mathsMatiere": "maths_complementaires",
+  "mathsPeriodes": [
+   "Terminale – T1"
+  ],
   "mathsSpe": null,
-  "expertes": null,
   "compl": 12,
+  "expertes": null,
+  "expertesPeriodes": [],
   "anglais": "B1",
   "anglaisCertifie": false,
   "ecartClasse": 0.8,
@@ -833,6 +845,6 @@
  },
  "empreintes": {
   "calculs": "ae58e172498f9c1aefb847ca78d9b6de343b00acbfe852e028e0f1037f50de34",
-  "textes": "6c328b4cac1028f8b184029909135b9b60d6c72906289f82cdae154ae0a640b0"
+  "textes": "20f5399e6ea3613026ebe4ecfe8ad6d921d93e3549e6c00d4556db2012e923b2"
  }
 }

@@ -6,7 +6,7 @@
  * Le catalogue est donc construit exactement comme sur le site (construireCatalogue dans
  * app.js), sans recopier sa logique ici.
  *
- * Renvoie { E, DATA, QUEST, afficher, cliquer } : E = CapEngine, DATA.formations = catalogue complet,
+ * Renvoie { E, B, DATA, QUEST, afficher, cliquer } : E = CapEngine, B = CapBulletin, DATA.formations = catalogue complet,
  * QUEST = questionnaire. Pour lire les pages : passer l'état de l'élève (options.etat, même forme que
  * CapStore), puis afficher("#liste") renvoie le HTML de la page, et cliquer({ action, ... }) simule un
  * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }).
@@ -86,7 +86,7 @@ async function chargerSite(remplacements = {}, options = {}) {
     (ecouteurs.click || []).forEach((f) => f({ target: { closest: (s) => (s === "[data-action]" ? bouton : null) }, preventDefault() {} }));
     return html;
   };
-  return { E: fenetre.CapEngine, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer };
+  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer };
 }
 
 module.exports = { chargerSite };
