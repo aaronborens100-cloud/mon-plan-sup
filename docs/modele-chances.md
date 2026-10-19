@@ -111,19 +111,60 @@ spécialité obligatoire ou l'option maths expertes indispensable qui manque).
 |-----|-----------|
 | Nouvelle formation 2026 (aucune statistique) | ambitieux (règle existante, inchangée) |
 | Point bloquant | ambitieux |
-| **Avec notes** : taux d'accès < 20 % **ou** position « en dessous » | ambitieux |
-| **Avec notes** : taux d'accès ≥ 50 % **et** position « au-dessus » (et aucun point bloquant) | sécurité |
+| **Avec notes** : taux d'accès < 20 % | ambitieux |
+| **Avec notes** : taux d'accès ≥ 85 % **et** position « dans la moyenne » ou « au-dessus » | sécurité (formation très ouverte) |
+| **Avec notes** : taux d'accès ≥ 85 % **et** position « en dessous » | réaliste (formation très ouverte) |
+| **Avec notes** : position « en dessous » | ambitieux |
+| **Avec notes** : taux d'accès ≥ 50 % **et** position « au-dessus » | sécurité |
 | **Avec notes** : tout le reste (y compris position inconnue, ou taux non publié) | réaliste |
 | **Sans notes** : taux d'accès ≥ 50 % | réaliste |
 | **Sans notes** : taux d'accès < 50 % ou non publié | ambitieux |
 
-Conséquences :
+Les règles sont lues dans l'ordre (`REGLES_CATEGORIE`) : nouvelle formation, point bloquant, sans
+notes et taux non publié passent avant les règles des formations très ouvertes.
 
-- un vœu « sécurité » a toujours un taux d'accès publié ≥ 50 % et une position « au-dessus » ;
+### Formations très ouvertes (`SEUIL_TAUX_TRES_OUVERT = 85`)
+
+La position parmi les admis compare l'élève aux **admis**, pas aux **refusés**. Quand au moins
+85 % des candidats reçoivent une proposition, les refusés sont au plus 15 % des candidats : les
+admis ressemblent alors à l'ensemble des candidats, et être en dessous de la plupart d'entre eux ne
+veut pas dire être refusé. Sans cette règle, le site classait « ambitieux » des formations où
+presque tout le monde reçoit une proposition : licence AES de l'Université de Bourgogne (Dijon,
+taux 98 %) pour le profil « fragile », et seulement « réaliste » la licence d'économie de
+l'Université de Toulon (taux 90 %) pour « eco-moyen » (position 36 %). L'élève recevait alors le
+message « aucun vœu sûr » alors que ces vœux le sont presque pour tous.
+
+- position « dans la moyenne » ou « au-dessus » → **sécurité** : « Formation très ouverte : au
+  moins 85 % des candidats ont reçu une proposition en 2025. » ;
+- position « en dessous » → **réaliste**, pas « sécurité » : les 15 % au plus qui ne reçoivent pas
+  de proposition ont plus de chances d'être parmi les dossiers les plus faibles. Texte : « Formation
+  très ouverte, mais ta moyenne est en dessous de celle des admis 2025 : candidate, et renforce tes
+  notes. » ;
+- position inconnue (mentions non publiées) : la règle ne s'applique pas, la formation reste
+  « réaliste » (jamais « sécurité » sans position).
+
+Le seuil de 85 % est un choix, pas une mesure : il laisse au plus un candidat sur sept sans
+proposition. Le taux d'accès compte les propositions, pas les admissions finales, et une
+proposition suppose que l'élève obtienne son bac (voir ci-dessous).
+
+### Moyenne sous 10
+
+Si la moyenne des bulletins (sans la marge) est inférieure à 10, Ma liste affiche en tête, en plus du
+message de protection : « Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de
+l'obtention de ton bac. C'est ta priorité n° 1 cette année. » Ce message ne change aucune
+catégorie.
+
+### Conséquences
+
+- un vœu « sécurité » a toujours un taux d'accès publié et une position connue : soit taux ≥ 50 %
+  et position « au-dessus », soit taux ≥ 85 % et position « dans la moyenne » ou « au-dessus » ;
+- aucune formation à au moins 85 % de taux, sans point bloquant, n'est « ambitieux » pour un élève
+  qui a renseigné ses notes ;
 - sans notes, aucune formation n'est « sécurité » : on ne peut pas savoir où se situe l'élève ;
   la fiche le dit (« Renseigne tes bulletins… ») ;
 - à formation égale, une moyenne plus haute ne donne jamais une catégorie moins bonne (le
-  percentile croît avec la moyenne, et les autres règles ne dépendent pas de la moyenne) ;
+  percentile croît avec la moyenne ; pour une formation très ouverte, la catégorie passe de
+  « réaliste » à « sécurité », pour les autres d'« ambitieux » à « réaliste » puis « sécurité ») ;
 - spécialités « à renforcer », langues, appréciations : toujours affichées comme critères sur la
   fiche et dans la note de faisabilité, mais elles ne changent plus la catégorie. Seul un point
   bloquant la change.
@@ -138,7 +179,7 @@ Sur la fiche, dans les cartes de recommandation et dans Ma liste :
 - la limite : « Ce n'est pas une probabilité : les jurys regardent aussi ton dossier complet. »
 
 La protection de la liste de vœux compte les vœux « sécurité » : avec ces règles, un vœu
-« sécurité » est solide par construction, il n'y a plus de seuil sur une fourchette. Le message
+« sécurité » est solide par construction (taux publié élevé, position connue, aucun point bloquant), il n'y a plus de seuil sur une fourchette. Le message
 « Renseigne tes bulletins » reste affiché pour un élève sans notes.
 
 ## 6. Exemples chiffrés
@@ -151,12 +192,17 @@ Mentions des admis 2025 (Parcoursup 2025), position calculée avec la moyenne de
 
 | Moyenne des bulletins | Moyenne retenue | Position | Catégorie | Ancien calcul |
 |---|---|---|---|---|
-| 9,5 (profil « fragile ») | 9,0 | 0 % → en dessous | ambitieux | sécurité, 35–80 % |
-| 12 | 11,5 | 42 % → dans la moyenne | réaliste | sécurité, 95–97 % |
+| 9,5 (profil « fragile ») | 9,0 | 0 % → en dessous | réaliste (très ouverte) | sécurité, 35–80 % |
+| 12 | 11,5 | 42 % → dans la moyenne | sécurité (très ouverte) | sécurité, 95–97 % |
 | 13 | 12,5 | 64 % → au-dessus | sécurité | sécurité |
 
 Calcul pour 12 : moyenne retenue 11,5, dans la tranche « sans mention » [10 ; 12[ ; part des admis
 en dessous = 56 % × (11,5 − 10) / 2 = 42 %.
+
+**Licence d'économie et gestion, Université de Toulon** — taux d'accès 90 %, admis : sans
+mention 65 %, AB 26 %, B 8 %, TB 1 %. Profil « eco-moyen » (11,6) : moyenne retenue 11,1, position
+65 % × 1,1 / 2 = 36 % → dans la moyenne → sécurité (formation très ouverte). Avant la règle :
+réaliste.
 
 **Licence Droit, Université Paris 1 Panthéon-Sorbonne** — taux d'accès 11 %, admis : AB 5 %,
 B 44 %, TB 48 %, félicitations 3 %.

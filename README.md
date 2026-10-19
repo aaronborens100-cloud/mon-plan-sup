@@ -142,8 +142,10 @@ donnée publique ne le permet (les statistiques décrivent les admis, pas les re
 renvoie le taux d'accès officiel de la formation (session, source) et la position de l'élève parmi les admis 2025
 (`percentileAdmis` sur la moyenne moins `MARGE_BULLETIN` = 0,5 point ; « au-dessus » à partir de 60 %, « en
 dessous » sous 30 %). La catégorie vient de la table `REGLES_CATEGORIE` (première règle vérifiée) : sécurité =
-taux ≥ 50 % et position « au-dessus » sans point bloquant ; ambitieux = taux < 20 %, position « en dessous » ou
-point bloquant ; réaliste = le reste. Sans notes, jamais « sécurité » (taux ≥ 50 % → réaliste, sinon ambitieux).
+taux ≥ 50 % et position « au-dessus », ou taux ≥ `SEUIL_TAUX_TRES_OUVERT` (85 %) et position « moyenne » ou
+« au-dessus », sans point bloquant ; ambitieux = taux < 20 %, position « en dessous » (sauf taux ≥ 85 % : réaliste)
+ou point bloquant ; réaliste = le reste. Moyenne sous 10 : message sur le bac en tête de Ma liste (`alerteBac`),
+sans effet sur les catégories. Sans notes, jamais « sécurité » (taux ≥ 50 % → réaliste, sinon ambitieux).
 
 ## Protection de la liste de vœux
 

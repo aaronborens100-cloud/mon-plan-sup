@@ -153,9 +153,9 @@
     89,
     0.32,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -183,7 +183,7 @@
     86,
     0.76,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -228,7 +228,7 @@
     99,
     0.62,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -258,7 +258,7 @@
     92,
     0.62,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -348,7 +348,7 @@
     100,
     0.72,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -393,7 +393,7 @@
     93,
     0.61,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -408,7 +408,7 @@
     99,
     0.7,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -438,7 +438,7 @@
     99,
     0.73,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -453,7 +453,7 @@
     100,
     0.65,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -498,7 +498,7 @@
     100,
     0.6,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -513,7 +513,7 @@
     100,
     0.74,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -618,7 +618,7 @@
     85,
     0.84,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -633,7 +633,7 @@
     99,
     0.74,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -648,7 +648,7 @@
     98,
     0.77,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -693,7 +693,7 @@
     100,
     0.75,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -718,12 +718,12 @@
  "voeux": {
   "liste": [
    {
-    "id": "aix-marseille-universite-marseille-licence-droit",
+    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
     "categorie": "securite",
-    "pertinence": 89,
+    "pertinence": 90,
     "repere": [
-     86,
-     "au_dessus"
+     89,
+     "moyenne"
     ]
    },
    {
@@ -736,11 +736,11 @@
     ]
    },
    {
-    "id": "psup-36525",
+    "id": "psup-11080",
     "categorie": "securite",
-    "pertinence": 80,
+    "pertinence": 83,
     "repere": [
-     57,
+     51,
      "au_dessus"
     ]
    },
@@ -754,11 +754,11 @@
     ]
    },
    {
-    "id": "assas-dl-droit-scpo",
+    "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
     "categorie": "ambitieux",
-    "pertinence": 84,
+    "pertinence": 88,
     "repere": [
-     7,
+     41,
      "en_dessous"
     ]
    },
@@ -772,29 +772,29 @@
     ]
    },
    {
-    "id": "psup-33111",
+    "id": "psup-32304",
     "categorie": "realiste",
-    "pertinence": 85,
+    "pertinence": 80,
     "repere": [
-     65,
-     "moyenne"
+     38,
+     "au_dessus"
     ]
    },
    {
-    "id": "psup-7645",
-    "categorie": "realiste",
-    "pertinence": 78,
-    "repere": [
-     92,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "u-clermont-auvergne-philosophie",
+    "id": "psup-12224",
     "categorie": "realiste",
     "pertinence": 77,
     "repere": [
-     99,
+     79,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "u-paris-1-histoire",
+    "categorie": "realiste",
+    "pertinence": 76,
+    "repere": [
+     66,
      "moyenne"
     ]
    },
@@ -822,7 +822,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec double licence et diplôme d'université ou d'établissement comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
+  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec double licence et IEP comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -844,17 +844,6 @@
   "liste": [
    {
     "x": {
-     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
-     "categorie": "realiste",
-     "pertinence": 90,
-     "repere": [
-      89,
-      "moyenne"
-     ]
-    }
-   },
-   {
-    "x": {
      "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
      "categorie": "realiste",
      "pertinence": 89,
@@ -874,11 +863,22 @@
       "moyenne"
      ]
     }
+   },
+   {
+    "x": {
+     "id": "u-de-tours-tours-double-licence-droit-science-politique",
+     "categorie": "ambitieux",
+     "pertinence": 85,
+     "repere": [
+      22,
+      "en_dessous"
+     ]
+    }
    }
   ]
  },
  "empreintes": {
-  "calculs": "f71020214db2d8a55e22c6b7a382a0e26537c39cdff5df1a851d874cea5b3ad3",
-  "textes": "8ec0bd9b06d4ee99d606b46ab3bed69558e56edb1cc7548fd86bf9c62c3ba957"
+  "calculs": "50f3c2382e9cfd2ddedaf4815d759237af1b945a9cf5e1be0be2476bc567b1c6",
+  "textes": "314d80ae8c0e7ae5d141499ee2a9043b1d2e6d03ac364a9d7b6d71d527e07699"
  }
 }

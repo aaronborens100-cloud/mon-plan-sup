@@ -231,6 +231,9 @@
   const MARGE_BULLETIN = 0.5;   // points retirés à la moyenne des bulletins avant de la comparer aux mentions au bac (prudence)
   const SEUIL_AU_DESSUS = 0.6, SEUIL_EN_DESSOUS = 0.3;   // part des admis sous la moyenne de l'élève
   const SEUIL_TAUX_SECURITE = 50, SEUIL_TAUX_AMBITIEUX = 20;   // taux d'accès (%)
+  // Formation très ouverte : presque tous les candidats reçoivent une proposition, la position parmi les admis
+  // (qui ne décrit pas les refusés, très peu nombreux) ne suffit plus à la classer « ambitieux »
+  const SEUIL_TAUX_TRES_OUVERT = 85;
   const POSITION_LABEL = { au_dessus: "au-dessus de la plupart des admis", moyenne: "dans la moyenne des admis", en_dessous: "en dessous de la plupart des admis", inconnue: "position inconnue" };
   const LIMITE_REPERE = "Ce n'est pas une probabilité : les jurys regardent aussi ton dossier complet.";
   function percentileAdmis(m, x) {
@@ -283,6 +286,10 @@
       texte: `Sans tes notes, on ne peut pas te situer parmi les admis : catégorie déduite du seul taux d'accès (moins de ${SEUIL_TAUX_SECURITE} % ou non publié). Renseigne tes bulletins.` },
     { cle: "taux_bas", categorie: "ambitieux", si: (r) => r.taux !== null && r.taux < SEUIL_TAUX_AMBITIEUX,
       texte: `Moins de ${SEUIL_TAUX_AMBITIEUX} % des candidats ont reçu une proposition : « ambitieux », même avec un très bon dossier.` },
+    { cle: "tres_ouverte", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && (r.position === "moyenne" || r.position === "au_dessus"),
+      texte: `Formation très ouverte : au moins ${SEUIL_TAUX_TRES_OUVERT} % des candidats ont reçu une proposition en 2025.` },
+    { cle: "tres_ouverte_en_dessous", categorie: "realiste", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && r.position === "en_dessous",
+      texte: "Formation très ouverte, mais ta moyenne est en dessous de celle des admis 2025 : candidate, et renforce tes notes." },
     { cle: "en_dessous", categorie: "ambitieux", si: (r) => r.position === "en_dessous", texte: "Ta moyenne est en dessous de celle de la plupart des admis 2025 : « ambitieux »." },
     { cle: "securite", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_SECURITE && r.position === "au_dessus",
       texte: `Au moins ${SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition et ta moyenne est au-dessus de celle de la plupart des admis : « sécurité ».` },
@@ -292,6 +299,9 @@
       texte: `Pour être « sécurité », il faut un taux d'accès d'au moins ${SEUIL_TAUX_SECURITE} % et une moyenne au-dessus de celle de la plupart des admis : « réaliste ».` },
   ];
   const regleCategorie = (r, bloque) => REGLES_CATEGORIE.find((g) => g.si(r, bloque));
+  // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
+  const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
+  const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
 
   /* ---------------------------------------------------------------- évaluation */
   function lieuDe(f) {
@@ -638,8 +648,9 @@
   /* ---------------------------------------------------------------- protection de la liste */
   // Repère sans probabilité globale : pas de « chances d'avoir au moins une admission », car les vœux ne sont pas
   // indépendants (les formations lisent le même dossier). Avec la table des catégories (REGLES_CATEGORIE), un vœu
-  // « sécurité » est solide par construction (taux d'accès d'au moins 50 %, moyenne au-dessus de la plupart des
-  // admis, aucun point bloquant) : on compte simplement les vœux « sécurité ».
+  // « sécurité » est solide par construction (taux d'accès d'au moins 50 % et moyenne au-dessus de la plupart des
+  // admis, ou taux d'au moins 85 % et moyenne dans celle des admis ; jamais de point bloquant) : on compte simplement
+  // les vœux « sécurité ».
   const PROTECTION_REPERE = "Aucun site ne peut calculer tes chances exactes d'admission : ces repères viennent des résultats Parcoursup 2025.";
   function protection(liste) {
     const nbSecurite = liste.filter((x) => x.categorie === "securite").length;
@@ -771,5 +782,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

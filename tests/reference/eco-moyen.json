@@ -307,9 +307,9 @@
     86,
     0.24,
     "en_dessous",
-    "en_dessous"
+    "tres_ouverte_en_dessous"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -457,9 +457,9 @@
     100,
     0.55,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -707,17 +707,17 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-47821",
-    "categorie": "realiste",
-    "pertinence": 75,
+    "id": "psup-28974",
+    "categorie": "securite",
+    "pertinence": 70,
     "repere": [
-     52,
+     95,
      "moyenne"
     ]
    },
    {
     "id": "psup-43423",
-    "categorie": "realiste",
+    "categorie": "securite",
     "pertinence": 72,
     "repere": [
      99,
@@ -726,7 +726,7 @@
    },
    {
     "id": "psup-4018",
-    "categorie": "realiste",
+    "categorie": "securite",
     "pertinence": 72,
     "repere": [
      98,
@@ -734,11 +734,11 @@
     ]
    },
    {
-    "id": "psup-47615",
+    "id": "psup-26270",
     "categorie": "ambitieux",
     "pertinence": 74,
     "repere": [
-     100,
+     73,
      "en_dessous"
     ]
    },
@@ -761,12 +761,12 @@
     ]
    },
    {
-    "id": "psup-20790",
+    "id": "psup-10451",
     "categorie": "realiste",
-    "pertinence": 62,
+    "pertinence": 72,
     "repere": [
-     98,
-     "moyenne"
+     88,
+     "en_dessous"
     ]
    },
    {
@@ -779,39 +779,37 @@
     ]
    },
    {
-    "id": "psup-10367",
+    "id": "psup-26373",
     "categorie": "realiste",
-    "pertinence": 67,
+    "pertinence": 65,
     "repere": [
-     90,
+     71,
      "moyenne"
     ]
    },
    {
-    "id": "psup-26296",
-    "categorie": "realiste",
-    "pertinence": 74,
+    "id": "psup-12539",
+    "categorie": "ambitieux",
+    "pertinence": 70,
     "repere": [
-     52,
-     "moyenne"
+     73,
+     "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 0,
-   "niveau": "aucun",
-   "message": "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
-  "alertes": [
-   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
-  ],
+  "alertes": [],
   "certitude": {
    "niveau": "decide",
    "top": [
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec licence d'éco-gestion et DCG (comptabilité et gestion) comme solutions de repli. Un vœu « découverte » t'ouvre à école de commerce post-bac.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec licence de droit ou science po et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -833,7 +831,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "43a67284da552c0fc71a4fb8c901c85a88def084c8952158a225836a0ad85096",
-  "textes": "463fbd1a084a468089721dbc601ace2a333652ca7bf84664e04e38fa7ec81a89"
+  "calculs": "3dec4a5b335794f4477ed768b56a17af660f888bf51d0cd1bce7ca9f94edb23d",
+  "textes": "6c90b1c8e30de17725984d572ea08e9dc514e2db86133ca0413c9c124a0d0605"
  }
 }

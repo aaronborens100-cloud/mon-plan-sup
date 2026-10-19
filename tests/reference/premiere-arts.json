@@ -112,7 +112,7 @@
     100,
     0.7,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -172,7 +172,7 @@
     100,
     1,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -187,7 +187,7 @@
     100,
     0.62,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -262,9 +262,9 @@
     99,
     0.51,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -292,9 +292,9 @@
     99,
     0.51,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -307,9 +307,9 @@
     100,
     0.54,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -322,7 +322,7 @@
     100,
     0.61,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -382,7 +382,7 @@
     100,
     0.83,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -397,7 +397,7 @@
     100,
     0.7,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -442,9 +442,9 @@
     100,
     0.56,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -457,9 +457,9 @@
     100,
     0.38,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -472,7 +472,7 @@
     94,
     1,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -517,9 +517,9 @@
     86,
     0.48,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -532,9 +532,9 @@
     99,
     0.36,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -547,9 +547,9 @@
     94,
     0.5,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -577,7 +577,7 @@
     100,
     0.6,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -592,7 +592,7 @@
     100,
     1,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -652,7 +652,7 @@
     100,
     0.68,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -697,9 +697,9 @@
     100,
     0.54,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   }
@@ -928,7 +928,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "45e78f8e6a398e6f3894bf1647d28b0d1a909c0599592bec23c2b3a4c0cc8959",
-  "textes": "151f81bf552b66b4dfa5847e12a630b555981f4abc8b3ee939c6d1f46e8030b4"
+  "calculs": "332d75b6f5b36db6c683430611488af475f08c857ec5f7785850de27cd324da3",
+  "textes": "a62a117dd12c93c9c76966410595ef6dd68fb5bfa07b359c28367e352fe512fc"
  }
 }

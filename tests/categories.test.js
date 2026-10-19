@@ -5,8 +5,10 @@
  *   - la table des catégories (REGLES_CATEGORIE) sur des repères fabriqués, cas par cas ;
  *   - monotonie : à formation égale, une moyenne plus haute ne donne jamais une catégorie moins bonne ;
  *   - le profil « vide » (aucune note) n'a aucun vœu « sécurité », ni aucune formation « sécurité » ;
- *   - aucun vœu « sécurité » (ni aucune formation « sécurité ») n'a un taux d'accès < 50 %, une position
- *     autre que « au-dessus » ou un point bloquant, pour les 10 profils types ;
+ *   - toute formation « sécurité » a un taux d'accès ≥ 50 % et la position « au-dessus », ou un taux ≥ 85 %
+ *     (formation très ouverte) et la position « moyenne » ou « au-dessus » ; jamais de point bloquant ;
+ *   - aucune formation à au moins 85 % de taux, sans point bloquant, n'est « ambitieux » pour un élève avec notes ;
+ *   - moyenne sous 10 : message sur le bac en tête de Ma liste (« fragile »), sans effet sur les catégories ;
  *   - aucun pourcentage personnel (fourchette de chances) n'apparaît plus dans les pages du site.
  *
  * Lancer : npm test
@@ -34,6 +36,7 @@ test("constantes du modèle", () => {
   assert.equal(E.SEUIL_EN_DESSOUS, 0.3);
   assert.equal(E.SEUIL_TAUX_SECURITE, 50);
   assert.equal(E.SEUIL_TAUX_AMBITIEUX, 20);
+  assert.equal(E.SEUIL_TAUX_TRES_OUVERT, 85);
   assert.equal(E.LIMITE_REPERE, "Ce n'est pas une probabilité : les jurys regardent aussi ton dossier complet.");
   assert.equal(E.chance, undefined, "l'ancien calcul de fourchette ne doit plus exister");
 });
@@ -43,8 +46,20 @@ test("table des catégories, cas par cas", () => {
   const cat = (r, bloque = false) => E.REGLES_CATEGORIE.find((g) => g.si(Object.assign({ taux: null, position: "inconnue", sansNotes: false }, r), bloque)).categorie;
   assert.equal(cat({ taux: 50, position: "au_dessus" }), "securite");
   assert.equal(cat({ taux: 49.9, position: "au_dessus" }), "realiste");
-  assert.equal(cat({ taux: 90, position: "moyenne" }), "realiste");
-  assert.equal(cat({ taux: 90, position: "en_dessous" }), "ambitieux");
+  assert.equal(cat({ taux: 84.9, position: "moyenne" }), "realiste");
+  assert.equal(cat({ taux: 84.9, position: "en_dessous" }), "ambitieux");
+  // formation très ouverte (taux ≥ 85 %)
+  assert.equal(cat({ taux: 85, position: "moyenne" }), "securite");
+  assert.equal(cat({ taux: 90, position: "au_dessus" }), "securite");
+  assert.equal(cat({ taux: 85, position: "en_dessous" }), "realiste");
+  assert.equal(cat({ taux: 98, position: "inconnue" }), "realiste", "très ouverte mais position inconnue");
+  assert.equal(cat({ taux: 98, position: "moyenne" }, true), "ambitieux", "très ouverte avec point bloquant");
+  assert.equal(cat({ taux: 98, position: null, sansNotes: true }), "realiste", "très ouverte sans notes");
+  assert.equal(E.REGLES_CATEGORIE.find((g) => g.cle === "tres_ouverte").texte, "Formation très ouverte : au moins 85 % des candidats ont reçu une proposition en 2025.");
+  assert.equal(E.REGLES_CATEGORIE.find((g) => g.cle === "tres_ouverte_en_dessous").texte, "Formation très ouverte, mais ta moyenne est en dessous de celle des admis 2025 : candidate, et renforce tes notes.");
+  const ordre = E.REGLES_CATEGORIE.map((g) => g.cle);
+  for (const avant of ["nouvelle", "bloquant", "sans_notes_ouverte", "sans_notes"]) assert.ok(ordre.indexOf(avant) < ordre.indexOf("tres_ouverte"), `${avant} doit rester prioritaire`);
+  assert.ok(ordre.indexOf("tres_ouverte_en_dessous") < ordre.indexOf("en_dessous"));
   assert.equal(cat({ taux: 19.9, position: "au_dessus" }), "ambitieux");
   assert.equal(cat({ taux: 20, position: "moyenne" }), "realiste");
   assert.equal(cat({ taux: 90, position: "au_dessus" }, true), "ambitieux", "point bloquant");
@@ -103,14 +118,18 @@ test("profil « vide » : aucun vœu ni aucune formation « sécurité »", () =
 });
 
 for (const p of PROFILS) {
-  test(`profil « ${p.id} » : tout « sécurité » a un taux ≥ 50 %, la position « au-dessus » et aucun point bloquant`, () => {
+  test(`profil « ${p.id} » : tout « sécurité » est solide, aucune formation très ouverte n'est « ambitieux »`, () => {
     const { A, W } = analyser(p);
     const secu = A.resultats.filter((x) => x.categorie === "securite");
     for (const x of secu) {
-      assert.ok(typeof x.repere.taux === "number" && x.repere.taux >= 50, `${x.f.id} : taux ${x.repere.taux}`);
-      assert.equal(x.repere.position, "au_dessus", `${x.f.id} : position ${x.repere.position}`);
-      assert.ok(x.repere.percentile >= 0.6, `${x.f.id} : percentile ${x.repere.percentile}`);
+      const t = x.repere.taux, pos = x.repere.position;
+      assert.ok(typeof t === "number", `${x.f.id} : taux non publié`);
+      assert.ok((t >= 50 && pos === "au_dessus") || (t >= 85 && (pos === "moyenne" || pos === "au_dessus")), `${x.f.id} : taux ${t}, position ${pos}`);
       assert.ok(!x.bloque, `${x.f.id} : point bloquant`);
+    }
+    for (const x of A.resultats) {
+      if (x.repere.sansNotes || x.bloque || x.repere.taux === null || x.repere.taux < 85) continue;
+      assert.notEqual(x.categorie, "ambitieux", `${x.f.id} : taux ${x.repere.taux} %, « ambitieux »`);
     }
     for (const x of W.liste) assert.ok(x.categorie !== "securite" || secu.includes(x));
     // la phrase affichée (pour cent arrondi) et le niveau de position ne se contredisent jamais
@@ -121,6 +140,22 @@ for (const p of PROFILS) {
     for (const x of A.resultats) assert.ok(!("chance" in x), `${x.f.id} : ancien champ « chance »`);
   });
 }
+
+test("moyenne sous 10 : message sur le bac, sans effet sur les catégories", async () => {
+  const E = site.E;
+  assert.equal(E.MESSAGE_BAC, "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.");
+  assert.equal(E.alerteBac({ moyenneGenerale: 9.99 }), E.MESSAGE_BAC);
+  assert.equal(E.alerteBac({ moyenneGenerale: 10 }), null);
+  assert.equal(E.alerteBac({ moyenneGenerale: null }), null);
+  const msg = E.MESSAGE_BAC.replace(/'/g, "&#39;");
+  for (const id of ["fragile", "eco-moyen", "vide"]) {
+    const p = PROFILS.find((x) => x.id === id);
+    const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
+    const reco = s.afficher("#liste"), voeux = s.cliquer({ action: "onglet-liste", o: "voeux" });
+    assert.equal(reco.includes(msg) && voeux.includes(msg), id === "fragile", `${id} : message sur le bac`);
+    if (id === "fragile") assert.match(voeux, /class="notice small protection/, "le message de protection reste affiché");
+  }
+});
 
 // Pages du site (HTML de #main) : plus de fourchette ni de « % de chances », mais le taux d'accès et la position.
 const INTERDITS = [

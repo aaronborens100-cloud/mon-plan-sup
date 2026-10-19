@@ -717,6 +717,33 @@
  "voeux": {
   "liste": [
    {
+    "id": "u-cote-d-azur-lettres",
+    "categorie": "realiste",
+    "pertinence": 63,
+    "repere": [
+     100,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-22666",
+    "categorie": "realiste",
+    "pertinence": 63,
+    "repere": [
+     87,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-28974",
+    "categorie": "realiste",
+    "pertinence": 54,
+    "repere": [
+     95,
+     "en_dessous"
+    ]
+   },
+   {
     "id": "psup-26131",
     "categorie": "ambitieux",
     "pertinence": 72,
@@ -753,29 +780,11 @@
     ]
    },
    {
-    "id": "u-cote-d-azur-economie-et-gestion",
-    "categorie": "ambitieux",
-    "pertinence": 64,
-    "repere": [
-     51,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-2226",
     "categorie": "ambitieux",
     "pertinence": 64,
     "repere": [
      14,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-12819",
-    "categorie": "ambitieux",
-    "pertinence": 64,
-    "repere": [
-     100,
      "en_dessous"
     ]
    },
@@ -789,20 +798,11 @@
     ]
    },
    {
-    "id": "psup-36460",
+    "id": "ps-12025",
     "categorie": "ambitieux",
-    "pertinence": 57,
+    "pertinence": 52,
     "repere": [
-     35,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-36461",
-    "categorie": "ambitieux",
-    "pertinence": 56,
-    "repere": [
-     48,
+     20,
      "en_dessous"
     ]
    }
@@ -814,7 +814,7 @@
   },
   "alertes": [
    "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).",
-   "Moins de 4 vœux « réaliste » disponibles avec tes critères."
+   "Moins de 3 vœux « réaliste » disponibles avec tes critères."
   ],
   "certitude": {
    "niveau": "decide",
@@ -824,7 +824,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec bachelor (France) et licence de lettres ou sciences humaines comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -846,7 +846,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "0e0a6ea6c917de2eb57a926ba7a82e8fce1a6ff944c93d952b9882c604094715",
-  "textes": "d3ed726f88d5733da8bddef19527f30bae3f84939b7a21df41f2522109189569"
+  "calculs": "5b3fdd1231308d07d264d6016c6743ede56a5e0786f1d399e5fe42030e26f38a",
+  "textes": "680501f8c8450342b86d6600769ed959b4f75d662cf7cf42f93de574df5c02e8"
  }
 }

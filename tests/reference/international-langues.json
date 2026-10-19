@@ -503,7 +503,7 @@
     100,
     0.81,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -518,7 +518,7 @@
     100,
     0.78,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -533,7 +533,7 @@
     100,
     0.8,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -608,7 +608,7 @@
     92,
     0.8,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -623,7 +623,7 @@
     100,
     0.67,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -638,7 +638,7 @@
     100,
     1,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -653,7 +653,7 @@
     100,
     0.78,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -668,7 +668,7 @@
     100,
     0.95,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -683,7 +683,7 @@
     100,
     0.84,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -698,7 +698,7 @@
     100,
     0.69,
     "au_dessus",
-    "securite"
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -1014,7 +1014,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "8fb657a7f9d7846722d8accf30398ce081628ca651d0b57e35118f8a57d9e525",
-  "textes": "178ad59f780613a9406a8d41ffdbe9dc6b19c7e45066d7e6055cedada8925a18"
+  "calculs": "fa4119863db5cf14f92fb519139b7c76d0aa4332fccde3c26408fcc2cd8d2b0a",
+  "textes": "8f0342bd411f4be1a4129ab9adca95aaea4b94bfc8876ecf7450abadb7db5f7f"
  }
 }

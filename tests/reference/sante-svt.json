@@ -426,9 +426,9 @@
     98,
     0.52,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -471,9 +471,9 @@
     99,
     0.52,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -531,9 +531,9 @@
     100,
     0.56,
     "moyenne",
-    "realiste"
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -715,12 +715,12 @@
     ]
    },
    {
-    "id": "psup-39250",
+    "id": "psup-4021",
     "categorie": "securite",
     "pertinence": 81,
     "repere": [
-     84,
-     "au_dessus"
+     99,
+     "moyenne"
     ]
    },
    {
@@ -760,15 +760,6 @@
     ]
    },
    {
-    "id": "psup-8820",
-    "categorie": "realiste",
-    "pertinence": 80,
-    "repere": [
-     100,
-     "moyenne"
-    ]
-   },
-   {
     "id": "psup-34546",
     "categorie": "realiste",
     "pertinence": 84,
@@ -778,11 +769,20 @@
     ]
    },
    {
-    "id": "psup-4021",
+    "id": "aix-marseille-universite-aix-en-provence-psychologie",
+    "categorie": "realiste",
+    "pertinence": 75,
+    "repere": [
+     43,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-10369",
     "categorie": "realiste",
     "pertinence": 81,
     "repere": [
-     99,
+     59,
      "moyenne"
     ]
    },
@@ -832,7 +832,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "b04978a80aad2147e58312d7193d02f376afa62e616799604590e270c970d0df",
-  "textes": "337ae18b59ef83e0f68f05d03f7fd544e21a00133e049ecede5412b8d742ae2d"
+  "calculs": "ae58e172498f9c1aefb847ca78d9b6de343b00acbfe852e028e0f1037f50de34",
+  "textes": "6c328b4cac1028f8b184029909135b9b60d6c72906289f82cdae154ae0a640b0"
  }
 }
