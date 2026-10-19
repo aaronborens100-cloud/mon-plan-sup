@@ -767,6 +767,15 @@
     ]
    },
    {
+    "id": "psup-11707",
+    "categorie": "realiste",
+    "pertinence": 77.45629641368285,
+    "repere": [
+     83,
+     "moyenne"
+    ]
+   },
+   {
     "id": "psup-23064",
     "categorie": "realiste",
     "pertinence": 82.14473012022495,
@@ -794,28 +803,19 @@
     ]
    },
    {
-    "id": "psup-39243",
-    "categorie": "realiste",
-    "pertinence": 76.68931584101952,
+    "id": "psup-10457",
+    "categorie": "securite",
+    "pertinence": 77.69627634413374,
     "repere": [
-     77,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "psup-20458",
-    "categorie": "ambitieux",
-    "pertinence": 75.34452898112932,
-    "repere": [
-     42,
-     "en_dessous"
+     99,
+     "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {
@@ -826,7 +826,7 @@
     "ingenierie_tech"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et licence de lettres ou sciences humaines comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et PASS ou LAS (santé) comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -848,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "d85bf15e4049ee76ee4dafa1b32dcb71a0c92ee286c0c7f142c68486083afc9c",
-  "textes": "af96a9a2dd9c60a6293865f66dae2d7287e8d13af9454443b4d97cd83beaf9bf"
+  "calculs": "e2ed936ed33922589a094069035d9b34487c6db0933fc47c4949b7080dfffb92",
+  "textes": "49337e1214e243df31b6f800a9948c650a08197a441bdf4fe84f6949d410bcd1"
  }
 }

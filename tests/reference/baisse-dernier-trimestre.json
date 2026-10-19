@@ -751,20 +751,20 @@
     ]
    },
    {
+    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
+    "categorie": "ambitieux",
+    "pertinence": 74.44968287983038,
+    "repere": [
+     56,
+     "en_dessous"
+    ]
+   },
+   {
     "id": "avignon-universite-avignon-licence-science-politique",
     "categorie": "ambitieux",
     "pertinence": 79.6629973908658,
     "repere": [
      35,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
-    "categorie": "ambitieux",
-    "pertinence": 71.80385964912281,
-    "repere": [
-     56,
      "en_dessous"
     ]
    },
@@ -893,7 +893,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "d0cb71ff80333006c3cb71bb52ec2440e540a656f5aa0f70a21fa3d02a31b81c",
-  "textes": "8e8b3fb05e2180e33d92b4df1eada4f0f52a2e59f3b16df67b37be0466159e89"
+  "calculs": "f0dafa5415238bf5ae8517be4a59ec09bf0121b2757b73927095d9e06905b041",
+  "textes": "23640115b9fb8ce6aa9c6525924ac950898b92fbf8a4f2042c426349316a0402"
  }
 }

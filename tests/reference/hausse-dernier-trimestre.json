@@ -762,7 +762,7 @@
    {
     "id": "u-de-corse-corte-double-licence-droit-administration-publique",
     "categorie": "ambitieux",
-    "pertinence": 76.32385964912282,
+    "pertinence": 78.96968287983039,
     "repere": [
      56,
      "en_dessous"
@@ -893,7 +893,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "2c34f0223efdfb7b8db748d5a457c1630c98c0f6ae677543cbeb51b85c75053c",
-  "textes": "8f5fff0d27d5e230be3487118a28df1447b542aeef55b89eba10e8081d9c3949"
+  "calculs": "2f81c7f7746e76354761c4bf83eabd35928811f03a410482b5ab91801e32ddd1",
+  "textes": "bcf4f01e623c57af347ae8882bc27e2a951ada7af6513db756f7c1f182f79eff"
  }
 }

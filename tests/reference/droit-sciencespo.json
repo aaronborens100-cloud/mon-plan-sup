@@ -414,6 +414,21 @@
    "exclu": null
   },
   {
+   "id": "u-de-corse-corte-licence-droit",
+   "interet": 80.82812892463694,
+   "faisabilite": 99.9,
+   "pertinence": 88.45687735478216,
+   "repere": [
+    100,
+    0.6,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-28488",
    "interet": 81.62220175988693,
    "faisabilite": 98.7,
@@ -712,21 +727,6 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-26607",
-   "interet": 79.7421685505584,
-   "faisabilite": 100,
-   "pertinence": 87.84530113033503,
-   "repere": [
-    67,
-    0.94,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -752,7 +752,7 @@
    {
     "id": "u-de-corse-corte-double-licence-droit-administration-publique",
     "categorie": "ambitieux",
-    "pertinence": 84.50999999999999,
+    "pertinence": 87.15582323070757,
     "repere": [
      56,
      "en_dessous"
@@ -892,7 +892,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "73cfac9e0ae8e251c0598b61ec9aea8b0659da817ee73dc10234607d12bec019",
-  "textes": "5b4ea59b92726fc393fdf2dac46724a68730138e3d7085c9e056cf3e5338329d"
+  "calculs": "9025aae5976180964e87b32e0882455af98b84e228a9a244cf88989387b75264",
+  "textes": "a9b17046edf4541cb2435ebf3d108a76d927f09b60d7cb10cdba24e3391b6431"
  }
 }
