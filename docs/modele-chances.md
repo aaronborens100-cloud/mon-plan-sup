@@ -347,6 +347,10 @@ Rien de cela n'utilise de donnée personnelle hors du navigateur : le lycée res
   Guadeloupe <https://www.education.gouv.fr/academie-de-guadeloupe-100115> et La Réunion
   <https://www.education.gouv.fr/academie-de-la-reunion-100118> (« la région académique … comprend uniquement
   l'académie de … ») ; Martinique, Guyane et Mayotte : une académie chacune (liste des 30 académies ci-dessus).
+  Saint-Martin et Saint-Barthélemy : rattachés à l'académie de la Guadeloupe (compétences « exercées par le recteur de
+  l'académie de la Guadeloupe », article D. 271-1 du code de l'éducation, décret du 18/12/2008, BO n° 2 du 8 janvier
+  2009 : <https://www.education.gouv.fr/bo/2009/2/mene0814102d.htm>, consulté le 19/10/2026). La page de l'académie de
+  Guadeloupe ne cite pas ces deux collectivités. Ils forment une zone à part pour la distance (traversée).
   La page de l'académie de Paris ne liste pas de département : Paris (75) est déduit des adresses de ses services.
   Polynésie française, Nouvelle-Calédonie, Saint-Pierre-et-Miquelon, Wallis-et-Futuna : vice-rectorats, pas
   d'académie (aucun départage par l'académie). Le référentiel officiel du MESR (`fr-esr-referentiel-geographique`)
@@ -361,8 +365,9 @@ arrondie : l'intérêt et la faisabilité gardent leurs décimales, seul l'affic
 exactement égale, `departage()` applique, dans cet ordre :
 
 1. formation de l'académie de l'élève d'abord (`memeAcademie`) ;
-2. la plus proche (`distTri` ; une formation de l'autre côté de la mer passe après toutes celles du même côté :
-   `DECALAGE_TRAVERSEE_KM` = 20 000 km ajoutés ; distance inconnue en dernier) ;
+2. la plus proche (`distTri`, la même distance équivalente que pour la pénalité : distance + `SURCOUT_TRAVERSEE_KM`
+   = 100 km en cas de traversée, section 8.3 ; distance inconnue en dernier). Un ancien décalage de 20 000 km
+   faisait passer une formation à Nice derrière Lille pour un élève d'Ajaccio : supprimé ;
 3. taux d'accès le plus élevé ;
 4. part de bacheliers généraux parmi les admis 2025 la plus élevée (`pct_bg`) ;
 5. nombre de places le plus élevé (`capa_fin`) ;
@@ -391,8 +396,13 @@ de la distance. Ils sont gradués pour que, à distance acceptée, la pénalité
 formations proches de note), et qu'au-delà elle écarte vite la formation du haut du classement, sans exclusion.
 
 - **Corse et outre-mer** (`zoneDe`) : continent, Corse et chaque territoire d'outre-mer sont des zones distinctes.
-  Changer de zone (traversée) donne toujours le plafond de pénalité et compte comme au-delà de la distance
-  acceptée, quelle que soit la distance à vol d'oiseau (Nice → Corte ≈ 218 km).
+  Changer de zone (traversée) compte comme au-delà de la distance acceptée, quelle que soit la distance à vol
+  d'oiseau (Nice → Corte ≈ 218 km) : jamais « sécurité » pour « domicile » et « proche ». La pénalité, elle, reste
+  **progressive** : on l'applique à la distance allongée de `SURCOUT_TRAVERSEE_KM` = 100 km (`distanceEquivalente`),
+  avec le plafond habituel. Élève d'Ajaccio, mobilité « proche » : Nice (233 km → 333 km équivalents) −13,3, Marseille
+  (315 km → 415) −21,5, Lille (1 060 km) −30 (plafond). Une traversée vers l'outre-mer dépasse toujours 1 000 km :
+  plafond, puis le départage met la plus proche devant (La Réunion : Mayotte avant la métropole). Les 100 km sont un
+  choix éditorial (ordre de grandeur d'un trajet supplémentaire en bateau ou en avion), pas une mesure.
 - **Campus à l'étranger enregistrés « France »** (Dauphine Londres, Madrid ; ESSEC Singapour, Rabat ; EM
   Normandie Oxford, Dublin… ; 25 fiches) : repérés par leur ville (`VILLES_ETRANGERES`) ou par des coordonnées à
   plus de 20 km de tout lieu français connu. Ils sont traités comme à l'étranger pour la distance (exclus pour

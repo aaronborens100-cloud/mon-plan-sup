@@ -392,6 +392,10 @@
   // et la liste des 30 académies : https://www.education.gouv.fr/les-regions-academiques-academies-et-services-departementaux-de-l-education-nationale-6557
   // (mise à jour du 11/12/2025), consultées le 19/10/2026. Toutes les URL : docs/modele-chances.md, section 8.
   // L'Île-de-France compte 3 académies (Paris, Créteil, Versailles) ; la Normandie n'en a qu'une ; chaque DROM a la sienne.
+  // Saint-Martin et Saint-Barthélemy : compétences exercées par le recteur de l'académie de la Guadeloupe (article D. 271-1
+  // du code de l'éducation, décret du 18/12/2008, BO n° 2 du 8 janvier 2009 : https://www.education.gouv.fr/bo/2009/2/mene0814102d.htm,
+  // consulté le 19/10/2026). La page de l'académie de Guadeloupe (https://www.education.gouv.fr/academie-de-guadeloupe-100115)
+  // ne cite pas ces deux collectivités.
   // Polynésie française, Nouvelle-Calédonie, Saint-Pierre-et-Miquelon, Wallis-et-Futuna : vice-rectorats, pas d'académie.
   const ACADEMIES = {
     "Aix-Marseille": ["Alpes-de-Haute-Provence", "Hautes-Alpes", "Bouches-du-Rhône", "Vaucluse"],
@@ -419,7 +423,7 @@
     "Strasbourg": ["Bas-Rhin", "Haut-Rhin"],
     "Toulouse": ["Ariège", "Aveyron", "Haute-Garonne", "Gers", "Lot", "Hautes-Pyrénées", "Tarn", "Tarn-et-Garonne"],
     "Versailles": ["Yvelines", "Essonne", "Hauts-de-Seine", "Val-d'Oise"],
-    "Guadeloupe": ["Guadeloupe"], "Martinique": ["Martinique"], "Guyane": ["Guyane"], "La Réunion": ["La Réunion"], "Mayotte": ["Mayotte"],
+    "Guadeloupe": ["Guadeloupe", "Saint-Martin", "Saint-Barthélemy"], "Martinique": ["Martinique"], "Guyane": ["Guyane"], "La Réunion": ["La Réunion"], "Mayotte": ["Mayotte"],
   };
   // « Corse-du-Sud », « Corse du Sud », « Deux-sèvres », « Polynésie Française » : même clé
   const normLieu = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -503,15 +507,19 @@
     1: { avant: 2, apres: 10, plafond: 30 },
     2: { avant: 0.5, apres: 0, plafond: 6 },
   };
-  // traversee : Corse ou outre-mer pour un élève du continent, et inversement → toujours le plafond
+  // Traversée (Corse ou outre-mer pour un élève du continent, et inversement) : la formation compte comme loin (jamais
+  // « sécurité » pour « domicile » et « proche »), et sa distance est allongée de SURCOUT_TRAVERSEE_KM, pour la pénalité
+  // comme pour le départage. La pénalité reste progressive et plafonnée : pour un élève d'Ajaccio, Nice et Marseille restent
+  // devant Lille. Choix éditorial : 100 km, l'ordre de grandeur d'un trajet supplémentaire (bateau ou avion, attente) ;
+  // aucune donnée ne le mesure.
+  const SURCOUT_TRAVERSEE_KM = 100;
+  const distanceEquivalente = (d, traversee) => (d === null || d === undefined ? d : d + (traversee ? SURCOUT_TRAVERSEE_KM : 0));
   function penaliteDistance(d, mobilite, traversee) {
     const P = PENALITE_DISTANCE[mobilite], L = DISTANCE_ACCEPTEE_KM[mobilite];
     if (!P || d === null || d === undefined) return 0;
-    if (traversee) return P.plafond;
-    return Math.min(P.plafond, (P.avant * Math.min(d, L) + P.apres * Math.max(0, d - L)) / 100);
+    const e = distanceEquivalente(d, traversee);
+    return Math.min(P.plafond, (P.avant * Math.min(e, L) + P.apres * Math.max(0, e - L)) / 100);
   }
-  // Départage : une formation de l'autre côté de la mer passe après toutes celles du même côté (distance + décalage)
-  const DECALAGE_TRAVERSEE_KM = 20000;
   function lieuEleve(l) {
     const dep = departementLycee(l), academie = academieDe(dep);
     return { departement: dep || null, academie, secteur: secteurDe(academie), zone: dep ? zoneDe(dep) : null };
@@ -642,8 +650,8 @@
     const categorie = regle.categorie;
     const pertinence = it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite;
     const memeAcademie = !!s.academie && lieu.academie === s.academie;
-    // distance pour le départage : une traversée passe après toute formation du même côté de la mer
-    const distTri = dist === null ? null : dist + (traversee ? DECALAGE_TRAVERSEE_KM : 0);
+    // distance pour le départage : la même distance équivalente que pour la pénalité (traversée + SURCOUT_TRAVERSEE_KM)
+    const distTri = dist === null ? null : distanceEquivalente(dist, traversee);
     return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, traversee, horsDistance,
       academie: lieu.academie, memeAcademie, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
   }
@@ -1044,5 +1052,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    DECALAGE_TRAVERSEE_KM, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, SOURCE_SECTEUR, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, SOURCE_SECTEUR, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

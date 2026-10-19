@@ -43,13 +43,17 @@ test("académies : Île-de-France (3), Normandie (1), Corse, DROM", () => {
   assert.equal(E.academieDe("Haute-Corse"), "Corse");
   for (const d of ["Guadeloupe", "Martinique", "Guyane", "La Réunion", "Mayotte"]) assert.equal(E.academieDe(d), d);
   assert.equal(E.academieDe("Polynésie française"), null, "vice-rectorat : pas d'académie");
+  // Saint-Martin et Saint-Barthélemy relèvent du recteur de l'académie de la Guadeloupe (article D. 271-1)
+  assert.equal(E.academieDe("Saint-Martin"), "Guadeloupe");
+  assert.equal(E.academieDe("Saint-Barthélemy"), "Guadeloupe");
+  assert.equal(E.statsProfil({ periodes: [], lycee: { type: "lycee", uai: "9711252J", nom: "Lycée Robert Weinum", lat: 18.097, lon: -63.0659 } }).academie, "Guadeloupe");
   assert.equal(E.academieDe("Alpes-Maritimes"), "Nice");
   assert.equal(E.academieDe("Bouches-du-Rhône"), "Aix-Marseille");
-  // 30 académies, 101 départements, chacun dans une seule académie
+  // 30 académies, 101 départements (+ Saint-Martin et Saint-Barthélemy), chacun dans une seule académie
   assert.equal(Object.keys(E.ACADEMIES).length, 30);
   const deps = Object.values(E.ACADEMIES).flat();
-  assert.equal(deps.length, 101);
-  assert.equal(new Set(deps).size, 101);
+  assert.equal(deps.length, 103);
+  assert.equal(new Set(deps).size, 103);
   // les trois académies d'Île-de-France forment un seul secteur de recrutement des licences
   assert.equal(E.secteurDe("Créteil"), "Île-de-France");
   assert.equal(E.secteurDe("Versailles"), E.secteurDe("Paris"));
@@ -106,8 +110,9 @@ test("Corse loin pour un élève de Nice, et inversement", () => {
   assert.equal(x.horsDistance, true, "au-delà de la distance acceptée malgré moins de 250 km");
   assert.notEqual(x.categorie, "securite");
   assert.ok(x.ajust.some((a) => /de l'autre côté de la mer/.test(a)));
-  // pénalité : la même que tout au bout de la distance (plafond)
-  assert.equal(E.penaliteDistance(x.dist, 1, true), E.PENALITE_DISTANCE[1].plafond);
+  // pénalité progressive : celle de la distance allongée du surcoût de traversée
+  assert.equal(E.penaliteDistance(x.dist, 1, true), E.penaliteDistance(x.dist + E.SURCOUT_TRAVERSEE_KM, 1, false));
+  assert.ok(E.penaliteDistance(x.dist, 1, true) < E.PENALITE_DISTANCE[1].plafond, "Corte n'est pas pénalisé comme le bout de la France");
   // et inversement : un élève d'Ajaccio, une formation à Nice
   const ajaccio = Object.assign({}, p.profil, { lycee: { type: "lycee", nom: "Lycée Fesch", dep: "Corse-du-Sud", lat: 41.9192, lon: 8.7386 } });
   const nice = DATA.formations.find((f) => f.pays === "France" && E.situer(f).academie === "Nice" && f.__gps);
@@ -202,7 +207,8 @@ test("départage à note égale : académie, distance, taux, bacheliers généra
   assert.equal(premier(x({ id: "A", pertinence: NaN }), x({ id: "B", pertinence: 1 })), "B", "NaN en dernier");
   assert.equal(premier(x({ id: "A", pertinence: 70.4 }), x({ id: "B", pertinence: 70.5, memeAcademie: false })), "B", "décimales avant le départage");
   // une traversée passe après toute formation du même côté de la mer
-  assert.ok(E.DECALAGE_TRAVERSEE_KM > 10000);
+  assert.equal(E.distanceEquivalente(200, true), 200 + E.SURCOUT_TRAVERSEE_KM);
+  assert.equal(E.distanceEquivalente(200, false), 200);
 });
 
 test("à note égale, la formation de l'académie de l'élève passe devant (vrai catalogue)", () => {
@@ -272,3 +278,34 @@ test("licence non sélective du secteur de l'élève : « dans la moyenne » suf
   // sans lycée, jamais
   assert.equal(E.evaluer(lic, E.statsProfil(Object.assign({}, p.profil, { lycee: null })), it).repere.secteur, false);
 });
+
+// Traversée progressive : un élève de Corse ou d'outre-mer retrouve d'abord les formations les plus proches de l'autre côté
+// de la mer. Même formation (copie), seules les coordonnées et le département changent : seule la distance joue.
+for (const [nom, lycee, proches, loin] of [
+  ["Ajaccio", { type: "lycee", nom: "Lycée Fesch", dep: "Corse-du-Sud", lat: 41.9177, lon: 8.7337 },
+    [["Nice", "Alpes-Maritimes", 43.7, 7.27], ["Marseille", "Bouches-du-Rhône", 43.3, 5.37]], ["Lille", "Nord", 50.63, 3.06]],
+  ["Saint-Denis (La Réunion)", { type: "commune", nom: "Saint-Denis", dep: "La Réunion", lat: -20.9, lon: 55.48 },
+    [["Mayotte", "Mayotte", -12.78, 45.23]], ["Lille", "Nord", 50.63, 3.06]],
+  ["Pointe-à-Pitre", { type: "commune", nom: "Pointe-à-Pitre", dep: "Guadeloupe", lat: 16.24, lon: -61.53 },
+    [["Fort-de-France", "Martinique", 14.6, -61.07], ["Bordeaux", "Gironde", 44.84, -0.58]], ["Strasbourg", "Bas-Rhin", 48.58, 7.75]],
+]) {
+  test(`élève de ${nom} : la traversée est progressive (${proches.map((p) => p[0]).join(", ")} avant ${loin[0]})`, () => {
+    const { E, DATA, QUEST } = site;
+    const p = avecReponses(PROFILS.find((x) => x.id === "sante-svt"), { mobilite: "proche" });
+    const s = E.statsProfil(Object.assign({}, p.profil, { lycee })), it = E.interets(QUEST, p.reponses);
+    const modele = DATA.formations.find((f) => f.id === "psup-8820") || DATA.formations.find((f) => f.pays === "France" && f.__gps && f.mentions_admis);
+    const copie = ([ville, dep, lat, lon]) => Object.assign(Object.create(Object.getPrototypeOf(modele)), modele, { id: "test-" + ville, ville, __dep: dep, __gps: { lat, lon }, __lieu: undefined });
+    const xs = [...proches, loin].map((l) => E.evaluer(copie(l), s, it));
+    const xl = xs[xs.length - 1];
+    for (const x of xs.slice(0, -1)) {
+      assert.equal(x.traversee || x.f.__dep === lycee.dep, true);
+      // au-delà du plafond (outre-mer : toute traversée dépasse 1 000 km), la note est la même et c'est le départage qui joue
+      const auPlafond = E.penaliteDistance(x.dist, 1, x.traversee) === E.PENALITE_DISTANCE[1].plafond;
+      if (auPlafond) assert.ok(x.interet >= xl.interet, `${x.f.ville} moins bien notée que ${xl.f.ville}`);
+      else assert.ok(x.interet > xl.interet, `${x.f.ville} (${Math.round(x.dist)} km) pas mieux notée que ${xl.f.ville} (${Math.round(xl.dist)} km)`);
+      assert.ok(x.distTri < xl.distTri, `${x.f.ville} après ${xl.f.ville} au départage`);
+      assert.ok([x, xl].sort(E.comparer)[0] === x, `${x.f.ville} classée après ${xl.f.ville}`);
+      if (x.traversee) assert.notEqual(x.categorie, "securite", "traversée : jamais « sécurité » pour « proche »");
+    }
+  });
+}
