@@ -102,6 +102,66 @@ de l'élève (`percentileAdmis`).
 - Sans répartition des mentions publiée, la position est « inconnue ». Il n'y a plus d'estimation
   de secours à partir de l'écart au repère de moyenne.
 
+### 3.3 Comment on calcule ta moyenne
+
+Code : `statsProfil` dans `js/moteur.js` (constantes `POIDS_PERIODE`, `NIVEAUX_BULLETINS`,
+`MESSAGE_SANS_MOYENNE`, `NOTE_MIN`, `NOTE_MAX`, `MESSAGE_NOTE_IMPOSSIBLE`, `MESSAGE_MATHS_COMPL`,
+`SEUIL_EXPERTES_FAIBLE`, `SEUIL_EXPERTES_FORT`). La « moyenne des bulletins »
+utilisée par la position (3.2) et par le critère « notes » est calculée ainsi :
+
+- **Moyenne générale** = moyenne simple des moyennes générales écrites sur les bulletins de
+  première et de terminale. Chaque période (trimestre ou semestre) compte pour `POIDS_PERIODE = 1`,
+  sans coefficient. C'est un choix éditorial : Parcoursup transmet tous les bulletins de première et
+  de terminale aux formations, et aucune donnée publique ne dit quel poids chaque jury donne à
+  chaque période. Les bulletins de seconde ne comptent que pour un élève qui n'en a pas d'autre.
+- **Période sans moyenne générale** : elle n'est pas comptée. On ne la reconstitue pas à partir des
+  matières (les coefficients du lycée, les options et les matières non saisies rendraient le
+  résultat différent du bulletin). Le profil affiche « Moyenne générale non renseignée pour Tle T2 :
+  ajoute-la depuis ton bulletin. » La même règle s'applique à l'import d'un bulletin PDF
+  (`js/bulletin.js`) : si la moyenne générale n'est pas lue, l'import n'en écrit aucune.
+- **Valeurs vides ou impossibles** : une case vide ou faite d'espaces est une valeur absente (jamais
+  0). Une moyenne générale ou une note de matière hors de [0 ; 20] (`NOTE_MIN`, `NOTE_MAX`) est une
+  erreur de saisie : elle n'est pas comptée, comme une valeur absente, et le profil affiche « Moyenne
+  de Tle T1 impossible (125) : vérifie-la sur ton bulletin. » (`MESSAGE_NOTE_IMPOSSIBLE`).
+- **Coefficients** : les coefficients saisis ou lus dans les bulletins ne servent à aucun calcul.
+- **Moyenne du dernier bulletin** : affichée à part (« Dernier bulletin »). Elle ne sert à aucun calcul.
+- **Maths** = moyenne simple de la spécialité maths sur toutes les périodes. Sans la spécialité,
+  ce sont les maths complémentaires (affichées comme telles). Avant cette version, les maths
+  retenues étaient `(maths × 2 + maths expertes) / 3`, une pondération sans source : elle est supprimée.
+- **Maths complémentaires et repères de maths** : le repère de maths d'une formation (`maths_cible`)
+  vise la spécialité maths. Les maths complémentaires ne lui sont donc jamais comparées : pour un
+  élève qui n'a que les maths complémentaires, le critère « notes » compare seulement la moyenne
+  générale et ajoute « Repère de maths donné pour la spécialité maths : tes maths complémentaires ne
+  sont pas comparées. » (`MESSAGE_MATHS_COMPL`). Si la formation n'a qu'un repère de maths, le critère
+  est « donnée manquante ». L'action « Gagner environ … point(s) de moyenne » n'ajoute pas « (surtout en
+  maths) » pour cet élève, et l'ajustement des prépas ECG maths appliquées ne regarde que la
+  spécialité maths.
+- **Spécialité maths abandonnée en fin de première, sans maths complémentaires** : on garde les notes
+  de spécialité maths de première comme « Maths » (c'est la seule note de maths de l'élève, et les
+  formations voient ces bulletins). Elles sont affichées « Spécialité maths (première) » dans les
+  tuiles du profil et dans « Comment on calcule ta moyenne » (`libelleMaths`), pour ne pas laisser
+  croire à des notes de terminale. Elles restent comparées au repère de maths des formations.
+- **Maths expertes** = moyenne simple à part, sur les périodes où l'option est suivie. Elle compte
+  dans la moyenne générale du bulletin comme n'importe quelle matière, puisque c'est le lycée qui
+  calcule cette moyenne.
+- **Critère « spécialités »** : pour une formation où l'option maths expertes est « indispensable »,
+  « fortement conseillée » ou « conseillée », on vérifie que l'élève la suit, puis on regarde sa note :
+  sous `SEUIL_EXPERTES_FAIBLE = 10`, « à renforcer » ; à `SEUIL_EXPERTES_FORT = 14` ou plus, « atout
+  fort » ; entre les deux, « conforme ». **Ces deux seuils sont des règles éditoriales de Mon Plan
+  Sup**, pas des exigences publiées par les formations. Le critère cite la note (« Maths expertes :
+  14,5 »). Comme les autres critères, il joue sur la faisabilité et l'ordre des recommandations,
+  pas sur la catégorie (seul un point bloquant la change, voir 4).
+- **Prépas ECG maths appliquées** : l'ajustement « tes maths te permettent l'option approfondies »
+  (−4 points d'intérêt) demande maths ≥ 15 (maths seules, sans les maths expertes) et une note de
+  maths expertes qui n'est pas sous `SEUIL_EXPERTES_FAIBLE`.
+- **Aucune prédiction** : ni tendance, ni extrapolation, ni bonus de mention du conseil de classe.
+  La seule correction est `MARGE_BULLETIN` (−0,5 point), appliquée uniquement dans `repere()`.
+- **Score « épreuves anticipées » (Sciences Po)** : 60 % français écrit, 10 % français oral, 30 %
+  maths, utilisé pour le Bachelor du Collège universitaire de Sciences Po seulement. Poids
+  relevés sur la page Admission de Sciences Po
+  (https://www.sciencespo.fr/admissions/fr/bachelor/bacheliers-lycees-francais/), non vérifiés à la
+  main au 19/10/2026.
+
 ## 4. La table des catégories
 
 « Point bloquant » : un critère de la formation est au niveau « bloquant » (aujourd'hui : une

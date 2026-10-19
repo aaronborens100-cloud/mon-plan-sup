@@ -383,16 +383,33 @@
       ${res.length ? `<div class="stack" style="gap:4px;margin-top:6px">${res.map((r) => `<button type="button" class="btn sm" style="justify-content:flex-start;text-align:left" data-action="lycee-choisir" data-k="${r.k}" data-id="${esc(r.k === "l" ? r.x.uai : r.x.cle)}">${r.k === "l" ? `${esc(r.x.nom)} <span class="muted">· ${esc(r.x.commune)}</span>` : `Ville : ${esc(r.x.commune)} <span class="muted">(${esc(r.x.dep)})</span>`}</button>`).join("")}</div>` : q.length >= 2 ? `<p class="small muted">Aucun résultat. Lycée introuvable : tape plutôt ta ville ou la ville la plus proche.</p>` : ""}
     </div>`;
   }
+  // « Première – T3 » → « 1re T3 »
+  const perCourt = (l) => String(l).replace("Seconde – ", "2de ").replace("Première – ", "1re ").replace("Terminale – ", "Tle ");
+  const listePer = (ls) => (ls.length ? ls.map(perCourt).join(", ") : "aucune période");
+  // Les moyennes retenues par le moteur (statsProfil), chacune avec les périodes prises en compte
+  function moyennesRetenues(s) {
+    const mathsLib = E.libelleMaths(s);
+    return [
+      { cle: "Moyenne générale", v: s.moyenneGenerale, sous: s.moyennePeriodes.length ? `moyenne de ${listePer(s.moyennePeriodes)}` : "" },
+      { cle: "Dernier bulletin", v: s.dernierBulletin ? s.dernierBulletin.moyenne : null, sous: s.dernierBulletin ? perCourt(s.dernierBulletin.periode) : "" },
+      { cle: "Maths", lib: mathsLib, v: s.maths, sous: s.mathsPeriodes.length ? listePer(s.mathsPeriodes) : "" },
+      { cle: "Maths expertes", v: s.expertes, sous: s.expertesPeriodes.length ? listePer(s.expertesPeriodes) : "" },
+    ];
+  }
+  // périodes sans moyenne générale, puis moyennes impossibles (hors de 0 à 20), qui ne sont pas comptées
+  const avisSansMoyenne = (s, p) => s.periodesSansMoyenne.map((l) => `<p class="notice small">${esc(E.MESSAGE_SANS_MOYENNE(perCourt(l)))}</p>`)
+    .concat(E.notesImpossibles(p).map((x) => `<p class="notice bad small">${esc(E.MESSAGE_NOTE_IMPOSSIBLE(perCourt(x.periode), x.valeur, x.matiere ? NOMS_MAT()[x.matiere] || x.matiere : null))}</p>`)).join("");
+  const horsBornes = (v) => isNaN(v) || v < E.NOTE_MIN || v > E.NOTE_MAX;
   const profilComplet = () => etat.profil.specialites.length > 0 && etat.profil.periodes.length > 0;
   function vueResumeProfil() {
     const p = etat.profil, s = E.statsProfil(p), noms = NOMS_MAT();
     const pers = p.periodes.slice().sort((a, b) => PERIODES.indexOf(a.label) - PERIODES.indexOf(b.label));
     // moyennes par matière sur toutes les périodes
     const parMat = {};
-    for (const per of pers) for (const [k, n] of Object.entries(per.notes || {})) { const v = parseFloat(String(n.moy).replace(",", ".")); if (!isNaN(v)) (parMat[k] = parMat[k] || []).push(v); }
+    for (const per of pers) for (const [k, n] of Object.entries(per.notes || {})) { const v = parseFloat(String(n.moy).replace(",", ".")); if (!horsBornes(v)) (parMat[k] = parMat[k] || []).push(v); }
     const mats = Object.entries(parMat).map(([k, v]) => [k, v.reduce((a, b) => a + b, 0) / v.length, v[v.length - 1]]).sort((a, b) => b[1] - a[1]);
     const forts = mats.slice(0, 3), faibles = mats.length > 5 ? mats.slice(-2).reverse() : [];
-    const mgPer = pers.map((per) => ({ l: per.label.replace("Seconde – ", "2de ").replace("Première – ", "1re ").replace("Terminale – ", "Tle "), v: parseFloat(String(per.moyenneGenerale).replace(",", ".")), c: parseFloat(String(per.moyenneClasse).replace(",", ".")), m: per.mention }));
+    const mgPer = pers.map((per) => ({ l: perCourt(per.label), v: ((x) => (horsBornes(x) ? NaN : x))(parseFloat(String(per.moyenneGenerale).replace(",", "."))), c: parseFloat(String(per.moyenneClasse).replace(",", ".")), m: per.mention }));
     const pf = [], vg = [];
     if (s.ecartClasse !== null && s.ecartClasse >= 1) pf.push(`Au-dessus de la moyenne de ta classe (${s.ecartClasse > 0 ? "+" : ""}${E.fmt(s.ecartClasse)} point${Math.abs(s.ecartClasse) >= 2 ? "s" : ""}).`);
     if (s.ecartClasse !== null && s.ecartClasse < 0) vg.push(`Sous la moyenne de ta classe (${E.fmt(s.ecartClasse)} point).`);
@@ -402,11 +419,12 @@
     if (s.appreciations && s.appreciations.niveau === "fort") pf.push("Appréciations très positives.");
     if (s.appreciations && (s.appreciations.niveau === "faible" || s.appreciations.niveau === "renforcer")) vg.push("Des points de vigilance dans les appréciations.");
     if (s.appreciations && s.appreciations.mentions.length) pf.push("Mentions du conseil : " + s.appreciations.mentions.join(", ") + ".");
-    if (s.optionMaths === "expertes") pf.push("Option maths expertes : un atout pour les prépas et les cursus quantitatifs.");
+    // pas de « point fort » si la note de maths expertes est sous le seuil (le critère « spécialités » dit déjà « à renforcer »)
+    if (s.optionMaths === "expertes" && !(s.expertes !== null && s.expertes < E.SEUIL_EXPERTES_FAIBLE)) pf.push("Option maths expertes : un atout pour les prépas et les cursus quantitatifs.");
     if (s.anglaisCertifie) pf.push(`Anglais certifié ${s.anglais}.`); else vg.push(s.anglais ? `Anglais ${s.anglais} estimé : à certifier pour l'étranger.` : "Niveau d'anglais non renseigné.");
     if (!p.experiences.length) vg.push("Aucune expérience extrascolaire renseignée."); else if (s.nbExperiencesFortes) pf.push(`${s.nbExperiencesFortes} expérience(s) marquante(s) (stage, projet, compétition, responsabilité).`);
-    const TUI = { "Moyenne générale": ["courbe", "bleu"], "Maths": ["cible", "violet"], "Écart à la classe": ["groupe", "ciel"], "Anglais": ["globe", "menthe"], "Appréciations": ["crayon", "ambre"] };
-    const tuile = (l, val, sous) => { const [ic, t] = TUI[l] || ["etoile", "bleu"]; return `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(ic)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${val}</span>${sous ? `<span class="tuile-s">${sous}</span>` : ""}</div>`; };
+    const TUI = { "Moyenne générale": ["courbe", "bleu"], "Dernier bulletin": ["courbe", "ciel"], "Maths": ["cible", "violet"], "Maths expertes": ["cible", "violet"], "Écart à la classe": ["groupe", "ciel"], "Anglais": ["globe", "menthe"], "Appréciations": ["crayon", "ambre"] };
+    const tuile = (l, val, sous, lib) => { const [ic, t] = TUI[l] || ["etoile", "bleu"]; return `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(ic)}</span><span class="tuile-l">${lib || l}</span><span class="tuile-v">${val}</span>${sous ? `<span class="tuile-s">${sous}</span>` : ""}</div>`; };
     const modif = (i) => `<button class="btn sm ghost" data-action="profil-edition" data-i="${i}">Modifier</button>`;
     const bp = s.bacPremiere;
     const EXPL = Object.fromEntries(EXPS);
@@ -420,12 +438,13 @@
       <section class="stack">
         <h2 class="titre-ico">${ico("etoile")}En bref</h2>
         <div class="tuiles">
-          ${tuile("Moyenne générale", E.fmt(s.moyenneGenerale), s.moyennePeriode ? esc(s.moyennePeriode) : s.nbPeriodes + " période" + (s.nbPeriodes > 1 ? "s" : ""))}
-          ${tuile("Maths", E.fmt(s.maths), s.expertes !== null ? "expertes " + E.fmt(s.expertes) : "")}
+          ${moyennesRetenues(s).filter((m) => m.cle !== "Maths expertes" || m.v !== null).map((m) => tuile(m.cle, E.fmt(m.v), esc(m.sous), m.lib)).join("")}
           ${tuile("Écart à la classe", s.ecartClasse !== null ? (s.ecartClasse > 0 ? "+" : "") + E.fmt(s.ecartClasse) : "—", "")}
           ${tuile("Anglais", s.anglais || "—", s.anglais ? (s.anglaisCertifie ? "certifié" : "estimé") : "")}
           ${tuile("Appréciations", s.appreciations ? E.NIVEAUX[s.appreciations.niveau].label : "—", "")}
         </div>
+        ${avisSansMoyenne(s, p)}
+        <p class="tiny muted">Moyenne générale : moyenne simple des moyennes générales de tes bulletins de première et de terminale, chaque période compte autant. Le dernier bulletin est affiché à part. Détails dans <a href="#donnees">Mes données</a>.</p>
       </section>
       <div class="grid-2">
         <section class="card stack"><div class="row" style="justify-content:space-between"><h2>Évolution</h2>${modif(1)}</div>
@@ -1537,7 +1556,7 @@
 
   /* ================================================================ DONNÉES */
   function vueDonnees() {
-    const dispo = S.stockageDisponible();
+    const dispo = S.stockageDisponible(), s = E.statsProfil(etat.profil);
     return `<div class="stack-lg">
       ${pageHero({ sur: "Confidentialité", titre: "Mes données", sous: "Où sont tes informations, comment les récupérer ou les effacer, et comment sont calculés les résultats.", ton: "menthe", ico: "cadenas" })}
       <section class="card stack prose"><h2>Où sont stockées tes réponses ?</h2>
@@ -1553,6 +1572,13 @@
       </section>
       <section class="card stack"><h2>Tout effacer</h2><p class="small muted">Supprime ton profil, tes réponses, ta liste et ton plan de ce navigateur.</p>
         ${app.confirmEffacer ? `<p class="notice bad small">Confirmer ? Cette action est définitive.</p><div class="row"><button class="btn danger" data-action="effacer-ok">Oui, tout effacer</button><button class="btn" data-action="effacer-annuler">Annuler</button></div>` : `<div><button class="btn danger" data-action="effacer">Tout effacer</button></div>`}
+      </section>
+      <section class="card stack prose"><h2>Comment on calcule ta moyenne</h2>
+        <table><tbody>${moyennesRetenues(s).map((m) => `<tr><th scope="row">${esc(m.lib || m.cle)}</th><td class="num"><strong>${E.fmt(m.v)}</strong></td><td class="small muted">${m.v === null ? "non renseignée" : esc(m.sous)}</td></tr>`).join("")}</tbody></table>
+        ${avisSansMoyenne(s, etat.profil)}
+        <p><strong>Moyenne générale.</strong> Moyenne simple des moyennes générales écrites sur tes bulletins de première et de terminale : chaque trimestre ou semestre compte autant, sans coefficient. Si une période n'a pas de moyenne générale, elle n'est pas comptée : on ne la recalcule pas à partir de tes matières. Une moyenne en dehors de 0 à 20 (faute de frappe) n'est pas comptée non plus. La moyenne du dernier bulletin est affichée à part ; elle ne sert à aucun calcul.</p>
+        <p><strong>Maths et maths expertes.</strong> Deux matières séparées. Maths : moyenne simple de ta spécialité maths sur toutes tes périodes (ou de tes maths complémentaires si tu n'as pas la spécialité : elles ne sont pas comparées aux repères de maths des formations, donnés pour la spécialité). Si tu as arrêté la spécialité maths en fin de première sans prendre maths complémentaires, ce sont tes notes de spécialité de première. Maths expertes : moyenne simple des périodes où tu suis l'option. Pour les formations qui demandent l'option, on regarde aussi ta note : sous ${E.fmt(E.SEUIL_EXPERTES_FAIBLE)}, « à renforcer » ; à ${E.fmt(E.SEUIL_EXPERTES_FORT)} ou plus, « atout fort ». Ces deux seuils sont des choix de Mon Plan Sup, pas des exigences publiées par les formations.</p>
+        <p><strong>Aucune prédiction.</strong> On ne prolonge pas ta tendance et on n'ajoute aucun bonus. Seule correction : pour te situer parmi les admis, ta moyenne est diminuée de ${E.fmt(E.MARGE_BULLETIN)} point par prudence.</p>
       </section>
       <section class="card stack prose"><h2>Comment sont calculés les résultats ?</h2>
         <p><strong>Intérêt.</strong> Le questionnaire construit ton profil de domaines (maths, économie, droit…), tes préférences de formation (dose de maths, d'écrit, encadrement, type d'établissement) et les métiers visés. On les compare à chaque formation, puis on applique tes contraintes : étranger, budget, ville, rythme.</p>

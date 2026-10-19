@@ -3,12 +3,28 @@
  "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
  "nbFormationsNotees": 11530,
  "statsEleve": {
-  "moyenneGenerale": 17.1,
-  "moyennePeriode": "Terminale – T1",
-  "maths": 17.3,
+  "moyenneGenerale": 16.95,
+  "moyennePeriodes": [
+   "Première – T3",
+   "Terminale – T1"
+  ],
+  "periodesSansMoyenne": [],
+  "dernierBulletin": {
+   "moyenne": 17.1,
+   "periode": "Terminale – T1"
+  },
+  "maths": 17.7,
+  "mathsMatiere": "maths",
+  "mathsPeriodes": [
+   "Première – T3",
+   "Terminale – T1"
+  ],
   "mathsSpe": 17.7,
-  "expertes": 16.5,
   "compl": null,
+  "expertes": 16.5,
+  "expertesPeriodes": [
+   "Terminale – T1"
+  ],
   "anglais": "C1",
   "anglaisCertifie": true,
   "ecartClasse": 4.3,
@@ -125,25 +141,10 @@
  },
  "top": [
   {
-   "id": "psup-31598",
-   "interet": 87,
-   "faisabilite": 100,
-   "pertinence": 92,
-   "repere": [
-    8,
-    0.76,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "york-economics",
    "interet": 86,
-   "faisabilite": 99,
-   "pertinence": 91,
+   "faisabilite": 100,
+   "pertinence": 92,
    "repere": [
     null,
     null,
@@ -155,47 +156,47 @@
    "exclu": null
   },
   {
+   "id": "psup-31598",
+   "interet": 87,
+   "faisabilite": 99,
+   "pertinence": 92,
+   "repere": [
+    8,
+    0.73,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31635",
+   "interet": 87,
+   "faisabilite": 97,
+   "pertinence": 91,
+   "repere": [
+    7,
+    0.54,
+    "moyenne",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "ps-7917",
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
    "repere": [
     66,
-    0.88,
+    0.87,
     "au_dessus",
     "securite"
    ],
    "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1063",
-   "interet": 83,
-   "faisabilite": 100,
-   "pertinence": 90,
-   "repere": [
-    38,
-    0.74,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7919",
-   "interet": 87,
-   "faisabilite": 94,
-   "pertinence": 90,
-   "repere": [
-    6,
-    0.3,
-    "moyenne",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -206,7 +207,7 @@
    "pertinence": 90,
    "repere": [
     63,
-    0.89,
+    0.88,
     "au_dessus",
     "securite"
    ],
@@ -221,7 +222,7 @@
    "pertinence": 90,
    "repere": [
     51,
-    0.8,
+    0.78,
     "au_dessus",
     "securite"
    ],
@@ -251,7 +252,7 @@
    "pertinence": 90,
    "repere": [
     64,
-    0.84,
+    0.82,
     "au_dessus",
     "securite"
    ],
@@ -296,7 +297,7 @@
    "pertinence": 90,
    "repere": [
     30,
-    0.88,
+    0.87,
     "au_dessus",
     "realiste"
    ],
@@ -307,12 +308,12 @@
   {
    "id": "paris1-dl-histoire-scpo",
    "interet": 86,
-   "faisabilite": 96,
+   "faisabilite": 95,
    "pertinence": 90,
    "repere": [
     10,
-    0.3,
-    "moyenne",
+    0.25,
+    "en_dessous",
     "taux_bas"
    ],
    "categorie": "ambitieux",
@@ -371,7 +372,7 @@
    "pertinence": 90,
    "repere": [
     52,
-    0.93,
+    0.92,
     "au_dessus",
     "securite"
    ],
@@ -416,7 +417,7 @@
    "pertinence": 90,
    "repere": [
     71,
-    0.94,
+    0.93,
     "au_dessus",
     "securite"
    ],
@@ -446,7 +447,7 @@
    "pertinence": 90,
    "repere": [
     64,
-    0.9,
+    0.89,
     "au_dessus",
     "securite"
    ],
@@ -461,7 +462,7 @@
    "pertinence": 90,
    "repere": [
     64,
-    0.85,
+    0.83,
     "au_dessus",
     "securite"
    ],
@@ -476,7 +477,7 @@
    "pertinence": 90,
    "repere": [
     28,
-    0.82,
+    0.8,
     "au_dessus",
     "realiste"
    ],
@@ -491,7 +492,7 @@
    "pertinence": 90,
    "repere": [
     52,
-    0.96,
+    0.95,
     "au_dessus",
     "securite"
    ],
@@ -506,7 +507,7 @@
    "pertinence": 90,
    "repere": [
     53,
-    0.9,
+    0.89,
     "au_dessus",
     "securite"
    ],
@@ -521,7 +522,7 @@
    "pertinence": 90,
    "repere": [
     54,
-    0.92,
+    0.91,
     "au_dessus",
     "securite"
    ],
@@ -566,7 +567,7 @@
    "pertinence": 90,
    "repere": [
     46,
-    0.83,
+    0.81,
     "au_dessus",
     "realiste"
    ],
@@ -581,7 +582,7 @@
    "pertinence": 90,
    "repere": [
     59,
-    0.91,
+    0.9,
     "au_dessus",
     "securite"
    ],
@@ -635,28 +636,13 @@
    "exclu": null
   },
   {
-   "id": "psup-31463",
-   "interet": 83,
-   "faisabilite": 100,
-   "pertinence": 90,
-   "repere": [
-    30,
-    0.71,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31464",
    "interet": 83,
    "faisabilite": 100,
    "pertinence": 90,
    "repere": [
     59,
-    0.89,
+    0.88,
     "au_dessus",
     "securite"
    ],
@@ -671,7 +657,7 @@
    "pertinence": 90,
    "repere": [
     62,
-    0.9,
+    0.89,
     "au_dessus",
     "securite"
    ],
@@ -686,7 +672,7 @@
    "pertinence": 90,
    "repere": [
     61,
-    0.73,
+    0.7,
     "au_dessus",
     "securite"
    ],
@@ -716,11 +702,41 @@
    "pertinence": 90,
    "repere": [
     47,
-    0.9,
+    0.88,
     "au_dessus",
     "realiste"
    ],
    "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31482",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "repere": [
+    17,
+    0.85,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31580",
+   "interet": 83,
+   "faisabilite": 100,
+   "pertinence": 90,
+   "repere": [
+    54,
+    0.83,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   }
@@ -751,7 +767,7 @@
     "pertinence": 90,
     "repere": [
      10,
-     "moyenne"
+     "en_dessous"
     ]
    },
    {
@@ -791,11 +807,11 @@
     ]
    },
    {
-    "id": "ps-1063",
+    "id": "ps-13643",
     "categorie": "realiste",
     "pertinence": 90,
     "repere": [
-     38,
+     30,
      "au_dessus"
     ]
    },
@@ -956,7 +972,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "a84c84b03df39ff3c0c303a96901f129ef9db036dbce451c3aef249ab4efa87f",
-  "textes": "d0c525dfda69929c0ba9b235adb0cec308996bebb4db44da8a1e9d018bcf6c1f"
+  "calculs": "a1257086b45d81acb6581ec1ff2c65f62dabdfad9af4186ff5e10b63dad5fb73",
+  "textes": "53f8f1667e822fb422aa8fa538180e469117d31edd9b25eed1dcc24f4f83caed"
  }
 }
