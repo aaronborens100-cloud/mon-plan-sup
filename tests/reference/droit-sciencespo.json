@@ -119,9 +119,11 @@
    "interet": 89,
    "faisabilite": 100,
    "pertinence": 93,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -132,9 +134,11 @@
    "interet": 89,
    "faisabilite": 96,
    "pertinence": 92,
-   "chance": [
-    60,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -145,9 +149,11 @@
    "interet": 87,
    "faisabilite": 94,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    89,
+    0.32,
+    "moyenne",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -158,9 +164,11 @@
    "interet": 89,
    "faisabilite": 92,
    "pertinence": 90,
-   "chance": [
-    44,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -171,9 +179,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    86,
+    0.76,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -184,9 +194,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    52,
+    0.69,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -197,9 +209,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -210,9 +224,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.62,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -223,9 +239,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -236,9 +254,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    92,
+    0.62,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -249,11 +269,13 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    80,
+    0.42,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -262,9 +284,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    71,
+    0.66,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -275,9 +299,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    75,
+    0.71,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -288,9 +314,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -301,9 +329,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    57,
+    0.62,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -314,9 +344,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.72,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -327,9 +359,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -340,11 +374,13 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    75,
+    0.53,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -353,9 +389,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    93,
+    0.61,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -366,9 +404,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.7,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -379,9 +419,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    83,
+    0.6,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -392,9 +434,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.73,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -405,9 +449,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.65,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -418,9 +464,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -431,11 +479,13 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    81,
+    0.56,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -444,9 +494,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.6,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -457,9 +509,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -470,9 +524,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -483,9 +539,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -496,9 +554,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -509,9 +569,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -522,9 +584,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -535,9 +599,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -548,9 +614,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    85,
+    0.84,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -561,9 +629,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -574,9 +644,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    98,
+    0.77,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -587,11 +659,13 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    87,
-    97
+   "repere": [
+    52,
+    0.59,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -600,11 +674,13 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    80,
-    97
+   "repere": [
+    52,
+    0.5,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -613,9 +689,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.75,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -626,9 +704,11 @@
    "interet": 82,
    "faisabilite": 100,
    "pertinence": 89,
-   "chance": [
-    95,
-    97
+   "repere": [
+    76,
+    0.63,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -641,96 +721,95 @@
     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
     "categorie": "securite",
     "pertinence": 90,
-    "chance": [
-     95,
-     97
+    "repere": [
+     89,
+     "moyenne"
     ]
    },
    {
     "id": "psup-26895",
     "categorie": "securite",
     "pertinence": 89,
-    "chance": [
-     95,
-     97
+    "repere": [
+     100,
+     "au_dessus"
     ]
    },
    {
-    "id": "psup-27193",
-    "categorie": "ambitieux",
-    "pertinence": 87,
-    "chance": [
-     6,
-     13
+    "id": "psup-11080",
+    "categorie": "securite",
+    "pertinence": 83,
+    "repere": [
+     51,
+     "au_dessus"
     ]
    },
    {
-    "id": "assas-dl-droit-scpo",
+    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
     "categorie": "ambitieux",
-    "pertinence": 84,
-    "chance": [
-     3,
-     6
+    "pertinence": 88,
+    "repere": [
+     56,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+    "categorie": "ambitieux",
+    "pertinence": 88,
+    "repere": [
+     41,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-35695",
     "categorie": "ambitieux",
     "pertinence": 81,
-    "chance": [
+    "repere": [
      13,
-     27
+     "moyenne"
     ]
    },
    {
-    "id": "psup-36539",
+    "id": "psup-32304",
     "categorie": "realiste",
-    "pertinence": 78,
-    "chance": [
-     32,
-     67
+    "pertinence": 80,
+    "repere": [
+     38,
+     "au_dessus"
     ]
    },
    {
-    "id": "psup-11077",
+    "id": "psup-12224",
     "categorie": "realiste",
-    "pertinence": 82,
-    "chance": [
-     37,
-     75
+    "pertinence": 77,
+    "repere": [
+     79,
+     "moyenne"
     ]
    },
    {
-    "id": "psup-28449",
+    "id": "u-paris-1-histoire",
     "categorie": "realiste",
     "pertinence": 76,
-    "chance": [
-     51,
-     75
-    ]
-   },
-   {
-    "id": "psup-48191",
-    "categorie": "realiste",
-    "pertinence": 75,
-    "chance": [
-     17,
-     36
+    "repere": [
+     66,
+     "moyenne"
     ]
    },
    {
     "id": "psup-48613",
-    "categorie": "securite",
+    "categorie": "realiste",
     "pertinence": 85,
-    "chance": [
-     72,
-     97
+    "repere": [
+     37,
+     "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSolides": 3,
-   "nbSecuriteFragiles": 0,
+   "nbSecurite": 3,
    "niveau": "bon",
    "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
@@ -766,40 +845,40 @@
    {
     "x": {
      "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
-     "categorie": "securite",
+     "categorie": "realiste",
      "pertinence": 89,
-     "chance": [
-      95,
-      97
-     ]
-    }
-   },
-   {
-    "x": {
-     "id": "u-de-corse-corte-double-licence-droit-administration-publique",
-     "categorie": "securite",
-     "pertinence": 88,
-     "chance": [
-      68,
-      97
+     "repere": [
+      80,
+      "moyenne"
      ]
     }
    },
    {
     "x": {
      "id": "u-d-orleans-orleans-double-licence-droit-histoire",
-     "categorie": "securite",
+     "categorie": "realiste",
      "pertinence": 85,
-     "chance": [
-      95,
-      97
+     "repere": [
+      78,
+      "moyenne"
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "u-de-tours-tours-double-licence-droit-science-politique",
+     "categorie": "ambitieux",
+     "pertinence": 85,
+     "repere": [
+      22,
+      "en_dessous"
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "75688d806b46ad45d51cc72341222d1cf8d1686a6e5565277acd18d7551a9b3c",
-  "textes": "2de9203f4840d6b57b9275ee1f3513e50fd90359d149fc846a702ca9c36d6058"
+  "calculs": "50f3c2382e9cfd2ddedaf4815d759237af1b945a9cf5e1be0be2476bc567b1c6",
+  "textes": "314d80ae8c0e7ae5d141499ee2a9043b1d2e6d03ac364a9d7b6d71d527e07699"
  }
 }

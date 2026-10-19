@@ -118,9 +118,11 @@
    "interet": 91,
    "faisabilite": 61,
    "pertinence": 79,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -131,9 +133,11 @@
    "interet": 91,
    "faisabilite": 61,
    "pertinence": 79,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -144,9 +148,11 @@
    "interet": 84,
    "faisabilite": 61,
    "pertinence": 75,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -157,9 +163,11 @@
    "interet": 84,
    "faisabilite": 61,
    "pertinence": 75,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -170,9 +178,11 @@
    "interet": 83,
    "faisabilite": 61,
    "pertinence": 74,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -183,11 +193,13 @@
    "interet": 84,
    "faisabilite": 55,
    "pertinence": 72,
-   "chance": [
-    19,
-    44
+   "repere": [
+    55,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -196,11 +208,13 @@
    "interet": 84,
    "faisabilite": 54,
    "pertinence": 72,
-   "chance": [
-    24,
-    55
+   "repere": [
+    69,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -209,9 +223,11 @@
    "interet": 84,
    "faisabilite": 54,
    "pertinence": 72,
-   "chance": [
-    11,
-    24
+   "repere": [
+    30,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -222,11 +238,13 @@
    "interet": 84,
    "faisabilite": 55,
    "pertinence": 72,
-   "chance": [
-    22,
-    50
+   "repere": [
+    62,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -235,11 +253,13 @@
    "interet": 84,
    "faisabilite": 55,
    "pertinence": 72,
-   "chance": [
-    24,
-    55
+   "repere": [
+    69,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -248,9 +268,11 @@
    "interet": 79,
    "faisabilite": 58,
    "pertinence": 71,
-   "chance": [
-    28,
-    62
+   "repere": [
+    64.3,
+    null,
+    "inconnue",
+    "position_inconnue"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -261,9 +283,11 @@
    "interet": 78,
    "faisabilite": 58,
    "pertinence": 70,
-   "chance": [
-    6,
-    14
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -274,9 +298,11 @@
    "interet": 84,
    "faisabilite": 50,
    "pertinence": 70,
-   "chance": [
-    6,
-    14
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -287,11 +313,13 @@
    "interet": 74,
    "faisabilite": 49,
    "pertinence": 64,
-   "chance": [
-    19,
-    44
+   "repere": [
+    55,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -300,9 +328,11 @@
    "interet": 67,
    "faisabilite": 57,
    "pertinence": 63,
-   "chance": [
-    17,
-    38
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -313,9 +343,11 @@
    "interet": 75,
    "faisabilite": 42,
    "pertinence": 62,
-   "chance": [
-    4,
-    10
+   "repere": [
+    14.5,
+    null,
+    "inconnue",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -326,9 +358,11 @@
    "interet": 60,
    "faisabilite": 64,
    "pertinence": 62,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -339,11 +373,13 @@
    "interet": 69,
    "faisabilite": 49,
    "pertinence": 61,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -352,11 +388,13 @@
    "interet": 69,
    "faisabilite": 50,
    "pertinence": 61,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -365,9 +403,11 @@
    "interet": 74,
    "faisabilite": 42,
    "pertinence": 61,
-   "chance": [
-    17,
-    38
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -378,9 +418,11 @@
    "interet": 59,
    "faisabilite": 64,
    "pertinence": 61,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -391,11 +433,13 @@
    "interet": 62,
    "faisabilite": 56,
    "pertinence": 60,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -404,11 +448,13 @@
    "interet": 62,
    "faisabilite": 54,
    "pertinence": 59,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -417,9 +463,11 @@
    "interet": 56,
    "faisabilite": 64,
    "pertinence": 59,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -430,9 +478,11 @@
    "interet": 55,
    "faisabilite": 64,
    "pertinence": 59,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -443,9 +493,11 @@
    "interet": 55,
    "faisabilite": 64,
    "pertinence": 59,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -456,9 +508,11 @@
    "interet": 66,
    "faisabilite": 48,
    "pertinence": 59,
-   "chance": [
-    17,
-    38
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -469,11 +523,13 @@
    "interet": 67,
    "faisabilite": 42,
    "pertinence": 57,
-   "chance": [
-    5,
-    13
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -482,11 +538,13 @@
    "interet": 71,
    "faisabilite": 37,
    "pertinence": 57,
-   "chance": [
-    12,
-    30
+   "repere": [
+    45,
+    null,
+    "inconnue",
+    "position_inconnue"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -495,11 +553,13 @@
    "interet": 64,
    "faisabilite": 46,
    "pertinence": 57,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -508,11 +568,13 @@
    "interet": 58,
    "faisabilite": 56,
    "pertinence": 57,
-   "chance": [
-    9,
-    19
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -521,9 +583,11 @@
    "interet": 59,
    "faisabilite": 55,
    "pertinence": 57,
-   "chance": [
-    3,
-    8
+   "repere": [
+    8,
+    null,
+    "inconnue",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -534,9 +598,11 @@
    "interet": 53,
    "faisabilite": 64,
    "pertinence": 57,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -547,9 +613,11 @@
    "interet": 66,
    "faisabilite": 42,
    "pertinence": 56,
-   "chance": [
-    4,
-    10
+   "repere": [
+    14.5,
+    null,
+    "inconnue",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -560,11 +628,13 @@
    "interet": 72,
    "faisabilite": 32,
    "pertinence": 56,
-   "chance": [
-    10,
-    27
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -573,11 +643,13 @@
    "interet": 63,
    "faisabilite": 42,
    "pertinence": 55,
-   "chance": [
-    5,
-    13
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -586,11 +658,13 @@
    "interet": 58,
    "faisabilite": 50,
    "pertinence": 55,
-   "chance": [
-    5,
-    13
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
@@ -599,9 +673,11 @@
    "interet": 57,
    "faisabilite": 50,
    "pertinence": 54,
-   "chance": [
-    16,
-    36
+   "repere": [
+    37.3,
+    null,
+    "inconnue",
+    "position_inconnue"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -612,9 +688,11 @@
    "interet": 46,
    "faisabilite": 64,
    "pertinence": 53,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -625,9 +703,11 @@
    "interet": 49,
    "faisabilite": 56,
    "pertinence": 52,
-   "chance": [
-    7,
-    16
+   "repere": [
+    20,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -637,103 +717,105 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-12819",
-    "categorie": "securite",
-    "pertinence": 64,
-    "chance": [
-     35,
-     80
+    "id": "u-cote-d-azur-lettres",
+    "categorie": "realiste",
+    "pertinence": 63,
+    "repere": [
+     100,
+     "en_dessous"
     ]
    },
    {
-    "id": "u-cote-d-azur-lettres",
-    "categorie": "securite",
+    "id": "psup-22666",
+    "categorie": "realiste",
     "pertinence": 63,
-    "chance": [
-     35,
-     80
+    "repere": [
+     87,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-28974",
-    "categorie": "securite",
+    "categorie": "realiste",
     "pertinence": 54,
-    "chance": [
-     33,
-     76
+    "repere": [
+     95,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-26131",
+    "categorie": "ambitieux",
+    "pertinence": 72,
+    "repere": [
+     55,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-31192",
+    "categorie": "ambitieux",
+    "pertinence": 72,
+    "repere": [
+     69,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-26115",
     "categorie": "ambitieux",
     "pertinence": 70,
-    "chance": [
-     6,
-     14
-    ]
-   },
-   {
-    "id": "psup-39903",
-    "categorie": "ambitieux",
-    "pertinence": 72,
-    "chance": [
-     11,
-     24
-    ]
-   },
-   {
-    "id": "psup-43192",
-    "categorie": "ambitieux",
-    "pertinence": 70,
-    "chance": [
-     6,
-     14
-    ]
-   },
-   {
-    "id": "psup-26131",
-    "categorie": "realiste",
-    "pertinence": 72,
-    "chance": [
-     19,
-     44
-    ]
-   },
-   {
-    "id": "ps-12050",
-    "categorie": "realiste",
-    "pertinence": 64,
-    "chance": [
-     19,
-     44
-    ]
-   },
-   {
-    "id": "psup-36461",
-    "categorie": "realiste",
-    "pertinence": 56,
-    "chance": [
-     17,
-     38
+    "repere": [
+     18,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-2220",
     "categorie": "ambitieux",
     "pertinence": 65,
-    "chance": [
-     10,
-     22
+    "repere": [
+     28,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-2226",
+    "categorie": "ambitieux",
+    "pertinence": 64,
+    "repere": [
+     14,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "ps-12050",
+    "categorie": "ambitieux",
+    "pertinence": 64,
+    "repere": [
+     55,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "ps-12025",
+    "categorie": "ambitieux",
+    "pertinence": 52,
+    "repere": [
+     20,
+     "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSolides": 0,
-   "nbSecuriteFragiles": 3,
-   "niveau": "securite_fragile",
-   "message": "Attention : tes vœux « sécurité » restent incertains pour ton profil (jusqu'à 67 % de risque de refus chacun). Ajoute des formations où tes notes sont nettement au-dessus de celles des admis, par exemple des licences de ton académie peu demandées."
+   "nbSecurite": 0,
+   "niveau": "aucun",
+   "message": "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition."
   },
-  "alertes": [],
+  "alertes": [
+   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).",
+   "Moins de 3 vœux « réaliste » disponibles avec tes critères."
+  ],
   "certitude": {
    "niveau": "decide",
    "top": [
@@ -742,7 +824,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec bachelor (France) et licence de lettres ou sciences humaines comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -764,7 +846,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "d0ad3f69adb35497d84160be91c464165c6c6740158e8f3449f8fc97a972739e",
-  "textes": "aaa1cd9120df87f8371bb94cb418dc50e49316511df180e62e982d464b7db44d"
+  "calculs": "5b3fdd1231308d07d264d6016c6743ede56a5e0786f1d399e5fe42030e26f38a",
+  "textes": "680501f8c8450342b86d6600769ed959b4f75d662cf7cf42f93de574df5c02e8"
  }
 }

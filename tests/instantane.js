@@ -3,7 +3,7 @@
  *
  * Pour chaque profil, on garde :
  *   - les 40 premières recommandations, en clair (id, intérêt, faisabilité, pertinence,
- *     chances, catégorie), pour voir facilement ce qui a changé ;
+ *     repères d'admission, catégorie), pour voir facilement ce qui a changé ;
  *   - la liste de 10 vœux (wishlist), la section « Nouvelles à la rentrée 2026 » (nouvelles) et les
  *     propositions à l'étranger (etranger), en clair ;
  *   - deux empreintes (sha256) de TOUTES les formations notées :
@@ -24,18 +24,18 @@ const empreinte = (x) => crypto.createHash("sha256").update(JSON.stringify(x)).d
 // Une formation notée (objet avec une fiche « f ») est réduite à l'essentiel, pour que les
 // instantanés restent lisibles et ne recopient pas les fiches.
 const estSet = (v) => v instanceof Set || (v && v.constructor && v.constructor.name === "Set");
-const resume = (x) => ({ id: x.f.id, categorie: x.categorie, pertinence: x.pertinence, chance: x.chance ? [x.chance.bas, x.chance.haut] : null });
+const resume = (x) => ({ id: x.f.id, categorie: x.categorie, pertinence: x.pertinence, repere: x.repere ? [x.repere.taux, x.repere.position] : null });
 const remplacer = (k, v) => (estSet(v) ? [...v].sort() : v && typeof v === "object" && v.f && v.f.id ? resume(v) : v);
 const propre = (x) => (x === undefined ? null : JSON.parse(JSON.stringify(x, remplacer)));
 
 function chiffres(r) {
-  const c = r.chance || {};
+  const c = r.repere || {};
   return { id: r.f.id, interet: r.interet, faisabilite: r.faisabilite, pertinence: r.pertinence,
-    chance: [c.bas, c.haut], categorie: r.categorie, bloque: r.bloque, exclu: r.exclu };
+    repere: [c.taux, c.percentile, c.position, c.regle], categorie: r.categorie, bloque: r.bloque, exclu: r.exclu };
 }
 function textes(r) {
   return { id: r.f.id, raisons: r.raisons, ajust: r.ajust, actions: r.actions,
-    criteres: Object.fromEntries(Object.entries(r.crit || {}).map(([k, v]) => [k, propre(v)])), methode: (r.chance || {}).methode };
+    criteres: Object.fromEntries(Object.entries(r.crit || {}).map(([k, v]) => [k, propre(v)])), repere: [(r.repere || {}).texte, (r.repere || {}).pourquoi] };
 }
 
 function instantane(site, p) {

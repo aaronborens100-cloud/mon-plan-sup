@@ -14,7 +14,7 @@ index.html            squelette de la page (en-tête, FAQ, pied de page)
 css/styles.css        styles
 js/store.js           CapStore : enregistrement local (localStorage, clé « capsup.v1 »)
 js/bulletin.js        CapBulletin : lecture des bulletins PDF dans le navigateur
-js/moteur.js          CapEngine : chances d'admission, liste de vœux, propositions à l'étranger
+js/moteur.js          CapEngine : repères d'admission et catégories, liste de vœux, étranger
 js/app.js             navigation et vues (accueil, profil, questionnaire, ma liste, fiche, catalogue, plan, données)
 data/                 jeux de données (JSON), chargés à la demande (voir « Chargement des données »)
 vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0, voir vendor/README.md), chargé au premier import de bulletin
@@ -102,14 +102,14 @@ Les formations écartées restent dans le catalogue et sur leur fiche.
 Les formations du périmètre absentes de `stats.json` ont un statut (`data/statuts-stats.json`) :
 
 - `nouvelle_2026` : formation qui n'a jamais eu de session Parcoursup. Mention « Nouvelle formation à la rentrée
-  2026 : pas encore de statistiques d'admission ». Pas de catégorie ni de fourchette de chances. Jamais dans la
+  2026 : pas encore de statistiques d'admission ». Pas de catégorie ni de repère d'admission. Jamais dans la
   liste de 10 vœux (`wishlist`) : `CapEngine.nouvelles(resultats, it, n)` en propose au plus `MAX_NOUVELLES` = 3
   dans une section à part, « Nouvelles à la rentrée 2026 », sous la liste. Tri par intérêt seulement (sans
   chiffres, la faisabilité est artificiellement haute), section vide sans réponse au questionnaire. Seules les
   catégories Parcoursup de `CATEGORIES_NOUVELLES` (licences, CPGE, ingénieurs, commerce, santé, IEP, CMI, DEUST,
   arts) sont proposées : sans statistiques, le filtre sur la part de bacheliers généraux ne peut pas jouer ;
 - `sans_stats` : formation qui existait, statistiques non publiées, non retrouvées, ou antérieures à 2024.
-  Mention « Statistiques d'admission non publiées : chances impossibles à estimer » (aucune estimation).
+  Mention « Statistiques d'admission non publiées : aucun repère d'admission » (aucune estimation).
   Hors des listes de vœux tant qu'il n'y a pas de chiffres sourcés.
 
 Des statistiques officielles de la session 2024 (retrouvées par le script avec `--historique`) rendent la
@@ -135,17 +135,26 @@ Pour vérifier dans les fichiers officiels, télécharger les exports CSV de fr-
 dans un dossier, puis lancer `python3 scripts/construire-statuts-stats.py --historique DOSSIER --consulte-le AAAA-MM-JJ`
 (le script compare aussi `stats.json` au fichier 2025 complet).
 
+## Catégories ambitieux / réaliste / sécurité
+
+Le modèle est décrit dans `docs/modele-chances.md`. Le site n'affiche aucun pourcentage de chances : aucune
+donnée publique ne le permet (les statistiques décrivent les admis, pas les refusés). `CapEngine.repere(f, s)`
+renvoie le taux d'accès officiel de la formation (session, source) et la position de l'élève parmi les admis 2025
+(`percentileAdmis` sur la moyenne moins `MARGE_BULLETIN` = 0,5 point ; « au-dessus » à partir de 60 %, « en
+dessous » sous 30 %). La catégorie vient de la table `REGLES_CATEGORIE` (première règle vérifiée) : sécurité =
+taux ≥ 50 % et position « au-dessus », ou taux ≥ `SEUIL_TAUX_TRES_OUVERT` (85 %) et position « moyenne » ou
+« au-dessus », sans point bloquant ; ambitieux = taux < 20 %, position « en dessous » (sauf taux ≥ 85 % : réaliste)
+ou point bloquant ; réaliste = le reste. Moyenne sous 10 : message sur le bac en tête de Ma liste (`alerteBac`),
+sans effet sur les catégories. Sans notes, jamais « sécurité » (taux ≥ 50 % → réaliste, sinon ambitieux).
+
 ## Protection de la liste de vœux
 
 Le site n'affiche aucune probabilité globale d'admission pour la liste : les vœux ne sont pas indépendants
-(les formations lisent le même dossier) et les chances par formation restent des estimations.
-`wishlist()` renvoie à la place `protection = { nbSolides, nbSecuriteFragiles, niveau, message }`
-(`CapEngine.protection(liste)`, aussi appelé sur les vœux retenus par l'élève). Un vœu est « solide » s'il est
-de catégorie « sécurité » et que le bas de sa fourchette (`chance.bas`) atteint `SEUIL_SOLIDE` = 60 % ; les autres
-vœux « sécurité » sont comptés dans `nbSecuriteFragiles`. `niveau` vaut `sans_notes` (aucune chance calculée),
-`securite_fragile` (aucun vœu solide mais des vœux « sécurité » incertains), `aucun` (0 solide), `insuffisant` (1),
-`minimum` (2) ou `bon` (3 ou plus). Ma liste affiche le message, suivi de `PROTECTION_REPERE`
-(« Aucun site ne peut calculer tes chances exactes d'admission… »).
+(les formations lisent le même dossier). `wishlist()` renvoie `protection = { nbSecurite, niveau, message }`
+(`CapEngine.protection(liste)`, aussi appelé sur les vœux retenus par l'élève). Avec la table des catégories, un
+vœu « sécurité » est solide par construction : on compte les vœux « sécurité ». `niveau` vaut `sans_notes`
+(élève sans notes), `aucun` (0 vœu « sécurité »), `insuffisant` (1), `minimum` (2) ou `bon` (3 ou plus). Ma liste
+affiche le message, suivi de `PROTECTION_REPERE` (« Aucun site ne peut calculer tes chances exactes d'admission… »).
 
 ## Tests
 

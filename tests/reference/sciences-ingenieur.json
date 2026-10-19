@@ -115,9 +115,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -128,9 +130,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.82,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -141,9 +145,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -154,9 +160,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.84,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -167,9 +175,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    70,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -180,9 +190,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    88,
+    0.86,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -193,9 +205,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -206,9 +220,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    70,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -219,9 +235,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -232,9 +250,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -245,9 +265,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.8,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -258,9 +280,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -271,9 +295,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -284,9 +310,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -297,9 +325,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.68,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -310,9 +340,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -323,9 +355,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.81,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -336,9 +370,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -349,9 +385,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -362,9 +400,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    70,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -375,9 +415,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -388,9 +430,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.72,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -401,9 +445,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    70,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -414,9 +460,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    69,
+    0.96,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -427,9 +475,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.86,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -440,9 +490,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.91,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -453,9 +505,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.82,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -466,9 +520,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.76,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -479,9 +535,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.8,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -492,9 +550,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.62,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -505,9 +565,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    70,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -518,9 +580,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.85,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -531,9 +595,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -544,9 +610,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.85,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -557,9 +625,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.7,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -570,9 +640,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -583,9 +655,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.78,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -596,9 +670,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    78,
-    80
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -609,9 +685,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    95,
-    97
+   "repere": [
+    99,
+    0.75,
+    "au_dessus",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -622,9 +700,11 @@
    "interet": 86,
    "faisabilite": 95,
    "pertinence": 90,
-   "chance": [
-    90,
-    97
+   "repere": [
+    51,
+    0.8,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -637,98 +717,97 @@
     "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
     "categorie": "securite",
     "pertinence": 90,
-    "chance": [
-     95,
-     97
+    "repere": [
+     100,
+     "au_dessus"
     ]
    },
    {
     "id": "nantes-universite-informatique",
     "categorie": "securite",
     "pertinence": 86,
-    "chance": [
-     95,
-     97
+    "repere": [
+     57,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "ps-11322",
+    "categorie": "ambitieux",
+    "pertinence": 84,
+    "repere": [
+     16,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "licence-physique-du-parcours-speciaux-double-diplome-universite-toulouse-iii-paul-sabatier-toulouse",
+    "categorie": "ambitieux",
+    "pertinence": 84,
+    "repere": [
+     65,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-15418",
     "categorie": "ambitieux",
     "pertinence": 88,
-    "chance": [
-     8,
-     16
-    ]
-   },
-   {
-    "id": "ps-8242",
-    "categorie": "ambitieux",
-    "pertinence": 82,
-    "chance": [
+    "repere": [
      4,
-     9
+     "au_dessus"
     ]
    },
    {
-    "id": "psup-39587",
-    "categorie": "ambitieux",
-    "pertinence": 82,
-    "chance": [
-     3,
-     8
-    ]
-   },
-   {
-    "id": "ps-11322",
+    "id": "ps-13328",
     "categorie": "realiste",
-    "pertinence": 84,
-    "chance": [
+    "pertinence": 83,
+    "repere": [
+     70,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "double-licence-mathematiques-informatique-le-mans-universite-le-mans",
+    "categorie": "realiste",
+    "pertinence": 81,
+    "repere": [
+     59,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-47255",
+    "categorie": "realiste",
+    "pertinence": 86,
+    "repere": [
      30,
-     61
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-5233",
+    "categorie": "realiste",
+    "pertinence": 79,
+    "repere": [
+     49,
+     "au_dessus"
     ]
    },
    {
     "id": "psup-32300",
-    "categorie": "realiste",
+    "categorie": "ambitieux",
     "pertinence": 82,
-    "chance": [
-     27,
-     56
-    ]
-   },
-   {
-    "id": "double-licence-mathematiques-informatique-universite-d-angers-angers",
-    "categorie": "realiste",
-    "pertinence": 81,
-    "chance": [
-     35,
-     72
-    ]
-   },
-   {
-    "id": "jacques-decour-paris-mpsi",
-    "categorie": "realiste",
-    "pertinence": 81,
-    "chance": [
-     27,
-     57
-    ]
-   },
-   {
-    "id": "nantes-universite-physique",
-    "categorie": "securite",
-    "pertinence": 86,
-    "chance": [
-     95,
-     97
+    "repere": [
+     14,
+     "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSolides": 3,
-   "nbSecuriteFragiles": 0,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -739,7 +818,7 @@
     "data_informatique"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec école d'ingénieurs post-bac et licence de sciences comme solutions de repli. Un vœu « découverte » t'ouvre à licence de sciences.",
+  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et BUT comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -764,20 +843,9 @@
      "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
      "categorie": "ambitieux",
      "pertinence": 87,
-     "chance": [
-      10,
-      21
-     ]
-    }
-   },
-   {
-    "x": {
-     "id": "double-licence-mathematiques-informatique-le-mans-universite-le-mans",
-     "categorie": "securite",
-     "pertinence": 81,
-     "chance": [
-      83,
-      97
+     "repere": [
+      15,
+      "en_dessous"
      ]
     }
    },
@@ -786,16 +854,27 @@
      "id": "double-licence-mathematiques-informatique-universite-clermont-auvergne-clermont-ferrand",
      "categorie": "securite",
      "pertinence": 81,
-     "chance": [
-      95,
-      97
+     "repere": [
+      60,
+      "au_dessus"
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "double-licence-mathematiques-informatique-universite-d-angers-angers",
+     "categorie": "realiste",
+     "pertinence": 81,
+     "repere": [
+      30,
+      "moyenne"
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "30681f1e7bdc93c6d8a1f98bf3b061c5b376a3378f6e61be2214eac665c9bc37",
-  "textes": "d0e722125dab5bf52f0e9473e8fa651c636c52d955ca163c5ed3dbe631c4798b"
+  "calculs": "fa72b25136384d367ef7fc4b758465d84c2be31a47ef67fde5e3520824ae046e",
+  "textes": "4c706b5bb8e11392c7586cff3a2f32f88a94dcca3d5ed67ccd55f1a193d967ee"
  }
 }

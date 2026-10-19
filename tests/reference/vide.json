@@ -61,11 +61,13 @@
    "interet": 49,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    66,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -74,11 +76,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    54,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -87,11 +91,13 @@
    "interet": 49,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    39,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -100,11 +106,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    38,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -113,9 +121,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    6,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -126,11 +136,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    30,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -139,9 +151,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    22,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -152,11 +166,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    86,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -165,11 +181,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    63,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -178,9 +196,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    24,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -191,11 +211,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    51,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -204,11 +226,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    36,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -217,11 +241,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    53,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -230,11 +256,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    54,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -243,11 +271,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    99,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -256,11 +286,13 @@
    "interet": 49,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    64,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -269,11 +301,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    70,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -282,9 +316,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    21,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -295,11 +331,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    41,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -308,9 +346,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    15,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -321,9 +361,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    10,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -334,9 +376,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    22,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -347,9 +391,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    4,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -360,9 +406,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    9,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -373,9 +421,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    18,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -386,11 +436,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    63,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -399,11 +451,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    64,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -412,11 +466,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    63,
     null,
-    null
+    null,
+    "sans_notes_ouverte"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -425,9 +481,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    20,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -438,11 +496,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    27,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -451,11 +511,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    38,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -464,11 +526,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    28,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -477,11 +541,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    30,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -490,9 +556,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    11,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -503,9 +571,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    15,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -516,9 +586,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    12,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -529,9 +601,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    13,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -542,9 +616,11 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    19,
     null,
-    null
+    null,
+    "sans_notes"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -555,11 +631,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    30,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -568,11 +646,13 @@
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
-   "chance": [
+   "repere": [
+    48,
     null,
-    null
+    null,
+    "sans_notes"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   }
@@ -581,28 +661,28 @@
   "liste": [
    {
     "id": "ps-7917",
-    "categorie": "securite",
+    "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     66,
      null
     ]
    },
    {
     "id": "ps-7918",
-    "categorie": "securite",
+    "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     54,
      null
     ]
    },
    {
-    "id": "ps-5824",
-    "categorie": "securite",
+    "id": "ps-7369",
+    "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     63,
      null
     ]
    },
@@ -610,8 +690,8 @@
     "id": "ps-12409",
     "categorie": "ambitieux",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     10,
      null
     ]
    },
@@ -619,64 +699,65 @@
     "id": "ps-12025",
     "categorie": "ambitieux",
     "pertinence": 61,
-    "chance": [
-     null,
-     null
-    ]
-   },
-   {
-    "id": "ps-2775",
-    "categorie": "ambitieux",
-    "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     20,
      null
     ]
    },
    {
     "id": "ps-8417",
-    "categorie": "realiste",
+    "categorie": "ambitieux",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     27,
      null
     ]
    },
    {
-    "id": "aix-marseille-universite-aix-en-provence-psychologie",
+    "id": "ps-6292",
     "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     59,
      null
     ]
    },
    {
-    "id": "licence-mathematiques-la-rochelle-universite-la-rochelle",
+    "id": "aix-marseille-universite-aix-en-provence-geographie-et-amenagement",
     "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     99,
      null
     ]
    },
    {
-    "id": "nantes-universite-physique",
+    "id": "licence-mathematiques-portail-rene-descartes-aix-marseille-universite-aix-en-provence",
     "categorie": "realiste",
     "pertinence": 61,
-    "chance": [
-     null,
+    "repere": [
+     71,
+     null
+    ]
+   },
+   {
+    "id": "nantes-universite-chimie",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "repere": [
+     100,
      null
     ]
    }
   ],
   "protection": {
-   "nbSolides": 0,
-   "nbSecuriteFragiles": 3,
+   "nbSecurite": 0,
    "niveau": "sans_notes",
    "message": "Renseigne tes bulletins : sans tes notes, on ne peut pas savoir quels vœux sont sûrs pour toi."
   },
-  "alertes": [],
+  "alertes": [
+   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
+  ],
   "certitude": {
    "niveau": "inconnu",
    "top": []
@@ -693,17 +774,17 @@
      "id": "durham-mathematics",
      "categorie": "ambitieux",
      "pertinence": 61,
-     "chance": [
+     "repere": [
       null,
       null
      ]
     },
     "ancre": {
-     "id": "licence-mathematiques-la-rochelle-universite-la-rochelle",
+     "id": "licence-mathematiques-portail-rene-descartes-aix-marseille-universite-aix-en-provence",
      "categorie": "realiste",
      "pertinence": 61,
-     "chance": [
-      null,
+     "repere": [
+      71,
       null
      ]
     },
@@ -724,19 +805,19 @@
    {
     "x": {
      "id": "uclouvain-droit",
-     "categorie": "securite",
+     "categorie": "ambitieux",
      "pertinence": 61,
-     "chance": [
+     "repere": [
       null,
       null
      ]
     },
     "ancre": {
-     "id": "ps-2775",
+     "id": "ps-8417",
      "categorie": "ambitieux",
      "pertinence": 61,
-     "chance": [
-      null,
+     "repere": [
+      27,
       null
      ]
     },
@@ -757,7 +838,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "06c3e9d212dc5cecd8afa3718c8071b43bcf50a332b79e3d5ac1d2a092c1f13e",
-  "textes": "1ed281848cc9c4cc948502d4531460f53f4b883996b603d2622e1ac569d84d9a"
+  "calculs": "34ef169ed72dfff06f1702061bf9d38fc7a5f9a1bb65bab3c0b1faa9ea83399f",
+  "textes": "059af1409ad2d1e8e68e9623871a0a0c6a04d81047c0af48f21badcf997b4edf"
  }
 }

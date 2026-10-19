@@ -108,9 +108,11 @@
    "interet": 92,
    "faisabilite": 61,
    "pertinence": 80,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -121,9 +123,11 @@
    "interet": 92,
    "faisabilite": 61,
    "pertinence": 80,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -134,9 +138,11 @@
    "interet": 89,
    "faisabilite": 61,
    "pertinence": 78,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -147,9 +153,11 @@
    "interet": 89,
    "faisabilite": 58,
    "pertinence": 77,
-   "chance": [
-    19,
-    42
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -160,9 +168,11 @@
    "interet": 89,
    "faisabilite": 58,
    "pertinence": 77,
-   "chance": [
-    19,
-    42
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -173,9 +183,11 @@
    "interet": 88,
    "faisabilite": 61,
    "pertinence": 77,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -186,9 +198,11 @@
    "interet": 88,
    "faisabilite": 61,
    "pertinence": 77,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -199,9 +213,11 @@
    "interet": 88,
    "faisabilite": 61,
    "pertinence": 77,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -212,9 +228,11 @@
    "interet": 88,
    "faisabilite": 61,
    "pertinence": 77,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -225,9 +243,11 @@
    "interet": 88,
    "faisabilite": 61,
    "pertinence": 77,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -238,11 +258,13 @@
    "interet": 81,
    "faisabilite": 65,
    "pertinence": 75,
-   "chance": [
-    74,
-    97
+   "repere": [
+    52,
+    0.37,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -251,11 +273,13 @@
    "interet": 81,
    "faisabilite": 66,
    "pertinence": 75,
-   "chance": [
-    95,
-    97
+   "repere": [
+    62,
+    0.55,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -264,11 +288,13 @@
    "interet": 81,
    "faisabilite": 62,
    "pertinence": 73,
-   "chance": [
-    51,
-    97
+   "repere": [
+    55,
+    0.2,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -277,11 +303,13 @@
    "interet": 81,
    "faisabilite": 62,
    "pertinence": 73,
-   "chance": [
-    91,
-    97
+   "repere": [
+    86,
+    0.24,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -290,11 +318,13 @@
    "interet": 81,
    "faisabilite": 61,
    "pertinence": 73,
-   "chance": [
-    72,
-    97
+   "repere": [
+    81,
+    0.18,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -303,11 +333,13 @@
    "interet": 81,
    "faisabilite": 62,
    "pertinence": 73,
-   "chance": [
-    76,
-    97
+   "repere": [
+    74,
+    0.23,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -316,9 +348,11 @@
    "interet": 80,
    "faisabilite": 61,
    "pertinence": 72,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -329,9 +363,11 @@
    "interet": 79,
    "faisabilite": 61,
    "pertinence": 72,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -342,9 +378,11 @@
    "interet": 80,
    "faisabilite": 61,
    "pertinence": 72,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -355,9 +393,11 @@
    "interet": 72,
    "faisabilite": 70,
    "pertinence": 71,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -368,11 +408,13 @@
    "interet": 75,
    "faisabilite": 65,
    "pertinence": 71,
-   "chance": [
-    26,
-    53
+   "repere": [
+    18,
+    0.37,
+    "moyenne",
+    "taux_bas"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -381,11 +423,13 @@
    "interet": 72,
    "faisabilite": 67,
    "pertinence": 70,
-   "chance": [
-    55,
-    97
+   "repere": [
+    73,
+    0.14,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -394,9 +438,11 @@
    "interet": 76,
    "faisabilite": 61,
    "pertinence": 70,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -407,9 +453,11 @@
    "interet": 72,
    "faisabilite": 68,
    "pertinence": 70,
-   "chance": [
-    95,
-    97
+   "repere": [
+    100,
+    0.55,
+    "moyenne",
+    "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -420,11 +468,13 @@
    "interet": 72,
    "faisabilite": 65,
    "pertinence": 69,
-   "chance": [
-    95,
-    97
+   "repere": [
+    75,
+    0.37,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -433,9 +483,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -446,9 +498,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -459,9 +513,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -472,9 +528,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -485,11 +543,13 @@
    "interet": 72,
    "faisabilite": 64,
    "pertinence": 69,
-   "chance": [
-    46,
-    96
+   "repere": [
+    40,
+    0.27,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -498,11 +558,13 @@
    "interet": 75,
    "faisabilite": 60,
    "pertinence": 69,
-   "chance": [
-    20,
-    41
+   "repere": [
+    14,
+    0.37,
+    "moyenne",
+    "taux_bas"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -511,9 +573,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -524,9 +588,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -537,9 +603,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -550,9 +618,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -563,9 +633,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -576,9 +648,11 @@
    "interet": 75,
    "faisabilite": 61,
    "pertinence": 69,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -589,9 +663,11 @@
    "interet": 81,
    "faisabilite": 52,
    "pertinence": 69,
-   "chance": [
-    3,
-    6
+   "repere": [
+    6,
+    0.03,
+    "en_dessous",
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -602,11 +678,13 @@
    "interet": 72,
    "faisabilite": 63,
    "pertinence": 68,
-   "chance": [
-    79,
-    97
+   "repere": [
+    82,
+    0.21,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "securite",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -615,9 +693,11 @@
    "interet": 72,
    "faisabilite": 61,
    "pertinence": 68,
-   "chance": [
+   "repere": [
     null,
-    null
+    null,
+    "inconnue",
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -627,101 +707,100 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-47821",
+    "id": "psup-28974",
     "categorie": "securite",
-    "pertinence": 75,
-    "chance": [
-     74,
-     97
-    ]
-   },
-   {
-    "id": "psup-26131",
-    "categorie": "securite",
-    "pertinence": 73,
-    "chance": [
-     51,
-     97
-    ]
-   },
-   {
-    "id": "psup-44895",
-    "categorie": "ambitieux",
-    "pertinence": 73,
-    "chance": [
-     15,
-     33
-    ]
-   },
-   {
-    "id": "ps-8461",
-    "categorie": "ambitieux",
-    "pertinence": 65,
-    "chance": [
-     10,
-     22
-    ]
-   },
-   {
-    "id": "psup-2226",
-    "categorie": "ambitieux",
-    "pertinence": 65,
-    "chance": [
-     8,
-     17
-    ]
-   },
-   {
-    "id": "psup-39903",
-    "categorie": "realiste",
-    "pertinence": 73,
-    "chance": [
-     27,
-     56
-    ]
-   },
-   {
-    "id": "psup-12910",
-    "categorie": "realiste",
-    "pertinence": 66,
-    "chance": [
-     21,
-     45
-    ]
-   },
-   {
-    "id": "psup-2220",
-    "categorie": "realiste",
-    "pertinence": 60,
-    "chance": [
-     30,
-     63
-    ]
-   },
-   {
-    "id": "psup-28490",
-    "categorie": "realiste",
-    "pertinence": 65,
-    "chance": [
-     24,
-     52
+    "pertinence": 70,
+    "repere": [
+     95,
+     "moyenne"
     ]
    },
    {
     "id": "psup-43423",
     "categorie": "securite",
     "pertinence": 72,
-    "chance": [
-     95,
-     97
+    "repere": [
+     99,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-4018",
+    "categorie": "securite",
+    "pertinence": 72,
+    "repere": [
+     98,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-26270",
+    "categorie": "ambitieux",
+    "pertinence": 74,
+    "repere": [
+     73,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-26131",
+    "categorie": "ambitieux",
+    "pertinence": 73,
+    "repere": [
+     55,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-43011",
+    "categorie": "ambitieux",
+    "pertinence": 67,
+    "repere": [
+     43,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-10451",
+    "categorie": "realiste",
+    "pertinence": 72,
+    "repere": [
+     88,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-3636",
+    "categorie": "realiste",
+    "pertinence": 67,
+    "repere": [
+     48,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-26373",
+    "categorie": "realiste",
+    "pertinence": 65,
+    "repere": [
+     71,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-12539",
+    "categorie": "ambitieux",
+    "pertinence": 70,
+    "repere": [
+     73,
+     "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSolides": 2,
-   "nbSecuriteFragiles": 1,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {
@@ -730,7 +809,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec école de commerce post-bac et licence d'éco-gestion comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec licence de droit ou science po et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -752,7 +831,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "a7865a37bf2d943f085c01105fa1a436e9f40ee478c1e8502778ee0242a03c02",
-  "textes": "14dba89ae017ec43cefda356ac8e8624837bfb93b4dfa0c49edea723ea94d8cb"
+  "calculs": "3dec4a5b335794f4477ed768b56a17af660f888bf51d0cd1bce7ca9f94edb23d",
+  "textes": "6c90b1c8e30de17725984d572ea08e9dc514e2db86133ca0413c9c124a0d0605"
  }
 }
