@@ -55,7 +55,8 @@
     REF.poursuites = Object.fromEntries((ref.poursuites || []).map((p) => [p.id, p]));
   }
 
-  const num = (v) => { if (v === "" || v === null || v === undefined) return null; const n = Number(String(v).replace(",", ".")); return Number.isFinite(n) ? n : null; };
+  // une chaîne vide ou faite d'espaces est une valeur absente (null), pas 0
+  const num = (v) => { if (v === null || v === undefined) return null; const t = String(v).trim(); if (t === "") return null; const n = Number(t.replace(",", ".")); return Number.isFinite(n) ? n : null; };
   const moyenne = (arr) => { const a = arr.filter((x) => x !== null && x !== undefined); return a.length ? a.reduce((s, x) => s + x, 0) / a.length : null; };
   const r1 = (x) => (x === null || x === undefined ? null : Math.round(x * 10) / 10);
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -92,6 +93,14 @@
   // « spécialités ») : règles éditoriales de Mon Plan Sup, pas des exigences publiées par les formations.
   const SEUIL_EXPERTES_FAIBLE = 10;   // sous 10 : « à renforcer »
   const SEUIL_EXPERTES_FORT = 14;     // 14 ou plus : « atout fort »
+  // Une moyenne (générale ou de matière) hors de 0 à 20 est une erreur de saisie : elle n'est pas comptée,
+  // comme une valeur absente, et le profil affiche MESSAGE_NOTE_IMPOSSIBLE.
+  const NOTE_MIN = 0, NOTE_MAX = 20;
+  const noteValide = (v) => { const n = num(v); return n !== null && n >= NOTE_MIN && n <= NOTE_MAX ? n : null; };
+  const noteImpossible = (v) => { const n = num(v); return n !== null && (n < NOTE_MIN || n > NOTE_MAX); };
+  // periode : forme courte (« Tle T1 ») ; matiere : nom affiché, absent pour la moyenne générale
+  const MESSAGE_NOTE_IMPOSSIBLE = (periode, valeur, matiere) =>
+    `Moyenne ${matiere ? `de ${matiere} en ${periode}` : `de ${periode}`} impossible (${fmt(valeur)}) : vérifie-la sur ton bulletin.`;
   function periodesComptees(periodes) {
     const niveau = (x) => String(x.label || "").split(" – ")[0];
     const lycee = periodes.filter((x) => NIVEAUX_BULLETINS.includes(niveau(x)));
@@ -99,14 +108,23 @@
   }
   // moyenne simple d'une matière sur les périodes où elle a une note, avec la liste de ces périodes
   function moyenneMatiere(periodes, m) {
-    const notes = periodes.map((x) => ({ periode: x.label || "", v: num(((x.notes || {})[m] || {}).moy) })).filter((x) => x.v !== null);
+    const notes = periodes.map((x) => ({ periode: x.label || "", v: noteValide(((x.notes || {})[m] || {}).moy) })).filter((x) => x.v !== null);
     return { moyenne: r1(moyenne(notes.map((x) => x.v))), periodes: notes.map((x) => x.periode) };
+  }
+  // valeurs hors de 0 à 20 dans les périodes comptées : [{ periode, matiere (null pour la moyenne générale), valeur }]
+  function notesImpossibles(p) {
+    const out = [];
+    for (const x of periodesComptees((p && p.periodes) || [])) {
+      if (noteImpossible(x.moyenneGenerale)) out.push({ periode: x.label || "", matiere: null, valeur: num(x.moyenneGenerale) });
+      for (const [m, n] of Object.entries(x.notes || {})) if (noteImpossible((n || {}).moy)) out.push({ periode: x.label || "", matiere: m, valeur: num(n.moy) });
+    }
+    return out;
   }
   function statsProfil(p) {
     const periodes = p.periodes || [];
     const comptees = periodesComptees(periodes);
-    const avecMoyenne = comptees.filter((x) => num(x.moyenneGenerale) !== null);
-    const sp = avecMoyenne.reduce((a, x) => a + num(x.moyenneGenerale) * POIDS_PERIODE, 0), sc = avecMoyenne.length * POIDS_PERIODE;
+    const avecMoyenne = comptees.filter((x) => noteValide(x.moyenneGenerale) !== null);
+    const sp = avecMoyenne.reduce((a, x) => a + noteValide(x.moyenneGenerale) * POIDS_PERIODE, 0), sc = avecMoyenne.length * POIDS_PERIODE;
     const mg = sc ? sp / sc : null;
     const dernier = avecMoyenne[avecMoyenne.length - 1];
     const spe = moyenneMatiere(comptees, "maths"), exp = moyenneMatiere(comptees, "maths_expertes"), cpl = moyenneMatiere(comptees, "maths_complementaires");
@@ -127,7 +145,7 @@
     return {
       moyenneGenerale: mg === null ? null : Math.round(mg * 100) / 100, moyennePeriodes: avecMoyenne.map((x) => x.label || ""),
       periodesSansMoyenne: comptees.filter((x) => num(x.moyenneGenerale) === null).map((x) => x.label || ""),
-      dernierBulletin: dernier ? { moyenne: num(dernier.moyenneGenerale), periode: dernier.label || "" } : null,
+      dernierBulletin: dernier ? { moyenne: noteValide(dernier.moyenneGenerale), periode: dernier.label || "" } : null,
       maths: mathsRef.moyenne, mathsMatiere, mathsPeriodes: mathsRef.periodes, mathsSpe: spe.moyenne, compl: cpl.moyenne,
       expertes: exp.moyenne, expertesPeriodes: exp.periodes,
       anglais, anglaisCertifie: !!niv[0], ecartClasse: r1(moyenne(ecartsClasse)), rangRelatif: moyenne(rangs),
@@ -172,14 +190,27 @@
     }
     if (n.moyenne_cible == null && n.maths_cible == null) return { niveau: "inconnu", texte: "Pas de repère chiffré relevé pour cette formation." };
     if (s.moyenneGenerale === null) return { niveau: "inconnu", texte: "Renseigne tes bulletins pour comparer tes notes." };
+    // le repère de maths d'une formation vise la spécialité maths : les maths complémentaires ne lui sont pas comparées
+    const compl = s.mathsMatiere === "maths_complementaires";
+    const noteCompl = compl && n.maths_cible != null ? ` ${MESSAGE_MATHS_COMPL}` : "";
+    if (compl && n.moyenne_cible == null) return { niveau: "inconnu", texte: `Pas de repère de moyenne générale relevé pour cette formation.${noteCompl}` };
     const ecarts = [];
     if (n.moyenne_cible != null) ecarts.push(s.moyenneGenerale - n.moyenne_cible);
-    if (n.maths_cible != null && s.maths !== null) ecarts.push(s.maths - n.maths_cible);
+    if (n.maths_cible != null && s.maths !== null && !compl) ecarts.push(s.maths - n.maths_cible);
     const e = Math.min(...ecarts);
     const cible = [n.moyenne_cible != null ? `${fmt(n.moyenne_cible)} de moyenne` : null, n.maths_cible != null ? `${fmt(n.maths_cible)} en maths` : null].filter(Boolean).join(" et ");
     const lib = n.statut === "officiel" ? "exigence officielle" : n.statut === "source_secondaire" ? "repère publié" : "repère estimé";
     const niveau = e >= 0.7 ? "fort" : e >= -0.3 ? "conforme" : e >= -1.5 ? "renforcer" : "faible";
-    return { niveau, ecart: r1(e), texte: `Visé : ${cible} (${lib}) — toi : ${fmt(s.moyenneGenerale)}${s.maths !== null ? ` / ${s.mathsMatiere === "maths_complementaires" ? "maths complémentaires" : "maths"} ${fmt(s.maths)}` : ""}.` };
+    return { niveau, ecart: r1(e), texte: `Visé : ${cible} (${lib}) — toi : ${fmt(s.moyenneGenerale)}${s.maths !== null && !noteCompl ? ` / ${compl ? "maths complémentaires" : "maths"} ${fmt(s.maths)}` : ""}.${noteCompl}` };
+  }
+  const MESSAGE_MATHS_COMPL = "Repère de maths donné pour la spécialité maths : tes maths complémentaires ne sont pas comparées.";
+  // Libellé des maths retenues, pour l'affichage : « Maths complémentaires » ; « Spécialité maths (première) » quand
+  // la spécialité a été abandonnée en fin de première sans maths complémentaires (on garde ses notes de première) ; sinon « Maths ».
+  function libelleMaths(s) {
+    if (s.mathsMatiere === "maths_complementaires") return "Maths complémentaires";
+    if (s.mathsMatiere === "maths" && !s.specialites.includes("maths") && s.abandonnee === "maths" && s.mathsPeriodes.length
+      && s.mathsPeriodes.every((l) => String(l).startsWith("Première"))) return "Spécialité maths (première)";
+    return "Maths";
   }
   function aMaths(s) {
     if (s.specialites.includes("maths")) return "spe";
@@ -385,7 +416,7 @@
       if (p.charge === 1) { interet -= 22; ajust.push("rythme de prépa très intense"); } else if (p.charge === 2) interet -= 6;
       if (f.type === "prepa_ecg" && f.option === "appro" && s.optionMaths !== "expertes" && s.niveau === "terminale") interet -= 6;
       // maths (sans les maths expertes) d'au moins 15, et maths expertes pas sous SEUIL_EXPERTES_FAIBLE
-      if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && (s.maths || 0) >= 15 && niveauExpertes(s.expertes) !== "renforcer") { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
+      if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && s.mathsMatiere === "maths" && (s.maths || 0) >= 15 && niveauExpertes(s.expertes) !== "renforcer") { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
     }
     if (etranger) {
       const voulus = (p.pays || []).filter((x) => x !== "aucun");
@@ -447,7 +478,7 @@
     const a = [];
     const add = (cle, texte, mois, prio) => a.push({ cle, texte, mois, prio });
     const n = crit.notes;
-    if (n.niveau === "renforcer" || n.niveau === "faible") add("notes", `Gagner environ ${fmt(Math.abs(n.ecart))} point(s) de moyenne${f.notes && f.notes.maths_cible ? " (surtout en maths)" : ""} d'ici le prochain conseil de classe.`, "trimestre", 1);
+    if (n.niveau === "renforcer" || n.niveau === "faible") add("notes", `Gagner environ ${fmt(Math.abs(n.ecart))} point(s) de moyenne${f.notes && f.notes.maths_cible && s.mathsMatiere !== "maths_complementaires" ? " (surtout en maths)" : ""} d'ici le prochain conseil de classe.`, "trimestre", 1);
     else if (n.niveau === "inconnu" && s.moyenneGenerale === null) add("bulletins", "Importer ou saisir tes bulletins pour affiner l'analyse.", "maintenant", 2);
     if (f.epreuves_anticipees && s.niveau !== "terminale") add("eaf", "Préparer sérieusement les épreuves anticipées de français et de maths de juin : elles comptent directement pour Sciences Po.", "avant juin", 1);
     for (const x of crit.specialites.actions || []) add("expertes", x + " (à demander au conseil de classe de première).", "avant juin", 1);
@@ -820,5 +851,5 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

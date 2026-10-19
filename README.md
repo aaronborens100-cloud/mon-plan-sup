@@ -143,7 +143,10 @@ période avec le même poids (`POIDS_PERIODE`), sans coefficient. Une période s
 comptée ni reconstituée (`periodesSansMoyenne`, message `MESSAGE_SANS_MOYENNE`) ; l'import PDF suit la même règle.
 La moyenne du dernier bulletin est gardée à part (`dernierBulletin`) et ne sert à aucun calcul. Maths
 (`maths`, ou maths complémentaires sans la spécialité : `mathsMatiere`) et maths expertes (`expertes`) sont deux
-moyennes séparées, chacune avec ses périodes. Critère « spécialités » des formations qui demandent l'option maths
+moyennes séparées, chacune avec ses périodes. Une case vide ou faite d'espaces est absente (jamais 0) ; une note hors
+de [`NOTE_MIN` ; `NOTE_MAX`] (0 à 20) n'est pas comptée et le profil la signale (`MESSAGE_NOTE_IMPOSSIBLE`). Les maths
+complémentaires ne sont jamais comparées au repère de maths d'une formation, donné pour la spécialité
+(`MESSAGE_MATHS_COMPL`). Critère « spécialités » des formations qui demandent l'option maths
 expertes : note sous `SEUIL_EXPERTES_FAIBLE` (10) → « à renforcer », à partir de `SEUIL_EXPERTES_FORT` (14) →
 « atout fort » (seuils éditoriaux). Aucune prédiction : seule `MARGE_BULLETIN` corrige la moyenne, dans `repere()`.
 

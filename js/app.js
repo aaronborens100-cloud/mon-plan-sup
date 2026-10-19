@@ -388,7 +388,7 @@
   const listePer = (ls) => (ls.length ? ls.map(perCourt).join(", ") : "aucune période");
   // Les moyennes retenues par le moteur (statsProfil), chacune avec les périodes prises en compte
   function moyennesRetenues(s) {
-    const mathsLib = s.mathsMatiere === "maths_complementaires" ? "Maths complémentaires" : "Maths";
+    const mathsLib = E.libelleMaths(s);
     return [
       { cle: "Moyenne générale", v: s.moyenneGenerale, sous: s.moyennePeriodes.length ? `moyenne de ${listePer(s.moyennePeriodes)}` : "" },
       { cle: "Dernier bulletin", v: s.dernierBulletin ? s.dernierBulletin.moyenne : null, sous: s.dernierBulletin ? perCourt(s.dernierBulletin.periode) : "" },
@@ -396,17 +396,20 @@
       { cle: "Maths expertes", v: s.expertes, sous: s.expertesPeriodes.length ? listePer(s.expertesPeriodes) : "" },
     ];
   }
-  const avisSansMoyenne = (s) => s.periodesSansMoyenne.map((l) => `<p class="notice small">${esc(E.MESSAGE_SANS_MOYENNE(perCourt(l)))}</p>`).join("");
+  // périodes sans moyenne générale, puis moyennes impossibles (hors de 0 à 20), qui ne sont pas comptées
+  const avisSansMoyenne = (s, p) => s.periodesSansMoyenne.map((l) => `<p class="notice small">${esc(E.MESSAGE_SANS_MOYENNE(perCourt(l)))}</p>`)
+    .concat(E.notesImpossibles(p).map((x) => `<p class="notice bad small">${esc(E.MESSAGE_NOTE_IMPOSSIBLE(perCourt(x.periode), x.valeur, x.matiere ? NOMS_MAT()[x.matiere] || x.matiere : null))}</p>`)).join("");
+  const horsBornes = (v) => isNaN(v) || v < E.NOTE_MIN || v > E.NOTE_MAX;
   const profilComplet = () => etat.profil.specialites.length > 0 && etat.profil.periodes.length > 0;
   function vueResumeProfil() {
     const p = etat.profil, s = E.statsProfil(p), noms = NOMS_MAT();
     const pers = p.periodes.slice().sort((a, b) => PERIODES.indexOf(a.label) - PERIODES.indexOf(b.label));
     // moyennes par matière sur toutes les périodes
     const parMat = {};
-    for (const per of pers) for (const [k, n] of Object.entries(per.notes || {})) { const v = parseFloat(String(n.moy).replace(",", ".")); if (!isNaN(v)) (parMat[k] = parMat[k] || []).push(v); }
+    for (const per of pers) for (const [k, n] of Object.entries(per.notes || {})) { const v = parseFloat(String(n.moy).replace(",", ".")); if (!horsBornes(v)) (parMat[k] = parMat[k] || []).push(v); }
     const mats = Object.entries(parMat).map(([k, v]) => [k, v.reduce((a, b) => a + b, 0) / v.length, v[v.length - 1]]).sort((a, b) => b[1] - a[1]);
     const forts = mats.slice(0, 3), faibles = mats.length > 5 ? mats.slice(-2).reverse() : [];
-    const mgPer = pers.map((per) => ({ l: perCourt(per.label), v: parseFloat(String(per.moyenneGenerale).replace(",", ".")), c: parseFloat(String(per.moyenneClasse).replace(",", ".")), m: per.mention }));
+    const mgPer = pers.map((per) => ({ l: perCourt(per.label), v: ((x) => (horsBornes(x) ? NaN : x))(parseFloat(String(per.moyenneGenerale).replace(",", "."))), c: parseFloat(String(per.moyenneClasse).replace(",", ".")), m: per.mention }));
     const pf = [], vg = [];
     if (s.ecartClasse !== null && s.ecartClasse >= 1) pf.push(`Au-dessus de la moyenne de ta classe (${s.ecartClasse > 0 ? "+" : ""}${E.fmt(s.ecartClasse)} point${Math.abs(s.ecartClasse) >= 2 ? "s" : ""}).`);
     if (s.ecartClasse !== null && s.ecartClasse < 0) vg.push(`Sous la moyenne de ta classe (${E.fmt(s.ecartClasse)} point).`);
@@ -416,7 +419,8 @@
     if (s.appreciations && s.appreciations.niveau === "fort") pf.push("Appréciations très positives.");
     if (s.appreciations && (s.appreciations.niveau === "faible" || s.appreciations.niveau === "renforcer")) vg.push("Des points de vigilance dans les appréciations.");
     if (s.appreciations && s.appreciations.mentions.length) pf.push("Mentions du conseil : " + s.appreciations.mentions.join(", ") + ".");
-    if (s.optionMaths === "expertes") pf.push("Option maths expertes : un atout pour les prépas et les cursus quantitatifs.");
+    // pas de « point fort » si la note de maths expertes est sous le seuil (le critère « spécialités » dit déjà « à renforcer »)
+    if (s.optionMaths === "expertes" && !(s.expertes !== null && s.expertes < E.SEUIL_EXPERTES_FAIBLE)) pf.push("Option maths expertes : un atout pour les prépas et les cursus quantitatifs.");
     if (s.anglaisCertifie) pf.push(`Anglais certifié ${s.anglais}.`); else vg.push(s.anglais ? `Anglais ${s.anglais} estimé : à certifier pour l'étranger.` : "Niveau d'anglais non renseigné.");
     if (!p.experiences.length) vg.push("Aucune expérience extrascolaire renseignée."); else if (s.nbExperiencesFortes) pf.push(`${s.nbExperiencesFortes} expérience(s) marquante(s) (stage, projet, compétition, responsabilité).`);
     const TUI = { "Moyenne générale": ["courbe", "bleu"], "Dernier bulletin": ["courbe", "ciel"], "Maths": ["cible", "violet"], "Maths expertes": ["cible", "violet"], "Écart à la classe": ["groupe", "ciel"], "Anglais": ["globe", "menthe"], "Appréciations": ["crayon", "ambre"] };
@@ -439,7 +443,7 @@
           ${tuile("Anglais", s.anglais || "—", s.anglais ? (s.anglaisCertifie ? "certifié" : "estimé") : "")}
           ${tuile("Appréciations", s.appreciations ? E.NIVEAUX[s.appreciations.niveau].label : "—", "")}
         </div>
-        ${avisSansMoyenne(s)}
+        ${avisSansMoyenne(s, p)}
         <p class="tiny muted">Moyenne générale : moyenne simple des moyennes générales de tes bulletins de première et de terminale, chaque période compte autant. Le dernier bulletin est affiché à part. Détails dans <a href="#donnees">Mes données</a>.</p>
       </section>
       <div class="grid-2">
@@ -1571,9 +1575,9 @@
       </section>
       <section class="card stack prose"><h2>Comment on calcule ta moyenne</h2>
         <table><tbody>${moyennesRetenues(s).map((m) => `<tr><th scope="row">${esc(m.lib || m.cle)}</th><td class="num"><strong>${E.fmt(m.v)}</strong></td><td class="small muted">${m.v === null ? "non renseignée" : esc(m.sous)}</td></tr>`).join("")}</tbody></table>
-        ${avisSansMoyenne(s)}
-        <p><strong>Moyenne générale.</strong> Moyenne simple des moyennes générales écrites sur tes bulletins de première et de terminale : chaque trimestre ou semestre compte autant, sans coefficient. Si une période n'a pas de moyenne générale, elle n'est pas comptée : on ne la recalcule pas à partir de tes matières. La moyenne du dernier bulletin est affichée à part ; elle ne sert à aucun calcul.</p>
-        <p><strong>Maths et maths expertes.</strong> Deux matières séparées. Maths : moyenne simple de ta spécialité maths sur toutes tes périodes (ou de tes maths complémentaires si tu n'as pas la spécialité). Maths expertes : moyenne simple des périodes où tu suis l'option. Pour les formations qui demandent l'option, on regarde aussi ta note : sous ${E.fmt(E.SEUIL_EXPERTES_FAIBLE)}, « à renforcer » ; à ${E.fmt(E.SEUIL_EXPERTES_FORT)} ou plus, « atout fort ». Ces deux seuils sont des choix de Mon Plan Sup, pas des exigences publiées par les formations.</p>
+        ${avisSansMoyenne(s, etat.profil)}
+        <p><strong>Moyenne générale.</strong> Moyenne simple des moyennes générales écrites sur tes bulletins de première et de terminale : chaque trimestre ou semestre compte autant, sans coefficient. Si une période n'a pas de moyenne générale, elle n'est pas comptée : on ne la recalcule pas à partir de tes matières. Une moyenne en dehors de 0 à 20 (faute de frappe) n'est pas comptée non plus. La moyenne du dernier bulletin est affichée à part ; elle ne sert à aucun calcul.</p>
+        <p><strong>Maths et maths expertes.</strong> Deux matières séparées. Maths : moyenne simple de ta spécialité maths sur toutes tes périodes (ou de tes maths complémentaires si tu n'as pas la spécialité : elles ne sont pas comparées aux repères de maths des formations, donnés pour la spécialité). Si tu as arrêté la spécialité maths en fin de première sans prendre maths complémentaires, ce sont tes notes de spécialité de première. Maths expertes : moyenne simple des périodes où tu suis l'option. Pour les formations qui demandent l'option, on regarde aussi ta note : sous ${E.fmt(E.SEUIL_EXPERTES_FAIBLE)}, « à renforcer » ; à ${E.fmt(E.SEUIL_EXPERTES_FORT)} ou plus, « atout fort ». Ces deux seuils sont des choix de Mon Plan Sup, pas des exigences publiées par les formations.</p>
         <p><strong>Aucune prédiction.</strong> On ne prolonge pas ta tendance et on n'ajoute aucun bonus. Seule correction : pour te situer parmi les admis, ta moyenne est diminuée de ${E.fmt(E.MARGE_BULLETIN)} point par prudence.</p>
       </section>
       <section class="card stack prose"><h2>Comment sont calculés les résultats ?</h2>

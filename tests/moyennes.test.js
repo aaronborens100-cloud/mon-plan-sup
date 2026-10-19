@@ -60,7 +60,7 @@ test("période sans moyenne générale : non comptée, jamais reconstituée à p
   // ses notes comptent quand même dans les moyennes de maths et de maths expertes
   assert.equal(s.maths, 18);
   assert.equal(s.expertes, 20);
-  assert.equal(site.E.MESSAGE_SANS_MOYENNE("T2"), "Moyenne générale non renseignée pour T2 : ajoute-la depuis ton bulletin.");
+  assert.equal(site.E.MESSAGE_SANS_MOYENNE("Tle T2"), "Moyenne générale non renseignée pour Tle T2 : ajoute-la depuis ton bulletin.");
   // aucune moyenne générale saisie : pas de moyenne du tout
   const rien = site.E.statsProfil(profil({ periodes: [periode("Terminale – T1", null, { maths: 15, SES: 14 })] }));
   assert.equal(rien.moyenneGenerale, null);
@@ -174,4 +174,105 @@ test("import PDF sans moyenne générale : aucune moyenne écrite, la période n
   for (const k of ["moyenneGenerale", "moyennePeriodes", "periodesSansMoyenne", "dernierBulletin", "maths", "expertes"]) assert.deepEqual(sp[k], sm[k], k);
   assert.equal(sp.moyenneGenerale, 13);
   assert.deepEqual(sp.periodesSansMoyenne, ["Terminale – T2"]);
+});
+
+/* ---------------------------------------------------------------- corrections de la revue de la PR #12 */
+const etatDe = (p) => ({ profil: Object.assign({ prenom: "Test", anglaisAuto: "B1", bacPremiere: {} }, p), reponses: {}, retenus: [], profilTermine: true, qIndex: 999 });
+const sansBalises = (html) => html.replace(/<[^>]+>/g, " ").replace(/&#39;/g, "'").replace(/\s+/g, " ");
+
+test("correction 1 : une case vide ou faite d'espaces est absente, jamais 0", () => {
+  const s = site.E.statsProfil(profil({ periodes: [periode("Première – T1", "abs"), periode("Première – T2", " "), periode("Terminale – T1", 14)] }));
+  assert.equal(s.moyenneGenerale, 14, "avant : 7 (« \" \" » lu comme 0)");
+  assert.deepEqual(s.moyennePeriodes, ["Terminale – T1"]);
+  assert.deepEqual(s.periodesSansMoyenne, ["Première – T1", "Première – T2"]);
+  // même règle pour une note de matière
+  const m = site.E.statsProfil(profil({ periodes: [periode("Terminale – T1", 14, { maths: "  ", maths_expertes: "\t" }), periode("Terminale – T2", 14, { maths: 12, maths_expertes: 16 })] }));
+  assert.equal(m.maths, 12);
+  assert.equal(m.expertes, 16);
+});
+
+test("correction 2 : une note hors de 0 à 20 n'est pas comptée et le profil le signale", async () => {
+  const { E } = site;
+  const per = [periode("Première – T3", 125, { maths: 25 }), periode("Terminale – T1", -3, { maths: 14 }), periode("Terminale – T2", 12, { maths: -1 })];
+  const s = E.statsProfil(profil({ periodes: per }));
+  assert.equal(s.moyenneGenerale, 12, "ni 61 (125 et -3 comptés), ni 44,67");
+  assert.deepEqual(s.moyennePeriodes, ["Terminale – T2"]);
+  assert.deepEqual(plain(s.dernierBulletin), { moyenne: 12, periode: "Terminale – T2" });
+  assert.equal(s.maths, 14);
+  assert.deepEqual(s.mathsPeriodes, ["Terminale – T1"]);
+  assert.equal(E.MESSAGE_NOTE_IMPOSSIBLE("Tle T1", 125), "Moyenne de Tle T1 impossible (125) : vérifie-la sur ton bulletin.");
+  assert.deepEqual(plain(E.notesImpossibles(profil({ periodes: per }))).map((x) => [x.periode, x.matiere, x.valeur]),
+    [["Première – T3", null, 125], ["Première – T3", "maths", 25], ["Terminale – T1", null, -3], ["Terminale – T2", "maths", -1]]);
+  // bornes incluses
+  assert.equal(E.statsProfil(profil({ periodes: [periode("Terminale – T1", 0), periode("Terminale – T2", 20)] })).moyenneGenerale, 10);
+  // dernier bulletin impossible : jamais affiché « Dernier bulletin -3 »
+  const p2 = profil({ periodes: [periode("Terminale – T1", 13), periode("Terminale – T2", -3)] });
+  assert.deepEqual(plain(E.statsProfil(p2).dernierBulletin), { moyenne: 13, periode: "Terminale – T1" });
+  const html = sansBalises((await chargerSite({}, { etat: etatDe(p2) })).afficher("#profil"));
+  assert.match(html, /Moyenne de Tle T2 impossible \(-3\) : vérifie-la sur ton bulletin\./);
+  assert.doesNotMatch(html, /Dernier bulletin -3/);
+  assert.match(html, /Dernier bulletin 13 Tle T1/);
+  const donnees = sansBalises((await chargerSite({}, { etat: etatDe(p2) })).afficher("#donnees"));
+  assert.match(donnees, /Moyenne de Tle T2 impossible \(-3\)/);
+});
+
+test("correction 3 : « Option maths expertes : un atout » absent des points forts si la note est sous le seuil", async () => {
+  const atout = "Option maths expertes : un atout pour les prépas";
+  const page = async (note) => sansBalises((await chargerSite({}, { etat: etatDe(profil({ periodes: [periode("Terminale – T1", 13, { maths: 14, maths_expertes: note })] })) })).afficher("#profil"));
+  assert.ok(!(await page(9.9)).includes(atout), "9,9 < SEUIL_EXPERTES_FAIBLE");
+  assert.ok((await page(10)).includes(atout), "10 = SEUIL_EXPERTES_FAIBLE");
+  assert.ok((await page(15)).includes(atout));
+});
+
+test("correction 4 : les maths complémentaires ne sont pas comparées au repère de maths d'une formation", () => {
+  const { E, DATA, QUEST } = site;
+  const it = E.interets(QUEST, {});
+  const compl = E.statsProfil(profil({ specialites: ["SES", "HGGSP"], specialiteAbandonnee: "maths", optionMaths: "complementaires",
+    periodes: [periode("Terminale – T1", 13, { maths_complementaires: 6 })] }));
+  assert.equal(compl.mathsMatiere, "maths_complementaires");
+  // une vraie licence du catalogue, avec un repère de moyenne et de maths fixé pour le test
+  const lic = DATA.formations.find((x) => x.type === "licence" && x.notes && x.notes.maths_cible != null && !x.epreuves_anticipees);
+  assert.ok(lic, "une licence avec un repère de maths");
+  const f = Object.assign({}, lic, { specialites: {}, notes: Object.assign({}, lic.notes, { moyenne_cible: 12.5, maths_cible: 14 }) });
+  const n = E.evaluer(f, compl, it).crit.notes;
+  assert.equal(n.ecart, 0.5, "seule la moyenne générale (13 − 12,5) est comparée, pas 6 − 14");
+  assert.equal(n.niveau, "conforme");
+  assert.ok(n.texte.endsWith(" " + E.MESSAGE_MATHS_COMPL), n.texte);
+  assert.equal(E.MESSAGE_MATHS_COMPL, "Repère de maths donné pour la spécialité maths : tes maths complémentaires ne sont pas comparées.");
+  // repère de maths seul : rien à comparer
+  assert.equal(E.evaluer(Object.assign({}, f, { notes: { maths_cible: 14 } }), compl, it).crit.notes.niveau, "inconnu");
+  // la spécialité maths, elle, reste comparée
+  const spe = E.statsProfil(profil({ periodes: [periode("Terminale – T1", 13, { maths: 6 })] }));
+  assert.equal(E.evaluer(f, spe, it).crit.notes.ecart, -8);
+  assert.ok(!E.evaluer(f, spe, it).crit.notes.texte.includes(E.MESSAGE_MATHS_COMPL));
+  // action « surtout en maths » : jamais pour les maths complémentaires
+  const faible = E.statsProfil(profil({ specialites: ["SES", "HGGSP"], specialiteAbandonnee: "maths", optionMaths: "complementaires",
+    periodes: [periode("Terminale – T1", 11, { maths_complementaires: 9 })] }));
+  const actions = (s) => E.evaluer(f, s, it).actions.map((a) => a.texte).join(" | ");
+  assert.match(actions(faible), /Gagner environ 1,5 point\(s\) de moyenne d'ici/);
+  assert.match(actions(E.statsProfil(profil({ periodes: [periode("Terminale – T1", 11, { maths: 9 })] }))), /\(surtout en maths\)/);
+  // prépa ECG maths appliquées : l'ajustement « tes maths te permettent l'option approfondies » ne regarde que la spécialité
+  const ecg = DATA.formations.find((x) => x.type === "prepa_ecg" && x.option === "appli");
+  const complFort = E.statsProfil(profil({ specialites: ["SES", "HGGSP"], specialiteAbandonnee: "maths", optionMaths: "expertes",
+    periodes: [periode("Terminale – T1", 14, { maths_complementaires: 18, maths_expertes: 15 })] }));
+  assert.ok(!E.evaluer(ecg, complFort, it).ajust.includes("tes maths te permettent l'option approfondies"));
+});
+
+test("correction 5 : spécialité maths abandonnée en fin de première, sans maths complémentaires", async () => {
+  const { E } = site;
+  const p = profil({ specialites: ["SES", "HGGSP"], specialiteAbandonnee: "maths", optionMaths: "aucune",
+    periodes: [periode("Première – T2", 12, { maths: 9 }), periode("Première – T3", 12, { maths: 10 }), periode("Terminale – T1", 13, { SES: 13 })] });
+  const s = E.statsProfil(p);
+  assert.equal(s.mathsMatiere, "maths");
+  assert.equal(s.maths, 9.5);
+  assert.deepEqual(s.mathsPeriodes, ["Première – T2", "Première – T3"]);
+  assert.equal(E.libelleMaths(s), "Spécialité maths (première)");
+  // autres cas : libellés inchangés
+  assert.equal(E.libelleMaths(E.statsProfil(profil({ periodes: [periode("Première – T3", 12, { maths: 9 })] }))), "Maths");
+  assert.equal(E.libelleMaths(E.statsProfil(Object.assign({}, p, { optionMaths: "complementaires",
+    periodes: p.periodes.concat([periode("Terminale – T2", 13, { maths_complementaires: 11 })]) }))), "Maths complémentaires");
+  const site2 = await chargerSite({}, { etat: etatDe(p) });
+  const resume = sansBalises(site2.afficher("#profil")), donnees = sansBalises(site2.afficher("#donnees"));
+  assert.match(resume, /Spécialité maths \(première\) 9,5 1re T2, 1re T3/, "tuile du profil");
+  assert.match(donnees, /Spécialité maths \(première\) 9,5 1re T2, 1re T3/, "« Comment on calcule ta moyenne »");
 });
