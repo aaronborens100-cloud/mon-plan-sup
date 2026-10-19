@@ -1,0 +1,882 @@
+{
+ "profil": "baisse-dernier-trimestre",
+ "description": "Autour de 15 en première, 11,5 au 1er trimestre de terminale : dernier bulletin nettement en baisse",
+ "nbFormationsNotees": 11530,
+ "statsEleve": {
+  "moyenneGenerale": 11.5,
+  "moyennePeriode": "Terminale – T1",
+  "maths": null,
+  "mathsSpe": null,
+  "expertes": null,
+  "compl": null,
+  "anglais": "B2",
+  "anglaisCertifie": false,
+  "ecartClasse": 2.5,
+  "rangRelatif": null,
+  "nbExperiences": 0,
+  "nbExperiencesFortes": 0,
+  "geo": {
+   "lat": 43.6985,
+   "lon": 7.2737,
+   "nom": "Lycée Masséna (Nice)"
+  },
+  "certifications": [],
+  "specialites": [
+   "SES",
+   "HGGSP"
+  ],
+  "abandonnee": "SVT",
+  "optionMaths": "aucune",
+  "niveau": "terminale",
+  "nbPeriodes": 4,
+  "bacPremiere": {
+   "francaisEcrit": null,
+   "francaisOral": null,
+   "maths": null,
+   "scoreSciencesPo": null
+  },
+  "appreciations": {
+   "niveau": "faible",
+   "nb": 1,
+   "positifs": 0,
+   "negatifs": 1,
+   "mentions": [],
+   "extraits": [
+    {
+     "per": "Terminale – T1",
+     "mat": "generale",
+     "txt": "Trimestre décevant, des efforts à fournir.",
+     "type": "neg"
+    }
+   ]
+  }
+ },
+ "interets": {
+  "domaines": {
+   "maths": 0.15789473684210525,
+   "economie": 0.6052631578947368,
+   "gestion_commerce": 0.2631578947368421,
+   "finance": 0.47368421052631576,
+   "droit": 0.8157894736842105,
+   "sciences_politiques": 1,
+   "international": 0.631578947368421,
+   "ingenierie_tech": 0.02631578947368421,
+   "data_informatique": 0.07894736842105263,
+   "sciences_humaines": 0.42105263157894735,
+   "langues": 0.05263157894736842,
+   "arts": 0.07894736842105263,
+   "sante": 0.07894736842105263,
+   "vivant": 0,
+   "sport": 0,
+   "communication": 0
+  },
+  "prefs": {
+   "matieres": [
+    "ses",
+    "hg"
+   ],
+   "secteurs": [
+    "public",
+    "droit"
+   ],
+   "salaire": 3,
+   "pratique": 3,
+   "maths_niv": 1,
+   "ecrit_niv": 2,
+   "encadrement": 3,
+   "poly": 2,
+   "charge": 2,
+   "ambition": 4,
+   "tests": 3,
+   "long": 4,
+   "etranger": 1,
+   "anglais": 3,
+   "pays": [
+    "Espagne"
+   ],
+   "budget_max": 20000,
+   "lieu": [
+    "regions",
+    "idf"
+   ],
+   "mobilite": 2
+  },
+  "types": [],
+  "metiers": [
+   "avocat",
+   "diplomate",
+   "haut_fonctionnaire",
+   "juriste"
+  ],
+  "repondues": 31,
+  "total": 31
+ },
+ "top": [
+  {
+   "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
+   "interet": 89,
+   "faisabilite": 70,
+   "pertinence": 81,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 70,
+   "pertinence": 79,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-des-antilles-martinique-schlcher-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 70,
+   "pertinence": 79,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26895",
+   "interet": 85,
+   "faisabilite": 71,
+   "pertinence": 79,
+   "repere": [
+    100,
+    0.2,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52221",
+   "interet": 85,
+   "faisabilite": 70,
+   "pertinence": 79,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13022",
+   "interet": 85,
+   "faisabilite": 67,
+   "pertinence": 78,
+   "repere": [
+    92,
+    0.08,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    41,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    100,
+    0.11,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    100,
+    0.11,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    100,
+    0.14,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-la-reunion-saint-denis-la-reunion-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
+   "interet": 84,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-des-antilles-guadeloupe-pointe-a-pitre-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 66,
+   "pertinence": 77,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-48169",
+   "interet": 85,
+   "faisabilite": 64,
+   "pertinence": 77,
+   "repere": [
+    100,
+    0.06,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "avignon-universite-avignon-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    35,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-brest-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    20,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-haute-alsace-mulhouse-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    33,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lille-lille-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    29,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-montpellier-montpellier-licence-science-politique",
+   "interet": 89,
+   "faisabilite": 56,
+   "pertinence": 76,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-amiens-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    31,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rouen-normandie-rouen-licence-science-politique",
+   "interet": 85,
+   "faisabilite": 62,
+   "pertinence": 76,
+   "repere": [
+    28,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+   "interet": 89,
+   "faisabilite": 56,
+   "pertinence": 76,
+   "repere": [
+    4,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-pantheon-assas-paris-licence-science-politique",
+   "interet": 89,
+   "faisabilite": 56,
+   "pertinence": 76,
+   "repere": [
+    9,
+    0.01,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39827",
+   "interet": 78,
+   "faisabilite": 72,
+   "pertinence": 76,
+   "repere": [
+    100,
+    0.33,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28619",
+   "interet": 78,
+   "faisabilite": 73,
+   "pertinence": 76,
+   "repere": [
+    100,
+    0.35,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    86,
+    0.24,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "aix-marseille-universite-marseille-licence-droit-parcours-droit-et-science-politique",
+   "interet": 84,
+   "faisabilite": 62,
+   "pertinence": 75,
+   "repere": [
+    33,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "cy-cergy-paris-universite-cergy-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    52,
+    0.15,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "cy-cergy-paris-universite-cergy-licence-droit-du-droit-espagnol-et-latino-americain",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    99,
+    0.18,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-rennes-bruz-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    92,
+    0.11,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    80,
+    0.05,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "institut-catholique-de-toulouse-toulouse-licence-droit-parcours-culture-juridique",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    71,
+    0.14,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-universite-le-mans-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    75,
+    0.19,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "le-mans-u-campus-de-laval-laval-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-bourgogne-europe-dijon-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    57,
+    0.14,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-bourgogne-europe-site-de-nevers-nevers-licence-droit",
+   "interet": 78,
+   "faisabilite": 70,
+   "pertinence": 75,
+   "repere": [
+    100,
+    0.29,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  }
+ ],
+ "voeux": {
+  "liste": [
+   {
+    "id": "psup-39827",
+    "categorie": "securite",
+    "pertinence": 76,
+    "repere": [
+     100,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-19192",
+    "categorie": "securite",
+    "pertinence": 66,
+    "repere": [
+     100,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-16514",
+    "categorie": "securite",
+    "pertinence": 65,
+    "repere": [
+     97,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+    "categorie": "ambitieux",
+    "pertinence": 77,
+    "repere": [
+     41,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
+    "categorie": "ambitieux",
+    "pertinence": 71,
+    "repere": [
+     56,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-48613",
+    "categorie": "ambitieux",
+    "pertinence": 70,
+    "repere": [
+     37,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-48152",
+    "categorie": "realiste",
+    "pertinence": 70,
+    "repere": [
+     65,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-26895",
+    "categorie": "realiste",
+    "pertinence": 79,
+    "repere": [
+     100,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-36157",
+    "categorie": "realiste",
+    "pertinence": 63,
+    "repere": [
+     88,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "ps-4671",
+    "categorie": "ambitieux",
+    "pertinence": 68,
+    "repere": [
+     5,
+     "en_dessous"
+    ]
+   }
+  ],
+  "protection": {
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+  },
+  "alertes": [],
+  "certitude": {
+   "niveau": "decide",
+   "top": [
+    "sciences_politiques",
+    "droit",
+    "economie"
+   ]
+  },
+  "explication": "Tes réponses montrent un intérêt net pour la science politique : on a concentré tes vœux sur licence de droit ou science po, avec licence d'éco-gestion et double licence comme solutions de repli.",
+  "decouvertes": {}
+ },
+ "nouvelles": [
+  {
+   "id": "psup-52221",
+   "interet": 85
+  },
+  {
+   "id": "psup-50518",
+   "interet": 79
+  },
+  {
+   "id": "psup-51249",
+   "interet": 79
+  }
+ ],
+ "etranger": {
+  "mode": "echange",
+  "liste": [
+   {
+    "x": {
+     "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
+     "categorie": "ambitieux",
+     "pertinence": 75,
+     "repere": [
+      80,
+      "en_dessous"
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
+     "categorie": "realiste",
+     "pertinence": 73,
+     "repere": [
+      89,
+      "en_dessous"
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "u-de-tours-tours-double-licence-droit-science-politique",
+     "categorie": "ambitieux",
+     "pertinence": 68,
+     "repere": [
+      22,
+      "en_dessous"
+     ]
+    }
+   }
+  ]
+ },
+ "empreintes": {
+  "calculs": "bdff053710300ab9583b89cf06a5718c9d22ddb789a610fd14663252757f6d0b",
+  "textes": "fc8d7be2c4e7c5e159e7539781294002d2ef28847acc0bf7e7af06406bc74531"
+ }
+}
