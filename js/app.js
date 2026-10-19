@@ -895,6 +895,7 @@
         cote: `<div class="mini-stats">${miniStat(nbFr(nbReco), "formations analysées", "bleu")}${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
       ${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
+      ${A.stats.geo ? "" : `<p class="notice info small sans-lycee">${esc(E.MESSAGE_SANS_LYCEE)}</p>`}
       <div class="segments" role="tablist" aria-label="Contenu de ma liste">
         <button role="tab" aria-selected="${o === "reco"}" data-action="onglet-liste" data-o="reco">${ico("etoile")}Recommandées</button>
         <button role="tab" aria-selected="${o === "voeux"}" data-action="onglet-liste" data-o="voeux">${ico("check")}Mes vœux <span class="compteur">${nbVoeux}</span></button>
@@ -1180,6 +1181,11 @@
     LIEUX = { lycees: li.lycees.map(([uai, nom, commune, dep, lat, lon]) => ({ uai, nom, commune, dep, lat, lon, cle: sansAccents(nom + " " + commune + " " + dep) })),
       communes: li.communes.map(([commune, dep, lat, lon]) => ({ commune, dep, lat, lon, cle: sansAccents(commune + " " + dep) })) };
     for (const c of LIEUX.communes) { const k = sansAccents(c.commune); if (!VILLES_GPS[k]) VILLES_GPS[k] = c; }
+    E.definirLieux(li);   // département d'un lycée ou d'un campus d'après ses coordonnées (académie, zone, campus à l'étranger)
+  }
+  // Champs Parcoursup lus par le moteur : département (académie), code gta et places (départage), sélectivité (secteur des licences)
+  function lierParcoursup(f, r) {
+    f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
   }
   function gpsDe(f, ps) {
     if (ps && ps.etab_gps && ps.etab_gps.lat != null) return { lat: ps.etab_gps.lat, lon: ps.etab_gps.lon };
@@ -1234,7 +1240,7 @@
       if (f.__gen) continue;
       const x = fu && fu.anciennes[f.id];
       const ps = x && x.m === "C" ? PSBY[x.g] : null;
-      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); }   // __tf, __pctBG : garde-fou des listes (moteur)
+      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); lierParcoursup(f, ps); }   // __tf, __pctBG : garde-fou des listes (moteur)
       const avTxt = [];
       if (x && x.m === "P") avTxt.push("Correspondance Parcoursup probable mais non confirmée.");
       if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
@@ -1249,7 +1255,7 @@
       if (horsPerimetre(r)) continue;   // BTS, BUT : formations non proposées par Mon Plan Sup (données conservées)
       const gf = genIds.get(r.gta) || null;
       if (gf && r.nmc) gf.__nmc = r.nmc;
-      if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); }
+      if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); lierParcoursup(gf, r); }
       const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
         type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin") || (gf && gf.admission.places), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf, stats: gf ? gf.stats : null,
@@ -1719,7 +1725,7 @@
     else if (a === "plus") { app.limite += 20; rendre(); }
     else if (a === "lycee-choisir") {
       const L = b.dataset.k === "l" ? LIEUX.lycees.find((x) => x.uai === b.dataset.id) : LIEUX.communes.find((x) => x.cle === b.dataset.id);
-      if (L) { p.lycee = b.dataset.k === "l" ? { type: "lycee", uai: L.uai, nom: L.nom, commune: L.commune, lat: L.lat, lon: L.lon } : { type: "commune", nom: L.commune, commune: L.commune, lat: L.lat, lon: L.lon }; app.lyceeEdition = false; app.lyceeQ = ""; sauver(true); rendre(); toast("Lycée enregistré"); }
+      if (L) { p.lycee = b.dataset.k === "l" ? { type: "lycee", uai: L.uai, nom: L.nom, commune: L.commune, dep: L.dep, lat: L.lat, lon: L.lon } : { type: "commune", nom: L.commune, commune: L.commune, dep: L.dep || undefined, lat: L.lat, lon: L.lon }; app.lyceeEdition = false; app.lyceeQ = ""; sauver(true); rendre(); toast("Lycée enregistré"); }
     }
     else if (a === "lycee-changer") { app.lyceeEdition = true; rendre(); const el = $("#lyceeq"); if (el) el.focus(); }
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
