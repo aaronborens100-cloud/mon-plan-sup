@@ -26,6 +26,10 @@
   "nbExperiences": 0,
   "nbExperiencesFortes": 0,
   "geo": null,
+  "departement": null,
+  "academie": null,
+  "secteur": null,
+  "zone": null,
   "certifications": [],
   "specialites": [
    "SES",
@@ -106,40 +110,10 @@
  },
  "top": [
   {
-   "id": "psup-21762",
-   "interet": 85,
-   "faisabilite": 79,
-   "pertinence": 83,
-   "repere": [
-    53,
-    0.61,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-21091",
-   "interet": 85,
-   "faisabilite": 80,
-   "pertinence": 83,
-   "repere": [
-    54,
-    0.72,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-29102",
-   "interet": 85,
-   "faisabilite": 80,
-   "pertinence": 83,
+   "interet": 85.33333333333334,
+   "faisabilite": 79.95,
+   "pertinence": 83.18,
    "repere": [
     80,
     0.75,
@@ -151,73 +125,13 @@
    "exclu": null
   },
   {
-   "id": "u-d-orleans-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
+   "id": "psup-21091",
+   "interet": 85.33333333333334,
+   "faisabilite": 79.55,
+   "pertinence": 83.02000000000001,
    "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bretagne-occidentale-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    59,
-    0.22,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-franche-comte-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    60,
-    0.54,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-reims-champagne-ardenne-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    64,
-    0.6,
+    54,
+    0.72,
     "au_dessus",
     "securite"
    ],
@@ -226,223 +140,28 @@
    "exclu": null
   },
   {
-   "id": "u-de-rouen-normandie-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    59,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-strasbourg-staps",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
+   "id": "psup-21762",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.75,
+   "pertinence": 82.7,
    "repere": [
     53,
-    0.44,
-    "moyenne",
-    "realiste"
+    0.61,
+    "au_dessus",
+    "securite"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "psup-31005",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    36,
-    0.58,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32587",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    44,
-    0.44,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-36152",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    50,
-    0.48,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-12795",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    72,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-6613",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    54,
-    0.51,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-8747",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    45,
-    0.42,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9937",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    35,
-    0.48,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-22966",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    73,
-    0.57,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-29100",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    66,
-    0.41,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-29101",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    78,
-    0.56,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-33488",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    47,
-    0.53,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-3171",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
-   "repere": [
-    32,
-    0.54,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-11967",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "id": "psup-36150",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
     100,
-    0.61,
+    0.6,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -451,25 +170,25 @@
    "exclu": null
   },
   {
-   "id": "psup-47436",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "id": "psup-32585",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
-    62,
-    0.48,
-    "moyenne",
-    "realiste"
+    100,
+    0.64,
+    "au_dessus",
+    "tres_ouverte"
    ],
-   "categorie": "realiste",
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
   {
    "id": "psup-14043",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
     63,
     0.59,
@@ -481,25 +200,10 @@
    "exclu": null
   },
   {
-   "id": "psup-23303",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    38,
-    0.46,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-13707",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
     57,
     0.6,
@@ -512,9 +216,9 @@
   },
   {
    "id": "psup-20422",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
     49,
     0.57,
@@ -526,13 +230,13 @@
    "exclu": null
   },
   {
-   "id": "psup-23301",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
+   "id": "psup-33488",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
-    45,
-    0.41,
+    47,
+    0.53,
     "moyenne",
     "realiste"
    ],
@@ -541,12 +245,27 @@
    "exclu": null
   },
   {
-   "id": "psup-10199",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "id": "psup-31005",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
    "repere": [
-    53,
+    36,
+    0.58,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-3171",
+   "interet": 85.33333333333334,
+   "faisabilite": 78.35,
+   "pertinence": 82.54,
+   "repere": [
+    32,
     0.54,
     "moyenne",
     "realiste"
@@ -556,43 +275,13 @@
    "exclu": null
   },
   {
-   "id": "psup-31002",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    47,
-    0.47,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31782",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    41,
-    0.41,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32585",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "id": "psup-11967",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
    "repere": [
     100,
-    0.64,
+    0.61,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -601,25 +290,55 @@
    "exclu": null
   },
   {
-   "id": "psup-36150",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "id": "psup-22966",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
    "repere": [
-    100,
-    0.6,
-    "au_dessus",
-    "tres_ouverte"
+    73,
+    0.57,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-12795",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
+   "repere": [
+    72,
+    0.55,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47436",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
+   "repere": [
+    62,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
    "id": "psup-4756",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
    "repere": [
     51,
     0.55,
@@ -631,28 +350,13 @@
    "exclu": null
   },
   {
-   "id": "psup-31800",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
+   "id": "psup-32587",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.95,
+   "pertinence": 82.38000000000001,
    "repere": [
-    54,
-    0.56,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-36267",
-   "interet": 85,
-   "faisabilite": 77,
-   "pertinence": 82,
-   "repere": [
-    56,
-    0.39,
+    44,
+    0.44,
     "moyenne",
     "realiste"
    ],
@@ -662,9 +366,9 @@
   },
   {
    "id": "psup-18647",
-   "interet": 85,
-   "faisabilite": 78,
-   "pertinence": 82,
+   "interet": 85.33333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 82.22,
    "repere": [
     84,
     0.51,
@@ -676,13 +380,13 @@
    "exclu": null
   },
   {
-   "id": "psup-10922",
-   "interet": 85,
-   "faisabilite": 76,
-   "pertinence": 81,
+   "id": "psup-6613",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 82.22,
    "repere": [
-    38,
-    0.36,
+    54,
+    0.51,
     "moyenne",
     "realiste"
    ],
@@ -691,13 +395,313 @@
    "exclu": null
   },
   {
-   "id": "psup-11469",
-   "interet": 85,
-   "faisabilite": 76,
-   "pertinence": 81,
+   "id": "psup-10199",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 82.22,
    "repere": [
-    30,
-    0.36,
+    53,
+    0.54,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9937",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 82.22,
+   "repere": [
+    35,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29101",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.15,
+   "pertinence": 82.06,
+   "repere": [
+    78,
+    0.56,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31800",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.15,
+   "pertinence": 82.06,
+   "repere": [
+    54,
+    0.56,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-36152",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.15,
+   "pertinence": 82.06,
+   "repere": [
+    50,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31782",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.15,
+   "pertinence": 82.06,
+   "repere": [
+    41,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29100",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    66,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-reims-champagne-ardenne-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    64,
+    0.6,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-franche-comte-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    60,
+    0.54,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-bretagne-occidentale-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    59,
+    0.22,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rouen-normandie-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    59,
+    0.55,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-36267",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    56,
+    0.39,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-strasbourg-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    53,
+    0.44,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31002",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    47,
+    0.47,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-8747",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    45,
+    0.42,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23301",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    45,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23303",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    38,
+    0.46,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-picardie-jules-verne-staps",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.75,
+   "pertinence": 81.9,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-2178",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    57,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-44913",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    49,
+    0.44,
     "moyenne",
     "realiste"
    ],
@@ -709,18 +713,18 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-21762",
+    "id": "psup-29102",
     "categorie": "securite",
-    "pertinence": 83,
+    "pertinence": 83.18,
     "repere": [
-     53,
+     80,
      "au_dessus"
     ]
    },
    {
     "id": "psup-35533",
     "categorie": "securite",
-    "pertinence": 75,
+    "pertinence": 75.12888888888888,
     "repere": [
      100,
      "moyenne"
@@ -729,7 +733,7 @@
    {
     "id": "u-de-bretagne-occidentale-staps",
     "categorie": "ambitieux",
-    "pertinence": 82,
+    "pertinence": 81.9,
     "repere": [
      59,
      "en_dessous"
@@ -738,7 +742,7 @@
    {
     "id": "psup-21476",
     "categorie": "ambitieux",
-    "pertinence": 79,
+    "pertinence": 78.976,
     "repere": [
      13,
      "au_dessus"
@@ -747,7 +751,7 @@
    {
     "id": "psup-50220",
     "categorie": "ambitieux",
-    "pertinence": 78,
+    "pertinence": 77.744,
     "repere": [
      17,
      "au_dessus"
@@ -756,7 +760,7 @@
    {
     "id": "psup-10205",
     "categorie": "realiste",
-    "pertinence": 76,
+    "pertinence": 75.47,
     "repere": [
      53,
      "moyenne"
@@ -765,7 +769,7 @@
    {
     "id": "psup-21193",
     "categorie": "realiste",
-    "pertinence": 79,
+    "pertinence": 78.72,
     "repere": [
      38,
      "moyenne"
@@ -774,28 +778,28 @@
    {
     "id": "psup-35609",
     "categorie": "realiste",
-    "pertinence": 67,
+    "pertinence": 66.5577192982456,
     "repere": [
      61,
      "moyenne"
     ]
    },
    {
-    "id": "psup-28972",
-    "categorie": "ambitieux",
-    "pertinence": 76,
-    "repere": [
-     12,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-44539",
     "categorie": "securite",
-    "pertinence": 70,
+    "pertinence": 69.67333333333335,
     "repere": [
      100,
      "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-28972",
+    "categorie": "ambitieux",
+    "pertinence": 75.60000000000001,
+    "repere": [
+     12,
+     "en_dessous"
     ]
    }
   ],
@@ -818,16 +822,16 @@
  },
  "nouvelles": [
   {
-   "id": "psup-51300",
-   "interet": 85
+   "id": "psup-51256",
+   "interet": 85.33333333333334
   },
   {
-   "id": "psup-51256",
-   "interet": 85
+   "id": "psup-51300",
+   "interet": 85.33333333333334
   },
   {
    "id": "psup-52022",
-   "interet": 85
+   "interet": 85.33333333333334
   }
  ],
  "etranger": {
@@ -837,7 +841,7 @@
     "x": {
      "id": "portsmouth-economics",
      "categorie": "realiste",
-     "pertinence": 59,
+     "pertinence": 59.11000000000001,
      "repere": [
       null,
       "inconnue"
@@ -846,7 +850,7 @@
     "ancre": {
      "id": "psup-35609",
      "categorie": "realiste",
-     "pertinence": 67,
+     "pertinence": 66.5577192982456,
      "repere": [
       61,
       "moyenne"
@@ -870,18 +874,18 @@
     "x": {
      "id": "uclouvain-louvain-la-neuve-bachelier-en-sciences-de-la-motricite-orientation-edu",
      "categorie": "realiste",
-     "pertinence": 80,
+     "pertinence": 79.30000000000001,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "psup-21762",
+     "id": "psup-29102",
      "categorie": "securite",
-     "pertinence": 83,
+     "pertinence": 83.18,
      "repere": [
-      53,
+      80,
       "au_dessus"
      ]
     },
@@ -899,43 +903,41 @@
    },
    {
     "x": {
-     "id": "brunel-economics",
+     "id": "nih-oslo-bachelor-i-idrettsvitenskap",
      "categorie": "realiste",
-     "pertinence": 59,
+     "pertinence": 78.94,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "psup-35609",
-     "categorie": "realiste",
-     "pertinence": 67,
+     "id": "psup-29102",
+     "categorie": "securite",
+     "pertinence": 83.18,
      "repere": [
-      61,
-      "moyenne"
+      80,
+      "au_dessus"
      ]
     },
-    "frais": 14508,
+    "frais": null,
     "vie": {
-     "min": 1790,
-     "max": 1790,
-     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
-     "source": "https://www.gov.uk/student-visa/money",
-     "statut": "officiel"
+     "min": 1200,
+     "max": 1600,
+     "statut": "estimation"
     },
     "francais": false,
-    "moinsCher": true,
-    "date": "2027-01-13",
+    "moinsCher": false,
+    "date": null,
     "bientot": false,
-    "jours": 104
+    "jours": null
    }
   ],
   "budgetSerre": true,
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "899f87324c87075006ca67f3ac190cb020f2e55f191078ffe273c5a80abadeb9",
-  "textes": "2187d09dd9c39a612fbc6a149b6aa1dead71370e651f0fcc17b3141bab45fa3e"
+  "calculs": "40ef3bd80dda93a75ae5f4dbe96691c0adbaac0160f4172a124558eb19f25058",
+  "textes": "4bb90039393ce33a1ddb8747c024f5d2b87f347ec8863a81f51659e65c578748"
  }
 }

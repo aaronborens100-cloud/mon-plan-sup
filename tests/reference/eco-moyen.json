@@ -33,6 +33,10 @@
    "lon": 7.2737,
    "nom": "Lycée Masséna (Nice)"
   },
+  "departement": "Alpes-Maritimes",
+  "academie": "Nice",
+  "secteur": "Nice",
+  "zone": "continent",
   "certifications": [],
   "specialites": [
    "SES",
@@ -118,9 +122,9 @@
  "top": [
   {
    "id": "psup-49978",
-   "interet": 92,
-   "faisabilite": 61,
-   "pertinence": 80,
+   "interet": 89.1965763721674,
+   "faisabilite": 61.25,
+   "pertinence": 78.01794582330044,
    "repere": [
     null,
     null,
@@ -133,9 +137,9 @@
   },
   {
    "id": "psup-53273",
-   "interet": 92,
-   "faisabilite": 61,
-   "pertinence": 80,
+   "interet": 87.20149144913762,
+   "faisabilite": 61.25,
+   "pertinence": 76.82089486948257,
    "repere": [
     null,
     null,
@@ -147,10 +151,10 @@
    "exclu": null
   },
   {
-   "id": "psup-49034",
-   "interet": 89,
-   "faisabilite": 61,
-   "pertinence": 78,
+   "id": "psup-33342",
+   "interet": 86.04729937865787,
+   "faisabilite": 61.25,
+   "pertinence": 76.12837962719472,
    "repere": [
     null,
     null,
@@ -162,55 +166,25 @@
    "exclu": null
   },
   {
-   "id": "grenoble-ecole-de-management-bachelor-in-international-business",
-   "interet": 89,
-   "faisabilite": 58,
-   "pertinence": 77,
+   "id": "psup-51924",
+   "interet": 86.04490935335158,
+   "faisabilite": 61.25,
+   "pertinence": 76.12694561201096,
    "repere": [
     null,
     null,
     "inconnue",
-    "sans_taux"
+    "nouvelle"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "kedge-business-school-bachelor",
-   "interet": 89,
-   "faisabilite": 58,
-   "pertinence": 77,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-49141",
-   "interet": 88,
-   "faisabilite": 61,
-   "pertinence": 77,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-42301",
-   "interet": 88,
-   "faisabilite": 61,
-   "pertinence": 77,
+   "id": "psup-49979",
+   "interet": 85.1965763721674,
+   "faisabilite": 61.25,
+   "pertinence": 75.61794582330043,
    "repere": [
     null,
     null,
@@ -223,9 +197,54 @@
   },
   {
    "id": "psup-44377",
-   "interet": 88,
-   "faisabilite": 61,
-   "pertinence": 77,
+   "interet": 84.81638579825963,
+   "faisabilite": 61.25,
+   "pertinence": 75.38983147895578,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "bachelor-management-de-l-hotellerie-et-du-tourisme-vatel-nimes",
+   "interet": 83.9733999560076,
+   "faisabilite": 61.6,
+   "pertinence": 75.02403997360456,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-42301",
+   "interet": 83.63243615971551,
+   "faisabilite": 61.25,
+   "pertinence": 74.6794616958293,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-50439",
+   "interet": 83.3162297643001,
+   "faisabilite": 61.25,
+   "pertinence": 74.48973785858007,
    "repere": [
     null,
     null,
@@ -238,9 +257,9 @@
   },
   {
    "id": "psup-51869",
-   "interet": 88,
-   "faisabilite": 61,
-   "pertinence": 77,
+   "interet": 83.3162297643001,
+   "faisabilite": 61.25,
+   "pertinence": 74.48973785858007,
    "repere": [
     null,
     null,
@@ -252,385 +271,10 @@
    "exclu": null
   },
   {
-   "id": "psup-42618",
-   "interet": 88,
-   "faisabilite": 61,
-   "pertinence": 77,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-446",
-   "interet": 81,
-   "faisabilite": 66,
-   "pertinence": 75,
-   "repere": [
-    62,
-    0.45,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-47821",
-   "interet": 81,
-   "faisabilite": 64,
-   "pertinence": 74,
-   "repere": [
-    52,
-    0.3,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26131",
-   "interet": 81,
-   "faisabilite": 61,
-   "pertinence": 73,
-   "repere": [
-    55,
-    0.16,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26149",
-   "interet": 81,
-   "faisabilite": 61,
-   "pertinence": 73,
-   "repere": [
-    86,
-    0.2,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-12065",
-   "interet": 81,
-   "faisabilite": 61,
-   "pertinence": 73,
-   "repere": [
-    81,
-    0.15,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26271",
-   "interet": 81,
-   "faisabilite": 61,
-   "pertinence": 73,
-   "repere": [
-    74,
-    0.19,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-53040",
-   "interet": 80,
-   "faisabilite": 61,
-   "pertinence": 72,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-46898",
-   "interet": 79,
-   "faisabilite": 61,
-   "pertinence": 72,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-53074",
-   "interet": 80,
-   "faisabilite": 61,
-   "pertinence": 72,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-49952",
-   "interet": 72,
-   "faisabilite": 70,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26115",
-   "interet": 75,
-   "faisabilite": 64,
-   "pertinence": 71,
-   "repere": [
-    18,
-    0.3,
-    "moyenne",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-aix-en-provence-aes",
-   "interet": 72,
-   "faisabilite": 66,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-12539",
-   "interet": 72,
-   "faisabilite": 66,
-   "pertinence": 70,
-   "repere": [
-    73,
-    0.11,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-52828",
-   "interet": 76,
-   "faisabilite": 61,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35399",
-   "interet": 72,
-   "faisabilite": 67,
-   "pertinence": 70,
-   "repere": [
-    100,
-    0.45,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-39359",
-   "interet": 72,
-   "faisabilite": 64,
-   "pertinence": 69,
-   "repere": [
-    75,
-    0.3,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-48199",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-48997",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-49827",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-51123",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26117",
-   "interet": 75,
-   "faisabilite": 60,
-   "pertinence": 69,
-   "repere": [
-    14,
-    0.3,
-    "moyenne",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-41713",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-45218",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-46614",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-53242",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
+   "id": "psup-52738",
+   "interet": 82.86825611373114,
+   "faisabilite": 61.25,
+   "pertinence": 74.22095366823868,
    "repere": [
     null,
     null,
@@ -643,9 +287,9 @@
   },
   {
    "id": "psup-53275",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
+   "interet": 82.86825611373114,
+   "faisabilite": 61.25,
+   "pertinence": 74.22095366823868,
    "repere": [
     null,
     null,
@@ -657,10 +301,10 @@
    "exclu": null
   },
   {
-   "id": "psup-33555",
-   "interet": 75,
-   "faisabilite": 61,
-   "pertinence": 69,
+   "id": "psup-49034",
+   "interet": 82.72895825543945,
+   "faisabilite": 61.25,
+   "pertinence": 74.13737495326367,
    "repere": [
     null,
     null,
@@ -672,28 +316,328 @@
    "exclu": null
   },
   {
-   "id": "psup-39082",
-   "interet": 81,
-   "faisabilite": 51,
-   "pertinence": 69,
+   "id": "psup-49141",
+   "interet": 81.91464796504745,
+   "faisabilite": 61.25,
+   "pertinence": 73.64878877902848,
    "repere": [
-    6,
-    0.03,
-    "en_dessous",
-    "taux_bas"
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-38238",
+   "interet": 81.60925826070151,
+   "faisabilite": 61.25,
+   "pertinence": 73.4655549564209,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "kedge-business-school-bachelor",
+   "interet": 83.8464820710574,
+   "faisabilite": 57.6,
+   "pertinence": 73.34788924263444,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "grenoble-ecole-de-management-bachelor-in-international-business",
+   "interet": 82.88544305868527,
+   "faisabilite": 57.6,
+   "pertinence": 72.77126583521117,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53168",
+   "interet": 80.14272137993315,
+   "faisabilite": 61.25,
+   "pertinence": 72.5856328279599,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "psup-50238",
-   "interet": 72,
-   "faisabilite": 62,
-   "pertinence": 68,
+   "id": "psup-38251",
+   "interet": 80.11624031349638,
+   "faisabilite": 61.25,
+   "pertinence": 72.56974418809781,
    "repere": [
-    82,
-    0.17,
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49376",
+   "interet": 79.10612357744093,
+   "faisabilite": 61.25,
+   "pertinence": 71.96367414646456,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-51307",
+   "interet": 78.99152551720206,
+   "faisabilite": 61.4,
+   "pertinence": 71.95491531032124,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-443",
+   "interet": 78.97871973312476,
+   "faisabilite": 61.36,
+   "pertinence": 71.93123183987485,
+   "repere": [
+    62,
+    0.21,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52736",
+   "interet": 78.86825611373114,
+   "faisabilite": 61.25,
+   "pertinence": 71.82095366823867,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52737",
+   "interet": 78.86825611373114,
+   "faisabilite": 61.25,
+   "pertinence": 71.82095366823867,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-48535",
+   "interet": 78.98738736194103,
+   "faisabilite": 61.04,
+   "pertinence": 71.80843241716462,
+   "repere": [
+    69,
+    0.18,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52795",
+   "interet": 78.60252440657935,
+   "faisabilite": 61.4,
+   "pertinence": 71.72151464394761,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-48258",
+   "interet": 75,
+   "faisabilite": 66.8,
+   "pertinence": 71.72,
+   "repere": [
+    95,
+    0.45,
+    "moyenne",
+    "hors_distance"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-45703",
+   "interet": 75,
+   "faisabilite": 66.8,
+   "pertinence": 71.72,
+   "repere": [
+    95,
+    0.45,
+    "moyenne",
+    "hors_distance"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26131",
+   "interet": 78.60252440657935,
+   "faisabilite": 61.36,
+   "pertinence": 71.70551464394761,
+   "repere": [
+    55,
+    0.16,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-38240",
+   "interet": 78.47256186705518,
+   "faisabilite": 61.25,
+   "pertinence": 71.5835371202331,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49276",
+   "interet": 78.45815622083394,
+   "faisabilite": 61.25,
+   "pertinence": 71.57489373250036,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39903",
+   "interet": 78.98738736194103,
+   "faisabilite": 60.08,
+   "pertinence": 71.42443241716462,
+   "repere": [
+    30,
+    0.15,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53621",
+   "interet": 78.04516395976127,
+   "faisabilite": 61.4,
+   "pertinence": 71.38709837585677,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-446",
+   "interet": 74.92178085873218,
+   "faisabilite": 65.84,
+   "pertinence": 71.28906851523931,
+   "repere": [
+    62,
+    0.45,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31192",
+   "interet": 78.60252440657935,
+   "faisabilite": 59.760000000000005,
+   "pertinence": 71.06551464394761,
+   "repere": [
+    69,
+    0.11,
     "en_dessous",
     "en_dessous"
    ],
@@ -703,9 +647,9 @@
   },
   {
    "id": "psup-50312",
-   "interet": 72,
-   "faisabilite": 61,
-   "pertinence": 68,
+   "interet": 77.58961679905414,
+   "faisabilite": 61.25,
+   "pertinence": 71.05377007943248,
    "repere": [
     null,
     null,
@@ -715,97 +659,157 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-51439",
+   "interet": 77.1868248029672,
+   "faisabilite": 61.25,
+   "pertinence": 70.81209488178033,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "montpellier-business-school-bachelor-in-international-business",
+   "interet": 79.60691446634921,
+   "faisabilite": 57.6,
+   "pertinence": 70.80414867980953,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26296",
+   "interet": 75.85801573360962,
+   "faisabilite": 62.96,
+   "pertinence": 70.69880944016577,
+   "repere": [
+    52,
+    0.25,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47821",
+   "interet": 74.85958801759512,
+   "faisabilite": 63.92,
+   "pertinence": 70.48375281055706,
+   "repere": [
+    52,
+    0.3,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
    {
-    "id": "psup-28974",
+    "id": "psup-20790",
     "categorie": "securite",
-    "pertinence": 69,
+    "pertinence": 57.75528779083116,
     "repere": [
-     95,
+     98,
      "moyenne"
     ]
    },
    {
-    "id": "psup-43423",
+    "id": "psup-20509",
     "categorie": "securite",
-    "pertinence": 71,
+    "pertinence": 55.04155637560065,
     "repere": [
-     99,
+     100,
      "moyenne"
     ]
    },
    {
-    "id": "psup-26296",
+    "id": "psup-443",
     "categorie": "ambitieux",
-    "pertinence": 74,
+    "pertinence": 71.93123183987485,
     "repere": [
-     52,
+     62,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-12065",
+    "id": "psup-26131",
     "categorie": "ambitieux",
-    "pertinence": 73,
+    "pertinence": 71.70551464394761,
     "repere": [
-     81,
+     55,
      "en_dessous"
     ]
    },
    {
     "id": "psup-26115",
     "categorie": "ambitieux",
-    "pertinence": 71,
+    "pertinence": 69.36043241716462,
     "repere": [
      18,
      "moyenne"
     ]
    },
    {
+    "id": "psup-446",
+    "categorie": "realiste",
+    "pertinence": 71.28906851523931,
+    "repere": [
+     62,
+     "moyenne"
+    ]
+   },
+   {
     "id": "psup-10451",
     "categorie": "realiste",
-    "pertinence": 71,
+    "pertinence": 67.66198956346317,
     "repere": [
      88,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-10367",
+    "id": "psup-5345",
     "categorie": "realiste",
-    "pertinence": 67,
+    "pertinence": 65.1924126321459,
     "repere": [
-     90,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-26370",
-    "categorie": "realiste",
-    "pertinence": 64,
-    "repere": [
-     79,
+     92,
      "moyenne"
     ]
    },
    {
-    "id": "psup-22670",
+    "id": "psup-21268",
     "categorie": "realiste",
-    "pertinence": 58,
+    "pertinence": 66.11173570172394,
     "repere": [
      100,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-2592",
+    "id": "psup-43011",
     "categorie": "ambitieux",
-    "pertinence": 66,
+    "pertinence": 63.83975627889662,
     "repere": [
-     44,
+     43,
      "en_dessous"
     ]
    }
@@ -822,21 +826,21 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec bachelor (France) et licence d'éco-gestion comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur bachelor (France), avec école de commerce post-bac et licence d'éco-gestion comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
   {
    "id": "psup-51307",
-   "interet": 81
+   "interet": 78.99152551720206
   },
   {
    "id": "psup-52795",
-   "interet": 81
+   "interet": 78.60252440657935
   },
   {
-   "id": "psup-53120",
-   "interet": 72
+   "id": "psup-52351",
+   "interet": 72.9861926853585
   }
  ],
  "etranger": {
@@ -844,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "7f86cedbdd1f9a071e15a8462ba7346c01dea6183b10b84edd16d6b9d5083cc3",
-  "textes": "90f112a831d53c3f966b59964924b14a9b58a4c9fc9813e04d5ab097a4f55d50"
+  "calculs": "f77e583964876841afb8c605ca83337062a2d52b1bd09755f8de78d850f369bf",
+  "textes": "570c658238a346b418af08ca254759940f0e9b8924eac6d4969f673695bb4b27"
  }
 }

@@ -32,6 +32,10 @@
    "lon": 7.2737,
    "nom": "Lycée Masséna (Nice)"
   },
+  "departement": "Alpes-Maritimes",
+  "academie": "Nice",
+  "secteur": "Nice",
+  "zone": "continent",
   "certifications": [],
   "specialites": [
    "SES",
@@ -126,10 +130,40 @@
  },
  "top": [
   {
+   "id": "psup-48258",
+   "interet": 85.75,
+   "faisabilite": 59.2,
+   "pertinence": 75.13,
+   "repere": [
+    95,
+    0,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "psup-45703",
+   "interet": 85.75,
+   "faisabilite": 59.2,
+   "pertinence": 75.13,
+   "repere": [
+    95,
+    0,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
    "id": "psup-33342",
-   "interet": 91,
-   "faisabilite": 61,
-   "pertinence": 79,
+   "interet": 84.31983022662266,
+   "faisabilite": 61.25,
+   "pertinence": 75.0918981359736,
    "repere": [
     null,
     null,
@@ -142,9 +176,9 @@
   },
   {
    "id": "psup-51924",
-   "interet": 91,
-   "faisabilite": 61,
-   "pertinence": 79,
+   "interet": 84.30788010009124,
+   "faisabilite": 61.25,
+   "pertinence": 75.08472806005474,
    "repere": [
     null,
     null,
@@ -156,10 +190,130 @@
    "exclu": null
   },
   {
+   "id": "dawson-business-management",
+   "interet": 82.58333333333333,
+   "faisabilite": 63.6,
+   "pertinence": 74.99,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-49978",
+   "interet": 83.36531224917752,
+   "faisabilite": 61.25,
+   "pertinence": 74.51918734950651,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49979",
+   "interet": 79.36531224917752,
+   "faisabilite": 61.25,
+   "pertinence": 72.11918734950652,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-50515",
+   "interet": 77.75,
+   "faisabilite": 61.4,
+   "pertinence": 71.21000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "psup-50516",
+   "interet": 77.75,
+   "faisabilite": 61.4,
+   "pertinence": 71.21000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "psup-50517",
+   "interet": 77.75,
+   "faisabilite": 61.4,
+   "pertinence": 71.21000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
    "id": "psup-51307",
-   "interet": 84,
-   "faisabilite": 61,
-   "pertinence": 75,
+   "interet": 77.70762758601029,
+   "faisabilite": 61.4,
+   "pertinence": 71.18457655160617,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "bath-management",
+   "interet": 78.81666666666666,
+   "faisabilite": 58.25,
+   "pertinence": 70.59,
+   "repere": [
+    64.3,
+    null,
+    "inconnue",
+    "position_inconnue"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-53621",
+   "interet": 76.30915313213967,
+   "faisabilite": 61.4,
+   "pertinence": 70.3454918792838,
    "repere": [
     null,
     null,
@@ -172,9 +326,9 @@
   },
   {
    "id": "psup-52795",
-   "interet": 84,
-   "faisabilite": 61,
-   "pertinence": 75,
+   "interet": 75.76262203289673,
+   "faisabilite": 61.4,
+   "pertinence": 70.01757321973804,
    "repere": [
     null,
     null,
@@ -186,27 +340,117 @@
    "exclu": null
   },
   {
-   "id": "psup-53621",
-   "interet": 83,
-   "faisabilite": 61,
-   "pertinence": 74,
+   "id": "psup-48015",
+   "interet": 77.75,
+   "faisabilite": 58.160000000000004,
+   "pertinence": 69.914,
+   "repere": [
+    90,
+    0,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "buas-breda-bachelor-tourism",
+   "interet": 75.00555555555556,
+   "faisabilite": 61.4,
+   "pertinence": 69.56333333333333,
    "repere": [
     null,
     null,
     "inconnue",
-    "nouvelle"
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ehl-lausanne-bachelor-of-science-in-international-hospitality-management",
+   "interet": 75.00555555555556,
+   "faisabilite": 61.4,
+   "pertinence": 69.56333333333333,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "glion-glion-bachelor-in-international-hospitality-business",
+   "interet": 75.00555555555556,
+   "faisabilite": 61.4,
+   "pertinence": 69.56333333333333,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "hotelschool-la-haye-bba-international-hospitality-management",
+   "interet": 75.00555555555556,
+   "faisabilite": 61.4,
+   "pertinence": 69.56333333333333,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "lesroches-crans-montana-bba-in-global-hospitality-management",
+   "interet": 75.00555555555556,
+   "faisabilite": 61.4,
+   "pertinence": 69.56333333333333,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-31816",
+   "interet": 77.75,
+   "faisabilite": 55.92,
+   "pertinence": 69.018,
+   "repere": [
+    77,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
    "categorie": "ambitieux",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
   },
   {
-   "id": "psup-26131",
-   "interet": 84,
-   "faisabilite": 55,
-   "pertinence": 72,
+   "id": "psup-443",
+   "interet": 77.64359866562378,
+   "faisabilite": 55.279999999999994,
+   "pertinence": 68.69815919937427,
    "repere": [
-    55,
+    62,
     0,
     "en_dessous",
     "en_dessous"
@@ -216,10 +460,25 @@
    "exclu": null
   },
   {
-   "id": "psup-31192",
-   "interet": 84,
-   "faisabilite": 54,
-   "pertinence": 72,
+   "id": "psup-44377",
+   "interet": 73.66245364056108,
+   "faisabilite": 61.25,
+   "pertinence": 68.69747218433665,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-48535",
+   "interet": 77.68693680970517,
+   "faisabilite": 54.96,
+   "pertinence": 68.5961620858231,
    "repere": [
     69,
     0,
@@ -232,9 +491,9 @@
   },
   {
    "id": "psup-39903",
-   "interet": 84,
+   "interet": 77.68693680970517,
    "faisabilite": 54,
-   "pertinence": 72,
+   "pertinence": 68.21216208582311,
    "repere": [
     30,
     0,
@@ -246,85 +505,55 @@
    "exclu": null
   },
   {
-   "id": "psup-443",
-   "interet": 84,
-   "faisabilite": 55,
-   "pertinence": 72,
+   "id": "psup-28555",
+   "interet": 77.75,
+   "faisabilite": 53.36,
+   "pertinence": 67.994,
    "repere": [
-    62,
+    78,
     0,
     "en_dessous",
     "en_dessous"
    ],
    "categorie": "ambitieux",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
   },
   {
-   "id": "psup-48535",
-   "interet": 84,
-   "faisabilite": 55,
-   "pertinence": 72,
+   "id": "brunel-business",
+   "interet": 74.68333333333334,
+   "faisabilite": 57.2,
+   "pertinence": 67.69,
    "repere": [
-    69,
-    0,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "bath-management",
-   "interet": 79,
-   "faisabilite": 58,
-   "pertinence": 71,
-   "repere": [
-    64.3,
+    null,
     null,
     "inconnue",
-    "position_inconnue"
+    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
-   "id": "psup-26115",
-   "interet": 78,
-   "faisabilite": 58,
-   "pertinence": 70,
+   "id": "psup-51317",
+   "interet": 71.75,
+   "faisabilite": 61.4,
+   "pertinence": 67.61,
    "repere": [
-    18,
-    0,
-    "en_dessous",
-    "taux_bas"
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
   },
   {
-   "id": "psup-43192",
-   "interet": 84,
-   "faisabilite": 50,
-   "pertinence": 70,
-   "repere": [
-    18,
-    0,
-    "en_dessous",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-12050",
-   "interet": 74,
-   "faisabilite": 49,
-   "pertinence": 64,
+   "id": "psup-26131",
+   "interet": 75.76262203289673,
+   "faisabilite": 55.279999999999994,
+   "pertinence": 67.56957321973803,
    "repere": [
     55,
     0,
@@ -336,190 +565,10 @@
    "exclu": null
   },
   {
-   "id": "luiss-economics-management",
-   "interet": 67,
-   "faisabilite": 57,
-   "pertinence": 63,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "lse-management",
-   "interet": 75,
-   "faisabilite": 42,
-   "pertinence": 62,
-   "repere": [
-    14.5,
-    null,
-    "inconnue",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "laval-etudes-internationales-langues",
-   "interet": 60,
-   "faisabilite": 64,
-   "pertinence": 62,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "manchester-accounting",
-   "interet": 69,
-   "faisabilite": 49,
-   "pertinence": 61,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "lancaster-accounting-finance",
-   "interet": 69,
-   "faisabilite": 50,
-   "pertinence": 61,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "ie-bba",
-   "interet": 74,
-   "faisabilite": 42,
-   "pertinence": 61,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "umontreal-etudes-internationales",
-   "interet": 59,
-   "faisabilite": 64,
-   "pertinence": 61,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "loughborough-economics",
-   "interet": 62,
-   "faisabilite": 56,
-   "pertinence": 60,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "leeds-economics",
-   "interet": 62,
-   "faisabilite": 54,
-   "pertinence": 59,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "umontreal-science-politique",
-   "interet": 56,
-   "faisabilite": 64,
-   "pertinence": 59,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "uqam-science-politique",
-   "interet": 55,
-   "faisabilite": 64,
-   "pertinence": 59,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "laval-science-politique",
-   "interet": 55,
-   "faisabilite": 64,
-   "pertinence": 59,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "skema-business-school-global-bba",
-   "interet": 66,
-   "faisabilite": 48,
-   "pertinence": 59,
+   "id": "psup-45962",
+   "interet": 71.54444446270541,
+   "faisabilite": 61.25,
+   "pertinence": 67.42666667762325,
    "repere": [
     null,
     null,
@@ -531,10 +580,10 @@
    "exclu": null
   },
   {
-   "id": "warwick-ppe",
-   "interet": 67,
-   "faisabilite": 42,
-   "pertinence": 57,
+   "id": "psup-45961",
+   "interet": 71.54405748827187,
+   "faisabilite": 61.25,
+   "pertinence": 67.42643449296312,
    "repere": [
     null,
     null,
@@ -543,183 +592,138 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
+   "exclu": null
   },
   {
-   "id": "edinburgh-business",
-   "interet": 71,
-   "faisabilite": 37,
-   "pertinence": 57,
+   "id": "psup-31192",
+   "interet": 75.76262203289673,
+   "faisabilite": 53.67999999999999,
+   "pertinence": 66.92957321973803,
    "repere": [
-    45,
-    null,
-    "inconnue",
-    "position_inconnue"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "bocconi-management",
-   "interet": 64,
-   "faisabilite": 46,
-   "pertinence": 57,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "lancaster-economics",
-   "interet": 58,
-   "faisabilite": 56,
-   "pertinence": 57,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "wu-vienne-bsc-business-economics",
-   "interet": 59,
-   "faisabilite": 55,
-   "pertinence": 57,
-   "repere": [
-    8,
-    null,
-    "inconnue",
-    "taux_bas"
+    69,
+    0,
+    "en_dessous",
+    "en_dessous"
    ],
    "categorie": "ambitieux",
    "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
+   "exclu": null
   },
   {
-   "id": "uqam-bridi",
-   "interet": 53,
-   "faisabilite": 64,
-   "pertinence": 57,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "lse-ppe",
-   "interet": 66,
-   "faisabilite": 42,
-   "pertinence": 56,
-   "repere": [
-    14.5,
-    null,
-    "inconnue",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "esade-bba",
-   "interet": 72,
-   "faisabilite": 32,
-   "pertinence": 56,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "york-ppe",
-   "interet": 63,
-   "faisabilite": 42,
-   "pertinence": 55,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "surrey-economics",
-   "interet": 58,
-   "faisabilite": 50,
-   "pertinence": 55,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "durham-politics",
-   "interet": 57,
-   "faisabilite": 50,
-   "pertinence": 54,
-   "repere": [
-    37.3,
-    null,
-    "inconnue",
-    "position_inconnue"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "umontreal-psychologie",
-   "interet": 46,
-   "faisabilite": 64,
-   "pertinence": 53,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "ps-12025",
-   "interet": 49,
-   "faisabilite": 56,
-   "pertinence": 52,
+   "id": "psup-31987",
+   "interet": 77.75,
+   "faisabilite": 50.480000000000004,
+   "pertinence": 66.842,
    "repere": [
     20,
     0,
     "en_dessous",
     "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "uva-amsterdam-bsc-communication-science",
+   "interet": 65.02777777777777,
+   "faisabilite": 69.5,
+   "pertinence": 66.81666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-28455",
+   "interet": 77.75,
+   "faisabilite": 50.4,
+   "pertinence": 66.81,
+   "repere": [
+    15,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "psup-43117",
+   "interet": 77.75,
+   "faisabilite": 50.4,
+   "pertinence": 66.81,
+   "repere": [
+    13,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+  },
+  {
+   "id": "psup-39081",
+   "interet": 77.21877511994319,
+   "faisabilite": 50.4,
+   "pertinence": 66.49126507196591,
+   "repere": [
+    45,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43192",
+   "interet": 77.21877511994319,
+   "faisabilite": 50.4,
+   "pertinence": 66.49126507196591,
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26115",
+   "interet": 71.68693680970517,
+   "faisabilite": 57.839999999999996,
+   "pertinence": 66.1481620858231,
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52106",
+   "interet": 68.59104552969767,
+   "faisabilite": 61.25,
+   "pertinence": 65.65462731781861,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
    ],
    "categorie": "ambitieux",
    "bloque": false,
@@ -729,27 +733,27 @@
  "voeux": {
   "liste": [
    {
-    "id": "u-cote-d-azur-lettres",
+    "id": "psup-22670",
     "categorie": "realiste",
-    "pertinence": 63,
+    "pertinence": 59.46507054419182,
     "repere": [
      100,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-22666",
+    "id": "u-cote-d-azur-lettres",
     "categorie": "realiste",
-    "pertinence": 63,
+    "pertinence": 58.54850512013147,
     "repere": [
-     87,
+     100,
      "en_dessous"
     ]
    },
    {
     "id": "psup-28974",
     "categorie": "realiste",
-    "pertinence": 54,
+    "pertinence": 50.49,
     "repere": [
      95,
      "en_dessous"
@@ -758,25 +762,25 @@
    {
     "id": "psup-26131",
     "categorie": "ambitieux",
-    "pertinence": 72,
+    "pertinence": 67.56957321973803,
     "repere": [
      55,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-31192",
+    "id": "psup-443",
     "categorie": "ambitieux",
-    "pertinence": 72,
+    "pertinence": 68.69815919937427,
     "repere": [
-     69,
+     62,
      "en_dessous"
     ]
    },
    {
     "id": "psup-26115",
     "categorie": "ambitieux",
-    "pertinence": 70,
+    "pertinence": 66.1481620858231,
     "repere": [
      18,
      "en_dessous"
@@ -785,7 +789,7 @@
    {
     "id": "psup-2220",
     "categorie": "ambitieux",
-    "pertinence": 65,
+    "pertinence": 61.45336059618244,
     "repere": [
      28,
      "en_dessous"
@@ -794,7 +798,7 @@
    {
     "id": "psup-2226",
     "categorie": "ambitieux",
-    "pertinence": 64,
+    "pertinence": 60.32170694061687,
     "repere": [
      14,
      "en_dessous"
@@ -803,18 +807,18 @@
    {
     "id": "ps-12050",
     "categorie": "ambitieux",
-    "pertinence": 64,
+    "pertinence": 59.4019916359561,
     "repere": [
      55,
      "en_dessous"
     ]
    },
    {
-    "id": "ps-12025",
+    "id": "psup-36460",
     "categorie": "ambitieux",
-    "pertinence": 52,
+    "pertinence": 53.28091124063294,
     "repere": [
-     20,
+     35,
      "en_dessous"
     ]
    }
@@ -836,21 +840,21 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec bachelor (France) et licence de lettres ou sciences humaines comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur école de commerce post-bac, avec licence de lettres ou sciences humaines et bachelor (France) comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
   {
    "id": "psup-51307",
-   "interet": 84
+   "interet": 77.70762758601029
   },
   {
    "id": "psup-52795",
-   "interet": 84
+   "interet": 75.76262203289673
   },
   {
    "id": "psup-52341",
-   "interet": 50
+   "interet": 42.3963147048129
   }
  ],
  "etranger": {
@@ -858,7 +862,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "5b3fdd1231308d07d264d6016c6743ede56a5e0786f1d399e5fe42030e26f38a",
-  "textes": "680501f8c8450342b86d6600769ed959b4f75d662cf7cf42f93de574df5c02e8"
+  "calculs": "94658801e7f4f0c6d94b40880e275b66223912d324127f92a697f30791dc213f",
+  "textes": "2f2c69e988a341dd0d80d7f437534425e38bd4b8e33395c21fe9c02213f7fbcd"
  }
 }

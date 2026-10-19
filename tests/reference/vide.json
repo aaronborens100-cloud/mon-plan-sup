@@ -21,6 +21,10 @@
   "nbExperiences": 0,
   "nbExperiencesFortes": 0,
   "geo": null,
+  "departement": null,
+  "academie": null,
+  "secteur": null,
+  "zone": null,
   "certifications": [],
   "specialites": [],
   "abandonnee": "",
@@ -62,12 +66,12 @@
  },
  "top": [
   {
-   "id": "ps-7917",
-   "interet": 49,
+   "id": "psup-25358",
+   "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    66,
+    100,
     null,
     null,
     "sans_notes_ouverte"
@@ -77,12 +81,12 @@
    "exclu": null
   },
   {
-   "id": "ps-7918",
+   "id": "psup-13726",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    54,
+    100,
     null,
     null,
     "sans_notes_ouverte"
@@ -92,187 +96,7 @@
    "exclu": null
   },
   {
-   "id": "ps-10210",
-   "interet": 49,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    39,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1063",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    38,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7919",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    6,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-5824",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    30,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-5087",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    22,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-13659",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    86,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-10249",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    63,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7931",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    24,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1030",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    51,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-10222",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    36,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-13666",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    53,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1029",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    54,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7974",
+   "id": "psup-32208",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
@@ -287,12 +111,12 @@
    "exclu": null
   },
   {
-   "id": "ps-5067",
-   "interet": 49,
+   "id": "psup-12017",
+   "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    64,
+    97,
     null,
     null,
     "sans_notes_ouverte"
@@ -302,12 +126,12 @@
    "exclu": null
   },
   {
-   "id": "ps-13649",
+   "id": "psup-41216",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    70,
+    96,
     null,
     null,
     "sans_notes_ouverte"
@@ -317,132 +141,12 @@
    "exclu": null
   },
   {
-   "id": "ps-13692",
+   "id": "psup-15653",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    21,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-4210",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    41,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-12411",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    15,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-12409",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    10,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-3254",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    22,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-3235",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    4,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7049",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    9,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-6707",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    18,
-    null,
-    null,
-    "sans_notes"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-7369",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    63,
+    95,
     null,
     null,
     "sans_notes_ouverte"
@@ -452,12 +156,12 @@
    "exclu": null
   },
   {
-   "id": "ps-5121",
+   "id": "psup-17423",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    64,
+    93,
     null,
     null,
     "sans_notes_ouverte"
@@ -467,12 +171,12 @@
    "exclu": null
   },
   {
-   "id": "ps-10201",
+   "id": "psup-41215",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    63,
+    92,
     null,
     null,
     "sans_notes_ouverte"
@@ -482,182 +186,482 @@
    "exclu": null
   },
   {
-   "id": "ps-12025",
+   "id": "psup-43196",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    20,
+    92,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-8417",
+   "id": "psup-39970",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    27,
+    92,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-10694",
+   "id": "psup-41219",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    38,
+    91,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-9010",
+   "id": "psup-18116",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    28,
+    90,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-3268",
+   "id": "psup-13720",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    30,
+    89,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-2775",
+   "id": "psup-41086",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    11,
+    89,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-1720",
+   "id": "psup-41085",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    15,
+    87,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-4674",
+   "id": "psup-43200",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    12,
+    87,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-1286",
+   "id": "psup-13716",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    13,
+    87,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-1621",
+   "id": "psup-41084",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    19,
+    86,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-8130",
+   "id": "psup-15787",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    30,
+    86,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "ps-12265",
+   "id": "psup-41217",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
    "repere": [
-    48,
+    86,
     null,
     null,
-    "sans_notes"
+    "sans_notes_ouverte"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43199",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    85,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13728",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    85,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-44213",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    83,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-41087",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    83,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27501",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    82,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13718",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    82,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43197",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    82,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13447",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    82,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-12457",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    82,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-12455",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    81,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32283",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    80,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43202",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    79,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26069",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    78,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-24399",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    78,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29153",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    78,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43198",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    78,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-49110",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    77,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32497",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    75,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26404",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    75,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26070",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    74,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -665,70 +669,25 @@
  "voeux": {
   "liste": [
    {
-    "id": "ps-7917",
+    "id": "psup-25358",
     "categorie": "realiste",
     "pertinence": 61,
     "repere": [
-     66,
+     100,
      null
     ]
    },
    {
-    "id": "ps-7918",
+    "id": "psup-41216",
     "categorie": "realiste",
     "pertinence": 61,
     "repere": [
-     54,
+     96,
      null
     ]
    },
    {
-    "id": "ps-7369",
-    "categorie": "realiste",
-    "pertinence": 61,
-    "repere": [
-     63,
-     null
-    ]
-   },
-   {
-    "id": "ps-12409",
-    "categorie": "ambitieux",
-    "pertinence": 61,
-    "repere": [
-     10,
-     null
-    ]
-   },
-   {
-    "id": "ps-12025",
-    "categorie": "ambitieux",
-    "pertinence": 61,
-    "repere": [
-     20,
-     null
-    ]
-   },
-   {
-    "id": "ps-8417",
-    "categorie": "ambitieux",
-    "pertinence": 61,
-    "repere": [
-     27,
-     null
-    ]
-   },
-   {
-    "id": "ps-6292",
-    "categorie": "realiste",
-    "pertinence": 61,
-    "repere": [
-     59,
-     null
-    ]
-   },
-   {
-    "id": "aix-marseille-universite-aix-en-provence-geographie-et-amenagement",
+    "id": "psup-32208",
     "categorie": "realiste",
     "pertinence": 61,
     "repere": [
@@ -737,20 +696,65 @@
     ]
    },
    {
-    "id": "licence-mathematiques-portail-rene-descartes-aix-marseille-universite-aix-en-provence",
-    "categorie": "realiste",
+    "id": "psup-26756",
+    "categorie": "ambitieux",
     "pertinence": 61,
     "repere": [
-     71,
+     49,
      null
     ]
    },
    {
-    "id": "nantes-universite-chimie",
+    "id": "psup-4146",
+    "categorie": "ambitieux",
+    "pertinence": 61,
+    "repere": [
+     48,
+     null
+    ]
+   },
+   {
+    "id": "psup-23598",
+    "categorie": "ambitieux",
+    "pertinence": 61,
+    "repere": [
+     47,
+     null
+    ]
+   },
+   {
+    "id": "psup-39970",
     "categorie": "realiste",
     "pertinence": 61,
     "repere": [
-     100,
+     92,
+     null
+    ]
+   },
+   {
+    "id": "psup-18116",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "repere": [
+     90,
+     null
+    ]
+   },
+   {
+    "id": "psup-43200",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "repere": [
+     87,
+     null
+    ]
+   },
+   {
+    "id": "psup-43202",
+    "categorie": "realiste",
+    "pertinence": 61,
+    "repere": [
+     79,
      null
     ]
    }
@@ -767,7 +771,7 @@
    "niveau": "inconnu",
    "top": []
   },
-  "explication": "Sans tes réponses au questionnaire, on a réparti tes vœux sur 9 types de formations. Réponds-y pour une liste vraiment personnalisée.",
+  "explication": "Sans tes réponses au questionnaire, on a réparti tes vœux sur 8 types de formations. Réponds-y pour une liste vraiment personnalisée.",
   "decouvertes": {}
  },
  "nouvelles": [],
@@ -776,7 +780,7 @@
   "liste": [
    {
     "x": {
-     "id": "durham-mathematics",
+     "id": "laval-droit",
      "categorie": "ambitieux",
      "pertinence": 61,
      "repere": [
@@ -785,15 +789,48 @@
      ]
     },
     "ancre": {
-     "id": "licence-mathematiques-portail-rene-descartes-aix-marseille-universite-aix-en-provence",
-     "categorie": "realiste",
+     "id": "psup-4146",
+     "categorie": "ambitieux",
      "pertinence": 61,
      "repere": [
-      71,
+      48,
       null
      ]
     },
-    "frais": null,
+    "frais": 6500,
+    "vie": {
+     "min": 1220,
+     "max": 1220,
+     "texte": "23 448 $ CA/an hors Québec : montant exigé pour le permis d'études à partir du 1er septembre 2026 (≈ 1 220 €/mois au taux indicatif 1 $ CA = 0,63 €)",
+     "source": "https://www.sfu.ca/students/isap/news/newsletters/new-financial-requirements-for-study-permit-application--effecti.html",
+     "statut": "source_secondaire"
+    },
+    "francais": true,
+    "moinsCher": false,
+    "date": null,
+    "bientot": false,
+    "jours": null
+   },
+   {
+    "x": {
+     "id": "exeter-law",
+     "categorie": "ambitieux",
+     "pertinence": 60.75,
+     "repere": [
+      null,
+      null
+     ]
+    },
+    "ancre": {
+     "id": "psup-4146",
+     "categorie": "ambitieux",
+     "pertinence": 61,
+     "repere": [
+      48,
+      null
+     ]
+    },
+    "frais": 30069,
     "vie": {
      "min": 1370,
      "max": 1370,
@@ -806,44 +843,13 @@
     "date": "2027-01-13",
     "bientot": false,
     "jours": 104
-   },
-   {
-    "x": {
-     "id": "uclouvain-droit",
-     "categorie": "ambitieux",
-     "pertinence": 61,
-     "repere": [
-      null,
-      null
-     ]
-    },
-    "ancre": {
-     "id": "ps-8417",
-     "categorie": "ambitieux",
-     "pertinence": 61,
-     "repere": [
-      27,
-      null
-     ]
-    },
-    "frais": 1194,
-    "vie": {
-     "min": 900,
-     "max": 1200,
-     "statut": "estimation"
-    },
-    "francais": true,
-    "moinsCher": false,
-    "date": null,
-    "bientot": false,
-    "jours": null
    }
   ],
   "budgetSerre": false,
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "34ef169ed72dfff06f1702061bf9d38fc7a5f9a1bb65bab3c0b1faa9ea83399f",
-  "textes": "059af1409ad2d1e8e68e9623871a0a0c6a04d81047c0af48f21badcf997b4edf"
+  "calculs": "1de4175436c9097a33874fb41567e9f02bb33668be1a0361154a070997f23998",
+  "textes": "b5c127cc423cd44c2a8885d7cae422a1b97f0ed3c98e518fd651ede72b837804"
  }
 }

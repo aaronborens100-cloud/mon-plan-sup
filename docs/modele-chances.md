@@ -176,12 +176,16 @@ spécialité obligatoire ou l'option maths expertes indispensable qui manque).
 | **Avec notes** : taux d'accès ≥ 85 % **et** position « en dessous » | réaliste (formation très ouverte) |
 | **Avec notes** : position « en dessous » | ambitieux |
 | **Avec notes** : taux d'accès ≥ 50 % **et** position « au-dessus » | sécurité |
+| **Avec notes** : licence non sélective du secteur de l'élève, taux d'accès ≥ 50 % (et < 85 %) **et** position « dans la moyenne » | sécurité (règle proposée, section 8.4) |
 | **Avec notes** : tout le reste (y compris position inconnue, ou taux non publié) | réaliste |
 | **Sans notes** : taux d'accès ≥ 50 % | réaliste |
 | **Sans notes** : taux d'accès < 50 % ou non publié | ambitieux |
 
 Les règles sont lues dans l'ordre (`REGLES_CATEGORIE`) : nouvelle formation, point bloquant, sans
 notes et taux non publié passent avant les règles des formations très ouvertes.
+
+Après la table, une formation « sécurité » au-delà de la distance acceptée par l'élève (ou de l'autre côté de la
+mer, à l'étranger, ou sans coordonnées) devient « réaliste » (section 8.3).
 
 ### Formations très ouvertes (`SEUIL_TAUX_TRES_OUVERT = 85`)
 
@@ -217,7 +221,9 @@ catégorie.
 ### Conséquences
 
 - un vœu « sécurité » a toujours un taux d'accès publié et une position connue : soit taux ≥ 50 %
-  et position « au-dessus », soit taux ≥ 85 % et position « dans la moyenne » ou « au-dessus » ;
+  et position « au-dessus », soit taux ≥ 85 % et position « dans la moyenne » ou « au-dessus », soit licence non
+  sélective du secteur de l'élève, taux ≥ 50 % et position « dans la moyenne » ; et, si l'élève a indiqué son lycée,
+  il est à la distance qu'il accepte ;
 - aucune formation à au moins 85 % de taux, sans point bloquant, n'est « ambitieux » pour un élève
   qui a renseigné ses notes ;
 - sans notes, aucune formation n'est « sécurité » : on ne peut pas savoir où se situe l'élève ;
@@ -296,3 +302,128 @@ une formation à 43 % → ambitieux.
   lycée d'origine. La catégorie n'en tient compte que pour les points bloquants.
 - Une liste peut ne pas trouver 3 vœux « sécurité » : c'est une information pour l'élève (alerte
   « Pas assez de vœux vraiment sûrs »), pas un défaut à corriger en relâchant les règles.
+
+## 8. Académie, distance et départage
+
+Code : `js/moteur.js` (sections « académies, zones, distance » et « départage », `evaluer`, `recommander`).
+Rien de cela n'utilise de donnée personnelle hors du navigateur : le lycée reste dans `localStorage`.
+
+### 8.1 Académie du lycée et de chaque formation
+
+- **Formation** : département de la cartographie Parcoursup 2026 (`data/parcoursup.json`, champ `departement`).
+  Sans département (fiches éditoriales non rattachées, campus « Non renseigné »), on prend le département du lieu
+  français connu le plus proche de ses coordonnées (`data/lieux.json`), à moins de `SEUIL_KM_LIEU_FRANCAIS` = 20 km.
+- **Lycée** : département enregistré avec le lycée (`data/lieux.json`), sinon retrouvé par son code UAI, sinon par
+  ses coordonnées (même règle).
+- **Correspondance département → académie** (`ACADEMIES`, 30 académies, 101 départements). Source : pages
+  « Académie de … » du ministère de l'Éducation nationale, rubrique « Directions des services départementaux de
+  l'Éducation nationale », consultées le 19/10/2026 :
+  liste des académies <https://www.education.gouv.fr/les-regions-academiques-academies-et-services-departementaux-de-l-education-nationale-6557>
+  (mise à jour du 11/12/2025) ; Paris <https://www.education.gouv.fr/academie-de-paris-100049> ;
+  Créteil (77, 93, 94) <https://www.education.gouv.fr/academie-de-creteil-100052> ;
+  Versailles (78, 91, 92, 95) <https://www.education.gouv.fr/academie-de-versailles-100046> ;
+  Normandie (14, 27, 50, 61, 76) <https://www.education.gouv.fr/academie-de-normandie-101186> ;
+  Corse (2A, 2B) <https://www.education.gouv.fr/academie-de-corse-100109> ;
+  Aix-Marseille <https://www.education.gouv.fr/academie-d-aix-marseille-100103> ;
+  Amiens <https://www.education.gouv.fr/academie-d-amiens-253> ;
+  Besançon <https://www.education.gouv.fr/academie-de-besancon-100076> ;
+  Bordeaux <https://www.education.gouv.fr/academie-de-bordeaux-100094> ;
+  Clermont-Ferrand <https://www.education.gouv.fr/academie-de-clermont-ferrand-100085> ;
+  Dijon <https://www.education.gouv.fr/academie-de-dijon-100073> ;
+  Grenoble <https://www.education.gouv.fr/academie-de-grenoble-100082> ;
+  Lille <https://www.education.gouv.fr/academie-de-lille-100043> ;
+  Limoges <https://www.education.gouv.fr/academie-de-limoges-100088> ;
+  Lyon <https://www.education.gouv.fr/academie-de-lyon-100079> ;
+  Montpellier <https://www.education.gouv.fr/academie-de-montpellier-100100> ;
+  Nancy-Metz <https://www.education.gouv.fr/academie-de-nancy-metz-100058> ;
+  Nantes <https://www.education.gouv.fr/academie-de-nantes-100067> ;
+  Nice <https://www.education.gouv.fr/academie-de-nice-100106> ;
+  Orléans-Tours <https://www.education.gouv.fr/academie-d-orleans-tours-100070> ;
+  Poitiers <https://www.education.gouv.fr/academie-de-poitiers-100091> ;
+  Reims <https://www.education.gouv.fr/academie-de-reims-100055> ;
+  Rennes <https://www.education.gouv.fr/academie-de-rennes-100064> ;
+  Strasbourg <https://www.education.gouv.fr/academie-de-strasbourg-100061> ;
+  Toulouse <https://www.education.gouv.fr/academie-de-toulouse-100097> ;
+  Guadeloupe <https://www.education.gouv.fr/academie-de-guadeloupe-100115> et La Réunion
+  <https://www.education.gouv.fr/academie-de-la-reunion-100118> (« la région académique … comprend uniquement
+  l'académie de … ») ; Martinique, Guyane et Mayotte : une académie chacune (liste des 30 académies ci-dessus).
+  La page de l'académie de Paris ne liste pas de département : Paris (75) est déduit des adresses de ses services.
+  Polynésie française, Nouvelle-Calédonie, Saint-Pierre-et-Miquelon, Wallis-et-Futuna : vice-rectorats, pas
+  d'académie (aucun départage par l'académie). Le référentiel officiel du MESR (`fr-esr-referentiel-geographique`)
+  et Légifrance n'étaient pas accessibles depuis l'environnement de travail (réseau bloqué) : à recouper.
+- **Île-de-France** : trois académies (Paris, Créteil, Versailles). Pour le départage « même académie », un élève de
+  Créteil et une formation de Paris ne sont **pas** de la même académie.
+
+### 8.2 Départage à note égale
+
+La note (pertinence = 60 % intérêt + 40 % faisabilité, ou faisabilité seule sans questionnaire) n'est plus
+arrondie : l'intérêt et la faisabilité gardent leurs décimales, seul l'affichage arrondit (note sur 5). À note
+exactement égale, `departage()` applique, dans cet ordre :
+
+1. formation de l'académie de l'élève d'abord (`memeAcademie`) ;
+2. la plus proche (`distTri` ; une formation de l'autre côté de la mer passe après toutes celles du même côté :
+   `DECALAGE_TRAVERSEE_KM` = 20 000 km ajoutés ; distance inconnue en dernier) ;
+3. taux d'accès le plus élevé ;
+4. part de bacheliers généraux parmi les admis 2025 la plus élevée (`pct_bg`) ;
+5. nombre de places le plus élevé (`capa_fin`) ;
+6. code Parcoursup (`gta`) croissant, puis identifiant de la fiche : ordre totalement déterministe.
+
+Jamais l'ordre du catalogue : `recommander()` et la liste de 10 vœux sont identiques si on mélange le catalogue
+(test). Une note non numérique (NaN, aujourd'hui 4 formations canadiennes) est classée en dernier ; sa cause fait
+l'objet d'une issue. L'académie ne sert qu'à départager : elle ne change la catégorie d'aucune formation sélective.
+
+### 8.3 Distance continue
+
+Distance à vol d'oiseau entre le lycée et la formation. Plus de paliers 45 / 120 / 250 km ni de bonus de
+proximité : une pénalité d'intérêt continue (`penaliteDistance`), qui dépend de la réponse à la question
+« mobilite » :
+
+| Mobilité | Distance acceptée (`DISTANCE_ACCEPTEE_KM`) | Pénalité par 100 km, jusqu'à la distance acceptée | au-delà | plafond |
+|---|---|---|---|---|
+| domicile (0) | 45 km | 10 | 30 | 40 |
+| proche (1) | 250 km | 2 | 10 | 30 |
+| partout (2) | aucune limite | 0,5 | — | 6 |
+
+Exemples : domicile, 30 km → −3 ; 120 km → −27 ; 200 km → −40. Proche, 150 km → −3 ; 400 km → −20 ; 600 km → −30.
+Partout, Nice → Paris (≈ 690 km) → −3,5. Les distances acceptées sont celles annoncées dans la question
+(décision du fondateur). Les coefficients sont des **choix éditoriaux** : aucune donnée publique ne mesure l'effet
+de la distance. Ils sont gradués pour que, à distance acceptée, la pénalité reste faible (elle départage deux
+formations proches de note), et qu'au-delà elle écarte vite la formation du haut du classement, sans exclusion.
+
+- **Corse et outre-mer** (`zoneDe`) : continent, Corse et chaque territoire d'outre-mer sont des zones distinctes.
+  Changer de zone (traversée) donne toujours le plafond de pénalité et compte comme au-delà de la distance
+  acceptée, quelle que soit la distance à vol d'oiseau (Nice → Corte ≈ 218 km).
+- **Campus à l'étranger enregistrés « France »** (Dauphine Londres, Madrid ; ESSEC Singapour, Rabat ; EM
+  Normandie Oxford, Dublin… ; 25 fiches) : repérés par leur ville (`VILLES_ETRANGERES`) ou par des coordonnées à
+  plus de 20 km de tout lieu français connu. Ils sont traités comme à l'étranger pour la distance (exclus pour
+  « domicile », −12 d'intérêt pour « proche »), mais restent dans le catalogue et dans les listes Parcoursup.
+- **Jamais « sécurité » au-delà de la distance acceptée** (`REGLE_HORS_DISTANCE`, après la table des
+  catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
+  l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :
+  on ne peut pas vérifier la distance. `protection()` ne compte donc que des vœux à distance acceptée.
+- **Sans lycée** : aucune distance, aucune pénalité, aucune académie, et la règle ci-dessus ne s'applique pas.
+  Ma liste affiche `MESSAGE_SANS_LYCEE` : « Indique ton lycée : sans lui, on ne peut pas tenir compte de ton
+  académie ni de la distance. »
+
+### 8.4 Licences non sélectives du secteur de l'élève (règle proposée, à valider)
+
+Source : FAQ Parcoursup « Prise en compte du secteur géographique »,
+<https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique>, consultée le
+19/10/2026 (page sans date ; elle cite les dates de la session 2026). Elle dit : quand une licence est très demandée,
+« une priorité d'attribution des places est définie par le recteur au bénéfice des candidats du secteur » et « un
+pourcentage maximum de candidats hors secteur géographique sera fixé par le recteur de région académique » ; le
+secteur dépend de l'adresse du domicile et correspond en général à l'académie ; les candidats des académies de
+Créteil, Paris et Versailles « appartiennent au même secteur géographique ». Même règle dans la réponse du ministère
+à la question écrite n° 9332 (JO du 4 novembre 2025, p. 8976, article L. 612-3, V du code de l'éducation) :
+<https://questions.assemblee-nationale.fr/q17/17-9332QE.htm>.
+
+Traduction proposée dans la table (`licence_secteur`, juste avant `tres_ouverte`) : licence non sélective
+(`select_form` = « formation non sélective » et catégorie Parcoursup « Licence »), du secteur de l'élève
+(son académie, l'Île-de-France comptant pour un seul secteur), taux d'accès d'au moins 50 % et moins de 85 %, position
+« dans la moyenne des admis » → **sécurité** (au lieu de « réaliste »). Sans changement : position « en dessous »
+(ambitieux), position inconnue (réaliste), taux sous 50 %, et toutes les formations sélectives.
+
+Limites : on suppose que l'adresse du domicile est dans l'académie du lycée (pas toujours vrai) ; on ne connaît ni
+le pourcentage hors secteur de chaque licence, ni la part des admis 2025 venus du secteur (`pct_aca_orig` existe
+dans `stats.json` mais ne mesure que l'académie d'origine des admis). La règle reste soumise à la règle de
+distance (8.3).

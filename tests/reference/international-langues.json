@@ -26,6 +26,10 @@
   "nbExperiences": 1,
   "nbExperiencesFortes": 0,
   "geo": null,
+  "departement": null,
+  "academie": null,
+  "secteur": null,
+  "zone": null,
   "certifications": [
    {
     "type": "IELTS",
@@ -131,9 +135,9 @@
  "top": [
   {
    "id": "birmingham-politics-ir",
-   "interet": 92,
-   "faisabilite": 100,
-   "pertinence": 95,
+   "interet": 92.41666666666667,
+   "faisabilite": 99.5,
+   "pertinence": 95.25,
    "repere": [
     null,
     null,
@@ -146,84 +150,9 @@
   },
   {
    "id": "qmul-politics-ir",
-   "interet": 92,
-   "faisabilite": 100,
-   "pertinence": 95,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "bristol-politics-ir",
-   "interet": 92,
-   "faisabilite": 96,
-   "pertinence": 94,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "manchester-politics-ir",
-   "interet": 92,
-   "faisabilite": 96,
-   "pertinence": 94,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "exeter-politics-ir",
-   "interet": 92,
-   "faisabilite": 96,
-   "pertinence": 94,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "york-politics",
-   "interet": 90,
-   "faisabilite": 100,
-   "pertinence": 94,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "nottingham-politics-ir",
-   "interet": 92,
-   "faisabilite": 96,
-   "pertinence": 94,
+   "interet": 92.41666666666667,
+   "faisabilite": 99.5,
+   "pertinence": 95.25,
    "repere": [
     null,
     null,
@@ -236,9 +165,84 @@
   },
   {
    "id": "glasgow-politics",
-   "interet": 90,
-   "faisabilite": 100,
-   "pertinence": 94,
+   "interet": 90.03571428571429,
+   "faisabilite": 99.5,
+   "pertinence": 93.82142857142858,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "york-politics",
+   "interet": 90.03571428571429,
+   "faisabilite": 99.5,
+   "pertinence": 93.82142857142858,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "bristol-politics-ir",
+   "interet": 92.41666666666667,
+   "faisabilite": 95.5,
+   "pertinence": 93.65,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "exeter-politics-ir",
+   "interet": 92.41666666666667,
+   "faisabilite": 95.5,
+   "pertinence": 93.65,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "manchester-politics-ir",
+   "interet": 92.41666666666667,
+   "faisabilite": 95.5,
+   "pertinence": 93.65,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "nottingham-politics-ir",
+   "interet": 92.41666666666667,
+   "faisabilite": 95.5,
+   "pertinence": 93.65,
    "repere": [
     null,
     null,
@@ -251,9 +255,9 @@
   },
   {
    "id": "edinburgh-politics",
-   "interet": 90,
-   "faisabilite": 96,
-   "pertinence": 92,
+   "interet": 90.03571428571429,
+   "faisabilite": 95.5,
+   "pertinence": 92.22142857142858,
    "repere": [
     null,
     null,
@@ -266,54 +270,9 @@
   },
   {
    "id": "leeds-politics",
-   "interet": 90,
-   "faisabilite": 96,
-   "pertinence": 92,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "durham-politics",
-   "interet": 92,
-   "faisabilite": 90,
-   "pertinence": 91,
-   "repere": [
-    37.3,
-    null,
-    "inconnue",
-    "position_inconnue"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "lse-international-relations",
-   "interet": 92,
-   "faisabilite": 90,
-   "pertinence": 91,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "lse-politics-ir",
-   "interet": 92,
-   "faisabilite": 90,
-   "pertinence": 91,
+   "interet": 90.03571428571429,
+   "faisabilite": 95.5,
+   "pertinence": 92.22142857142858,
    "repere": [
     null,
     null,
@@ -326,39 +285,9 @@
   },
   {
    "id": "kcl-international-relations",
-   "interet": 92,
+   "interet": 92.41666666666667,
    "faisabilite": 90,
-   "pertinence": 91,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "lse-ir-history",
-   "interet": 92,
-   "faisabilite": 90,
-   "pertinence": 91,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "lse-sociology",
-   "interet": 89,
-   "faisabilite": 94,
-   "pertinence": 91,
+   "pertinence": 91.45,
    "repere": [
     null,
     null,
@@ -371,9 +300,9 @@
   },
   {
    "id": "kcl-war-studies",
-   "interet": 92,
+   "interet": 92.41666666666667,
    "faisabilite": 90,
-   "pertinence": 91,
+   "pertinence": 91.45,
    "repere": [
     null,
     null,
@@ -385,10 +314,10 @@
    "exclu": null
   },
   {
-   "id": "lse-politics",
-   "interet": 90,
+   "id": "lse-international-relations",
+   "interet": 92.41666666666667,
    "faisabilite": 90,
-   "pertinence": 90,
+   "pertinence": 91.45,
    "repere": [
     null,
     null,
@@ -400,10 +329,55 @@
    "exclu": null
   },
   {
-   "id": "lse-politics-philosophy",
-   "interet": 90,
+   "id": "lse-ir-history",
+   "interet": 92.41666666666667,
    "faisabilite": 90,
-   "pertinence": 90,
+   "pertinence": 91.45,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "lse-politics-ir",
+   "interet": 92.41666666666667,
+   "faisabilite": 90,
+   "pertinence": 91.45,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "durham-politics",
+   "interet": 91.58333333333333,
+   "faisabilite": 90,
+   "pertinence": 90.94999999999999,
+   "repere": [
+    37.3,
+    null,
+    "inconnue",
+    "position_inconnue"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "lse-sociology",
+   "interet": 88.79232804232805,
+   "faisabilite": 94,
+   "pertinence": 90.87539682539683,
    "repere": [
     null,
     null,
@@ -416,9 +390,9 @@
   },
   {
    "id": "ucl-politics-ir",
-   "interet": 92,
-   "faisabilite": 87,
-   "pertinence": 90,
+   "interet": 92.41666666666667,
+   "faisabilite": 87.2,
+   "pertinence": 90.33000000000001,
    "repere": [
     null,
     null,
@@ -431,9 +405,9 @@
   },
   {
    "id": "kcl-politics",
-   "interet": 90,
+   "interet": 90.03571428571429,
    "faisabilite": 90,
-   "pertinence": 90,
+   "pertinence": 90.02142857142857,
    "repere": [
     null,
     null,
@@ -445,10 +419,10 @@
    "exclu": null
   },
   {
-   "id": "st-andrews-international-relations",
-   "interet": 92,
-   "faisabilite": 84,
-   "pertinence": 89,
+   "id": "lse-politics",
+   "interet": 90.03571428571429,
+   "faisabilite": 90,
+   "pertinence": 90.02142857142857,
    "repere": [
     null,
     null,
@@ -460,10 +434,10 @@
    "exclu": null
   },
   {
-   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
+   "id": "lse-politics-philosophy",
+   "interet": 90.03571428571429,
+   "faisabilite": 90,
+   "pertinence": 90.02142857142857,
    "repere": [
     null,
     null,
@@ -475,115 +449,10 @@
    "exclu": null
   },
   {
-   "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    41,
-    0.51,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    100,
-    0.81,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    100,
-    0.78,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    100,
-    0.8,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-la-reunion-saint-denis-la-reunion-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-des-antilles-guadeloupe-pointe-a-pitre-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
+   "id": "mcgill-ba-political-science",
+   "interet": 94.08333333333334,
+   "faisabilite": 82.5,
+   "pertinence": 89.45,
    "repere": [
     null,
     null,
@@ -596,9 +465,9 @@
   },
   {
    "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-   "interet": 82,
+   "interet": 82.41666666666667,
    "faisabilite": 100,
-   "pertinence": 89,
+   "pertinence": 89.45,
    "repere": [
     null,
     null,
@@ -610,12 +479,87 @@
    "exclu": null
   },
   {
-   "id": "psup-13022",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
+   "id": "warwick-politics-international-studies",
+   "interet": 92.41666666666667,
+   "faisabilite": 83.25,
+   "pertinence": 88.75,
    "repere": [
-    92,
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "st-andrews-international-relations",
+   "interet": 91.58333333333333,
+   "faisabilite": 84.4,
+   "pertinence": 88.71000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    100,
+    0.78,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    100,
+    0.81,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19506",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    100,
+    0.84,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    100,
     0.8,
     "au_dessus",
     "tres_ouverte"
@@ -625,40 +569,10 @@
    "exclu": null
   },
   {
-   "id": "psup-48169",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    100,
-    0.67,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26895",
-   "interet": 81,
-   "faisabilite": 100,
-   "pertinence": 89,
-   "repere": [
-    100,
-    1,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-19482",
-   "interet": 81,
+   "interet": 80.75,
    "faisabilite": 100,
-   "pertinence": 89,
+   "pertinence": 88.44999999999999,
    "repere": [
     100,
     0.78,
@@ -671,9 +585,9 @@
   },
   {
    "id": "psup-29038",
-   "interet": 81,
+   "interet": 80.75,
    "faisabilite": 100,
-   "pertinence": 89,
+   "pertinence": 88.44999999999999,
    "repere": [
     100,
     0.95,
@@ -685,13 +599,13 @@
    "exclu": null
   },
   {
-   "id": "psup-19506",
-   "interet": 81,
+   "id": "psup-26895",
+   "interet": 80.75,
    "faisabilite": 100,
-   "pertinence": 89,
+   "pertinence": 88.44999999999999,
    "repere": [
     100,
-    0.84,
+    1,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -700,13 +614,13 @@
    "exclu": null
   },
   {
-   "id": "psup-19987",
-   "interet": 81,
+   "id": "psup-13022",
+   "interet": 80.75,
    "faisabilite": 100,
-   "pertinence": 89,
+   "pertinence": 88.44999999999999,
    "repere": [
-    100,
-    0.69,
+    92,
+    0.8,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -715,10 +629,25 @@
    "exclu": null
   },
   {
-   "id": "umontreal-science-politique",
-   "interet": 94,
-   "faisabilite": 79,
-   "pertinence": 88,
+   "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    41,
+    0.51,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
    "repere": [
     null,
     null,
@@ -728,50 +657,125 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-des-antilles-guadeloupe-pointe-a-pitre-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-des-antilles-martinique-schlcher-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uco-la-reunion-saint-denis-la-reunion-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 100,
+   "pertinence": 88.44999999999999,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19987",
+   "interet": 80.75,
+   "faisabilite": 99.9,
+   "pertinence": 88.41,
+   "repere": [
+    100,
+    0.69,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
    {
-    "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
+    "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
     "categorie": "securite",
-    "pertinence": 89,
+    "pertinence": 88.44999999999999,
     "repere": [
      100,
      "au_dessus"
     ]
    },
    {
-    "id": "cy-cergy-paris-universite-histoire",
+    "id": "psup-18038",
     "categorie": "securite",
-    "pertinence": 83,
+    "pertinence": 83.37857142857143,
     "repere": [
      100,
      "au_dessus"
     ]
    },
    {
-    "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+    "id": "u-paris-pantheon-assas-paris-licence-science-politique",
     "categorie": "ambitieux",
-    "pertinence": 87,
+    "pertinence": 86.65,
     "repere": [
-     4,
+     9,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-28413",
+    "id": "psup-14403",
     "categorie": "ambitieux",
-    "pertinence": 80,
+    "pertinence": 79.9426984126984,
     "repere": [
-     14,
-     "au_dessus"
+     31,
+     "en_dessous"
     ]
    },
    {
     "id": "psup-35695",
     "categorie": "ambitieux",
-    "pertinence": 78,
+    "pertinence": 78.16727891156464,
     "repere": [
      13,
      "moyenne"
@@ -780,7 +784,7 @@
    {
     "id": "psup-32304",
     "categorie": "realiste",
-    "pertinence": 79,
+    "pertinence": 78.5,
     "repere": [
      38,
      "au_dessus"
@@ -789,44 +793,44 @@
    {
     "id": "psup-36539",
     "categorie": "realiste",
-    "pertinence": 78,
+    "pertinence": 77.84,
     "repere": [
      28,
      "moyenne"
     ]
    },
    {
-    "id": "u-rennes-2-sciences-de-l-education",
+    "id": "psup-20896",
     "categorie": "realiste",
-    "pertinence": 83,
+    "pertinence": 82.7357142857143,
     "repere": [
-     45,
+     49,
      "au_dessus"
     ]
    },
    {
-    "id": "psup-11486",
+    "id": "psup-11488",
     "categorie": "realiste",
-    "pertinence": 77,
+    "pertinence": 76.7357142857143,
     "repere": [
-     36,
+     43,
      "au_dessus"
     ]
    },
    {
-    "id": "psup-12224",
-    "categorie": "securite",
-    "pertinence": 83,
+    "id": "ps-4671",
+    "categorie": "ambitieux",
+    "pertinence": 77.50061224489798,
     "repere": [
-     79,
-     "au_dessus"
+     5,
+     "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -842,15 +846,15 @@
  "nouvelles": [
   {
    "id": "psup-52221",
-   "interet": 81
+   "interet": 80.75
   },
   {
-   "id": "psup-51022",
-   "interet": 71
+   "id": "psup-50636",
+   "interet": 71.22619047619048
   },
   {
-   "id": "psup-51491",
-   "interet": 71
+   "id": "psup-50774",
+   "interet": 71.22619047619048
   }
  ],
  "etranger": {
@@ -860,16 +864,16 @@
     "x": {
      "id": "birmingham-politics-ir",
      "categorie": "realiste",
-     "pertinence": 95,
+     "pertinence": 95.25,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
+     "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
      "categorie": "securite",
-     "pertinence": 89,
+     "pertinence": 88.44999999999999,
      "repere": [
       100,
       "au_dessus"
@@ -893,16 +897,16 @@
     "x": {
      "id": "qmul-politics-ir",
      "categorie": "realiste",
-     "pertinence": 95,
+     "pertinence": 95.25,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
+     "id": "uco-facultes-libres-de-l-ouest-nantes-reze-licence-science-politique",
      "categorie": "securite",
-     "pertinence": 89,
+     "pertinence": 88.44999999999999,
      "repere": [
       100,
       "au_dessus"
@@ -924,20 +928,20 @@
    },
    {
     "x": {
-     "id": "uqam-science-politique",
+     "id": "concordia-ba-political-science",
      "categorie": "realiste",
-     "pertinence": 88,
+     "pertinence": 88.05000000000001,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+     "id": "u-paris-pantheon-assas-paris-licence-science-politique",
      "categorie": "ambitieux",
-     "pertinence": 87,
+     "pertinence": 86.65,
      "repere": [
-      4,
+      9,
       "en_dessous"
      ]
     },
@@ -949,7 +953,7 @@
      "source": "https://www.sfu.ca/students/isap/news/newsletters/new-financial-requirements-for-study-permit-application--effecti.html",
      "statut": "source_secondaire"
     },
-    "francais": true,
+    "francais": false,
     "moinsCher": false,
     "date": null,
     "bientot": false,
@@ -959,18 +963,18 @@
     "x": {
      "id": "laval-science-politique",
      "categorie": "realiste",
-     "pertinence": 88,
+     "pertinence": 88.05000000000001,
      "repere": [
       null,
       "inconnue"
      ]
     },
     "ancre": {
-     "id": "u-paris-1-pantheon-sorbonne-paris-licence-science-politique",
+     "id": "u-paris-pantheon-assas-paris-licence-science-politique",
      "categorie": "ambitieux",
-     "pertinence": 87,
+     "pertinence": 86.65,
      "repere": [
-      4,
+      9,
       "en_dessous"
      ]
     },
@@ -992,7 +996,7 @@
     "x": {
      "id": "uc3m-ciencias-politicas",
      "categorie": "realiste",
-     "pertinence": 88,
+     "pertinence": 88.05000000000001,
      "repere": [
       null,
       "inconnue"
@@ -1001,7 +1005,7 @@
     "ancre": {
      "id": "psup-36539",
      "categorie": "realiste",
-     "pertinence": 78,
+     "pertinence": 77.84,
      "repere": [
       28,
       "moyenne"
@@ -1024,7 +1028,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "fa4119863db5cf14f92fb519139b7c76d0aa4332fccde3c26408fcc2cd8d2b0a",
-  "textes": "8f0342bd411f4be1a4129ab9adca95aaea4b94bfc8876ecf7450abadb7db5f7f"
+  "calculs": "0c4738f6ccbefd6f9f385804c63a404a9ebdc76d4c21027e312b7fd2b68dcb9b",
+  "textes": "bb56702e98b35e2a922e2ada42f8bd1a23fef64b3538235bbd5b66aba3a375ca"
  }
 }
