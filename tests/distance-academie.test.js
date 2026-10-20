@@ -260,7 +260,7 @@ test("licence non sélective du secteur de l'élève : « dans la moyenne » suf
   assert.equal(cat({ taux: 49, position: "moyenne", secteur: true }), "realiste");
   assert.equal(cat({ taux: 60, position: "en_dessous", secteur: true }), "ambitieux");
   assert.equal(cat({ taux: 60, position: "inconnue", secteur: true }), "realiste");
-  assert.match(E.SOURCE_SECTEUR.url, /^https:\/\/www\.parcoursup\.gouv\.fr\//);
+  assert.match(E.SOURCE_SECTEUR.source, /^https:\/\/www\.parcoursup\.gouv\.fr\//);
   // vrai catalogue : une licence non sélective de l'académie de Nice et une d'ailleurs, mêmes chiffres
   const p = PROFILS.find((x) => x.id === "eco-moyen");
   const s = E.statsProfil(p.profil), it = E.interets(QUEST, p.reponses);
@@ -315,9 +315,9 @@ for (const [nom, lycee, proches, loin] of [
 
 /* ---------------------------------------------------------------- décisions du fondateur du 19-20/10/2026 */
 
-test("licence de secteur : priorité expliquée, jamais « sûre » à cause du secteur (texte selon la mobilité)", () => {
+test("licence de secteur : priorité expliquée, jamais « sûre » à cause du secteur (texte selon la mobilité)", async () => {
   const { E, DATA, QUEST } = site;
-  const BASE = "Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).";
+  const BASE = "Au moins 50 % des candidats ont reçu une proposition et ta moyenne est dans celle des admis. Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).";
   const PARTIR = `${BASE} Même si tu veux partir, garder ce vœu te protège.`;
   assert.equal(E.REGLES_CATEGORIE.find((g) => g.cle === "licence_secteur").texte, BASE);
   assert.equal(E.texteLicenceSecteur(0), BASE);
@@ -330,7 +330,13 @@ test("licence de secteur : priorité expliquée, jamais « sûre » à cause du 
   assert.ok(toulon && /Biologie/.test(toulon.f.nom) && toulon.f.ville === "La Garde");
   assert.equal(toulon.repere.regle, "licence_secteur");
   assert.equal(toulon.repere.pourquoi, BASE);
-  assert.deepEqual(toulon.repere.source, E.SOURCE_SECTEUR);
+  assert.ok(toulon.repere.pourquoi.startsWith(`Au moins ${E.SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition`), "le texte commence par la condition");
+  assert.deepEqual(toulon.repere.sourceRegle, E.SOURCE_SECTEUR);
+  // la fiche affiche la source de la règle (FAQ Parcoursup), dans la forme des autres sources du site
+  const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
+  const fiche = s.afficher("#formation-" + toulon.f.id);
+  assert.ok(fiche.includes(`href="${E.SOURCE_SECTEUR.source}"`), "la fiche contient l'URL de la FAQ Parcoursup");
+  assert.match(fiche, /prise-en-compte-du-secteur-geographique" target="_blank" rel="noopener">[^<]+<\/a> · consulté le 19 octobre 2026/);
   assert.ok(W.liste.includes(toulon), "la licence de Toulon sort de la liste de sante-svt");
   for (const t of [toulon.repere.pourquoi, toulon.repere.texte, ...toulon.raisons, ...toulon.ajust]) assert.doesNotMatch(String(t), /sûre/i);
   // aucun texte « licence_secteur » ne dit « sûre », quelle que soit la mobilité

@@ -360,7 +360,7 @@
     // recteur plafonne la part des candidats hors secteur. Règle validée par le fondateur (20/10/2026) : « dans la
     // moyenne » suffit dès 50 %. Le texte affiché dépend de la question « mobilite » : voir texteLicenceSecteur().
     { cle: "licence_secteur", categorie: "securite", si: (r) => r.secteur === true && r.taux !== null && r.taux >= SEUIL_TAUX_SECURITE && r.taux < SEUIL_TAUX_TRES_OUVERT && r.position === "moyenne",
-      texte: "Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup)." },
+      texte: `Au moins ${SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition et ta moyenne est dans celle des admis. Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).` },
     { cle: "tres_ouverte", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && (r.position === "moyenne" || r.position === "au_dessus"),
       texte: `Formation très ouverte : au moins ${SEUIL_TAUX_TRES_OUVERT} % des candidats ont reçu une proposition en 2025.` },
     { cle: "tres_ouverte_en_dessous", categorie: "realiste", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && r.position === "en_dessous",
@@ -380,7 +380,8 @@
   const REGLE_DISTANCE_INCONNUE = { cle: "distance_inconnue", categorie: "realiste",
     texte: "Adresse de la formation inconnue : on ne peut pas vérifier qu'elle est à la distance que tu acceptes, donc jamais « sécurité »." };
   // Règle du secteur de recrutement des licences non sélectives (consultée le 19/10/2026)
-  const SOURCE_SECTEUR = { url: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
+  // Même forme que les autres sources du site ({ source, consulte_le }), affichée par srcLien() dans app.js
+  const SOURCE_SECTEUR = { source: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
   // Texte de la règle « licence_secteur », d'après SOURCE_SECTEUR (FAQ Parcoursup « Prise en compte du secteur
   // géographique », consultée le 19/10/2026) : priorité aux candidats du secteur. On ne dit jamais que la licence est
   // « sûre » à cause du secteur : on explique la priorité. Pour un élève prêt à partir (mobilite 2), on ajoute pourquoi
@@ -681,7 +682,8 @@
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
     rep.regle = regle.cle;
     rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
-    if (regle.cle === "licence_secteur") rep.source = SOURCE_SECTEUR;
+    // source de la règle, distincte de rep.source (source du taux d'accès)
+    if (regle.cle === "licence_secteur") rep.sourceRegle = SOURCE_SECTEUR;
     const categorie = regle.categorie;
     const pertinence = it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite;
     const memeAcademie = !!s.academie && lieu.academie === s.academie;

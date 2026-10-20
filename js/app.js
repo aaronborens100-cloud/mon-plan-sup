@@ -198,7 +198,7 @@
     return `<div class="chances-detail ton-${CAT_TON[x.categorie]}">
             <div><h4>Ta position parmi les admis</h4><p class="small">${esc(r.texte)}</p>${r.percentile !== null ? `<p class="tiny muted">${esc(E.METHODE_POSITION)}</p>` : ""}</div>
             <p class="small">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong> des candidats ont reçu une proposition.${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"}</p>
-            <p class="small">${catPill(x.categorie)} ${esc(r.pourquoi)}</p>
+            <p class="small">${catPill(x.categorie)} ${esc(r.pourquoi)}${srcLien(r.sourceRegle)}</p>
             <p class="small muted">${esc(E.LIMITE_REPERE)}</p></div>`;
   }
   function libTaux(a) {
