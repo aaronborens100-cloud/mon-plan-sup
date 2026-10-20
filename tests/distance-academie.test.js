@@ -12,7 +12,7 @@
  *   - sans lycée : ni distance ni académie, et Ma liste affiche MESSAGE_SANS_LYCEE ;
  *   - licence non sélective du secteur de l'élève : règle « licence_secteur » (texte selon la mobilité) ;
  *   - règle « domicile » : avec un lycée, une formation à plus de 45 km (traversée comprise) est exclue ;
- *   - règle « territoires » (question « lieu ») : Corse et outre-mer seulement si cochés, sinon jamais « sécurité ».
+ *   - règle « territoires » (question « pays ») : zone du lycée, plus Corse, outre-mer, continent si cochés ; sinon jamais « sécurité ».
  *
  * Lancer : npm test
  */
@@ -293,8 +293,8 @@ for (const [nom, lycee, proches, loin] of [
 ]) {
   test(`élève de ${nom} : la traversée est progressive (${proches.map((p) => p[0]).join(", ")} avant ${loin[0]})`, () => {
     const { E, DATA, QUEST } = site;
-    // sans réponse à « lieu » : seule la distance joue (la règle « territoires » est testée à part)
-    const p = avecReponses(PROFILS.find((x) => x.id === "sante-svt"), { mobilite: "proche", lieu: [] });
+    // sans réponse à « lieu » ni à « pays » : seule la distance joue (la règle « territoires » est testée à part)
+    const p = avecReponses(PROFILS.find((x) => x.id === "sante-svt"), { mobilite: "proche", lieu: [], pays: [] });
     const s = E.statsProfil(Object.assign({}, p.profil, { lycee })), it = E.interets(QUEST, p.reponses);
     const modele = DATA.formations.find((f) => f.id === "psup-8820") || DATA.formations.find((f) => f.pays === "France" && f.__gps && f.mentions_admis);
     const copie = ([ville, dep, lat, lon]) => Object.assign(Object.create(Object.getPrototypeOf(modele)), modele, { id: "test-" + ville, ville, __dep: dep, __gps: { lat, lon }, __lieu: undefined });
@@ -373,89 +373,131 @@ test("règle « domicile » : avec un lycée, rien à plus de 45 km (fragile) ; 
   assert.equal(B.W.liste.length, 10);
 });
 
-test("territoires : options de la question « lieu »", () => {
+/* ---------------------------------------------------------------- règle « territoires » (question « pays ») */
+// Décision du fondateur du 20/10/2026 : la question « lieu » est celle de main ; la Corse, l'outre-mer et la France
+// continentale se cochent dans « Si tu partais, où ? » (question « pays »).
+
+const AJACCIO = { type: "lycee", nom: "Lycée Fesch", dep: "Corse-du-Sud", lat: 41.9192, lon: 8.7386 };
+const BASE_NICE = () => PROFILS.find((x) => x.id === "baisse-dernier-trimestre");   // Nice, 10 vœux avec des « sécurité »
+const terr = (x) => site.E.territoireDe(x.f);
+const SECU = (A, t) => A.resultats.filter((x) => x.categorie === "securite" && x.f.pays === "France" && terr(x) === t);
+
+test("territoires : la question « lieu » est identique à main", () => {
   const q = site.QUEST.questions.find((x) => x.id === "lieu");
-  assert.deepEqual(q.options.map((o) => o.value), ["idf", "lyon", "regions", "corse", "outremer", "partout"]);
+  assert.deepEqual(q, {
+    id: "lieu", theme: "Budget et lieu", type: "multi", question: "Où aimerais-tu étudier en France ? (plusieurs choix)",
+    options: [{ label: "Paris et Île-de-France", value: "idf" }, { label: "Lyon", value: "lyon" }, { label: "Autres régions", value: "regions" }, { label: "Peu importe", value: "partout" }],
+    max: 4, aide: null,
+  });
+  // lieuDe() : la Corse et l'outre-mer comptent dans « regions », comme sur main
+  const { E, DATA } = site;
+  const une = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone);
+  for (const z of ["Corse", "Guadeloupe", "La Réunion"]) assert.equal(E.lieuDe(une(z)), "regions", z);
+});
+
+test("territoires : options corse, outremer, continent dans « pays », après Canada et avant Aucun", () => {
+  const q = site.QUEST.questions.find((x) => x.id === "pays");
+  const vals = q.options.map((o) => o.value);
+  assert.deepEqual(vals.slice(vals.indexOf("Canada")), ["Canada", "corse", "outremer", "continent", "aucun"]);
   const label = (v) => q.options.find((o) => o.value === v).label;
   assert.equal(label("corse"), "Corse");
   assert.equal(label("outremer"), "Outre-mer (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte…)");
-  assert.equal(label("partout"), "Peu importe, sur le continent");
-  assert.match(q.aide, /Si tu vis en Corse ou outre-mer, ton territoire compte toujours parmi tes choix\./);
-  assert.ok(q.max >= q.options.length - 1, "on doit pouvoir cocher tout le continent, la Corse et l'outre-mer");
+  assert.equal(label("continent"), "La France continentale (si tu vis en Corse ou outre-mer)");
+  // « Aucun » est exclusif (js/app.js) : on doit pouvoir cocher toutes les autres cases
+  assert.equal(q.max, q.options.length - 1);
+  assert.deepEqual([...site.E.TERRITOIRES], ["corse", "outremer", "continent"]);
 });
 
-test("territoires : lieuDe() renvoie corse et outremer avant idf, lyon, regions", () => {
-  const { E, DATA } = site;
-  const une = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone);
-  assert.equal(E.lieuDe(une("Corse")), "corse");
-  for (const z of ["Guadeloupe", "Martinique", "La Réunion"]) assert.equal(E.lieuDe(une(z)), "outremer", z);
-  assert.equal(E.lieuDe(DATA.formations.find((f) => f.id === "psup-10369")), "regions");
-});
-
-const SECU_ISOLEE = (A) => A.resultats.filter((x) => x.categorie === "securite" && x.f.pays === "France" && ["corse", "outremer"].includes(site.E.lieuDe(x.f)));
-
-test("territoires : élève de Nice, « partout » (mobilité partout) → aucun vœu « sécurité » en Corse ni outre-mer", () => {
-  const E = site.E;
-  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: ["partout"], mobilite: "partout" });
+test("territoires : élève de Nice, mobilité et lieu « partout », sans corse ni outremer → aucun « sécurité » en Corse ni outre-mer", () => {
+  const p = avecReponses(BASE_NICE(), { lieu: ["partout"], mobilite: "partout", pays: ["Espagne"] });
   const { A, W } = analyser(p);
-  assert.equal(SECU_ISOLEE(A).length, 0);
-  assert.ok(!W.liste.some((x) => x.categorie === "securite" && ["corse", "outremer"].includes(E.lieuDe(x.f))));
+  assert.equal(SECU(A, "corse").length + SECU(A, "outremer").length, 0);
+  assert.ok(!W.liste.some((x) => x.categorie === "securite" && terr(x) !== "continent"));
   const pap = A.resultats.find((x) => x.f.id === "psup-29038");   // Licence de science politique, Pointe-à-Pitre
   assert.equal(pap.categorie, "realiste");
   assert.equal(pap.repere.regle, "hors_territoire");
-  assert.equal(pap.repere.pourquoi, "Tu n'as pas choisi d'étudier en outre-mer : ce vœu ne compte pas comme sûr.");
+  assert.equal(pap.repere.pourquoi, "Tu n'as pas coché l'outre-mer dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.");
   assert.ok(pap.ajust.includes("ville hors de tes choix"));
-  const corse = A.resultats.find((x) => E.lieuDe(x.f) === "corse" && x.repere.regle === "hors_territoire");
-  if (corse) assert.equal(corse.repere.pourquoi, "Tu n'as pas choisi d'étudier en Corse : ce vœu ne compte pas comme sûr.");
+  const corse = A.resultats.find((x) => terr(x) === "corse" && x.repere.regle === "hors_territoire");
+  if (corse) assert.equal(corse.repere.pourquoi, "Tu n'as pas coché la Corse dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.");
   // protection() ne compte que les vœux « sécurité » restants
   assert.equal(W.protection.nbSecurite, W.liste.filter((x) => x.categorie === "securite").length);
-  // tous les profils types : aucun « sécurité » en Corse ou outre-mer (aucun n'a coché ces territoires)
-  for (const q of PROFILS) assert.equal(SECU_ISOLEE(analyser(q).A).length, 0, q.id);
+  // tous les profils types répondent à « pays » sans ces cases : aucun « sécurité » en Corse ou outre-mer
+  for (const q of PROFILS) { const B = analyser(q).A; assert.equal(SECU(B, "corse").length + SECU(B, "outremer").length, 0, q.id); }
 });
 
-test("territoires : avec « outremer » coché, la licence de Pointe-à-Pitre peut redevenir « sécurité »", () => {
-  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: ["partout", "outremer"], mobilite: "partout" });
+test("territoires : même élève avec « outremer » coché → Pointe-à-Pitre peut être « sécurité »", () => {
+  const p = avecReponses(BASE_NICE(), { lieu: ["partout"], mobilite: "partout", pays: ["outremer"] });
   const pap = analyser(p).A.resultats.find((x) => x.f.id === "psup-29038");
   assert.equal(pap.categorie, "securite");
-  assert.ok(!pap.ajust.includes("ville hors de tes choix"));
   assert.equal(pap.horsTerritoire, false);
+  assert.ok(!pap.ajust.includes("ville hors de tes choix"));
 });
 
-test("territoires : le territoire du lycée (La Réunion, Corse) reste toujours dans les choix", () => {
-  const { E, DATA, QUEST } = site;
-  const base = PROFILS.find((x) => x.id === "sante-svt");
-  const it = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["regions"], mobilite: "partout" }));
-  const reunion = E.statsProfil(Object.assign({}, base.profil, { lycee: { type: "commune", nom: "Saint-Denis", dep: "La Réunion", lat: -20.9, lon: 55.48 } }));
-  const dans = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone && f.__gps);
-  const x = E.evaluer(dans("La Réunion"), reunion, it);
-  assert.ok(!x.ajust.includes("ville hors de tes choix"), "La Réunion hors des choix d'un élève de La Réunion");
-  assert.equal(x.horsTerritoire, false);
-  // un autre territoire d'outre-mer, non coché, n'est pas dans ses choix
-  const m = E.evaluer(dans("Mayotte"), reunion, it);
-  assert.ok(m.ajust.includes("ville hors de tes choix"));
-  assert.equal(m.horsTerritoire, true);
-  // le continent : dans ses choix avec « regions »
-  const toulon = E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), reunion, it);
-  assert.ok(!toulon.ajust.includes("ville hors de tes choix"));
-  // élève d'Ajaccio qui n'a coché que la Corse : le continent est hors de ses choix, jamais « sécurité »
-  const ajaccio = E.statsProfil(Object.assign({}, base.profil, { lycee: { type: "lycee", nom: "Lycée Fesch", dep: "Corse-du-Sud", lat: 41.9192, lon: 8.7386 } }));
-  const itCorse = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["corse"], mobilite: "partout" }));
-  const res = DATA.formations.filter((f) => f.pays === "France" && E.lieuDe(f) === "regions").slice(0, 400).map((f) => E.evaluer(f, ajaccio, itCorse));
-  assert.ok(res.every((r) => r.horsTerritoire && r.ajust.includes("ville hors de tes choix")));
-  assert.ok(res.every((r) => r.categorie !== "securite"));
-  const r = res.find((y) => y.repere.regle === "hors_territoire");
-  if (r) assert.equal(r.repere.pourquoi, "Tu n'as pas choisi d'étudier sur le continent : ce vœu ne compte pas comme sûr.");
-  assert.equal(E.evaluer(dans("Corse"), ajaccio, itCorse).horsTerritoire, false);
-  // avec « partout », le continent redevient un choix
-  const itPartout = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["partout"], mobilite: "partout" }));
-  assert.equal(E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), ajaccio, itPartout).horsTerritoire, false);
-});
-
-test("territoires : sans réponse à « lieu », aucune restriction", () => {
-  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: [], mobilite: "partout" });
+test("territoires : sans réponse à « pays », aucune restriction", () => {
+  const p = avecReponses(BASE_NICE(), { lieu: ["partout"], mobilite: "partout", pays: [] });
   const { A } = analyser(p);
   assert.ok(!A.resultats.some((x) => x.horsTerritoire || x.ajust.includes("ville hors de tes choix")));
   assert.equal(A.resultats.find((x) => x.f.id === "psup-29038").categorie, "securite");
-  const q = Object.assign({}, p, { reponses: Object.assign({}, p.reponses) }); delete q.reponses.lieu;
+  const q = Object.assign({}, p, { reponses: Object.assign({}, p.reponses) }); delete q.reponses.pays;
   assert.deepEqual(analyser(q).A.resultats.map((x) => [x.f.id, x.categorie, x.pertinence]), A.resultats.map((x) => [x.f.id, x.categorie, x.pertinence]));
+});
+
+test("territoires : élève d'Ajaccio, pays [Espagne] → aucun « sécurité » sur le continent, la Corse oui ; avec « continent », le continent aussi", () => {
+  const base = avecProfil(BASE_NICE(), { lycee: AJACCIO });
+  const { A, W } = analyser(avecReponses(base, { lieu: ["partout"], mobilite: "partout", pays: ["Espagne"] }));
+  assert.equal(SECU(A, "continent").length, 0);
+  assert.ok(SECU(A, "corse").length > 0, "aucune formation corse « sécurité » pour un élève d'Ajaccio");
+  assert.ok(!W.liste.some((x) => x.categorie === "securite" && terr(x) === "continent"));
+  assert.ok(A.resultats.some((x) => terr(x) === "corse" && !x.horsTerritoire));
+  const r = A.resultats.find((x) => terr(x) === "continent" && x.repere.regle === "hors_territoire");
+  assert.ok(r, "aucune formation du continent rétrogradée");
+  assert.equal(r.repere.pourquoi, "Tu n'as pas coché la France continentale dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.");
+  assert.ok(r.ajust.includes("ville hors de tes choix"));
+  // l'outre-mer reste hors de ses choix
+  assert.equal(SECU(A, "outremer").length, 0);
+  const B = analyser(avecReponses(base, { lieu: ["partout"], mobilite: "partout", pays: ["Espagne", "continent"] })).A;
+  assert.ok(SECU(B, "continent").length > 0, "le continent reste interdit avec « continent » coché");
+  assert.ok(!B.resultats.some((x) => terr(x) === "continent" && x.horsTerritoire));
+});
+
+test("territoires : un élève de La Réunion garde son territoire, pas les autres territoires d'outre-mer", () => {
+  const { E, DATA, QUEST } = site;
+  const base = PROFILS.find((x) => x.id === "sante-svt");
+  const reunion = E.statsProfil(Object.assign({}, base.profil, { lycee: { type: "commune", nom: "Saint-Denis", dep: "La Réunion", lat: -20.9, lon: 55.48 } }));
+  const dans = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone && f.__gps);
+  const it = E.interets(QUEST, Object.assign({}, base.reponses, { mobilite: "partout", pays: ["Espagne"] }));
+  assert.equal(E.evaluer(dans("La Réunion"), reunion, it).horsTerritoire, false);
+  assert.equal(E.evaluer(dans("Mayotte"), reunion, it).horsTerritoire, true);
+  assert.equal(E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), reunion, it).horsTerritoire, true);
+  const it2 = E.interets(QUEST, Object.assign({}, base.reponses, { mobilite: "partout", pays: ["outremer", "continent"] }));
+  assert.equal(E.evaluer(dans("Mayotte"), reunion, it2).horsTerritoire, false);
+  assert.equal(E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), reunion, it2).horsTerritoire, false);
+});
+
+test("territoires : corse, outremer, continent ne sont pas des pays (malus étranger et etranger() inchangés)", () => {
+  const { E, QUEST } = site;
+  const etr = (A) => A.resultats.filter((x) => x.f.pays !== "France").map((x) => [x.f.id, x.interet, x.exclu, x.ajust.join("|")]);
+  // élève qui veut partir, avec des pays cochés : ajouter des territoires ne change rien aux formations étrangères
+  const intl = PROFILS.find((x) => x.id === "international-langues");
+  const avant = analyser(intl);
+  for (const ajout of [["corse"], ["outremer"], ["continent"], ["corse", "outremer", "continent"]]) {
+    const apres = analyser(avecReponses(intl, { pays: intl.reponses.pays.concat(ajout) }));
+    assert.deepEqual(etr(apres.A), etr(avant.A), ajout.join("+"));
+  }
+  // élève qui coche seulement « corse » : comme sans réponse à « pays » (pas de « pays non choisi »)
+  const sansPays = avecReponses(intl, { pays: [] });
+  const A0 = analyser(sansPays), A1 = analyser(avecReponses(intl, { pays: ["corse"] }));
+  assert.deepEqual(etr(A1.A), etr(A0.A));
+  assert.ok(!A1.A.resultats.some((x) => x.ajust.includes("pays non choisi")));
+  // propositions à l'étranger : mêmes résultats d'entrée (vœux français fixes), même sortie
+  const it0 = E.interets(QUEST, sansPays.reponses), it1 = E.interets(QUEST, Object.assign({}, intl.reponses, { pays: ["corse"] }));
+  const fixe = A0.A.resultats.map((x) => x.f.pays === "France" ? x : A1.A.resultats.find((y) => y.f.id === x.f.id));
+  const e0 = E.etranger(fixe, A0.W, it0, "2026-10-20"), e1 = E.etranger(fixe, A0.W, it1, "2026-10-20");
+  const resume = (e) => [e.mode, e.liste.map((c) => c.x.f.id)];
+  assert.deepEqual(resume(e1), resume(e0));
+  assert.notEqual(e1.mode, "non");
+  // et sur les vrais calculs (vœux recalculés) : l'élève de Nice garde les mêmes propositions à l'étranger
+  const p0 = E.etranger(A0.A.resultats, A0.W, it0, "2026-10-20"), p1 = E.etranger(A1.A.resultats, A1.W, it1, "2026-10-20");
+  assert.deepEqual(resume(p1), resume(p0));
 });

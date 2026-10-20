@@ -390,11 +390,14 @@
     const base = REGLES_CATEGORIE.find((g) => g.cle === "licence_secteur").texte;
     return mobilite === 2 ? `${base} Même si tu veux partir, garder ce vœu te protège.` : base;
   }
-  // Appliquée après la table et la règle de distance : formation en Corse, outre-mer (ou sur le continent pour un élève
-  // de Corse ou d'outre-mer) dans une zone que l'élève n'a pas choisie (question « lieu ») : jamais « sécurité ».
+  // Règle « territoires » (décision du fondateur du 20/10/2026), fondée sur la question « pays » (« Si tu partais,
+  // où ? »), qui propose aussi corse, outremer et continent. Ces trois valeurs ne sont pas des pays étrangers : elles
+  // ne jouent ni sur le malus « pays non choisi » ni sur etranger(). Appliquée après la table et la règle de distance :
+  // formation dans une zone que l'élève n'a pas cochée (et qui n'est pas celle de son lycée) : jamais « sécurité ».
+  const TERRITOIRES = ["corse", "outremer", "continent"];
   const REGLE_HORS_TERRITOIRE = { cle: "hors_territoire", categorie: "realiste" };
-  const NOM_TERRITOIRE = { corse: "Corse", outremer: "outre-mer", continent: "sur le continent" };
-  const texteHorsTerritoire = (t) => `Tu n'as pas choisi d'étudier ${t === "continent" ? NOM_TERRITOIRE.continent : "en " + NOM_TERRITOIRE[t]} : ce vœu ne compte pas comme sûr.`;
+  const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
+  const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
   const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
   const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
@@ -567,16 +570,20 @@
   const comparer = (a, b) => cmpNombre(a.pertinence, b.pertinence, -1) || departage(a, b);
 
   /* ---------------------------------------------------------------- évaluation */
-  // Valeur de la question « lieu » qui correspond à la formation : corse, outremer (d'après zoneDe), puis idf, lyon,
-  // regions sur le continent.
+  // Valeur de la question « lieu » qui correspond à la formation (Corse et outre-mer comptent dans « regions »)
   function lieuDe(f) {
     if (f.pays !== "France") return "etranger";
-    const zone = situer(f).zone;
-    if (zone === "Corse") return "corse";
-    if (zone && zone !== "continent") return "outremer";
     if (IDF.some((c) => f.ville.includes(c))) return "idf";
     if (f.ville.includes("Lyon")) return "lyon";
     return "regions";
+  }
+  // Territoire d'une formation française (règle « territoires ») : corse, outremer (toute zone hors continent et Corse,
+  // d'après zoneDe) ou continent (zone inconnue comprise)
+  function territoireDe(f) {
+    const zone = situer(f).zone;
+    if (zone === "Corse") return "corse";
+    if (zone && zone !== "continent") return "outremer";
+    return "continent";
   }
   function salaireMoyen(f) {
     const v = (f.metiers || []).map((id) => REF.metiers[id] && REF.metiers[id].salaire_fr && REF.metiers[id].salaire_fr.moyenne).filter((x) => typeof x === "number");
@@ -619,7 +626,8 @@
       if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && s.mathsMatiere === "maths" && (s.maths || 0) >= 15 && niveauExpertes(s.expertes) !== "renforcer") { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
     }
     if (etranger) {
-      const voulus = (p.pays || []).filter((x) => x !== "aucun");
+      // corse, outremer et continent ne sont pas des pays étrangers (règle « territoires ») : pas de « pays non choisi »
+      const voulus = (p.pays || []).filter((x) => x !== "aucun" && !TERRITOIRES.includes(x));
       if (p.etranger === 0 || (p.pays || []).includes("aucun")) exclu = "Tu as indiqué vouloir rester en France.";
       else if (p.etranger === 1) { interet -= 20; ajust.push("tu envisages surtout un échange"); }
       else if (p.etranger === 3) interet += 5;
@@ -653,16 +661,19 @@
       interet -= penaliteDistance(dist, mob, traversee);
       if (horsDistance) ajust.push(traversee ? `de l'autre côté de la mer (≈ ${Math.round(dist)} km de chez toi)` : `à ${Math.round(dist)} km de chez toi`);
     }
-    // territoires choisis (question « lieu ») : « partout » = tout le continent ; Corse et outre-mer seulement si cochés ;
-    // la zone du lycée de l'élève (Corse ou un territoire d'outre-mer) est toujours comprise. Sans réponse : aucune restriction.
     const lieux = p.lieu || [];
-    const lieuF = etranger ? "etranger" : lieuDe(f);
-    const territoire = lieuF === "corse" || lieuF === "outremer" ? lieuF : "continent";
-    const dansSaZone = !!s.zone && s.zone !== "continent" && lieu.zone === s.zone;
-    const horsChoix = !etranger && lieux.length > 0 && !dansSaZone
-      && (territoire === "continent" ? !lieux.includes("partout") && !lieux.includes(lieuF) : !lieux.includes(territoire));
-    const horsTerritoire = horsChoix && (territoire !== "continent" || (!!s.zone && s.zone !== "continent"));
-    if (horsChoix) { interet -= 12; ajust.push("ville hors de tes choix"); }
+    const horsLieu = !etranger && lieux.length > 0 && !lieux.includes("partout") && !lieux.includes(lieuDe(f));
+    // territoires acceptés (question « pays ») : la zone du lycée de l'élève (toujours ; continent sans lycée) et les
+    // zones cochées (corse, outremer, continent). Pour un élève du continent, le continent est toujours accepté ; pour
+    // un élève d'outre-mer, son territoire seulement (un autre territoire d'outre-mer demande « outremer »). Sans
+    // réponse à « pays » : aucune restriction.
+    const zonesCochees = (p.pays || []).filter((x) => TERRITOIRES.includes(x));
+    const territoire = etranger ? null : territoireDe(f);
+    const eleveContinent = !s.zone || s.zone === "continent";
+    const accepte = territoire === null || zonesCochees.includes(territoire)
+      || (territoire === "continent" ? eleveContinent : !eleveContinent && lieu.zone === s.zone);
+    const horsTerritoire = Array.isArray(p.pays) && p.pays.length > 0 && !accepte;
+    if (horsLieu || horsTerritoire) { interet -= 12; ajust.push("ville hors de tes choix"); }
     const sel = f.selectivite.niveau;
     if (p.ambition >= 4 && sel === "tres_haute") interet += 4;
     if (p.ambition !== undefined && p.ambition <= 2 && sel === "tres_haute") interet -= 8;
@@ -678,7 +689,7 @@
     let regle = regleCategorie(rep, bloque);
     // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
-    // zone non choisie (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
+    // zone non cochée dans « pays » (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
     rep.regle = regle.cle;
     rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
@@ -1089,5 +1100,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, TERRITOIRES, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

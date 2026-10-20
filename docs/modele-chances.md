@@ -455,28 +455,41 @@ Texte affiché (fiche, liste ; décision du fondateur du 20/10/2026, construit p
 | domicile ou proche (ou pas de réponse) | « Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup). » |
 | partout | la même phrase, puis « Même si tu veux partir, garder ce vœu te protège. » |
 
-### 8.5 Territoires : Corse et outre-mer (question « lieu »)
+### 8.5 Territoires : Corse et outre-mer (question « pays »)
 
-Décision du fondateur du 20/10/2026. La question « Où aimerais-tu étudier en France ? » (choix multiple) propose :
-Paris et Île-de-France (`idf`), Lyon (`lyon`), Autres régions (`regions`), Corse (`corse`), Outre-mer (Guadeloupe,
-Martinique, Guyane, La Réunion, Mayotte…) (`outremer`), Peu importe, sur le continent (`partout` : la valeur ne
-change pas, pour garder les réponses déjà enregistrées). Aide affichée : « Si tu vis en Corse ou outre-mer, ton
-territoire compte toujours parmi tes choix. » Dans le questionnaire, « partout » remplace idf, lyon et regions, mais
-se combine avec la Corse et l'outre-mer.
+Décision du fondateur du 20/10/2026. La question « Où aimerais-tu étudier en France ? » (« lieu ») reste celle de
+main : idf, lyon, regions, « Peu importe » (`partout` = toute la France), même aide, même maximum, et cocher
+« Peu importe » décoche les autres. `lieuDe(f)` est aussi celui de main : la Corse et l'outre-mer comptent dans
+`regions`.
 
-- `lieuDe(f)` : `corse` ou `outremer` d'après `zoneDe` (outre-mer = toute zone hors continent et Corse, y compris
-  Polynésie, Nouvelle-Calédonie, Saint-Martin…), puis `idf`, `lyon`, `regions` sur le continent.
-- **Territoires choisis** = les réponses à « lieu ». `partout` = tout le continent. Corse et outre-mer ne sont dans
-  les choix que si l'élève les a cochés. La zone du lycée de l'élève (Corse, ou son territoire d'outre-mer) est
-  toujours comprise ; un autre territoire d'outre-mer ne l'est pas (élève de La Réunion : Mayotte seulement si
-  « outremer » est coché). Pour un élève de Corse ou d'outre-mer, le continent n'est dans ses choix que s'il a coché
-  idf, lyon, regions ou partout. Sans réponse à « lieu » : aucune restriction (comportement d'avant).
-- **Hors des choix** : le malus existant « ville hors de tes choix » (−12 d'intérêt) s'applique.
+La Corse et l'outre-mer se cochent dans « Si tu partais, où ? (plusieurs choix) » (« pays »), après « Canada » et
+avant « Aucun » : Corse (`corse`), Outre-mer (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte…) (`outremer`),
+La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 12 : toutes les cases sauf
+« Aucun », qui reste exclusive (js/app.js : cocher « Aucun » décoche les autres, cocher une autre case décoche
+« Aucun »).
+
+- `territoireDe(f)` : `corse` ou `outremer` d'après `zoneDe` (outre-mer = toute zone hors continent et Corse, y
+  compris Polynésie, Nouvelle-Calédonie, Saint-Martin…), sinon `continent` (zone inconnue comprise).
+- **Zones acceptées** = la zone du lycée de l'élève (toujours ; sans lycée, le continent) + les zones cochées dans
+  « pays » (`TERRITOIRES` : corse, outremer, continent). Pour un élève du continent, le continent est toujours
+  accepté. Pour un élève d'outre-mer, seul son territoire est compris d'office (élève de La Réunion : Mayotte
+  seulement avec « outremer »). Un élève de Corse ou d'outre-mer qui n'a pas coché « continent » n'a jamais de vœu
+  « sécurité » sur le continent (décision confirmée). Sans aucune réponse à « pays » : aucune restriction
+  (comportement de main). « Aucun » est une réponse : seule la zone du lycée est alors acceptée.
+- **Hors des zones acceptées** : malus « ville hors de tes choix » (−12 d'intérêt, appliqué une seule fois même si
+  la ville est aussi hors des choix de « lieu »).
 - **Jamais « sécurité »** (`REGLE_HORS_TERRITOIRE`, clé `hors_territoire`, appliquée après la table et la règle de
-  distance) pour une formation en Corse ou outre-mer non choisie, ou sur le continent pour un élève de Corse ou
-  d'outre-mer qui ne l'a pas choisi → « réaliste » au mieux, dans la liste comme dans `protection()`. Texte : « Tu
-  n'as pas choisi d'étudier en Corse : ce vœu ne compte pas comme sûr. » (ou « en outre-mer », « sur le
-  continent »). Si la règle de distance s'applique déjà, c'est son texte qui est affiché.
+  distance), même avec la mobilité « partout » et « Peu importe » → « réaliste » au mieux, dans la liste comme dans
+  `protection()`. Texte : « Tu n'as pas coché la Corse dans « Si tu partais, où ? » : ce vœu ne compte pas comme
+  sûr. » (ou « l'outre-mer », « la France continentale »). Si la règle de distance s'applique déjà, c'est son texte
+  qui est affiché.
+- **Pas des pays étrangers** : corse, outremer et continent sont ignorés par le malus « pays non choisi » des
+  formations à l'étranger (`evaluer()`) et par `etranger()`. Un élève qui coche seulement « Corse » a les mêmes
+  formations étrangères et les mêmes propositions à l'étranger que s'il n'avait pas répondu à « pays ».
 - Pourquoi : un élève de Nice qui répond « peu importe » pense à la métropole ; une licence de Pointe-à-Pitre à
   7 000 km ne doit pas être présentée comme son vœu de sécurité. La règle ne dit rien des chances d'admission : elle
   vient des choix de l'élève, pas d'une donnée officielle.
+- Limites connues : « Aucun » étant exclusif, un élève qui coche « Corse » perd « Aucun », donc l'exclusion
+  « Tu as indiqué vouloir rester en France. » des formations étrangères (il reste la réponse à « Étudier à
+  l'étranger dès le bachelor ? »). La question est dans le thème « International » : un élève de Corse ou
+  d'outre-mer qui ne veut pas partir à l'étranger peut ne pas penser à y cocher « continent ».

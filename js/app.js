@@ -1639,12 +1639,7 @@
       if (q.type === "multi") {
         let vals = Array.isArray(etat.reponses[q.id]) ? etat.reponses[q.id].slice() : [];
         if (t.checked) {
-          // question « lieu » : « partout » (tout le continent) remplace idf, lyon et regions, mais se combine avec
-          // la Corse et l'outre-mer, qui ne font pas partie du continent
-          const CONTINENT = ["idf", "lyon", "regions"];
-          if (q.id === "lieu" && t.value === "partout") vals = vals.filter((v) => !CONTINENT.includes(v)).concat("partout");
-          else if (q.id === "lieu" && !CONTINENT.includes(t.value)) vals.push(t.value);
-          else if (t.value === "aucun" || t.value === "partout") vals = [t.value];
+          if (t.value === "aucun" || t.value === "partout") vals = [t.value];
           else { vals = vals.filter((v) => v !== "aucun" && v !== "partout"); vals.push(t.value); }
           if (vals.length > q.max) { t.checked = false; toast(`${q.max} choix maximum`); return; }
         } else vals = vals.filter((v) => v !== t.value);

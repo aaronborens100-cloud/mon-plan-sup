@@ -172,8 +172,8 @@ bacheliers généraux, places, code Parcoursup (jamais l'ordre du catalogue). La
 les campus à l'étranger enregistrés « France » sont traités comme étrangers. Au-delà de la distance acceptée
 (`DISTANCE_ACCEPTEE_KM` : 45 km, 250 km, aucune limite), un vœu n'est jamais « sécurité » ; pour « domicile », une
 formation à plus de 45 km est exclue. Licences non sélectives du secteur de l'élève : règle `licence_secteur`.
-Corse et outre-mer ne sont dans les choix de l'élève que s'il les a cochés (question « lieu »), sinon jamais
-« sécurité » (`REGLE_HORS_TERRITOIRE`). Sans lycée, les règles de distance et d'académie ne s'appliquent pas et
+Corse, outre-mer et continent : en dehors de la zone de son lycée, seules les zones cochées dans « Si tu partais,
+où ? » (question « pays ») peuvent être « sécurité » (`REGLE_HORS_TERRITOIRE`, docs/modele-chances.md 8.5). Sans lycée, les règles de distance et d'académie ne s'appliquent pas et
 Ma liste affiche `MESSAGE_SANS_LYCEE`.
 
 ## Protection de la liste de vœux
