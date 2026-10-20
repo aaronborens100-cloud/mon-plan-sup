@@ -464,21 +464,6 @@
    "exclu": null
   },
   {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-   "interet": 82.41666666666667,
-   "faisabilite": 100,
-   "pertinence": 89.45,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "warwick-politics-international-studies",
    "interet": 92.41666666666667,
    "faisabilite": 83.25,
@@ -539,21 +524,6 @@
    "exclu": null
   },
   {
-   "id": "psup-19506",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    100,
-    0.84,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
    "interet": 80.75,
    "faisabilite": 100,
@@ -561,51 +531,6 @@
    "repere": [
     100,
     0.8,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-19482",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    100,
-    0.78,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-29038",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    100,
-    0.95,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26895",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    100,
-    1,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -674,62 +599,137 @@
    "exclu": null
   },
   {
-   "id": "u-des-antilles-guadeloupe-pointe-a-pitre-licence-science-politique",
+   "id": "psup-48169",
    "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "uco-la-reunion-saint-denis-la-reunion-licence-science-politique",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-19987",
-   "interet": 80.75,
-   "faisabilite": 99.9,
-   "pertinence": 88.41,
+   "faisabilite": 99.5,
+   "pertinence": 88.25,
    "repere": [
     100,
-    0.69,
+    0.67,
     "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39204",
+   "interet": 80.75,
+   "faisabilite": 99.1,
+   "pertinence": 88.09,
+   "repere": [
+    84,
+    0.68,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "oxford-history-politics",
+   "interet": 90.51719576719577,
+   "faisabilite": 84.4,
+   "pertinence": 88.07031746031747,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "concordia-ba-political-science",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "laval-science-politique",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "maastricht-european-studies",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "toronto-ba-political-science",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uc3m-ciencias-politicas",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "umontreal-science-politique",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -1028,7 +1028,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "0c4738f6ccbefd6f9f385804c63a404a9ebdc76d4c21027e312b7fd2b68dcb9b",
-  "textes": "bb56702e98b35e2a922e2ada42f8bd1a23fef64b3538235bbd5b66aba3a375ca"
+  "calculs": "5ac6a03e73f50329227937922dca8cdcf9e6bd3b0ab01d800eaa3ec0b19a66f5",
+  "textes": "86ba27d6af47b3f19c4977cf9e8ec0a9fc30f9dba8e1847ed7b2c964bb9c3959"
  }
 }

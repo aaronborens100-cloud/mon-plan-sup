@@ -411,11 +411,20 @@ formations proches de note), et qu'au-delà elle écarte vite la formation du ha
   catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
   l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :
   on ne peut pas vérifier la distance. `protection()` ne compte donc que des vœux à distance acceptée.
+- **Règle « domicile »** (décision du fondateur, 20/10/2026) : pour un élève qui a indiqué son lycée et répondu
+  « Non, je veux rester chez mes parents » (mobilite 0), une formation à plus de `DISTANCE_ACCEPTEE_KM[0]` = 45 km
+  est **exclue**, par le même mécanisme (`exclu`) que l'étranger : elle n'entre ni dans la liste de 10 vœux, ni dans
+  les recommandations, et sa fiche affiche « Tu as indiqué vouloir rester chez tes parents : cette formation est à
+  X km de ton lycée. » (X = distance à vol d'oiseau, arrondie). La traversée compte : on compare la distance
+  équivalente (distance + `SURCOUT_TRAVERSEE_KM`), donc la Corse est toujours exclue pour un élève de Nice. Une
+  formation sans coordonnées n'est pas exclue (on ne peut pas mesurer) : elle reste soumise à
+  `REGLE_DISTANCE_INCONNUE`. Sans lycée, rien ne change. Conséquence assumée : la liste d'un élève « domicile » peut
+  compter moins de 10 vœux, et on ne la complète pas avec des formations lointaines.
 - **Sans lycée** : aucune distance, aucune pénalité, aucune académie, et la règle ci-dessus ne s'applique pas.
   Ma liste affiche `MESSAGE_SANS_LYCEE` : « Indique ton lycée : sans lui, on ne peut pas tenir compte de ton
   académie ni de la distance. »
 
-### 8.4 Licences non sélectives du secteur de l'élève (règle proposée, à valider)
+### 8.4 Licences non sélectives du secteur de l'élève (règle validée le 20/10/2026)
 
 Source : FAQ Parcoursup « Prise en compte du secteur géographique »,
 <https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique>, consultée le
@@ -427,7 +436,7 @@ Créteil, Paris et Versailles « appartiennent au même secteur géographique »
 à la question écrite n° 9332 (JO du 4 novembre 2025, p. 8976, article L. 612-3, V du code de l'éducation) :
 <https://questions.assemblee-nationale.fr/q17/17-9332QE.htm>.
 
-Traduction proposée dans la table (`licence_secteur`, juste avant `tres_ouverte`) : licence non sélective
+Traduction dans la table (`licence_secteur`, juste avant `tres_ouverte`) : licence non sélective
 (`select_form` = « formation non sélective » et catégorie Parcoursup « Licence »), du secteur de l'élève
 (son académie, l'Île-de-France comptant pour un seul secteur), taux d'accès d'au moins 50 % et moins de 85 %, position
 « dans la moyenne des admis » → **sécurité** (au lieu de « réaliste »). Sans changement : position « en dessous »
@@ -437,3 +446,37 @@ Limites : on suppose que l'adresse du domicile est dans l'académie du lycée (p
 le pourcentage hors secteur de chaque licence, ni la part des admis 2025 venus du secteur (`pct_aca_orig` existe
 dans `stats.json` mais ne mesure que l'académie d'origine des admis). La règle reste soumise à la règle de
 distance (8.3).
+
+Texte affiché (fiche, liste ; décision du fondateur du 20/10/2026, construit par `texteLicenceSecteur()` qui cite
+`SOURCE_SECTEUR`) : on n'écrit jamais que la licence est « sûre » à cause du secteur, on explique la priorité.
+
+| Réponse à « mobilite » | Texte |
+|---|---|
+| domicile ou proche (ou pas de réponse) | « Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup). » |
+| partout | la même phrase, puis « Même si tu veux partir, garder ce vœu te protège. » |
+
+### 8.5 Territoires : Corse et outre-mer (question « lieu »)
+
+Décision du fondateur du 20/10/2026. La question « Où aimerais-tu étudier en France ? » (choix multiple) propose :
+Paris et Île-de-France (`idf`), Lyon (`lyon`), Autres régions (`regions`), Corse (`corse`), Outre-mer (Guadeloupe,
+Martinique, Guyane, La Réunion, Mayotte…) (`outremer`), Peu importe, sur le continent (`partout` : la valeur ne
+change pas, pour garder les réponses déjà enregistrées). Aide affichée : « Si tu vis en Corse ou outre-mer, ton
+territoire compte toujours parmi tes choix. » Dans le questionnaire, « partout » remplace idf, lyon et regions, mais
+se combine avec la Corse et l'outre-mer.
+
+- `lieuDe(f)` : `corse` ou `outremer` d'après `zoneDe` (outre-mer = toute zone hors continent et Corse, y compris
+  Polynésie, Nouvelle-Calédonie, Saint-Martin…), puis `idf`, `lyon`, `regions` sur le continent.
+- **Territoires choisis** = les réponses à « lieu ». `partout` = tout le continent. Corse et outre-mer ne sont dans
+  les choix que si l'élève les a cochés. La zone du lycée de l'élève (Corse, ou son territoire d'outre-mer) est
+  toujours comprise ; un autre territoire d'outre-mer ne l'est pas (élève de La Réunion : Mayotte seulement si
+  « outremer » est coché). Pour un élève de Corse ou d'outre-mer, le continent n'est dans ses choix que s'il a coché
+  idf, lyon, regions ou partout. Sans réponse à « lieu » : aucune restriction (comportement d'avant).
+- **Hors des choix** : le malus existant « ville hors de tes choix » (−12 d'intérêt) s'applique.
+- **Jamais « sécurité »** (`REGLE_HORS_TERRITOIRE`, clé `hors_territoire`, appliquée après la table et la règle de
+  distance) pour une formation en Corse ou outre-mer non choisie, ou sur le continent pour un élève de Corse ou
+  d'outre-mer qui ne l'a pas choisi → « réaliste » au mieux, dans la liste comme dans `protection()`. Texte : « Tu
+  n'as pas choisi d'étudier en Corse : ce vœu ne compte pas comme sûr. » (ou « en outre-mer », « sur le
+  continent »). Si la règle de distance s'applique déjà, c'est son texte qui est affiché.
+- Pourquoi : un élève de Nice qui répond « peu importe » pense à la métropole ; une licence de Pointe-à-Pitre à
+  7 000 km ne doit pas être présentée comme son vœu de sécurité. La règle ne dit rien des chances d'admission : elle
+  vient des choix de l'élève, pas d'une donnée officielle.

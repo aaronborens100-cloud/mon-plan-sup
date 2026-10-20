@@ -767,15 +767,6 @@
     ]
    },
    {
-    "id": "psup-11707",
-    "categorie": "realiste",
-    "pertinence": 77.45629641368285,
-    "repere": [
-     83,
-     "moyenne"
-    ]
-   },
-   {
     "id": "psup-23064",
     "categorie": "realiste",
     "pertinence": 82.14473012022495,
@@ -803,19 +794,28 @@
     ]
    },
    {
-    "id": "psup-10457",
-    "categorie": "securite",
-    "pertinence": 77.69627634413374,
+    "id": "psup-39243",
+    "categorie": "realiste",
+    "pertinence": 76.68931584101952,
     "repere": [
-     99,
-     "au_dessus"
+     77,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-11707",
+    "categorie": "realiste",
+    "pertinence": 70.25629641368283,
+    "repere": [
+     83,
+     "moyenne"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -848,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "e2ed936ed33922589a094069035d9b34487c6db0933fc47c4949b7080dfffb92",
-  "textes": "49337e1214e243df31b6f800a9948c650a08197a441bdf4fe84f6949d410bcd1"
+  "calculs": "bcde5ed49b26acec723fcc396fc2858e8bf5d2d07ade67b1fcde30f0ebee78ae",
+  "textes": "b4c5b608bec2d5c93be3889fddaccb48489f9a5d2f916d4b000dfe8fe4ea3868"
  }
 }

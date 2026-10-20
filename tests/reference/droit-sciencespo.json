@@ -144,21 +144,6 @@
    "exclu": null
   },
   {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-   "interet": 83.08333333333334,
-   "faisabilite": 99.9,
-   "pertinence": 89.81,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31837",
    "interet": 82.07751979277313,
    "faisabilite": 100,
@@ -410,21 +395,6 @@
     "realiste"
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-corse-corte-licence-droit",
-   "interet": 80.82812892463694,
-   "faisabilite": 99.9,
-   "pertinence": 88.45687735478216,
-   "repere": [
-    100,
-    0.6,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -727,6 +697,36 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-26607",
+   "interet": 79.7421685505584,
+   "faisabilite": 100,
+   "pertinence": 87.84530113033503,
+   "repere": [
+    67,
+    0.94,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28486",
+   "interet": 81.6750271906944,
+   "faisabilite": 97.1,
+   "pertinence": 87.84501631441664,
+   "repere": [
+    40,
+    0.64,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -741,20 +741,20 @@
     ]
    },
    {
-    "id": "psup-29038",
+    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
     "categorie": "securite",
-    "pertinence": 85.85,
+    "pertinence": 85.78687587749553,
     "repere": [
      100,
      "au_dessus"
     ]
    },
    {
-    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
+    "id": "u-de-tours-tours-double-licence-droit-science-politique",
     "categorie": "ambitieux",
-    "pertinence": 87.15582323070757,
+    "pertinence": 82.94433070247847,
     "repere": [
-     56,
+     22,
      "en_dessous"
     ]
    },
@@ -892,7 +892,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "9025aae5976180964e87b32e0882455af98b84e228a9a244cf88989387b75264",
-  "textes": "a9b17046edf4541cb2435ebf3d108a76d927f09b60d7cb10cdba24e3391b6431"
+  "calculs": "57cf2b3b109e144eeefef8be20382469a9d90b10123ff376a75212c4da952982",
+  "textes": "261ad51a0c23f1668bda8bd4365a777b0df532bf4e314451fca1667f6a5ec63b"
  }
 }

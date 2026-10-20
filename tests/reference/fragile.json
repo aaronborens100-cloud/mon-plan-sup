@@ -217,7 +217,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
   },
   {
    "id": "psup-49979",
@@ -232,7 +232,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
   },
   {
    "id": "psup-50515",
@@ -472,7 +472,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 68 km de ton lycée."
   },
   {
    "id": "psup-48535",
@@ -577,7 +577,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 48 km de ton lycée."
   },
   {
    "id": "psup-45961",
@@ -592,7 +592,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": null
+   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
   },
   {
    "id": "psup-31192",
@@ -751,11 +751,11 @@
     ]
    },
    {
-    "id": "psup-28974",
-    "categorie": "realiste",
-    "pertinence": 50.49,
+    "id": "psup-443",
+    "categorie": "ambitieux",
+    "pertinence": 68.69815919937427,
     "repere": [
-     95,
+     62,
      "en_dessous"
     ]
    },
@@ -765,15 +765,6 @@
     "pertinence": 67.56957321973803,
     "repere": [
      55,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-443",
-    "categorie": "ambitieux",
-    "pertinence": 68.69815919937427,
-    "repere": [
-     62,
      "en_dessous"
     ]
    },
@@ -821,6 +812,15 @@
      35,
      "en_dessous"
     ]
+   },
+   {
+    "id": "psup-48535",
+    "categorie": "ambitieux",
+    "pertinence": 68.5961620858231,
+    "repere": [
+     69,
+     "en_dessous"
+    ]
    }
   ],
   "protection": {
@@ -862,7 +862,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "002846604043826a0153e6f6375f289e390ac190f5e097ce10087a1fd65646af",
-  "textes": "69c2ed73934e645ddc6a780ab2a5b041227fb0db65d168268c5fd56488de3fae"
+  "calculs": "57cbb4056583e21e7c454d1232acebadb427f2531d0ef5fbff58158f78d4c757",
+  "textes": "0d3f5300b209217eb71f94cda47001fbe057c81e703a8a4177e33263c0d48173"
  }
 }

@@ -130,21 +130,6 @@
  },
  "top": [
   {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique-cupge-prepa-iep",
-   "interet": 82.66666666666667,
-   "faisabilite": 85.2,
-   "pertinence": 83.68,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
    "interet": 81.54948338091232,
    "faisabilite": 85.2,
@@ -205,55 +190,10 @@
    "exclu": null
   },
   {
-   "id": "psup-29038",
-   "interet": 79.33333333333334,
-   "faisabilite": 86.4,
-   "pertinence": 82.16,
-   "repere": [
-    100,
-    0.36,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26895",
-   "interet": 79.33333333333334,
-   "faisabilite": 86.4,
-   "pertinence": 82.16,
-   "repere": [
-    100,
-    0.26,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
    "interet": 82.17781531956184,
    "faisabilite": 81.2,
    "pertinence": 81.78668919173711,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-des-antilles-martinique-schlcher-licence-science-politique",
-   "interet": 79.33333333333334,
-   "faisabilite": 85.2,
-   "pertinence": 81.68,
    "repere": [
     null,
     null,
@@ -291,21 +231,6 @@
     "tres_ouverte_en_dessous"
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-19506",
-   "interet": 79.33333333333334,
-   "faisabilite": 84.8,
-   "pertinence": 81.52000000000001,
-   "repere": [
-    100,
-    0.35,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -535,21 +460,6 @@
    "exclu": null
   },
   {
-   "id": "psup-19482",
-   "interet": 79.33333333333334,
-   "faisabilite": 82.4,
-   "pertinence": 80.56,
-   "repere": [
-    100,
-    0.22,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "uco-facultes-libres-de-l-ouest-brest-brest-licence-science-politique",
    "interet": 80.1010499111476,
    "faisabilite": 81.2,
@@ -728,25 +638,115 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-27099",
+   "interet": 75.23379075912757,
+   "faisabilite": 87.6,
+   "pertinence": 80.18027445547654,
+   "repere": [
+    68,
+    0.38,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
+   "interet": 79.49377240471433,
+   "faisabilite": 81.2,
+   "pertinence": 80.1762634428286,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-grenoble-alpes-antenne-de-valence-valence-licence-droit",
+   "interet": 76.80473265688777,
+   "faisabilite": 85.2,
+   "pertinence": 80.16283959413266,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31042",
+   "interet": 76.79857790399899,
+   "faisabilite": 85.2,
+   "pertinence": 80.1591467423994,
+   "repere": [
+    65,
+    0.39,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-nimes-nimes-licence-droit",
+   "interet": 76.7910373015413,
+   "faisabilite": 85.2,
+   "pertinence": 80.15462238092478,
+   "repere": [
+    99,
+    0.32,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26660",
+   "interet": 75.95254258051679,
+   "faisabilite": 86.4,
+   "pertinence": 80.13152554831007,
+   "repere": [
+    86,
+    0.38,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
-   {
-    "id": "psup-29038",
-    "categorie": "securite",
-    "pertinence": 82.16,
-    "repere": [
-     100,
-     "moyenne"
-    ]
-   },
    {
     "id": "psup-27301",
     "categorie": "securite",
     "pertinence": 80.761732759372,
     "repere": [
      85,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-5345",
+    "categorie": "securite",
+    "pertinence": 70.89530484213361,
+    "repere": [
+     92,
      "moyenne"
     ]
    },
@@ -760,20 +760,20 @@
     ]
    },
    {
-    "id": "u-de-corse-corte-double-licence-droit-administration-publique",
-    "categorie": "ambitieux",
-    "pertinence": 78.96968287983039,
-    "repere": [
-     56,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "avignon-universite-avignon-licence-science-politique",
     "categorie": "ambitieux",
     "pertinence": 81.48299739086579,
     "repere": [
      35,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "paris1-dl-droit-scpo",
+    "categorie": "ambitieux",
+    "pertinence": 75.02872509098854,
+    "repere": [
+     6,
      "en_dessous"
     ]
    },
@@ -796,21 +796,21 @@
     ]
    },
    {
+    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
+    "categorie": "realiste",
+    "pertinence": 81.65687587749554,
+    "repere": [
+     100,
+     "en_dessous"
+    ]
+   },
+   {
     "id": "psup-36157",
     "categorie": "realiste",
     "pertinence": 68.25357820404292,
     "repere": [
      88,
      "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-35445",
-    "categorie": "realiste",
-    "pertinence": 64.23923382578491,
-    "repere": [
-     58,
-     "moyenne"
     ]
    },
    {
@@ -893,7 +893,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "2f81c7f7746e76354761c4bf83eabd35928811f03a410482b5ab91801e32ddd1",
-  "textes": "bcf4f01e623c57af347ae8882bc27e2a951ada7af6513db756f7c1f182f79eff"
+  "calculs": "f37b2bbebafb83339ce5b9a5504429ea81744f9e4263f478d2a5747752009bde",
+  "textes": "3e3c8c8051de1f054c86a7c75a8fc0fdc64f631aaccc43996459616fd0cc4a2f"
  }
 }

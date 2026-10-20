@@ -10,7 +10,9 @@
  *   - recommander() et la liste de 10 vœux ne dépendent pas de l'ordre du catalogue ; NaN en dernier ;
  *   - à note égale, la formation de l'académie de l'élève passe devant, puis la plus proche, etc. ;
  *   - sans lycée : ni distance ni académie, et Ma liste affiche MESSAGE_SANS_LYCEE ;
- *   - licence non sélective du secteur de l'élève : règle « licence_secteur ».
+ *   - licence non sélective du secteur de l'élève : règle « licence_secteur » (texte selon la mobilité) ;
+ *   - règle « domicile » : avec un lycée, une formation à plus de 45 km (traversée comprise) est exclue ;
+ *   - règle « territoires » (question « lieu ») : Corse et outre-mer seulement si cochés, sinon jamais « sécurité ».
  *
  * Lancer : npm test
  */
@@ -291,7 +293,8 @@ for (const [nom, lycee, proches, loin] of [
 ]) {
   test(`élève de ${nom} : la traversée est progressive (${proches.map((p) => p[0]).join(", ")} avant ${loin[0]})`, () => {
     const { E, DATA, QUEST } = site;
-    const p = avecReponses(PROFILS.find((x) => x.id === "sante-svt"), { mobilite: "proche" });
+    // sans réponse à « lieu » : seule la distance joue (la règle « territoires » est testée à part)
+    const p = avecReponses(PROFILS.find((x) => x.id === "sante-svt"), { mobilite: "proche", lieu: [] });
     const s = E.statsProfil(Object.assign({}, p.profil, { lycee })), it = E.interets(QUEST, p.reponses);
     const modele = DATA.formations.find((f) => f.id === "psup-8820") || DATA.formations.find((f) => f.pays === "France" && f.__gps && f.mentions_admis);
     const copie = ([ville, dep, lat, lon]) => Object.assign(Object.create(Object.getPrototypeOf(modele)), modele, { id: "test-" + ville, ville, __dep: dep, __gps: { lat, lon }, __lieu: undefined });
@@ -309,3 +312,144 @@ for (const [nom, lycee, proches, loin] of [
     }
   });
 }
+
+/* ---------------------------------------------------------------- décisions du fondateur du 19-20/10/2026 */
+
+test("licence de secteur : priorité expliquée, jamais « sûre » à cause du secteur (texte selon la mobilité)", () => {
+  const { E, DATA, QUEST } = site;
+  const BASE = "Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).";
+  const PARTIR = `${BASE} Même si tu veux partir, garder ce vœu te protège.`;
+  assert.equal(E.REGLES_CATEGORIE.find((g) => g.cle === "licence_secteur").texte, BASE);
+  assert.equal(E.texteLicenceSecteur(0), BASE);
+  assert.equal(E.texteLicenceSecteur(1), BASE);
+  assert.equal(E.texteLicenceSecteur(2), PARTIR);
+  // sante-svt (Nice, mobilité « proche ») : Licence de Biologie, Université de Toulon (La Garde)
+  const p = PROFILS.find((x) => x.id === "sante-svt");
+  const { A, W } = analyser(p);
+  const toulon = A.resultats.find((x) => x.f.id === "psup-10369");
+  assert.ok(toulon && /Biologie/.test(toulon.f.nom) && toulon.f.ville === "La Garde");
+  assert.equal(toulon.repere.regle, "licence_secteur");
+  assert.equal(toulon.repere.pourquoi, BASE);
+  assert.deepEqual(toulon.repere.source, E.SOURCE_SECTEUR);
+  assert.ok(W.liste.includes(toulon), "la licence de Toulon sort de la liste de sante-svt");
+  for (const t of [toulon.repere.pourquoi, toulon.repere.texte, ...toulon.raisons, ...toulon.ajust]) assert.doesNotMatch(String(t), /sûre/i);
+  // aucun texte « licence_secteur » ne dit « sûre », quelle que soit la mobilité
+  for (const m of ["domicile", "proche", "partout"]) {
+    const q = avecReponses(p, { mobilite: m });
+    const xs = E.recommander(DATA.formations, q.profil, QUEST, q.reponses).resultats.filter((x) => x.repere.regle === "licence_secteur");
+    for (const x of xs) {
+      assert.equal(x.repere.pourquoi, m === "partout" ? PARTIR : BASE);
+      assert.doesNotMatch(x.repere.pourquoi, /sûre/i);
+    }
+  }
+});
+
+test("règle « domicile » : avec un lycée, rien à plus de 45 km (fragile) ; sans lycée, les vœux restent", () => {
+  const E = site.E;
+  const fragile = PROFILS.find((x) => x.id === "fragile");
+  assert.equal(fragile.reponses.mobilite, "domicile");
+  const { A, W } = analyser(fragile);
+  assert.ok(W.liste.length > 0);
+  for (const x of W.liste) assert.ok(x.dist !== null && E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
+  // toute formation au-delà de 45 km (traversée comprise) est exclue, avec la distance dans le message
+  for (const x of A.resultats) {
+    if (x.dist === null || E.distanceEquivalente(x.dist, x.traversee) <= 45) continue;
+    assert.ok(x.exclu, `${x.f.id} (${Math.round(x.dist)} km) non exclue`);
+    if (!/^Frais/.test(x.exclu)) assert.equal(x.exclu, `Tu as indiqué vouloir rester chez tes parents : cette formation est à ${Math.round(x.dist)} km de ton lycée.`);
+  }
+  // la Corse (traversée) est exclue même à moins de 250 km
+  const corse = A.resultats.find((x) => x.traversee && x.dist < 250);
+  assert.ok(corse && corse.exclu, "Corse non exclue pour « domicile »");
+  // sans lycée : aucune exclusion par la distance, la liste reste complète
+  const sans = avecProfil(fragile, { lycee: null });
+  const B = analyser(sans);
+  assert.ok(!B.A.resultats.some((x) => /cette formation est à/.test(x.exclu || "")));
+  assert.equal(B.W.liste.length, 10);
+});
+
+test("territoires : options de la question « lieu »", () => {
+  const q = site.QUEST.questions.find((x) => x.id === "lieu");
+  assert.deepEqual(q.options.map((o) => o.value), ["idf", "lyon", "regions", "corse", "outremer", "partout"]);
+  const label = (v) => q.options.find((o) => o.value === v).label;
+  assert.equal(label("corse"), "Corse");
+  assert.equal(label("outremer"), "Outre-mer (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte…)");
+  assert.equal(label("partout"), "Peu importe, sur le continent");
+  assert.match(q.aide, /Si tu vis en Corse ou outre-mer, ton territoire compte toujours parmi tes choix\./);
+  assert.ok(q.max >= q.options.length - 1, "on doit pouvoir cocher tout le continent, la Corse et l'outre-mer");
+});
+
+test("territoires : lieuDe() renvoie corse et outremer avant idf, lyon, regions", () => {
+  const { E, DATA } = site;
+  const une = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone);
+  assert.equal(E.lieuDe(une("Corse")), "corse");
+  for (const z of ["Guadeloupe", "Martinique", "La Réunion"]) assert.equal(E.lieuDe(une(z)), "outremer", z);
+  assert.equal(E.lieuDe(DATA.formations.find((f) => f.id === "psup-10369")), "regions");
+});
+
+const SECU_ISOLEE = (A) => A.resultats.filter((x) => x.categorie === "securite" && x.f.pays === "France" && ["corse", "outremer"].includes(site.E.lieuDe(x.f)));
+
+test("territoires : élève de Nice, « partout » (mobilité partout) → aucun vœu « sécurité » en Corse ni outre-mer", () => {
+  const E = site.E;
+  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: ["partout"], mobilite: "partout" });
+  const { A, W } = analyser(p);
+  assert.equal(SECU_ISOLEE(A).length, 0);
+  assert.ok(!W.liste.some((x) => x.categorie === "securite" && ["corse", "outremer"].includes(E.lieuDe(x.f))));
+  const pap = A.resultats.find((x) => x.f.id === "psup-29038");   // Licence de science politique, Pointe-à-Pitre
+  assert.equal(pap.categorie, "realiste");
+  assert.equal(pap.repere.regle, "hors_territoire");
+  assert.equal(pap.repere.pourquoi, "Tu n'as pas choisi d'étudier en outre-mer : ce vœu ne compte pas comme sûr.");
+  assert.ok(pap.ajust.includes("ville hors de tes choix"));
+  const corse = A.resultats.find((x) => E.lieuDe(x.f) === "corse" && x.repere.regle === "hors_territoire");
+  if (corse) assert.equal(corse.repere.pourquoi, "Tu n'as pas choisi d'étudier en Corse : ce vœu ne compte pas comme sûr.");
+  // protection() ne compte que les vœux « sécurité » restants
+  assert.equal(W.protection.nbSecurite, W.liste.filter((x) => x.categorie === "securite").length);
+  // tous les profils types : aucun « sécurité » en Corse ou outre-mer (aucun n'a coché ces territoires)
+  for (const q of PROFILS) assert.equal(SECU_ISOLEE(analyser(q).A).length, 0, q.id);
+});
+
+test("territoires : avec « outremer » coché, la licence de Pointe-à-Pitre peut redevenir « sécurité »", () => {
+  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: ["partout", "outremer"], mobilite: "partout" });
+  const pap = analyser(p).A.resultats.find((x) => x.f.id === "psup-29038");
+  assert.equal(pap.categorie, "securite");
+  assert.ok(!pap.ajust.includes("ville hors de tes choix"));
+  assert.equal(pap.horsTerritoire, false);
+});
+
+test("territoires : le territoire du lycée (La Réunion, Corse) reste toujours dans les choix", () => {
+  const { E, DATA, QUEST } = site;
+  const base = PROFILS.find((x) => x.id === "sante-svt");
+  const it = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["regions"], mobilite: "partout" }));
+  const reunion = E.statsProfil(Object.assign({}, base.profil, { lycee: { type: "commune", nom: "Saint-Denis", dep: "La Réunion", lat: -20.9, lon: 55.48 } }));
+  const dans = (zone) => DATA.formations.find((f) => f.pays === "France" && E.situer(f).zone === zone && f.__gps);
+  const x = E.evaluer(dans("La Réunion"), reunion, it);
+  assert.ok(!x.ajust.includes("ville hors de tes choix"), "La Réunion hors des choix d'un élève de La Réunion");
+  assert.equal(x.horsTerritoire, false);
+  // un autre territoire d'outre-mer, non coché, n'est pas dans ses choix
+  const m = E.evaluer(dans("Mayotte"), reunion, it);
+  assert.ok(m.ajust.includes("ville hors de tes choix"));
+  assert.equal(m.horsTerritoire, true);
+  // le continent : dans ses choix avec « regions »
+  const toulon = E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), reunion, it);
+  assert.ok(!toulon.ajust.includes("ville hors de tes choix"));
+  // élève d'Ajaccio qui n'a coché que la Corse : le continent est hors de ses choix, jamais « sécurité »
+  const ajaccio = E.statsProfil(Object.assign({}, base.profil, { lycee: { type: "lycee", nom: "Lycée Fesch", dep: "Corse-du-Sud", lat: 41.9192, lon: 8.7386 } }));
+  const itCorse = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["corse"], mobilite: "partout" }));
+  const res = DATA.formations.filter((f) => f.pays === "France" && E.lieuDe(f) === "regions").slice(0, 400).map((f) => E.evaluer(f, ajaccio, itCorse));
+  assert.ok(res.every((r) => r.horsTerritoire && r.ajust.includes("ville hors de tes choix")));
+  assert.ok(res.every((r) => r.categorie !== "securite"));
+  const r = res.find((y) => y.repere.regle === "hors_territoire");
+  if (r) assert.equal(r.repere.pourquoi, "Tu n'as pas choisi d'étudier sur le continent : ce vœu ne compte pas comme sûr.");
+  assert.equal(E.evaluer(dans("Corse"), ajaccio, itCorse).horsTerritoire, false);
+  // avec « partout », le continent redevient un choix
+  const itPartout = E.interets(QUEST, Object.assign({}, base.reponses, { lieu: ["partout"], mobilite: "partout" }));
+  assert.equal(E.evaluer(DATA.formations.find((f) => f.id === "psup-10369"), ajaccio, itPartout).horsTerritoire, false);
+});
+
+test("territoires : sans réponse à « lieu », aucune restriction", () => {
+  const p = avecReponses(PROFILS.find((x) => x.id === "baisse-dernier-trimestre"), { lieu: [], mobilite: "partout" });
+  const { A } = analyser(p);
+  assert.ok(!A.resultats.some((x) => x.horsTerritoire || x.ajust.includes("ville hors de tes choix")));
+  assert.equal(A.resultats.find((x) => x.f.id === "psup-29038").categorie, "securite");
+  const q = Object.assign({}, p, { reponses: Object.assign({}, p.reponses) }); delete q.reponses.lieu;
+  assert.deepEqual(analyser(q).A.resultats.map((x) => [x.f.id, x.categorie, x.pertinence]), A.resultats.map((x) => [x.f.id, x.categorie, x.pertinence]));
+});

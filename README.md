@@ -170,8 +170,10 @@ garde ses décimales ; à note égale, `departage()` classe : académie de l'él
 bacheliers généraux, places, code Parcoursup (jamais l'ordre du catalogue). La distance donne une pénalité continue
 (`PENALITE_DISTANCE`) selon la mobilité choisie ; Corse et outre-mer comptent comme loin pour un élève du continent ;
 les campus à l'étranger enregistrés « France » sont traités comme étrangers. Au-delà de la distance acceptée
-(`DISTANCE_ACCEPTEE_KM` : 45 km, 250 km, aucune limite), un vœu n'est jamais « sécurité ». Licences non sélectives du
-secteur de l'élève : règle `licence_secteur` (proposée, à valider). Sans lycée, rien de tout cela ne s'applique et
+(`DISTANCE_ACCEPTEE_KM` : 45 km, 250 km, aucune limite), un vœu n'est jamais « sécurité » ; pour « domicile », une
+formation à plus de 45 km est exclue. Licences non sélectives du secteur de l'élève : règle `licence_secteur`.
+Corse et outre-mer ne sont dans les choix de l'élève que s'il les a cochés (question « lieu »), sinon jamais
+« sécurité » (`REGLE_HORS_TERRITOIRE`). Sans lycée, les règles de distance et d'académie ne s'appliquent pas et
 Ma liste affiche `MESSAGE_SANS_LYCEE`.
 
 ## Protection de la liste de vœux

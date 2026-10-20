@@ -155,21 +155,6 @@
    "exclu": null
   },
   {
-   "id": "psup-36150",
-   "interet": 85.33333333333334,
-   "faisabilite": 78.35,
-   "pertinence": 82.54,
-   "repere": [
-    100,
-    0.6,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-32585",
    "interet": 85.33333333333334,
    "faisabilite": 78.35,
@@ -271,21 +256,6 @@
     "realiste"
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-11967",
-   "interet": 85.33333333333334,
-   "faisabilite": 77.95,
-   "pertinence": 82.38000000000001,
-   "repere": [
-    100,
-    0.61,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -432,36 +402,6 @@
    "repere": [
     78,
     0.56,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31800",
-   "interet": 85.33333333333334,
-   "faisabilite": 77.15,
-   "pertinence": 82.06,
-   "repere": [
-    54,
-    0.56,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-36152",
-   "interet": 85.33333333333334,
-   "faisabilite": 77.15,
-   "pertinence": 82.06,
-   "repere": [
-    50,
-    0.48,
     "moyenne",
     "realiste"
    ],
@@ -695,13 +635,73 @@
    "exclu": null
   },
   {
-   "id": "psup-44913",
+   "id": "psup-8678",
    "interet": 85.33333333333334,
    "faisabilite": 76.35,
    "pertinence": 81.74000000000001,
    "repere": [
-    49,
-    0.44,
+    44,
+    0.4,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-16806",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    41,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9928",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    31,
+    0.42,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11469",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    30,
+    0.36,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20503",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    28,
+    0.38,
     "moyenne",
     "realiste"
    ],
@@ -785,15 +785,6 @@
     ]
    },
    {
-    "id": "psup-44539",
-    "categorie": "securite",
-    "pertinence": 69.67333333333335,
-    "repere": [
-     100,
-     "au_dessus"
-    ]
-   },
-   {
     "id": "psup-28972",
     "categorie": "ambitieux",
     "pertinence": 75.60000000000001,
@@ -801,12 +792,21 @@
      12,
      "en_dessous"
     ]
+   },
+   {
+    "id": "psup-28503",
+    "categorie": "realiste",
+    "pertinence": 68.75666666666666,
+    "repere": [
+     30,
+     "au_dessus"
+    ]
    }
   ],
   "protection": {
-   "nbSecurite": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "40ef3bd80dda93a75ae5f4dbe96691c0adbaac0160f4172a124558eb19f25058",
-  "textes": "4bb90039393ce33a1ddb8747c024f5d2b87f347ec8863a81f51659e65c578748"
+  "calculs": "6d45b240a6853cfca631d28226f806a3f26753c46ffbc9dfdf4c61a2a45d35aa",
+  "textes": "2213233381d8859c0ff95f37e3c5763700a0b3991ee75d1c1b3feab976e4f049"
  }
 }
