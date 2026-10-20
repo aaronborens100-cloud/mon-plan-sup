@@ -395,7 +395,7 @@ test("territoires : la question « lieu » est identique à main", () => {
   for (const z of ["Corse", "Guadeloupe", "La Réunion"]) assert.equal(E.lieuDe(une(z)), "regions", z);
 });
 
-test("territoires : options corse, outremer, continent dans « pays », après Canada et avant Aucun", () => {
+test("territoires : options corse, outremer, continent dans « pays », après Canada et avant « aucun »", () => {
   const q = site.QUEST.questions.find((x) => x.id === "pays");
   const vals = q.options.map((o) => o.value);
   assert.deepEqual(vals.slice(vals.indexOf("Canada")), ["Canada", "corse", "outremer", "continent", "aucun"]);
@@ -403,8 +403,8 @@ test("territoires : options corse, outremer, continent dans « pays », après C
   assert.equal(label("corse"), "Corse");
   assert.equal(label("outremer"), "Outre-mer (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte…)");
   assert.equal(label("continent"), "La France continentale (si tu vis en Corse ou outre-mer)");
-  // « Aucun » est exclusif (js/app.js) : on doit pouvoir cocher toutes les autres cases
-  assert.equal(q.max, q.options.length - 1);
+  // « Rien d'autre que ce que j'ai coché » se combine avec les autres cases (js/app.js) : toutes peuvent être cochées
+  assert.equal(q.max, q.options.length);
   assert.deepEqual([...site.E.TERRITOIRES], ["corse", "outremer", "continent"]);
 });
 
@@ -500,4 +500,113 @@ test("territoires : corse, outremer, continent ne sont pas des pays (malus étra
   // et sur les vrais calculs (vœux recalculés) : l'élève de Nice garde les mêmes propositions à l'étranger
   const p0 = E.etranger(A0.A.resultats, A0.W, it0, "2026-10-20"), p1 = E.etranger(A1.A.resultats, A1.W, it1, "2026-10-20");
   assert.deepEqual(resume(p1), resume(p0));
+});
+
+/* ---------------------------------------------------------------- « Rien d'autre que ce que j'ai coché » (value « aucun »)
+   Décision du fondateur du 20/10/2026 : la case se combine avec les autres cases de « pays » et veut dire « aucun autre
+   endroit que ce que j'ai coché ». Élève de Nice qui veut partir (« plutot »), mobilité et lieu « partout ». */
+const RIEN_D_AUTRE = "Rien d'autre que ce que j'ai coché";
+const niceVeutPartir = (pays) => avecReponses(BASE_NICE(), { lieu: ["partout"], mobilite: "partout", etranger: "plutot", pays });
+const etudier = (p) => {
+  const { A, W } = analyser(p);
+  const e = site.E.etranger(A.resultats, W, site.E.interets(site.QUEST, p.reponses), "2026-10-20");
+  return { A, W, e, etr: A.resultats.filter((x) => x.f.pays !== "France") };
+};
+
+test("« aucun » : libellé « Rien d'autre que ce que j'ai coché », value inchangée, ligne d'aide", () => {
+  const q = site.QUEST.questions.find((x) => x.id === "pays");
+  const o = q.options[q.options.length - 1];
+  assert.deepEqual(o, { label: RIEN_D_AUTRE, value: "aucun" });
+  assert.ok(!q.options.some((x) => x.label === "Aucun"));
+  assert.equal(q.aide, `Coche « ${RIEN_D_AUTRE} » pour exclure tout le reste.`);
+  // aucun texte affiché à l'élève par le moteur ne cite l'ancien libellé « Aucun »
+  for (const p of [niceVeutPartir(["aucun"]), niceVeutPartir(["aucun", "Espagne"])]) {
+    const { A } = etudier(p);
+    assert.ok(!A.resultats.some((x) => /« Aucun »/.test([x.exclu, x.repere && x.repere.pourquoi, ...(x.ajust || [])].join(" "))));
+  }
+});
+
+test("« aucun » + « outremer » (Nice) : aucune formation étrangère, etranger() « non », outre-mer possible en « sécurité »", () => {
+  const { A, e, etr } = etudier(niceVeutPartir(["aucun", "outremer"]));
+  assert.ok(etr.length > 0);
+  for (const x of etr) assert.equal(x.exclu, "Tu as indiqué vouloir rester en France.", x.f.id);
+  assert.equal(e.mode, "non"); assert.equal(e.liste.length, 0);
+  const pap = A.resultats.find((x) => x.f.id === "psup-29038");   // Licence de science politique, Pointe-à-Pitre
+  assert.equal(pap.categorie, "securite");
+  assert.equal(pap.horsTerritoire, false);
+  // côté France, « aucun » ne change rien : mêmes résultats qu'avec « outremer » seul
+  const B = etudier(niceVeutPartir(["outremer"])).A;
+  const fr = (R) => R.resultats.filter((x) => x.f.pays === "France").map((x) => [x.f.id, x.categorie, x.pertinence, x.exclu || null]);
+  assert.deepEqual(fr(A), fr(B));
+});
+
+test("« outremer » seul (Nice) : l'étranger reste proposé, comme avant", () => {
+  const { e, etr } = etudier(niceVeutPartir(["outremer"]));
+  assert.ok(!etr.some((x) => x.exclu === "Tu as indiqué vouloir rester en France." || x.exclu === site.E.MESSAGE_AUCUN_AUTRE_PAYS));
+  assert.ok(!etr.some((x) => x.ajust.includes("pays non choisi")));
+  assert.equal(e.mode, "decouverte");
+  assert.equal(e.liste.length, 3);
+  // identique à une réponse sans aucun pays (les territoires ne sont pas des pays)
+  const e0 = etudier(niceVeutPartir([])).e;
+  assert.deepEqual(e.liste.map((c) => c.x.f.id), e0.liste.map((c) => c.x.f.id));
+});
+
+test("« aucun » + « Espagne » (Nice) : seule l'Espagne à l'étranger, etranger() limité à l'Espagne", () => {
+  const { e, etr } = etudier(niceVeutPartir(["aucun", "Espagne"]));
+  const espagne = etr.filter((x) => x.f.pays === "Espagne"), autres = etr.filter((x) => x.f.pays !== "Espagne");
+  assert.ok(espagne.length > 0 && autres.length > 0);
+  for (const x of autres) assert.equal(x.exclu, "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.", x.f.id);
+  assert.ok(espagne.some((x) => !x.exclu));
+  // un pays coché garde le comportement actuel : mêmes calculs qu'avec « Espagne » seul
+  const sans = etudier(niceVeutPartir(["Espagne"]));
+  const calc = (L) => L.filter((x) => x.f.pays === "Espagne").map((x) => [x.f.id, x.interet, x.exclu || null, x.ajust.join("|")]);
+  assert.deepEqual(calc(etr), calc(sans.etr));
+  assert.equal(e.mode, "decouverte");
+  assert.ok(e.liste.length > 0);
+  for (const c of e.liste) assert.equal(c.x.f.pays, "Espagne", c.x.f.id);
+  // sans « aucun », etranger() propose aussi d'autres pays
+  assert.ok(sans.e.liste.some((c) => c.x.f.pays !== "Espagne"));
+  // etranger() filtre aussi seul, même sur des résultats où les autres pays ne seraient pas exclus
+  const it = site.E.interets(site.QUEST, niceVeutPartir(["aucun", "Espagne"]).reponses);
+  const e2 = site.E.etranger(sans.A.resultats, sans.W, it, "2026-10-20");
+  assert.ok(e2.liste.length > 0 && e2.liste.every((c) => c.x.f.pays === "Espagne"));
+});
+
+test("« aucun » seul : identique à aujourd'hui (tout l'étranger exclu, etranger() « non »)", () => {
+  const { e, etr } = etudier(niceVeutPartir(["aucun"]));
+  for (const x of etr) assert.equal(x.exclu, "Tu as indiqué vouloir rester en France.", x.f.id);
+  assert.equal(e.mode, "non"); assert.equal(e.liste.length, 0);
+  // « aucun » avec les trois territoires : même chose pour l'étranger
+  const T = etudier(niceVeutPartir(["aucun", "corse", "outremer", "continent"]));
+  assert.deepEqual(T.etr.map((x) => [x.f.id, x.exclu]), etr.map((x) => [x.f.id, x.exclu]));
+  assert.equal(T.e.mode, "non");
+  // les profils types qui répondent « aucun » le cochent seul (références inchangées)
+  for (const p of PROFILS) if ((p.reponses.pays || []).includes("aucun")) assert.deepEqual(p.reponses.pays, ["aucun"], p.id);
+});
+
+test("interface : « Rien d'autre que ce que j'ai coché » puis « Outre-mer » garde les deux ; « Peu importe » (lieu) reste exclusif", async () => {
+  const base = BASE_NICE();
+  const qs = site.QUEST.questions, iPays = qs.findIndex((x) => x.id === "pays"), iLieu = qs.findIndex((x) => x.id === "lieu");
+  const reponses = Object.assign({}, base.reponses, { pays: [], lieu: ["idf"] });
+  const s = await chargerSite({}, { etat: { profil: base.profil, reponses, retenus: [], profilTermine: false, qIndex: iPays } });
+  const coche = (html, q, v) => new RegExp(`value="${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}" data-q="${q}" checked`).test(html);
+  let html = s.afficher("#questionnaire");
+  const echappe = (t) => t.replace(/'/g, "&#39;");   // esc() de js/app.js
+  assert.ok(html.includes(echappe(`Coche « ${RIEN_D_AUTRE} » pour exclure tout le reste.`)));
+  assert.ok(html.includes(`data-q="pays" >${echappe(RIEN_D_AUTRE)}</label>`));
+  html = s.changer({ q: "pays" }, { value: "aucun", checked: true });
+  html = s.changer({ q: "pays" }, { value: "outremer", checked: true });
+  assert.ok(coche(html, "pays", "aucun") && coche(html, "pays", "outremer"));
+  // dans l'autre ordre aussi, et toutes les cases peuvent être cochées ensemble (max = nombre de cases)
+  for (const o of qs[iPays].options) if (o.value !== "aucun" && o.value !== "outremer") html = s.changer({ q: "pays" }, { value: o.value, checked: true });
+  for (const o of qs[iPays].options) assert.ok(coche(html, "pays", o.value), o.value);
+  html = s.changer({ q: "pays" }, { value: "outremer", checked: false });
+  assert.ok(coche(html, "pays", "aucun") && !coche(html, "pays", "outremer"));
+  // question « lieu » : « Peu importe » décoche toujours les autres cases, et inversement
+  html = s.cliquer({ action: "q-aller", i: String(iLieu) });
+  assert.ok(coche(html, "lieu", "idf"));
+  html = s.changer({ q: "lieu" }, { value: "partout", checked: true });
+  assert.ok(coche(html, "lieu", "partout") && !coche(html, "lieu", "idf"));
+  html = s.changer({ q: "lieu" }, { value: "lyon", checked: true });
+  assert.ok(coche(html, "lieu", "lyon") && !coche(html, "lieu", "partout"));
 });

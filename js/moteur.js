@@ -396,6 +396,12 @@
   // formation dans une zone que l'élève n'a pas cochée (et qui n'est pas celle de son lycée) : jamais « sécurité ».
   const TERRITOIRES = ["corse", "outremer", "continent"];
   const REGLE_HORS_TERRITOIRE = { cle: "hors_territoire", categorie: "realiste" };
+  // Pays étrangers cochés dans « pays » (sans « aucun » ni les territoires) ; paysCoche(f, voulus) : le pays de la
+  // formation en fait partie (« autre_europe » = tout pays hors des pays nommés)
+  const paysVoulus = (p) => (p.pays || []).filter((x) => x !== "aucun" && !TERRITOIRES.includes(x));
+  const PAYS_NOMMES = ["Royaume-Uni", "Pays-Bas", "Italie", "Espagne", "Suisse", "Allemagne", "États-Unis", "Canada"];
+  const paysCoche = (f, voulus) => voulus.some((x) => (x === "autre_europe" ? !PAYS_NOMMES.includes(f.pays) : f.pays.includes(x)));
+  const MESSAGE_AUCUN_AUTRE_PAYS = "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.";
   const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
   const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
@@ -627,13 +633,15 @@
     }
     if (etranger) {
       // corse, outremer et continent ne sont pas des pays étrangers (règle « territoires ») : pas de « pays non choisi »
-      const voulus = (p.pays || []).filter((x) => x !== "aucun" && !TERRITOIRES.includes(x));
-      if (p.etranger === 0 || (p.pays || []).includes("aucun")) exclu = "Tu as indiqué vouloir rester en France.";
+      const voulus = paysVoulus(p);
+      // « Rien d'autre que ce que j'ai coché » (value « aucun ») : seul ou avec des territoires, tout l'étranger est
+      // exclu ; avec des pays, seuls les pays non cochés le sont (décision du fondateur du 20/10/2026)
+      const aucun = (p.pays || []).includes("aucun");
+      if (p.etranger === 0 || (aucun && !voulus.length)) exclu = "Tu as indiqué vouloir rester en France.";
+      else if (aucun && !paysCoche(f, voulus)) exclu = MESSAGE_AUCUN_AUTRE_PAYS;
       else if (p.etranger === 1) { interet -= 20; ajust.push("tu envisages surtout un échange"); }
       else if (p.etranger === 3) interet += 5;
-      const NOMMES = ["Royaume-Uni", "Pays-Bas", "Italie", "Espagne", "Suisse", "Allemagne", "États-Unis", "Canada"];
-      const okPays = (x) => (x === "autre_europe" ? !NOMMES.includes(f.pays) : f.pays.includes(x));
-      if (voulus.length && !voulus.some(okPays)) { interet -= 15; ajust.push("pays non choisi"); }
+      if (voulus.length && !paysCoche(f, voulus)) { interet -= 15; ajust.push("pays non choisi"); }
     } else if (p.etranger === 3) interet -= 5;
     if (anglaisSeul && p.anglais !== undefined && p.anglais <= 2) { interet -= 15; ajust.push("cours entièrement en anglais"); }
     if (cout != null && p.budget_max !== undefined && cout > p.budget_max) {
@@ -1031,7 +1039,8 @@
   // Propositions à l'étranger, rattachées chacune à un vœu français (« l'équivalent à l'étranger »)
   function etranger(resultats, W, it, auj = new Date().toISOString().slice(0, 10)) {
     const p = (it && it.prefs) || {};
-    if (p.etranger === 0 || (p.pays || []).includes("aucun") || p.mobilite === 0) return { mode: "non", liste: [] };
+    const aucun = (p.pays || []).includes("aucun"), voulus = paysVoulus(p);
+    if (p.etranger === 0 || (aucun && !voulus.length) || p.mobilite === 0) return { mode: "non", liste: [] };
     if (p.etranger === 1) {
       // « seulement un échange » : formations françaises très ouvertes à l'international, dans les mêmes voies que les vœux
       const voies = new Set(W.liste.map((x) => voie(x.f))), pris = new Set(W.liste.map((x) => x.f.id));
@@ -1044,7 +1053,8 @@
     const anglaisFragile = p.anglais !== undefined && p.anglais <= 2;
     const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && x.f.pays === "France" && !horsListe(x.f)).slice(0, 10);
     // seules exclusions acceptées : le budget (on propose alors les options les moins chères du pays)
-    const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj))
+    // « aucun » avec des pays : seulement ces pays
+    const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj) && (!aucun || paysCoche(x.f, voulus)))
       .map((x) => {
         const proches = ancres.map((a) => ({ a, s: ressemblance(x.f, a.f) + a.pertinence / 10000 })).filter((o) => o.s >= 0.35).sort((u, v) => v.s - u.s);
         const best = proches.length ? proches[0].a : null, bs = proches.length ? proches[0].s : 0;
@@ -1100,5 +1110,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, TERRITOIRES, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

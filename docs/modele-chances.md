@@ -463,10 +463,21 @@ main : idf, lyon, regions, « Peu importe » (`partout` = toute la France), mêm
 `regions`.
 
 La Corse et l'outre-mer se cochent dans « Si tu partais, où ? (plusieurs choix) » (« pays »), après « Canada » et
-avant « Aucun » : Corse (`corse`), Outre-mer (Guadeloupe, Martinique, Guyane, La Réunion, Mayotte…) (`outremer`),
-La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 12 : toutes les cases sauf
-« Aucun », qui reste exclusive (js/app.js : cocher « Aucun » décoche les autres, cocher une autre case décoche
-« Aucun »).
+avant « Rien d'autre que ce que j'ai coché » (`aucun`) : Corse (`corse`), Outre-mer (Guadeloupe, Martinique, Guyane,
+La Réunion, Mayotte…) (`outremer`), La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 13 :
+toutes les cases.
+
+**« Rien d'autre que ce que j'ai coché »** (décision du fondateur du 20/10/2026 ; ancien libellé « Aucun », value
+`aucun` gardée pour les réponses déjà enregistrées). Elle veut dire « aucun autre endroit que ce que j'ai coché » et se
+combine avec toutes les cases de « pays » (js/app.js : cocher l'une ne décoche plus l'autre ; « Peu importe » de
+« lieu » reste exclusif). Aide affichée : « Coche « Rien d'autre que ce que j'ai coché » pour exclure tout le reste. »
+- seule ou avec seulement des territoires : toutes les formations à l'étranger sont exclues (« Tu as indiqué vouloir
+  rester en France. ») et `etranger()` renvoie le mode « non », comme avant ;
+- avec des pays : les formations d'un pays non coché sont exclues (« Tu as indiqué ne vouloir aucun autre pays que
+  ceux que tu as cochés. », `MESSAGE_AUCUN_AUTRE_PAYS`), les pays cochés gardent le comportement habituel, et
+  `etranger()` ne propose que ces pays (`paysCoche`) ;
+- non cochée : pays non choisi = malus « pays non choisi », comme avant. Les territoires suivent la règle ci-dessous
+  dans tous les cas.
 
 - `territoireDe(f)` : `corse` ou `outremer` d'après `zoneDe` (outre-mer = toute zone hors continent et Corse, y
   compris Polynésie, Nouvelle-Calédonie, Saint-Martin…), sinon `continent` (zone inconnue comprise).
@@ -475,7 +486,7 @@ La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 
   accepté. Pour un élève d'outre-mer, seul son territoire est compris d'office (élève de La Réunion : Mayotte
   seulement avec « outremer »). Un élève de Corse ou d'outre-mer qui n'a pas coché « continent » n'a jamais de vœu
   « sécurité » sur le continent (décision confirmée). Sans aucune réponse à « pays » : aucune restriction
-  (comportement de main). « Aucun » est une réponse : seule la zone du lycée est alors acceptée.
+  (comportement de main). `aucun` seul est une réponse : seule la zone du lycée est alors acceptée.
 - **Hors des zones acceptées** : malus « ville hors de tes choix » (−12 d'intérêt, appliqué une seule fois même si
   la ville est aussi hors des choix de « lieu »).
 - **Jamais « sécurité »** (`REGLE_HORS_TERRITOIRE`, clé `hors_territoire`, appliquée après la table et la règle de
@@ -489,7 +500,5 @@ La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 
 - Pourquoi : un élève de Nice qui répond « peu importe » pense à la métropole ; une licence de Pointe-à-Pitre à
   7 000 km ne doit pas être présentée comme son vœu de sécurité. La règle ne dit rien des chances d'admission : elle
   vient des choix de l'élève, pas d'une donnée officielle.
-- Limites connues : « Aucun » étant exclusif, un élève qui coche « Corse » perd « Aucun », donc l'exclusion
-  « Tu as indiqué vouloir rester en France. » des formations étrangères (il reste la réponse à « Étudier à
-  l'étranger dès le bachelor ? »). La question est dans le thème « International » : un élève de Corse ou
+- Limites connues : la question est dans le thème « International » : un élève de Corse ou
   d'outre-mer qui ne veut pas partir à l'étranger peut ne pas penser à y cocher « continent ».

@@ -1639,7 +1639,9 @@
       if (q.type === "multi") {
         let vals = Array.isArray(etat.reponses[q.id]) ? etat.reponses[q.id].slice() : [];
         if (t.checked) {
-          if (t.value === "aucun" || t.value === "partout") vals = [t.value];
+          // question « pays » : « Rien d'autre que ce que j'ai coché » (value « aucun ») se combine avec les autres cases
+          if (q.id === "pays") vals.push(t.value);
+          else if (t.value === "aucun" || t.value === "partout") vals = [t.value];
           else { vals = vals.filter((v) => v !== "aucun" && v !== "partout"); vals.push(t.value); }
           if (vals.length > q.max) { t.checked = false; toast(`${q.max} choix maximum`); return; }
         } else vals = vals.filter((v) => v !== t.value);
