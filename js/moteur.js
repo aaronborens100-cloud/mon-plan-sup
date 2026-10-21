@@ -624,7 +624,10 @@
     let interet = 55;
     if (it.repondues > 0) {
       const poids = [1, 0.8, 0.6, 0.45, 0.3], doms = f.domaines.slice(0, 5);
-      const dom = doms.reduce((acc, k, i) => acc + (d[k] || 0) * poids[i], 0) / poids.slice(0, doms.length).reduce((a, b) => a + b, 0);
+      // fiche sans domaines (issue #13) : le terme « domaines » compte pour 0 (aucun point accordé faute de donnée,
+      // rien n'est inventé) ; sans ce garde-fou, 0 / 0 donnait une note NaN
+      const dom = doms.length ? doms.reduce((acc, k, i) => acc + (d[k] || 0) * poids[i], 0) / poids.slice(0, doms.length).reduce((a, b) => a + b, 0) : 0;
+      if (!doms.length) ajust.push("domaines de la formation non renseignés");
       const typeAff = it.types.size ? (it.types.has(f.type) ? 1 : 0.2) : 0.6;
       const attrs = [];
       const pf = f.profil || {};

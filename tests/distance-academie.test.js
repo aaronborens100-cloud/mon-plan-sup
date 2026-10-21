@@ -187,10 +187,11 @@ test("note avec décimales, NaN en dernier", () => {
   const R = A.resultats;
   assert.ok(R.some((x) => !Number.isInteger(x.pertinence)), "la pertinence n'est plus arrondie");
   assert.ok(R.some((x) => !Number.isInteger(x.interet)) && R.some((x) => !Number.isInteger(x.faisabilite)));
-  const premierNaN = R.findIndex((x) => Number.isNaN(x.pertinence));
-  assert.ok(premierNaN > 0, "des notes NaN existent aujourd'hui (formations canadiennes) : voir l'issue ouverte");
-  assert.ok(R.slice(premierNaN).every((x) => Number.isNaN(x.pertinence)), "toutes les notes NaN sont à la fin");
-  for (let i = 1; i < premierNaN; i++) assert.ok(R[i - 1].pertinence >= R[i].pertinence, `ordre décroissant (rang ${i})`);
+  // plus aucune note NaN depuis l'issue #13 (voir tests/notes-nan.test.js) ; le comparateur les range toujours en dernier
+  assert.ok(R.every((x) => Number.isFinite(x.pertinence)), "aucune note NaN (issue #13)");
+  for (let i = 1; i < R.length; i++) assert.ok(R[i - 1].pertinence >= R[i].pertinence, `ordre décroissant (rang ${i})`);
+  const avecNaN = [R[0], Object.assign({}, R[1], { pertinence: NaN }), R[2]].sort(site.E.comparer);
+  assert.ok(Number.isNaN(avecNaN[2].pertinence), "une note NaN passe en dernier");
 });
 
 test("départage à note égale : académie, distance, taux, bacheliers généraux, places, code", () => {
