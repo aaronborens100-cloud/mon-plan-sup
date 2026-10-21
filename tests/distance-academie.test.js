@@ -81,7 +81,7 @@ test("formations : académie d'après le département Parcoursup ; campus à l'�
   const { E, DATA } = site;
   const F = (id) => DATA.formations.find((f) => f.id === id);
   const londres = F("ps-12025");   // Dauphine, campus de Londres (fiche éditoriale, ville « Londres »)
-  assert.ok(londres && londres.pays === "France");
+  assert.ok(londres && londres.pays === "Royaume-Uni" && londres.__campusEtranger, "pays réel (issue #16)");
   assert.equal(E.situer(londres).etranger, true);
   const londresPs = F("psup-25819");   // même campus, fiche Parcoursup (département vide, coordonnées à Londres)
   assert.equal(E.situer(londresPs).etranger, true);
@@ -92,9 +92,13 @@ test("formations : académie d'après le département Parcoursup ; campus à l'�
   for (const id of ["ps-12025", "psup-25819"]) {
     const x = A.resultats.find((r) => r.f.id === id);
     assert.equal(x.dist, null, id);
-    assert.equal(x.exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
+    // « fragile » veut aussi rester en France : la règle « étranger » passe d'abord, comme pour une formation étrangère (issue #16)
+    assert.equal(x.exclu, "Tu as indiqué vouloir rester en France.", id);
     assert.notEqual(x.categorie, "securite");
   }
+  // le même élève, ouvert à l'étranger mais qui veut rester chez ses parents : exclue par la règle « domicile »
+  const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [] })).A;
+  for (const id of ["ps-12025", "psup-25819"]) assert.equal(ouvert.resultats.find((r) => r.f.id === id).exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
   // des formations de chaque académie d'Île-de-France sont bien reconnues
   const aca = new Set(DATA.formations.filter((f) => f.pays === "France").map((f) => E.situer(f).academie));
   for (const a of ["Paris", "Créteil", "Versailles", "Normandie", "Corse", "La Réunion"]) assert.ok(aca.has(a), a);

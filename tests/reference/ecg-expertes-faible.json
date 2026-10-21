@@ -798,11 +798,11 @@
     ]
    },
    {
-    "id": "psup-39294",
+    "id": "psup-39903",
     "categorie": "realiste",
-    "pertinence": 73.544,
+    "pertinence": 73.54210810429116,
     "repere": [
-     43,
+     30,
      "au_dessus"
     ]
    },
@@ -852,7 +852,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "3d8fe52da9025b75ba3a806d688fe5451904399956269a045cc1fe1c6d2b4ade",
-  "textes": "432027f10b966f920169c27027d05a15d1b41a4855daf9b55d719b5e67234471"
+  "calculs": "a30b36096ad92f95a3f434ae0b33505c3f74c3fbb5ce8f3d3eb7a848b9da30d6",
+  "textes": "be5436ac4b5e638783ba2dc1882d484bf6b5b6072bace48fe1a03565e3d0cfb8"
  }
 }
