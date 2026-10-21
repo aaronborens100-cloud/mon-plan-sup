@@ -813,19 +813,19 @@
     ]
    },
    {
-    "id": "psup-32300",
-    "categorie": "ambitieux",
-    "pertinence": 80.9645475507334,
+    "id": "ps-2415",
+    "categorie": "securite",
+    "pertinence": 82.30698796192235,
     "repere": [
-     14,
+     57,
      "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {

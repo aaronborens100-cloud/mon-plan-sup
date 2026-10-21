@@ -814,19 +814,19 @@
     ]
    },
    {
-    "id": "psup-25831",
-    "categorie": "ambitieux",
-    "pertinence": 68.11033296289608,
+    "id": "psup-36525",
+    "categorie": "securite",
+    "pertinence": 70.75946737958077,
     "repere": [
-     45,
-     "en_dessous"
+     57,
+     "au_dessus"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {
@@ -837,7 +837,7 @@
     "economie"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la science politique : on a concentré tes vœux sur licence de droit ou science po, avec double licence et année préparatoire ou de mise à niveau comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour la science politique : on a concentré tes vœux sur licence de droit ou science po, avec diplôme d'université ou d'établissement et double licence comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [

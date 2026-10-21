@@ -301,7 +301,9 @@ une formation à 43 % → ambitieux.
 - Les jurys lisent tout le dossier : appréciations, projet motivé, spécialités, progression,
   lycée d'origine. La catégorie n'en tient compte que pour les points bloquants.
 - Une liste peut ne pas trouver 3 vœux « sécurité » : c'est une information pour l'élève (alerte
-  « Pas assez de vœux vraiment sûrs »), pas un défaut à corriger en relâchant les règles.
+  « Pas assez de vœux vraiment sûrs »), pas un défaut à corriger en relâchant les règles. Une liste
+  avec moins de 3 vœux « sécurité » affiche toujours cette alerte : la place d'un vœu « découverte »
+  écarté en fin de liste est rendue à sa catégorie et remplie avec les mêmes règles (`wishlist`, issue #17).
 
 ## 8. Académie, distance et départage
 

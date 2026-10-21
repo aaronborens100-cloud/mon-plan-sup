@@ -805,11 +805,11 @@
     ]
    },
    {
-    "id": "psup-43011",
-    "categorie": "ambitieux",
-    "pertinence": 63.83975627889662,
+    "id": "psup-2290",
+    "categorie": "realiste",
+    "pertinence": 53.853596962195695,
     "repere": [
-     43,
+     100,
      "en_dessous"
     ]
    }
@@ -819,7 +819,9 @@
    "niveau": "minimum",
    "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
-  "alertes": [],
+  "alertes": [
+   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
+  ],
   "certitude": {
    "niveau": "decide",
    "top": [
