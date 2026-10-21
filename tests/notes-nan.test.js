@@ -32,7 +32,7 @@ for (const p of PROFILS) {
 
 test("fiche sans domaines : notée sans le terme « domaines », avec un ajustement visible", () => {
   const { E, DATA, QUEST } = site;
-  const p = PROFILS[0];
+  const p = PROFILS.find((x) => x.id === "eco-moyen");   // profil qui a répondu au questionnaire
   const A = E.recommander(DATA.formations, p.profil, QUEST, p.reponses);
   const sans = A.resultats.filter((x) => !(x.f.domaines || []).length);
   assert.ok(sans.length > 0, "Aucune fiche sans domaines dans le catalogue : test à revoir.");
