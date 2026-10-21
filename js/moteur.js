@@ -404,6 +404,24 @@
   const MESSAGE_AUCUN_AUTRE_PAYS = "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.";
   const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
   const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
+  // Règle « établissement privé aux frais inconnus » (décision du fondateur du 21/10/2026, option A). Concerne un élève
+  // au budget serré (budget_max ≤ BUDGET_SERRE_MAX : réponses « gratuit » et « faible ») et une formation française dont
+  // l'établissement n'est pas « Publics » d'après Parcoursup (champ tc de data/parcoursup.json, f.__tc) et dont les frais
+  // annuels ne sont pas chiffrés. On n'invente aucun montant : la formation reste dans les résultats, avec un malus
+  // d'intérêt, n'est jamais « sécurité » et affiche MESSAGE_PRIVE_FRAIS_INCONNUS. Statut inconnu (fiche non liée à
+  // Parcoursup) ou frais connus : rien ne change.
+  const BUDGET_SERRE_MAX = 5000;
+  // Malus d'intérêt : la même valeur que « frais au-dessus de ton budget » (−18, frais connus mais pas assez au-dessus du
+  // budget pour exclure la formation). Choix éditorial : les frais d'un établissement privé non relevés peuvent dépasser
+  // le budget, sans qu'on sache de combien ; on applique donc le malus le plus fort que le site donne sans exclure, et
+  // jamais l'exclusion (réservée aux frais connus à plus du double du budget).
+  const MALUS_PRIVE_FRAIS_INCONNUS = 18;
+  const MESSAGE_PRIVE_FRAIS_INCONNUS = "Établissement privé : vérifie les frais avant de le mettre dans tes vœux, ils peuvent dépasser ton budget.";
+  const REGLE_PRIVE_FRAIS_INCONNUS = { cle: "prive_frais_inconnus", categorie: "realiste", texte: MESSAGE_PRIVE_FRAIS_INCONNUS };
+  const TC_PUBLIC = "Publics";
+  // f.__tc est posé par app.js (lierParcoursup) pour les seules fiches liées à Parcoursup
+  const priveFraisInconnus = (f, cout, budgetMax) => budgetMax !== undefined && budgetMax <= BUDGET_SERRE_MAX
+    && f.pays === "France" && typeof f.__tc === "string" && f.__tc !== TC_PUBLIC && cout == null;
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
   const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
   const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
@@ -648,6 +666,9 @@
       if (p.budget_max <= 5000 && cout > p.budget_max * 2) exclu = exclu || `Frais (≈ ${fmtEur(cout)}/an) au-delà de ton budget.`;
       else { interet -= 18; ajust.push("frais au-dessus de ton budget"); }
     }
+    // budget serré et établissement privé (Parcoursup) aux frais non chiffrés : malus, jamais « sécurité », message
+    const priveFI = priveFraisInconnus(f, cout, p.budget_max);
+    if (priveFI) { interet -= MALUS_PRIVE_FRAIS_INCONNUS; ajust.push("établissement privé aux frais non relevés"); }
     // distance au lycée de l'élève et envie de bouger (question « mobilite ») ; sans lycée, ni distance ni académie
     const lieu = f.pays === "France" ? situer(f) : { dep: null, academie: null, zone: null, etranger: true };
     const loinPays = etranger || lieu.etranger;   // à l'étranger, y compris un campus enregistré « France » (Dauphine Londres)
@@ -699,8 +720,13 @@
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
     // zone non cochée dans « pays » (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
+    // établissement privé aux frais inconnus, budget serré : jamais « sécurité »
+    if (regle.categorie === "securite" && priveFI) regle = REGLE_PRIVE_FRAIS_INCONNUS;
     rep.regle = regle.cle;
     rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
+    // le message est affiché même quand une autre règle donne la catégorie
+    if (priveFI && regle !== REGLE_PRIVE_FRAIS_INCONNUS) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_PRIVE_FRAIS_INCONNUS}`;
+    rep.priveFraisInconnus = priveFI;
     // source de la règle, distincte de rep.source (source du taux d'accès)
     if (regle.cle === "licence_secteur") rep.sourceRegle = SOURCE_SECTEUR;
     const categorie = regle.categorie;
@@ -1121,5 +1147,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

@@ -11,7 +11,7 @@
  *   - contrôles permanents : aucun vœu sans statistiques, à relire ou visant les bacs pro ; aucun vœu
  *     « sécurité » sous 50 % de taux d'accès, au-delà de la distance acceptée ou hors des territoires choisis ;
  *     10 vœux ; protection() cohérente avec les catégories de la liste ;
- *   - les 7 profils de l'issue : 3 vœux « sécurité », sauf eco-moyen (aucun autre vœu sûr admissible : alerte).
+ *   - les 7 profils de l'issue : 3 vœux « sécurité » (eco-moyen : 2 et l'alerte avant la règle « prive_frais_inconnus »).
  *
  * Lancer : npm test
  */
@@ -62,6 +62,7 @@ for (const p of PROFILS) {
         assert.ok(typeof x.repere.taux === "number" && x.repere.taux >= E.SEUIL_TAUX_SECURITE, `${ctx} : ${x.f.id} « sécurité » à ${x.repere.taux} %`);
         assert.equal(x.horsDistance, false, `${ctx} : ${x.f.id} « sécurité » au-delà de la distance acceptée`);
         assert.equal(x.horsTerritoire, false, `${ctx} : ${x.f.id} « sécurité » hors des territoires choisis`);
+        assert.equal(x.repere.priveFraisInconnus, false, `${ctx} : ${x.f.id} « sécurité » privé aux frais inconnus avec un budget serré`);
       }
       // protection() cohérente avec les catégories
       assert.equal(W.protection.nbSecurite, secu.length, `${ctx} : protection()`);
@@ -74,12 +75,14 @@ for (const p of PROFILS) {
 
 test("issue #17 : la place d'une découverte écartée est rendue à sa catégorie", () => {
   const { DATA } = site;
-  const attendu = { "eco-moyen": 2, "sciences-ingenieur": 3, "droit-sciencespo": 3, "sante-svt": 3, indecis: 3, "international-langues": 3, "baisse-dernier-trimestre": 3 };
+  // eco-moyen (budget « faible ») : 3 depuis la règle « prive_frais_inconnus » (21/10/2026) ; avant : 2, avec l'alerte
+  const attendu = { "eco-moyen": 3,"sciences-ingenieur": 3, "droit-sciencespo": 3, "sante-svt": 3, indecis: 3, "international-langues": 3, "baisse-dernier-trimestre": 3 };
   for (const [id, n] of Object.entries(attendu)) {
     const { W } = analyser(PROFILS.find((x) => x.id === id), DATA.formations);
     assert.equal(W.protection.nbSecurite, n, `${id} : vœux « sécurité »`);
-    // eco-moyen : la découverte (licence AES, Nîmes) est écartée par le plafond de sa voie, et aucun autre vœu
-    // « sécurité » ne respecte les règles : la place va au meilleur « réaliste » et l'alerte s'affiche
+    // eco-moyen, avant la règle « prive_frais_inconnus » : la découverte (licence AES, Nîmes) était écartée par le
+    // plafond de sa voie et aucun autre vœu « sécurité » ne respectait les règles (alerte). Les écoles privées aux
+    // frais inconnus ayant perdu 18 points d'intérêt, la licence AES de Nîmes entre dans la liste en « sécurité ».
     assert.equal(W.alertes.some((a) => ALERTE_SURS.test(a)), n < 3, `${id} : alerte « sécurité »`);
   }
 });

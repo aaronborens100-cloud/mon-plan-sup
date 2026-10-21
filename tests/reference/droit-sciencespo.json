@@ -639,21 +639,6 @@
    "exclu": null
   },
   {
-   "id": "institut-catholique-de-toulouse-toulouse-licence-droit-parcours-culture-juridique",
-   "interet": 80.07072323318462,
-   "faisabilite": 99.9,
-   "pertinence": 88.00243393991079,
-   "repere": [
-    71,
-    0.66,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-27741",
    "interet": 79.98998165210341,
    "faisabilite": 100,
@@ -727,6 +712,21 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
+   "interet": 85.14001743034449,
+   "faisabilite": 91.9,
+   "pertinence": 87.8440104582067,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -741,11 +741,20 @@
     ]
    },
    {
-    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
+    "id": "psup-11080",
     "categorie": "securite",
-    "pertinence": 85.78687587749553,
+    "pertinence": 80.86323689042737,
     "repere": [
-     100,
+     51,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-42939",
+    "categorie": "securite",
+    "pertinence": 77.64357053173785,
+    "repere": [
+     55,
      "au_dessus"
     ]
    },
@@ -786,24 +795,6 @@
     ]
    },
    {
-    "id": "psup-32304",
-    "categorie": "realiste",
-    "pertinence": 77.28577211964797,
-    "repere": [
-     38,
-     "au_dessus"
-    ]
-   },
-   {
-    "id": "psup-12224",
-    "categorie": "realiste",
-    "pertinence": 76.20361121929224,
-    "repere": [
-     79,
-     "moyenne"
-    ]
-   },
-   {
     "id": "psup-43210",
     "categorie": "realiste",
     "pertinence": 75.14817769982778,
@@ -813,12 +804,21 @@
     ]
    },
    {
-    "id": "psup-42939",
-    "categorie": "securite",
-    "pertinence": 77.64357053173785,
+    "id": "psup-11488",
+    "categorie": "realiste",
+    "pertinence": 72.51098679555363,
     "repere": [
-     55,
+     43,
      "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-33111",
+    "categorie": "realiste",
+    "pertinence": 83.05732310949091,
+    "repere": [
+     65,
+     "moyenne"
     ]
    }
   ],
@@ -849,35 +849,13 @@
    "interet": 78.98025682030571
   },
   {
-   "id": "psup-53570",
-   "interet": 78.97652649200347
+   "id": "psup-53196",
+   "interet": 78.9496816542897
   }
  ],
  "etranger": {
   "mode": "echange",
   "liste": [
-   {
-    "x": {
-     "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-double-licence-droit-science-politique",
-     "categorie": "securite",
-     "pertinence": 87.43968158570894,
-     "repere": [
-      89,
-      "moyenne"
-     ]
-    }
-   },
-   {
-    "x": {
-     "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
-     "categorie": "realiste",
-     "pertinence": 86.86444596021445,
-     "repere": [
-      80,
-      "moyenne"
-     ]
-    }
-   },
    {
     "x": {
      "id": "u-d-orleans-orleans-double-licence-droit-histoire",
@@ -888,11 +866,33 @@
       "moyenne"
      ]
     }
+   },
+   {
+    "x": {
+     "id": "u-paris-1-pantheon-sorbonne-paris-double-licence-droit-philosophie",
+     "categorie": "ambitieux",
+     "pertinence": 82.54541948431591,
+     "repere": [
+      20,
+      "en_dessous"
+     ]
+    }
+   },
+   {
+    "x": {
+     "id": "u-paris-nanterre-nanterre-double-licence-droit-philosophie",
+     "categorie": "ambitieux",
+     "pertinence": 82.51050961770008,
+     "repere": [
+      29,
+      "en_dessous"
+     ]
+    }
    }
   ]
  },
  "empreintes": {
-  "calculs": "8625ee299540d9cf10a8d3dbd0fb0db79f141c6e04a5aada61022f54dd8d593e",
-  "textes": "9b90f0c89c49db88b7ff45d372cb52709fd3038b8b7b1bb48d694a7b0a341948"
+  "calculs": "c653ed39030ec1a02f285cac219f38968660e8656523517a66abd6c22e0c6a4b",
+  "textes": "d79e079d4b4a6ed91966a80ac365d2af2d5775ee098b092e402e06de706030f2"
  }
 }

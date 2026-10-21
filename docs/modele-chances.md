@@ -185,7 +185,8 @@ Les règles sont lues dans l'ordre (`REGLES_CATEGORIE`) : nouvelle formation, po
 notes et taux non publié passent avant les règles des formations très ouvertes.
 
 Après la table, une formation « sécurité » au-delà de la distance acceptée par l'élève (ou de l'autre côté de la
-mer, à l'étranger, ou sans coordonnées) devient « réaliste » (section 8.3).
+mer, à l'étranger, ou sans coordonnées) devient « réaliste » (section 8.3). Même chose hors des territoires choisis
+(section 8.5) et, pour un élève au budget serré, dans un établissement privé aux frais inconnus (section 9).
 
 ### Formations très ouvertes (`SEUIL_TAUX_TRES_OUVERT = 85`)
 
@@ -510,3 +511,34 @@ combine avec toutes les cases de « pays » (js/app.js : cocher l'une ne décoch
   vient des choix de l'élève, pas d'une donnée officielle.
 - Limites connues : la question est dans le thème « International » : un élève de Corse ou
   d'outre-mer qui ne veut pas partir à l'étranger peut ne pas penser à y cocher « continent ».
+
+## 9. Budget serré et établissements privés aux frais inconnus
+
+Décision du fondateur du 21/10/2026 (option A). Code : `js/moteur.js` (`priveFraisInconnus`, `evaluer`), statut posé
+par `lierParcoursup` (`js/app.js`).
+
+Constat : le budget (question « budget », `budget_max` : gratuit = 1 000, faible = 5 000, moyen = 20 000,
+eleve = 80 000) n'agit que si les frais de la formation sont chiffrés. Presque aucune formation privée n'a de frais
+relevés : le profil « fragile » (budget « gratuit ») recevait 4 écoles de commerce privées aux frais inconnus (et une
+cinquième fiche sans lien Parcoursup) sur 10 vœux.
+
+- **Qui** : élève dont `budget_max` ≤ `BUDGET_SERRE_MAX` = 5 000 (« gratuit » et « faible ») ; formation française
+  dont l'établissement n'est **pas** « Publics » d'après Parcoursup (champ `tc` de `data/parcoursup.json` :
+  « Privés en contrat avec l'Etat / EESC » ou « Privés »), et dont les frais annuels ne sont pas chiffrés.
+- **Effet** : la formation reste dans les résultats, avec un malus d'intérêt `MALUS_PRIVE_FRAIS_INCONNUS` = 18
+  (ajustement « établissement privé aux frais non relevés »). Elle n'est jamais « sécurité »
+  (`REGLE_PRIVE_FRAIS_INCONNUS`, clé `prive_frais_inconnus`, appliquée après les règles de distance et de territoire),
+  ni dans la liste ni dans `protection()`. Elle affiche (texte de catégorie, Ma liste, cartes) : « Établissement
+  privé : vérifie les frais avant de le mettre dans tes vœux, ils peuvent dépasser ton budget. »
+- **Malus de 18** : la même valeur que « frais au-dessus de ton budget » (frais connus, mais pas plus du double du
+  budget). C'est le malus le plus fort que le site applique sans exclure. Choix éditorial : on ne sait pas si les
+  frais dépassent le budget, donc on n'exclut pas (l'exclusion reste réservée aux frais connus à plus du double du
+  budget), mais on ne les traite pas mieux qu'un dépassement connu.
+- **Sans effet** : établissement « Publics » ; frais chiffrés (règle actuelle) ; budget « moyen », « eleve » ou pas
+  de réponse ; statut inconnu (fiche de `data/formations.json` non liée à Parcoursup : 194 fiches françaises aux frais
+  inconnus, dont 6 peuvent entrer dans la liste de vœux). Aucun montant n'est inventé et « cher » n'est déduit de rien
+  d'autre que le statut Parcoursup.
+- **Formations concernées** (budget « gratuit » ou « faible ») : 3 287 formations françaises (1 976 privées sous
+  contrat ou consulaires, 1 311 privées), dont 1 241 peuvent entrer dans la liste de vœux (990 et 251).
+- **Limites** : le statut ne dit rien du montant (un établissement privé peut avoir des frais faibles) ; seul un
+  relevé sourcé des frais lève la règle pour une formation.
