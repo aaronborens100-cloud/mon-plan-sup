@@ -919,9 +919,14 @@
     // 2. vœux principaux, catégorie par catégorie (3 sûrs, 3 ambitieux, 4 réalistes, moins les découvertes)
     const nDec = { securite: 0, realiste: 0, ambitieux: 0 };
     decouvertes.forEach((x) => { nDec[x.categorie]++; });
-    const quotas = [["securite", 3], ["ambitieux", 3], ["realiste", 4]].map(([c, q]) => [c, Math.max(0, q - nDec[c])]);
+    const QUOTAS = { securite: 3, ambitieux: 3, realiste: 4 };
+    const quotas = Object.entries(QUOTAS).map(([c, q]) => [c, Math.max(0, q - nDec[c])]);
     const alertes = [];
-    for (const [cat, q] of quotas) {
+    const alerteDe = {};   // une seule alerte par catégorie
+    const alerter = (cat, texte) => { if (!alerteDe[cat]) { alerteDe[cat] = true; alertes.push(texte); } };
+    // remplit q places de la catégorie cat (mêmes règles de diversité, même plancher) ; s'il manque des vœux
+    // « sécurité », les places restantes vont aux meilleurs « réalistes » (plancher abaissé de 10) et l'alerte s'affiche
+    const remplir = (cat, q, alerteQ = q) => {
       const dispo = ok.filter((x) => x.categorie === cat && !decouvertes.has(x.f.id));
       let k = 0;
       while (k < q) { const x = meilleur(dispo); if (!x) break; prend(x); k++; }
@@ -930,11 +935,17 @@
           plancher -= 10;
           while (k < q) { const x = meilleur(ok.filter((y) => y.categorie === "realiste" && !decouvertes.has(y.f.id))); if (!x) break; prend(x); k++; }
           plancher += 10;
-          alertes.push("Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).");
-        } else alertes.push(`Moins de ${q} vœux « ${CAT_LABEL[cat].toLowerCase()} » disponibles avec tes critères.`);
+          alerter(cat, "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).");
+        } else alerter(cat, `Moins de ${alerteQ} vœux « ${CAT_LABEL[cat].toLowerCase()} » disponibles avec tes critères.`);
       }
-    }
-    for (const x of decouvertes.values()) if (choisis.length < n && peut(x)) prend(x); else decouvertes.delete(x.f.id);
+    };
+    for (const [cat, q] of quotas) remplir(cat, q);
+    // 3. découvertes : ajoutées si elles respectent encore les règles. Une découverte écartée (un vœu de même filière
+    //    et de même catégorie, ou le plafond de sa voie, a été atteint entre-temps) rend sa place de quota, remplie
+    //    par le meilleur vœu admissible de sa catégorie (issue #17).
+    const ecartees = [];
+    for (const x of decouvertes.values()) if (choisis.length < n && peut(x)) prend(x); else { decouvertes.delete(x.f.id); ecartees.push(x); }
+    for (const x of ecartees) if (choisis.length < n) remplir(x.categorie, 1, QUOTAS[x.categorie]);
     const reste = ok.filter((x) => !decouvertes.has(x.f.id) || choisis.includes(x));
     while (choisis.length < n) { const x = meilleur(reste); if (!x) break; prend(x); }
     // trop peu de voies différentes : on relâche la diversité plutôt que de rendre une liste incomplète
