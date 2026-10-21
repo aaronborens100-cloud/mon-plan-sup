@@ -785,12 +785,12 @@
     ]
    },
    {
-    "id": "psup-28972",
-    "categorie": "ambitieux",
-    "pertinence": 75.60000000000001,
+    "id": "psup-26820",
+    "categorie": "securite",
+    "pertinence": 71.33000000000001,
     "repere": [
-     12,
-     "en_dessous"
+     100,
+     "au_dessus"
     ]
    },
    {
@@ -804,9 +804,9 @@
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {
@@ -817,7 +817,7 @@
     "economie"
    ]
   },
-  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 7 types de formations pour garder un maximum de portes ouvertes.",
+  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 8 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
  "nouvelles": [

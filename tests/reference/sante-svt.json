@@ -803,19 +803,19 @@
     ]
    },
    {
-    "id": "psup-11707",
-    "categorie": "realiste",
-    "pertinence": 70.25629641368283,
+    "id": "u-cote-d-azur-geographie-et-amenagement",
+    "categorie": "securite",
+    "pertinence": 72.00018246739148,
     "repere": [
-     83,
+     98,
      "moyenne"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
   "alertes": [],
   "certitude": {
@@ -826,7 +826,7 @@
     "ingenierie_tech"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et PASS ou LAS (santé) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et licence de lettres ou sciences humaines comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
