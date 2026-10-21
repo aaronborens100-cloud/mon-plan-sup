@@ -184,11 +184,13 @@
   }
   const libTauxAcces = (r) => `Taux d'accès${r.session ? " " + r.session : ""}`;
   // Ligne courte des cartes : taux d'accès (session, source) et position de l'élève en une phrase
+  // (cartes et Ma liste), suivie du message « établissement privé aux frais inconnus » (budget serré) s'il s'applique
   function ligneRepere(x) {
     const r = x.repere;
-    if (r.nouvelle || r.sansStats) return "";
+    const alerteFrais = r.priveFraisInconnus && !x.exclu ? `<p class="small texte-bad">${esc(E.MESSAGE_PRIVE_FRAIS_INCONNUS)}</p>` : "";
+    if (r.nouvelle || r.sansStats) return alerteFrais;
     const st = sourceTaux(x.f);
-    return `<p class="small repere-ligne">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong>${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"} ${esc(r.texte)}</p>`;
+    return `<p class="small repere-ligne">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong>${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"} ${esc(r.texte)}</p>${alerteFrais}`;
   }
   // Bloc de la fiche : position, taux d'accès, catégorie et sa règle, limite du repère
   function blocRepere(x) {
@@ -699,7 +701,7 @@
       ${notesSur5(best)}
       <div class="crit">${C.map(([l, c]) => `<div class="crit-item" title="${esc(c.texte)}"><span class="crit-l">${l}</span>${niveauBarre(c.niveau)}<span class="crit-v lvl-${c.niveau}">${E.NIVEAUX[c.niveau].label}</span></div>`).join("")}</div>
       ${(() => { const tete = `<div class="table-wrap"><table class="fam-table"><thead><tr><th scope="col">${prepa ? "Lycée" : "Établissement"}</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th></tr></thead><tbody>`;
-        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div><div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td></tr>`; };
+        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div>${x.repere.priveFraisInconnus && !x.exclu ? `<div class="tiny texte-bad">${esc(E.MESSAGE_PRIVE_FRAIS_INCONNUS)}</div>` : ""}<div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td></tr>`; };
         const VIS = 5, debut = membres.slice(0, VIS), reste = membres.slice(VIS);
         return tete + debut.map(ligne).join("") + "</tbody></table></div>" + (reste.length ? `<details class="fam-plus"><summary>${ico("groupe")}Voir les ${reste.length} autres ${lieu}</summary>${tete}${reste.map(ligne).join("")}</tbody></table></div></details>` : ""); })()}
       <p class="tiny muted">Sur Parcoursup, chaque ${prepa ? "lycée" : "établissement"} est un vœu distinct : choisis-en un ou deux dans cette famille et complète avec d'autres niveaux d'exigence.</p>
@@ -1185,9 +1187,12 @@
     for (const c of LIEUX.communes) (VILLES_GPS[sansAccents(c.commune)] = VILLES_GPS[sansAccents(c.commune)] || []).push(c);
     E.definirLieux(li);   // département d'un lycée ou d'un campus d'après ses coordonnées (académie, zone, campus à l'étranger)
   }
-  // Champs Parcoursup lus par le moteur : département (académie), code gta et places (départage), sélectivité (secteur des licences)
+  // Champs Parcoursup lus par le moteur : département (académie), code gta et places (départage), sélectivité (secteur des
+  // licences), statut de l'établissement (champ tc : « Publics », « Privés en contrat avec l'Etat / EESC », « Privés » ;
+  // règle « prive_frais_inconnus »). Fiche non liée à Parcoursup : __tc absent, statut inconnu.
   function lierParcoursup(f, r) {
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
+    f.__tc = r.tc || null;
   }
   // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
   // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs

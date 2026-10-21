@@ -335,21 +335,6 @@
    "exclu": null
   },
   {
-   "id": "psup-18647",
-   "interet": 85.33333333333334,
-   "faisabilite": 77.55,
-   "pertinence": 82.22,
-   "repere": [
-    84,
-    0.51,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-6613",
    "interet": 85.33333333333334,
    "faisabilite": 77.55,
@@ -708,6 +693,21 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-10704",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    24,
+    0.37,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -785,11 +785,11 @@
     ]
    },
    {
-    "id": "psup-26820",
+    "id": "psup-11266",
     "categorie": "securite",
-    "pertinence": 71.33000000000001,
+    "pertinence": 76.59,
     "repere": [
-     100,
+     58,
      "au_dessus"
     ]
    },
@@ -817,7 +817,7 @@
     "economie"
    ]
   },
-  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 8 types de formations pour garder un maximum de portes ouvertes.",
+  "explication": "Tu sembles hésiter entre la santé et le social, le sport et l'économie : on a réparti tes vœux sur 7 types de formations pour garder un maximum de portes ouvertes.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -830,8 +830,8 @@
    "interet": 85.33333333333334
   },
   {
-   "id": "psup-52022",
-   "interet": 85.33333333333334
+   "id": "psup-51310",
+   "interet": 75.61111111111111
   }
  ],
  "etranger": {
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "c5f2629ec1d0e4b0eb5945e4f540ddd211a397cf5b0ef14fcfb82026cc47c979",
-  "textes": "38cd6415e02590c95df37e950b6b53fedaf6042fc6388ea92c2b7f652d757d93"
+  "calculs": "ce9f6dccb5e46b2d175a3f343ab9108ef733be68fed91165eb44b5833fdb1dd9",
+  "textes": "95a993ef33f5694f744ac8b3adf6547d31621e2d252e0c8cf5c83be896b783fd"
  }
 }

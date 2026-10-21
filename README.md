@@ -176,6 +176,14 @@ Corse, outre-mer et continent : en dehors de la zone de son lycée, seules les z
 où ? » (question « pays ») peuvent être « sécurité » (`REGLE_HORS_TERRITOIRE`, docs/modele-chances.md 8.5). Sans lycée, les règles de distance et d'académie ne s'appliquent pas et
 Ma liste affiche `MESSAGE_SANS_LYCEE`.
 
+## Budget serré et établissements privés
+
+Détails : `docs/modele-chances.md`, section 9. Pour un élève au budget « gratuit » ou « faible » (`budget_max` ≤
+`BUDGET_SERRE_MAX` = 5 000), une formation française d'un établissement qui n'est pas « Publics » selon Parcoursup
+(champ `tc`) et dont les frais ne sont pas chiffrés reste proposée, avec un malus d'intérêt
+(`MALUS_PRIVE_FRAIS_INCONNUS` = 18), n'est jamais « sécurité » (règle `prive_frais_inconnus`) et affiche
+`MESSAGE_PRIVE_FRAIS_INCONNUS`. Statut inconnu (fiche non liée à Parcoursup) ou frais connus : rien ne change.
+
 ## Protection de la liste de vœux
 
 Le site n'affiche aucune probabilité globale d'admission pour la liste : les vœux ne sont pas indépendants
