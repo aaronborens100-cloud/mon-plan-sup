@@ -151,6 +151,8 @@
       anglais, anglaisCertifie: !!niv[0], ecartClasse: r1(moyenne(ecartsClasse)), rangRelatif: moyenne(rangs),
       nbExperiences: exps.length, nbExperiencesFortes: exps.filter((e) => ["competition", "responsabilite", "projet", "stage"].includes(e.type)).length,
       geo: p.lycee && p.lycee.lat != null ? { lat: p.lycee.lat, lon: p.lycee.lon, nom: p.lycee.nom } : null,
+      // département, académie, secteur Parcoursup (licences) et zone (continent, Corse, outre-mer) du lycée ; null sans lycée
+      ...lieuEleve(p.lycee),
       certifications: certs, specialites: p.specialites || [], abandonnee: p.specialiteAbandonnee || "", optionMaths: p.optionMaths || "aucune",
       niveau: p.niveau || "terminale", nbPeriodes: periodes.length, bacPremiere: { francaisEcrit: fe, francaisOral: fo, maths: ma, scoreSciencesPo: r1(eaf) },
       appreciations: appr,
@@ -354,6 +356,11 @@
       texte: `Sans tes notes, on ne peut pas te situer parmi les admis : catégorie déduite du seul taux d'accès (moins de ${SEUIL_TAUX_SECURITE} % ou non publié). Renseigne tes bulletins.` },
     { cle: "taux_bas", categorie: "ambitieux", si: (r) => r.taux !== null && r.taux < SEUIL_TAUX_AMBITIEUX,
       texte: `Moins de ${SEUIL_TAUX_AMBITIEUX} % des candidats ont reçu une proposition : « ambitieux », même avec un très bon dossier.` },
+    // Licence non sélective du secteur de l'élève (SOURCE_SECTEUR) : les candidats du secteur sont prioritaires et le
+    // recteur plafonne la part des candidats hors secteur. Règle validée par le fondateur (20/10/2026) : « dans la
+    // moyenne » suffit dès 50 %. Le texte affiché dépend de la question « mobilite » : voir texteLicenceSecteur().
+    { cle: "licence_secteur", categorie: "securite", si: (r) => r.secteur === true && r.taux !== null && r.taux >= SEUIL_TAUX_SECURITE && r.taux < SEUIL_TAUX_TRES_OUVERT && r.position === "moyenne",
+      texte: `Au moins ${SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition et ta moyenne est dans celle des admis. Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).` },
     { cle: "tres_ouverte", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && (r.position === "moyenne" || r.position === "au_dessus"),
       texte: `Formation très ouverte : au moins ${SEUIL_TAUX_TRES_OUVERT} % des candidats ont reçu une proposition en 2025.` },
     { cle: "tres_ouverte_en_dessous", categorie: "realiste", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && r.position === "en_dessous",
@@ -367,16 +374,222 @@
       texte: `Pour être « sécurité », il faut un taux d'accès d'au moins ${SEUIL_TAUX_SECURITE} % et une moyenne au-dessus de celle de la plupart des admis : « réaliste ».` },
   ];
   const regleCategorie = (r, bloque) => REGLES_CATEGORIE.find((g) => g.si(r, bloque));
+  // Appliquée après la table : un vœu au-delà de la distance acceptée (question « mobilite ») n'est jamais « sécurité »
+  const REGLE_HORS_DISTANCE = { cle: "hors_distance", categorie: "realiste",
+    texte: "Plus loin que la distance que tu acceptes (ou de l'autre côté de la mer) : jamais « sécurité », même si tes chiffres sont bons." };
+  const REGLE_DISTANCE_INCONNUE = { cle: "distance_inconnue", categorie: "realiste",
+    texte: "Adresse de la formation inconnue : on ne peut pas vérifier qu'elle est à la distance que tu acceptes, donc jamais « sécurité »." };
+  // Règle du secteur de recrutement des licences non sélectives (consultée le 19/10/2026)
+  // Même forme que les autres sources du site ({ source, consulte_le }), affichée par srcLien() dans app.js
+  const SOURCE_SECTEUR = { source: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
+  // Texte de la règle « licence_secteur », d'après SOURCE_SECTEUR (FAQ Parcoursup « Prise en compte du secteur
+  // géographique », consultée le 19/10/2026) : priorité aux candidats du secteur. On ne dit jamais que la licence est
+  // « sûre » à cause du secteur : on explique la priorité. Pour un élève prêt à partir (mobilite 2), on ajoute pourquoi
+  // garder ce vœu.
+  function texteLicenceSecteur(mobilite) {
+    const base = REGLES_CATEGORIE.find((g) => g.cle === "licence_secteur").texte;
+    return mobilite === 2 ? `${base} Même si tu veux partir, garder ce vœu te protège.` : base;
+  }
+  // Règle « territoires » (décision du fondateur du 20/10/2026), fondée sur la question « pays » (« Si tu partais,
+  // où ? »), qui propose aussi corse, outremer et continent. Ces trois valeurs ne sont pas des pays étrangers : elles
+  // ne jouent ni sur le malus « pays non choisi » ni sur etranger(). Appliquée après la table et la règle de distance :
+  // formation dans une zone que l'élève n'a pas cochée (et qui n'est pas celle de son lycée) : jamais « sécurité ».
+  const TERRITOIRES = ["corse", "outremer", "continent"];
+  const REGLE_HORS_TERRITOIRE = { cle: "hors_territoire", categorie: "realiste" };
+  // Pays étrangers cochés dans « pays » (sans « aucun » ni les territoires) ; paysCoche(f, voulus) : le pays de la
+  // formation en fait partie (« autre_europe » = tout pays hors des pays nommés)
+  const paysVoulus = (p) => (p.pays || []).filter((x) => x !== "aucun" && !TERRITOIRES.includes(x));
+  const PAYS_NOMMES = ["Royaume-Uni", "Pays-Bas", "Italie", "Espagne", "Suisse", "Allemagne", "États-Unis", "Canada"];
+  const paysCoche = (f, voulus) => voulus.some((x) => (x === "autre_europe" ? !PAYS_NOMMES.includes(f.pays) : f.pays.includes(x)));
+  const MESSAGE_AUCUN_AUTRE_PAYS = "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.";
+  const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
+  const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
   const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
   const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
 
+  /* ---------------------------------------------------------------- académies, zones, distance */
+  // Correspondance département → académie. Source : pages « Académie de … » du ministère de l'Éducation nationale
+  // (rubrique « Directions des services départementaux de l'Éducation nationale »), par exemple
+  // https://www.education.gouv.fr/academie-de-creteil-100052, https://www.education.gouv.fr/academie-de-versailles-100046,
+  // https://www.education.gouv.fr/academie-de-normandie-101186, https://www.education.gouv.fr/academie-de-corse-100109,
+  // et la liste des 30 académies : https://www.education.gouv.fr/les-regions-academiques-academies-et-services-departementaux-de-l-education-nationale-6557
+  // (mise à jour du 11/12/2025), consultées le 19/10/2026. Toutes les URL : docs/modele-chances.md, section 8.
+  // L'Île-de-France compte 3 académies (Paris, Créteil, Versailles) ; la Normandie n'en a qu'une ; chaque DROM a la sienne.
+  // Saint-Martin et Saint-Barthélemy : compétences exercées par le recteur de l'académie de la Guadeloupe (article D. 271-1
+  // du code de l'éducation, décret du 18/12/2008, BO n° 2 du 8 janvier 2009 : https://www.education.gouv.fr/bo/2009/2/mene0814102d.htm,
+  // consulté le 19/10/2026). La page de l'académie de Guadeloupe (https://www.education.gouv.fr/academie-de-guadeloupe-100115)
+  // ne cite pas ces deux collectivités.
+  // Polynésie française, Nouvelle-Calédonie, Saint-Pierre-et-Miquelon, Wallis-et-Futuna : vice-rectorats, pas d'académie.
+  const ACADEMIES = {
+    "Aix-Marseille": ["Alpes-de-Haute-Provence", "Hautes-Alpes", "Bouches-du-Rhône", "Vaucluse"],
+    "Amiens": ["Aisne", "Oise", "Somme"],
+    "Besançon": ["Doubs", "Jura", "Haute-Saône", "Territoire de Belfort"],
+    "Bordeaux": ["Dordogne", "Gironde", "Landes", "Lot-et-Garonne", "Pyrénées-Atlantiques"],
+    "Clermont-Ferrand": ["Allier", "Cantal", "Haute-Loire", "Puy-de-Dôme"],
+    "Corse": ["Corse-du-Sud", "Haute-Corse"],
+    "Créteil": ["Seine-et-Marne", "Seine-Saint-Denis", "Val-de-Marne"],
+    "Dijon": ["Côte-d'Or", "Nièvre", "Saône-et-Loire", "Yonne"],
+    "Grenoble": ["Ardèche", "Drôme", "Isère", "Savoie", "Haute-Savoie"],
+    "Lille": ["Nord", "Pas-de-Calais"],
+    "Limoges": ["Corrèze", "Creuse", "Haute-Vienne"],
+    "Lyon": ["Ain", "Loire", "Rhône"],
+    "Montpellier": ["Aude", "Gard", "Hérault", "Lozère", "Pyrénées-Orientales"],
+    "Nancy-Metz": ["Meurthe-et-Moselle", "Meuse", "Moselle", "Vosges"],
+    "Nantes": ["Loire-Atlantique", "Maine-et-Loire", "Mayenne", "Sarthe", "Vendée"],
+    "Nice": ["Alpes-Maritimes", "Var"],
+    "Normandie": ["Calvados", "Eure", "Manche", "Orne", "Seine-Maritime"],
+    "Orléans-Tours": ["Cher", "Eure-et-Loir", "Indre", "Indre-et-Loire", "Loir-et-Cher", "Loiret"],
+    "Paris": ["Paris"],
+    "Poitiers": ["Charente", "Charente-Maritime", "Deux-Sèvres", "Vienne"],
+    "Reims": ["Ardennes", "Aube", "Marne", "Haute-Marne"],
+    "Rennes": ["Côtes-d'Armor", "Finistère", "Ille-et-Vilaine", "Morbihan"],
+    "Strasbourg": ["Bas-Rhin", "Haut-Rhin"],
+    "Toulouse": ["Ariège", "Aveyron", "Haute-Garonne", "Gers", "Lot", "Hautes-Pyrénées", "Tarn", "Tarn-et-Garonne"],
+    "Versailles": ["Yvelines", "Essonne", "Hauts-de-Seine", "Val-d'Oise"],
+    "Guadeloupe": ["Guadeloupe", "Saint-Martin", "Saint-Barthélemy"], "Martinique": ["Martinique"], "Guyane": ["Guyane"], "La Réunion": ["La Réunion"], "Mayotte": ["Mayotte"],
+  };
+  // « Corse-du-Sud », « Corse du Sud », « Deux-sèvres », « Polynésie Française » : même clé
+  const normLieu = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const ACADEMIE_DU_DEP = {};
+  for (const [a, deps] of Object.entries(ACADEMIES)) for (const d of deps) ACADEMIE_DU_DEP[normLieu(d)] = a;
+  const academieDe = (dep) => (dep ? ACADEMIE_DU_DEP[normLieu(dep)] || null : null);
+  // Secteur de recrutement Parcoursup des licences non sélectives : en général l'académie ; les candidats des académies
+  // de Paris, Créteil et Versailles forment un seul secteur (FAQ Parcoursup, voir SOURCE_SECTEUR).
+  const ACADEMIES_IDF = ["Paris", "Créteil", "Versailles"];
+  const secteurDe = (academie) => (!academie ? null : ACADEMIES_IDF.includes(academie) ? "Île-de-France" : academie);
+  // Zone géographique : le continent, la Corse et chaque territoire d'outre-mer. Passer d'une zone à l'autre demande
+  // une traversée (bateau ou avion) : la formation compte comme loin, quelle que soit la distance à vol d'oiseau.
+  const ZONES_ISOLEES = ["Corse-du-Sud", "Haute-Corse", "Guadeloupe", "Martinique", "Guyane", "La Réunion", "Mayotte",
+    "Polynésie française", "Nouvelle-Calédonie", "Saint-Martin", "Saint-Barthélemy", "Saint-Pierre-et-Miquelon", "St-Pierre-et-Miquelon", "Wallis-et-Futuna"];
+  const ZONE_DU_DEP = {};
+  for (const d of ZONES_ISOLEES) ZONE_DU_DEP[normLieu(d)] = /corse/i.test(d) ? "Corse" : d.replace(/^St-/, "Saint-");
+  const zoneDe = (dep) => (dep ? ZONE_DU_DEP[normLieu(dep)] || "continent" : null);
+
+  // Lieux français connus (data/lieux.json : lycées de l'annuaire de l'Éducation nationale, communes des formations
+  // Parcoursup), rangés dans une grille pour retrouver vite le département d'un point. Enregistrés par app.js.
+  const PAS_GRILLE = 0.5;   // degrés : une case fait au moins 35 km de côté, plus que SEUIL_KM_LIEU_FRANCAIS
+  // Un point à plus de 20 km de tout lycée et de toute commune de formation française n'est pas en France
+  // (Luxembourg : 24 km du lieu français le plus proche ; formation française la plus isolée : voir docs/modele-chances.md).
+  const SEUIL_KM_LIEU_FRANCAIS = 20;
+  let GRILLE = new Map(), DEP_DU_LYCEE = new Map();
+  const caseDe = (lat, lon) => `${Math.floor(lat / PAS_GRILLE)}:${Math.floor(lon / PAS_GRILLE)}`;
+  function definirLieux(li) {
+    GRILLE = new Map(); DEP_DU_LYCEE = new Map();
+    const ajoute = (lat, lon, dep) => {
+      if (lat == null || lon == null || !dep || dep === "Etranger") return;
+      const k = caseDe(lat, lon); if (!GRILLE.has(k)) GRILLE.set(k, []); GRILLE.get(k).push({ lat, lon, dep });
+    };
+    for (const [uai, , , dep, lat, lon] of (li && li.lycees) || []) { ajoute(lat, lon, dep); if (uai && dep) DEP_DU_LYCEE.set(uai, dep); }
+    for (const [, dep, lat, lon] of (li && li.communes) || []) ajoute(lat, lon, dep);
+  }
+  // Département du lieu français connu le plus proche (à moins de SEUIL_KM_LIEU_FRANCAIS), sinon null.
+  // undefined si on ne peut pas savoir (pas de coordonnées, ou lieux.json pas chargé).
+  function departementProche(g) {
+    if (!g || g.lat == null || g.lon == null || !GRILLE.size) return undefined;
+    const i = Math.floor(g.lat / PAS_GRILLE), j = Math.floor(g.lon / PAS_GRILLE);
+    let best = null, bd = SEUIL_KM_LIEU_FRANCAIS;
+    for (let a = i - 1; a <= i + 1; a++) for (let b = j - 1; b <= j + 1; b++) {
+      for (const p of GRILLE.get(`${a}:${b}`) || []) { const d = km(g, p); if (d <= bd) { bd = d; best = p.dep; } }
+    }
+    return best;
+  }
+  // Département du lycée : enregistré avec le lycée, sinon retrouvé par son code UAI, sinon par ses coordonnées
+  function departementLycee(l) {
+    if (!l || l.lat == null || l.lon == null) return null;
+    if (l.dep) return l.dep;
+    if (l.uai && DEP_DU_LYCEE.has(l.uai)) return DEP_DU_LYCEE.get(l.uai);
+    return departementProche(l);
+  }
+  // Campus enregistré « France » mais situé à l'étranger (Dauphine Londres, Madrid, ESSEC Singapour…) : repéré par sa
+  // ville, ou par des coordonnées trop loin de tout lieu français connu.
+  const VILLES_ETRANGERES = /^(londres|london|oxford|dublin|madrid|barcelone|barcelona|malaga|turin|berlin|bruxelles|luxembourg|monaco|budapest|singapour|hong kong|shanghai|hanoi|dubai|casablanca|rabat|yaounde|douala)\b/;
+  // Lieu d'une formation : { dep, academie, zone, etranger }. Département : celui de Parcoursup (f.__dep, posé par
+  // app.js depuis data/parcoursup.json, ou à défaut celui du lieu français le plus proche de ses coordonnées).
+  function situer(f) {
+    if (f.__lieu) return f.__lieu;
+    const ville = normLieu(String(f.ville || "").split(/\s*[/(]/)[0]);
+    const etranger = f.pays !== "France" || VILLES_ETRANGERES.test(ville) || /\bmonaco\b/.test(normLieu(f.etablissement))
+      || (!f.__dep && !!f.__gps && departementProche(f.__gps) === null);
+    const dep = etranger ? null : f.__dep || departementProche(f.__gps) || null;
+    const r = { dep, academie: academieDe(dep), zone: etranger ? null : zoneDe(dep), etranger };
+    if (GRILLE.size) f.__lieu = r;   // pas de cache tant que data/lieux.json n'est pas chargé
+    return r;
+  }
+
+  // Distance acceptée selon la réponse à la question « mobilite » (0 = rester chez mes parents, 1 = pas trop loin,
+  // 2 = n'importe où), comme annoncé dans la question : moins de 45 km, moins de 250 km, aucune limite. Au-delà, un vœu
+  // n'est jamais « sécurité » (horsDistance).
+  const DISTANCE_ACCEPTEE_KM = { 0: 45, 1: 250, 2: Infinity };
+  // Pénalité d'intérêt (points sur 100) pour chaque tranche de 100 km : « avant » jusqu'à la distance acceptée, « apres »
+  // au-delà, sans dépasser « plafond ». Choix éditoriaux (aucune donnée ne mesure l'effet de la distance) :
+  // - domicile : très forte (−4,5 à 45 km, −27 à 120 km, −40 dès 165 km environ) ;
+  // - proche : forte (−5 à 250 km, −20 à 400 km, −30 dès 500 km) ;
+  // - partout : légère (−0,5 par 100 km, au plus −6 : Nice → Paris ≈ −3,5), pour départager deux formations proches.
+  const PENALITE_DISTANCE = {
+    0: { avant: 10, apres: 30, plafond: 40 },
+    1: { avant: 2, apres: 10, plafond: 30 },
+    2: { avant: 0.5, apres: 0, plafond: 6 },
+  };
+  // Traversée (Corse ou outre-mer pour un élève du continent, et inversement) : la formation compte comme loin (jamais
+  // « sécurité » pour « domicile » et « proche »), et sa distance est allongée de SURCOUT_TRAVERSEE_KM, pour la pénalité
+  // comme pour le départage. La pénalité reste progressive et plafonnée : pour un élève d'Ajaccio, Nice et Marseille restent
+  // devant Lille. Choix éditorial : 100 km, l'ordre de grandeur d'un trajet supplémentaire (bateau ou avion, attente) ;
+  // aucune donnée ne le mesure.
+  const SURCOUT_TRAVERSEE_KM = 100;
+  const distanceEquivalente = (d, traversee) => (d === null || d === undefined ? d : d + (traversee ? SURCOUT_TRAVERSEE_KM : 0));
+  function penaliteDistance(d, mobilite, traversee) {
+    const P = PENALITE_DISTANCE[mobilite], L = DISTANCE_ACCEPTEE_KM[mobilite];
+    if (!P || d === null || d === undefined) return 0;
+    const e = distanceEquivalente(d, traversee);
+    return Math.min(P.plafond, (P.avant * Math.min(e, L) + P.apres * Math.max(0, e - L)) / 100);
+  }
+  function lieuEleve(l) {
+    const dep = departementLycee(l), academie = academieDe(dep);
+    return { departement: dep || null, academie, secteur: secteurDe(academie), zone: dep ? zoneDe(dep) : null };
+  }
+  const MESSAGE_SANS_LYCEE = "Indique ton lycée : sans lui, on ne peut pas tenir compte de ton académie ni de la distance.";
+
+  /* ---------------------------------------------------------------- départage */
+  // À note égale (pertinence avec ses décimales), dans cet ordre : formation de l'académie de l'élève ; la plus proche ;
+  // taux d'accès le plus favorable ; part de bacheliers généraux admis (pct_bg) ; nombre de places (capa_fin) ; enfin
+  // le code Parcoursup (gta), puis l'identifiant de la fiche, pour un ordre totalement déterministe (jamais celui du
+  // catalogue). Une valeur absente ou non numérique (NaN) passe après les autres.
+  function cmpNombre(x, y, sens) {
+    const vx = typeof x === "number" && !Number.isNaN(x), vy = typeof y === "number" && !Number.isNaN(y);
+    if (!vx || !vy) return vx === vy ? 0 : vx ? -1 : 1;
+    return x === y ? 0 : sens * (x < y ? -1 : 1);
+  }
+  function cmpIdentifiant(a, b) {
+    const ga = a.__gta != null ? Number(a.__gta) : null, gb = b.__gta != null ? Number(b.__gta) : null;
+    return cmpNombre(ga, gb, 1) || (a.id === b.id ? 0 : String(a.id) < String(b.id) ? -1 : 1);
+  }
+  function departage(a, b) {
+    return (b.memeAcademie === true) - (a.memeAcademie === true)
+      || cmpNombre(a.distTri, b.distTri, 1)
+      || cmpNombre(a.repere ? a.repere.taux : null, b.repere ? b.repere.taux : null, -1)
+      || cmpNombre(a.f.__pctBG, b.f.__pctBG, -1)
+      || cmpNombre(a.f.__capa, b.f.__capa, -1)
+      || cmpIdentifiant(a.f, b.f);
+  }
+  // Ordre des recommandations : pertinence décroissante (NaN en dernier), puis départage
+  const comparer = (a, b) => cmpNombre(a.pertinence, b.pertinence, -1) || departage(a, b);
+
   /* ---------------------------------------------------------------- évaluation */
+  // Valeur de la question « lieu » qui correspond à la formation (Corse et outre-mer comptent dans « regions »)
   function lieuDe(f) {
     if (f.pays !== "France") return "etranger";
     if (IDF.some((c) => f.ville.includes(c))) return "idf";
     if (f.ville.includes("Lyon")) return "lyon";
     return "regions";
+  }
+  // Territoire d'une formation française (règle « territoires ») : corse, outremer (toute zone hors continent et Corse,
+  // d'après zoneDe) ou continent (zone inconnue comprise)
+  function territoireDe(f) {
+    const zone = situer(f).zone;
+    if (zone === "Corse") return "corse";
+    if (zone && zone !== "continent") return "outremer";
+    return "continent";
   }
   function salaireMoyen(f) {
     const v = (f.metiers || []).map((id) => REF.metiers[id] && REF.metiers[id].salaire_fr && REF.metiers[id].salaire_fr.moyenne).filter((x) => typeof x === "number");
@@ -385,7 +598,7 @@
   function evaluer(f, s, it) {
     const crit = { notes: critNotes(f, s), specialites: critSpecialites(f, s), langues: critLangues(f, s), tests: critTests(f, s), extra: critExtra(f, s), appreciations: critAppreciations(f, s) };
     const scores = Object.entries(crit).map(([k, c]) => (k === "notes" && typeof c.ecart === "number" ? clamp(74 + c.ecart * 16, 0, 100) : NIVEAUX[c.niveau].score)).filter((x) => x !== null);
-    let faisabilite = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+    let faisabilite = scores.reduce((a, b) => a + b, 0) / scores.length;   // sans arrondi (tri) ; l'affichage arrondit
     const bloque = Object.values(crit).some((c) => c.niveau === "bloquant");
     if (bloque) faisabilite = Math.min(faisabilite, 25);
 
@@ -404,7 +617,7 @@
       if (p.poly !== undefined && pf.poly !== undefined) attrs.push(1 - Math.abs(p.poly - pf.poly) / 2);
       const prof = attrs.length ? attrs.reduce((a, b) => a + b, 0) / attrs.length : 0.6;
       const met = it.metiers.size ? ((f.metiers || []).some((m) => it.metiers.has(m)) ? 1 : 0.25) : 0.6;
-      interet = Math.round(100 * (0.4 * dom + 0.2 * typeAff + 0.25 * prof + 0.15 * met));
+      interet = 100 * (0.4 * dom + 0.2 * typeAff + 0.25 * prof + 0.15 * met);
       if (it.types.size && !it.types.has(f.type)) ajust.push("type de formation non choisi");
       if (p.maths_niv !== undefined && pf.maths !== undefined && Math.abs(p.maths_niv - pf.maths) >= 2) ajust.push(pf.maths > p.maths_niv ? "beaucoup plus de maths que tu ne le souhaites" : "moins de maths que tu ne le souhaites");
       if (it.metiers.size && met < 1) ajust.push("débouchés éloignés de tes envies");
@@ -419,42 +632,84 @@
       if (f.type === "prepa_ecg" && f.option === "appli" && s.optionMaths === "expertes" && s.mathsMatiere === "maths" && (s.maths || 0) >= 15 && niveauExpertes(s.expertes) !== "renforcer") { interet -= 4; ajust.push("tes maths te permettent l'option approfondies"); }
     }
     if (etranger) {
-      const voulus = (p.pays || []).filter((x) => x !== "aucun");
-      if (p.etranger === 0 || (p.pays || []).includes("aucun")) exclu = "Tu as indiqué vouloir rester en France.";
+      // corse, outremer et continent ne sont pas des pays étrangers (règle « territoires ») : pas de « pays non choisi »
+      const voulus = paysVoulus(p);
+      // « Rien d'autre que ce que j'ai coché » (value « aucun ») : seul ou avec des territoires, tout l'étranger est
+      // exclu ; avec des pays, seuls les pays non cochés le sont (décision du fondateur du 20/10/2026)
+      const aucun = (p.pays || []).includes("aucun");
+      if (p.etranger === 0 || (aucun && !voulus.length)) exclu = "Tu as indiqué vouloir rester en France.";
+      else if (aucun && !paysCoche(f, voulus)) exclu = MESSAGE_AUCUN_AUTRE_PAYS;
       else if (p.etranger === 1) { interet -= 20; ajust.push("tu envisages surtout un échange"); }
       else if (p.etranger === 3) interet += 5;
-      const NOMMES = ["Royaume-Uni", "Pays-Bas", "Italie", "Espagne", "Suisse", "Allemagne", "États-Unis", "Canada"];
-      const okPays = (x) => (x === "autre_europe" ? !NOMMES.includes(f.pays) : f.pays.includes(x));
-      if (voulus.length && !voulus.some(okPays)) { interet -= 15; ajust.push("pays non choisi"); }
+      if (voulus.length && !paysCoche(f, voulus)) { interet -= 15; ajust.push("pays non choisi"); }
     } else if (p.etranger === 3) interet -= 5;
     if (anglaisSeul && p.anglais !== undefined && p.anglais <= 2) { interet -= 15; ajust.push("cours entièrement en anglais"); }
     if (cout != null && p.budget_max !== undefined && cout > p.budget_max) {
       if (p.budget_max <= 5000 && cout > p.budget_max * 2) exclu = exclu || `Frais (≈ ${fmtEur(cout)}/an) au-delà de ton budget.`;
       else { interet -= 18; ajust.push("frais au-dessus de ton budget"); }
     }
-    // distance au lycée de l'élève et envie de bouger (question « mobilite »)
-    const dist = s.geo && f.__gps && !etranger ? km(s.geo, f.__gps) : null;
-    if (etranger && p.mobilite === 0) exclu = exclu || "Tu as indiqué vouloir rester chez tes parents.";
-    else if (etranger && p.mobilite === 1) { interet -= 12; ajust.push("à l'étranger, loin de chez toi"); }
-    if (dist !== null && p.mobilite !== undefined) {
-      if (p.mobilite === 0) { if (dist > 45) { interet -= dist > 120 ? 35 : 22; ajust.push(`à ${Math.round(dist)} km de chez toi`); } else interet += 6; }
-      else if (p.mobilite === 1) { if (dist > 250) { interet -= 15; ajust.push(`à ${Math.round(dist)} km de chez toi`); } else interet += 2; }
+    // distance au lycée de l'élève et envie de bouger (question « mobilite ») ; sans lycée, ni distance ni académie
+    const lieu = f.pays === "France" ? situer(f) : { dep: null, academie: null, zone: null, etranger: true };
+    const loinPays = etranger || lieu.etranger;   // à l'étranger, y compris un campus enregistré « France » (Dauphine Londres)
+    const dist = s.geo && f.__gps && !loinPays ? km(s.geo, f.__gps) : null;
+    const traversee = dist !== null && !!s.zone && !!lieu.zone && lieu.zone !== s.zone;
+    if (loinPays && p.mobilite === 0) exclu = exclu || "Tu as indiqué vouloir rester chez tes parents.";
+    else if (loinPays && p.mobilite === 1) { interet -= 12; ajust.push("à l'étranger, loin de chez toi"); }
+    const mob = p.mobilite;
+    // règle « domicile » : avec un lycée, une formation à plus de DISTANCE_ACCEPTEE_KM[0] (45 km, traversée comprise :
+    // distance + SURCOUT_TRAVERSEE_KM) est exclue, comme l'étranger. Distance inconnue : pas exclue (distance_inconnue).
+    if (mob === 0 && dist !== null && distanceEquivalente(dist, traversee) > DISTANCE_ACCEPTEE_KM[0])
+      exclu = exclu || `Tu as indiqué vouloir rester chez tes parents : cette formation est à ${Math.round(dist)} km de ton lycée.`;
+    // au-delà de la distance acceptée (à l'étranger, de l'autre côté de la mer, ou trop loin) ; distance inconnue (pas de
+    // coordonnées) : on ne peut pas vérifier, donc jamais « sécurité » non plus. Sans lycée, la règle ne s'applique pas.
+    const distanceInconnue = !!s.geo && !loinPays && dist === null;
+    const horsDistance = !!s.geo && (mob === 0 || mob === 1)
+      && (loinPays || traversee || distanceInconnue || dist > DISTANCE_ACCEPTEE_KM[mob]);
+    if (dist !== null && mob !== undefined) {
+      interet -= penaliteDistance(dist, mob, traversee);
+      if (horsDistance) ajust.push(traversee ? `de l'autre côté de la mer (≈ ${Math.round(dist)} km de chez toi)` : `à ${Math.round(dist)} km de chez toi`);
     }
     const lieux = p.lieu || [];
-    if (!etranger && lieux.length && !lieux.includes("partout") && !lieux.includes(lieuDe(f))) { interet -= 12; ajust.push("ville hors de tes choix"); }
+    const horsLieu = !etranger && lieux.length > 0 && !lieux.includes("partout") && !lieux.includes(lieuDe(f));
+    // territoires acceptés (question « pays ») : la zone du lycée de l'élève (toujours ; continent sans lycée) et les
+    // zones cochées (corse, outremer, continent). Pour un élève du continent, le continent est toujours accepté ; pour
+    // un élève d'outre-mer, son territoire seulement (un autre territoire d'outre-mer demande « outremer »). Sans
+    // réponse à « pays » : aucune restriction.
+    const zonesCochees = (p.pays || []).filter((x) => TERRITOIRES.includes(x));
+    const territoire = etranger ? null : territoireDe(f);
+    const eleveContinent = !s.zone || s.zone === "continent";
+    const accepte = territoire === null || zonesCochees.includes(territoire)
+      || (territoire === "continent" ? eleveContinent : !eleveContinent && lieu.zone === s.zone);
+    const horsTerritoire = Array.isArray(p.pays) && p.pays.length > 0 && !accepte;
+    if (horsLieu || horsTerritoire) { interet -= 12; ajust.push("ville hors de tes choix"); }
     const sel = f.selectivite.niveau;
     if (p.ambition >= 4 && sel === "tres_haute") interet += 4;
     if (p.ambition !== undefined && p.ambition <= 2 && sel === "tres_haute") interet -= 8;
     if (crit.tests.aPreparer && crit.tests.aPreparer.length && p.tests !== undefined && p.tests <= 2) { interet -= 8; ajust.push("tests à préparer"); }
     if (p.long !== undefined && p.long <= 2 && f.duree_ans >= 5) interet -= 6;
     if (p.salaire >= 4) { const sm = salaireMoyen(f); if (sm && sm >= 46) interet += 4; }
-    interet = clamp(Math.round(interet), 0, 100);
+    // pas d'arrondi : la pertinence garde ses décimales pour le tri (l'affichage arrondit)
+    interet = clamp(interet, 0, 100);
 
-    const rep = repere(f, s), regle = regleCategorie(rep, bloque);
-    rep.regle = regle.cle; rep.pourquoi = regle.texte;
+    const rep = repere(f, s);
+    // licence non sélective du secteur de recrutement de l'élève (son académie ; Paris, Créteil et Versailles : un seul secteur)
+    rep.secteur = !!s.secteur && f.__selectForm === "formation non sélective" && (f.__tf || []).includes("Licence") && secteurDe(lieu.academie) === s.secteur;
+    let regle = regleCategorie(rep, bloque);
+    // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
+    if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
+    // zone non cochée dans « pays » (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
+    if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
+    rep.regle = regle.cle;
+    rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
+    // source de la règle, distincte de rep.source (source du taux d'accès)
+    if (regle.cle === "licence_secteur") rep.sourceRegle = SOURCE_SECTEUR;
     const categorie = regle.categorie;
-    const pertinence = Math.round(it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite);
-    return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
+    const pertinence = it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite;
+    const memeAcademie = !!s.academie && lieu.academie === s.academie;
+    // distance pour le départage : la même distance équivalente que pour la pénalité (traversée + SURCOUT_TRAVERSEE_KM)
+    const distTri = dist === null ? null : distanceEquivalente(dist, traversee);
+    return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, traversee, horsDistance, horsTerritoire,
+      academie: lieu.academie, memeAcademie, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
   }
 
   function raisons(f, s, it, crit, cout) {
@@ -534,7 +789,7 @@
     for (const f of formations) { const n = nmcDe(f); if (!n) continue; const b = baseNom(f); (cpt[b] = cpt[b] || {})[n] = (cpt[b][n] || 0) + 1; }
     BASE_NMC = {};
     for (const [b, c] of Object.entries(cpt)) BASE_NMC[b] = Object.entries(c).sort((x, y) => y[1] - x[1])[0][0];
-    for (const f of formations) { delete f.__fil; delete f.__voie; }
+    for (const f of formations) { delete f.__fil; delete f.__voie; delete f.__lieu; }
   }
   // regroupement à l'affichage : famille de prépas (même niveau d'exigence) si elle existe, sinon même intitulé
   const filiere = (f) => (f.famille ? "fam:" + f.famille.id : intitule(f));
@@ -623,7 +878,7 @@
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
     // voies « cœur de projet » : celles des 5 formations les plus pertinentes ; la première est la voie principale
-    const top5 = ok.slice().sort((a, b) => b.pertinence - a.pertinence).slice(0, 5);
+    const top5 = ok.slice().sort(comparer).slice(0, 5);
     const coeur = new Set(top5.map(V)), principal = top5.length ? V(top5[0]) : null;
     const CAPS = { decide: [5, 3, 2], intermediaire: [4, 3, 2], indecis: [3, 2, 2], inconnu: [3, 3, 2] }[cert.niveau];
     let bonusType = 0;
@@ -653,7 +908,7 @@
     const decouvertes = new Map();
     const typesCoches = it && it.types ? it.types : new Set();
     const candDec = ok.filter((x) => !coeur.has(V(x)) && x.pertinence >= topP - 15 && (!typesCoches.size || !typesCoches.has(x.f.type)))
-      .sort((a, b) => b.pertinence - a.pertinence);
+      .sort(comparer);
     const voiesDec = new Set();
     for (const x of candDec) {
       if (decouvertes.size >= nbDec) break;
@@ -784,12 +1039,13 @@
   // Propositions à l'étranger, rattachées chacune à un vœu français (« l'équivalent à l'étranger »)
   function etranger(resultats, W, it, auj = new Date().toISOString().slice(0, 10)) {
     const p = (it && it.prefs) || {};
-    if (p.etranger === 0 || (p.pays || []).includes("aucun") || p.mobilite === 0) return { mode: "non", liste: [] };
+    const aucun = (p.pays || []).includes("aucun"), voulus = paysVoulus(p);
+    if (p.etranger === 0 || (aucun && !voulus.length) || p.mobilite === 0) return { mode: "non", liste: [] };
     if (p.etranger === 1) {
       // « seulement un échange » : formations françaises très ouvertes à l'international, dans les mêmes voies que les vœux
       const voies = new Set(W.liste.map((x) => voie(x.f))), pris = new Set(W.liste.map((x) => x.f.id));
       const liste = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !horsListe(x.f) && !pris.has(x.f.id) && voies.has(voie(x.f)) && ((x.f.profil || {}).international || 0) >= 2)
-        .sort((a, b) => b.pertinence - a.pertinence).slice(0, 3);
+        .sort(comparer).slice(0, 3);
       return { mode: "echange", liste: liste.map((x) => ({ x })) };
     }
     const n = p.etranger === 3 ? 5 : p.etranger === 2 ? 3 : 2;
@@ -797,7 +1053,8 @@
     const anglaisFragile = p.anglais !== undefined && p.anglais <= 2;
     const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && x.f.pays === "France" && !horsListe(x.f)).slice(0, 10);
     // seules exclusions acceptées : le budget (on propose alors les options les moins chères du pays)
-    const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj))
+    // « aucun » avec des pays : seulement ces pays
+    const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj) && (!aucun || paysCoche(x.f, voulus)))
       .map((x) => {
         const proches = ancres.map((a) => ({ a, s: ressemblance(x.f, a.f) + a.pertinence / 10000 })).filter((o) => o.s >= 0.35).sort((u, v) => v.s - u.s);
         const best = proches.length ? proches[0].a : null, bs = proches.length ? proches[0].s : 0;
@@ -842,7 +1099,8 @@
 
   function recommander(formations, profil, questionnaire, reponses) {
     const s = statsProfil(profil), it = interets(questionnaire, reponses);
-    const res = formations.map((f) => evaluer(f, s, it)).sort((a, b) => b.pertinence - a.pertinence);
+    // tri par pertinence (avec ses décimales), puis départage explicite : jamais l'ordre du catalogue
+    const res = formations.map((f) => evaluer(f, s, it)).sort(comparer);
     return { stats: s, interets: it, resultats: res };
   }
 
@@ -851,5 +1109,6 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+  window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

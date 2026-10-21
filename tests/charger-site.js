@@ -9,7 +9,7 @@
  * Renvoie { E, B, DATA, QUEST, afficher, cliquer } : E = CapEngine, B = CapBulletin, DATA.formations = catalogue complet,
  * QUEST = questionnaire. Pour lire les pages : passer l'état de l'élève (options.etat, même forme que
  * CapStore), puis afficher("#liste") renvoie le HTML de la page, et cliquer({ action, ... }) simule un
- * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }).
+ * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }) ; changer() simule une case cochée.
  */
 "use strict";
 const fs = require("fs");
@@ -86,7 +86,13 @@ async function chargerSite(remplacements = {}, options = {}) {
     (ecouteurs.click || []).forEach((f) => f({ target: { closest: (s) => (s === "[data-action]" ? bouton : null) }, preventDefault() {} }));
     return html;
   };
-  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer };
+  // changer({ q: "pays" }, { value: "aucun", checked: true }) : simule un clic sur une case à cocher (événement change)
+  const changer = (dataset, { value, checked, type = "checkbox" }) => {
+    const cible = { dataset: { ...dataset }, value, checked, type, closest: () => null };
+    (ecouteurs.change || []).forEach((f) => f({ target: cible }));
+    return html;
+  };
+  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer, changer };
 }
 
 module.exports = { chargerSite };

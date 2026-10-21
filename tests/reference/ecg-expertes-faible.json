@@ -36,6 +36,10 @@
    "lon": 7.2737,
    "nom": "Lycée Masséna (Nice)"
   },
+  "departement": "Alpes-Maritimes",
+  "academie": "Nice",
+  "secteur": "Nice",
+  "zone": "continent",
   "certifications": [],
   "specialites": [
    "maths",
@@ -119,28 +123,13 @@
  },
  "top": [
   {
-   "id": "psup-28381",
-   "interet": 84,
-   "faisabilite": 83,
-   "pertinence": 84,
+   "id": "psup-17165",
+   "interet": 81.0715222964324,
+   "faisabilite": 83.15,
+   "pertinence": 81.90291337785945,
    "repere": [
-    9,
-    0.96,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-1029",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
-   "repere": [
-    54,
-    0.81,
+    81,
+    0.71,
     "au_dessus",
     "securite"
    ],
@@ -149,13 +138,13 @@
    "exclu": null
   },
   {
-   "id": "ps-5121",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
+   "id": "psup-35609",
+   "interet": 80.93677099468168,
+   "faisabilite": 83.25,
+   "pertinence": 81.86206259680901,
    "repere": [
-    64,
-    0.8,
+    61,
+    0.84,
     "au_dessus",
     "securite"
    ],
@@ -165,9 +154,9 @@
   },
   {
    "id": "ps-10201",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
+   "interet": 80.59064070541176,
+   "faisabilite": 83.25,
+   "pertinence": 81.65438442324705,
    "repere": [
     63,
     0.77,
@@ -179,10 +168,325 @@
    "exclu": null
   },
   {
+   "id": "psup-31325",
+   "interet": 81.43787378586399,
+   "faisabilite": 81.95,
+   "pertinence": 81.64272427151839,
+   "repere": [
+    49,
+    0.67,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28381",
+   "interet": 80.51806034459848,
+   "faisabilite": 83.25,
+   "pertinence": 81.61083620675909,
+   "repere": [
+    9,
+    0.96,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26671",
+   "interet": 80.4174113006418,
+   "faisabilite": 83.25,
+   "pertinence": 81.55044678038509,
+   "repere": [
+    68,
+    0.83,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-7621",
+   "interet": 80.4173742141429,
+   "faisabilite": 83.25,
+   "pertinence": 81.55042452848573,
+   "repere": [
+    98,
+    0.89,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-3277",
+   "interet": 80.24313367212592,
+   "faisabilite": 83.25,
+   "pertinence": 81.44588020327555,
+   "repere": [
+    99,
+    0.83,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28724",
+   "interet": 81.071358250698,
+   "faisabilite": 81.95,
+   "pertinence": 81.4228149504188,
+   "repere": [
+    18,
+    0.67,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31661",
+   "interet": 81.00525879392653,
+   "faisabilite": 81.95,
+   "pertinence": 81.38315527635592,
+   "repere": [
+    56,
+    0.66,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35071",
+   "interet": 79.62060077054932,
+   "faisabilite": 83.25,
+   "pertinence": 81.07236046232958,
+   "repere": [
+    98,
+    0.88,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43262",
+   "interet": 79.59146456737943,
+   "faisabilite": 83.25,
+   "pertinence": 81.05487874042765,
+   "repere": [
+    99,
+    0.83,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "birmingham-economics",
+   "interet": 83.11111111111111,
+   "faisabilite": 77.96000000000001,
+   "pertinence": 81.05066666666667,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "u-de-toulon-economie-et-gestion",
+   "interet": 79.40407946857856,
+   "faisabilite": 83.25,
+   "pertinence": 80.94244768114714,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10367",
+   "interet": 79.37279582711044,
+   "faisabilite": 83.25,
+   "pertinence": 80.92367749626627,
+   "repere": [
+    90,
+    0.88,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47172",
+   "interet": 79.33031701269542,
+   "faisabilite": 83.25,
+   "pertinence": 80.89819020761726,
+   "repere": [
+    100,
+    0.94,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-12528",
+   "interet": 79.25879519134708,
+   "faisabilite": 83.25,
+   "pertinence": 80.85527711480825,
+   "repere": [
+    81,
+    0.79,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20745",
+   "interet": 79.20272487823601,
+   "faisabilite": 83.25,
+   "pertinence": 80.82163492694161,
+   "repere": [
+    84,
+    0.87,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-1029",
+   "interet": 79.19780826262625,
+   "faisabilite": 83.25,
+   "pertinence": 80.81868495757575,
+   "repere": [
+    54,
+    0.81,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31976",
+   "interet": 79.19754483535732,
+   "faisabilite": 83.25,
+   "pertinence": 80.8185269012144,
+   "repere": [
+    70,
+    0.83,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ulb-sciences-economiques",
+   "interet": 86.66666666666667,
+   "faisabilite": 72,
+   "pertinence": 80.8,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-4889",
+   "interet": 79.1539707642013,
+   "faisabilite": 83.25,
+   "pertinence": 80.79238245852079,
+   "repere": [
+    66,
+    0.82,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27812",
+   "interet": 79.1539187957539,
+   "faisabilite": 83.25,
+   "pertinence": 80.79235127745234,
+   "repere": [
+    75,
+    0.82,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "ps-5121",
+   "interet": 79.21270666976116,
+   "faisabilite": 83.15,
+   "pertinence": 80.7876240018567,
+   "repere": [
+    64,
+    0.8,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "ps-5077",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
+   "interet": 79.12146774290694,
+   "faisabilite": 83.25,
+   "pertinence": 80.77288064574417,
    "repere": [
     32,
     0.78,
@@ -195,9 +499,9 @@
   },
   {
    "id": "psup-31293",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
+   "interet": 79.18748880527839,
+   "faisabilite": 83.15,
+   "pertinence": 80.77249328316704,
    "repere": [
     50,
     0.83,
@@ -209,415 +513,10 @@
    "exclu": null
   },
   {
-   "id": "psup-31400",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
-   "repere": [
-    34,
-    0.87,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31661",
-   "interet": 83,
-   "faisabilite": 82,
-   "pertinence": 83,
-   "repere": [
-    56,
-    0.66,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31976",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
-   "repere": [
-    70,
-    0.83,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31325",
-   "interet": 83,
-   "faisabilite": 82,
-   "pertinence": 83,
-   "repere": [
-    49,
-    0.67,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-48764",
-   "interet": 83,
-   "faisabilite": 83,
-   "pertinence": 83,
-   "repere": [
-    72,
-    0.94,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-3277",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    99,
-    0.83,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-7621",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    98,
-    0.89,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26671",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    68,
-    0.83,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-30131",
-   "interet": 82,
-   "faisabilite": 82,
-   "pertinence": 82,
-   "repere": [
-    63,
-    0.74,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31341",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    64,
-    0.65,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31353",
-   "interet": 83,
-   "faisabilite": 81,
-   "pertinence": 82,
-   "repere": [
-    53,
-    0.67,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31662",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    86,
-    0.6,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32433",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    53,
-    0.53,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-19209",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    98,
-    0.79,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-47172",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    100,
-    0.94,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-43262",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    99,
-    0.83,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31278",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    35,
-    0.43,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31292",
-   "interet": 83,
-   "faisabilite": 81,
-   "pertinence": 82,
-   "repere": [
-    41,
-    0.6,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35071",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    98,
-    0.88,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-28724",
-   "interet": 82,
-   "faisabilite": 82,
-   "pertinence": 82,
-   "repere": [
-    18,
-    0.67,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31296",
-   "interet": 83,
-   "faisabilite": 81,
-   "pertinence": 82,
-   "repere": [
-    78,
-    0.61,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31304",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    87,
-    0.55,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31626",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    55,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31873",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    48,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-4138",
-   "interet": 82,
-   "faisabilite": 81,
-   "pertinence": 82,
-   "repere": [
-    41,
-    0.64,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-4889",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    66,
-    0.82,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-17165",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
-   "repere": [
-    81,
-    0.71,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-43259",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
+   "interet": 79.10607169698218,
+   "faisabilite": 83.25,
+   "pertinence": 80.76364301818931,
    "repere": [
     92,
     0.77,
@@ -629,10 +528,85 @@
    "exclu": null
   },
   {
+   "id": "psup-31046",
+   "interet": 78.97929429634723,
+   "faisabilite": 83.25,
+   "pertinence": 80.68757657780834,
+   "repere": [
+    82,
+    0.83,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31400",
+   "interet": 78.97117130972205,
+   "faisabilite": 83.25,
+   "pertinence": 80.68270278583324,
+   "repere": [
+    34,
+    0.87,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31615",
+   "interet": 81.57666374448293,
+   "faisabilite": 79.15,
+   "pertinence": 80.60599824668975,
+   "repere": [
+    77,
+    0.47,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31049",
+   "interet": 78.83374583460646,
+   "faisabilite": 83.25,
+   "pertinence": 80.60024750076389,
+   "repere": [
+    70,
+    0.8,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31051",
+   "interet": 78.83365910815665,
+   "faisabilite": 83.25,
+   "pertinence": 80.600195464894,
+   "repere": [
+    55,
+    0.96,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-23801",
-   "interet": 82,
-   "faisabilite": 83,
-   "pertinence": 82,
+   "interet": 78.77867309996007,
+   "faisabilite": 83.25,
+   "pertinence": 80.56720385997605,
    "repere": [
     100,
     0.81,
@@ -644,29 +618,14 @@
    "exclu": null
   },
   {
-   "id": "psup-31290",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
-   "repere": [
-    39,
-    0.57,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31322",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
+   "id": "psup-26866",
+   "interet": 78.77867309996007,
+   "faisabilite": 83.25,
+   "pertinence": 80.56720385997605,
    "repere": [
     91,
-    0.54,
-    "moyenne",
+    0.74,
+    "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
@@ -674,13 +633,58 @@
    "exclu": null
   },
   {
-   "id": "psup-31381",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
+   "id": "psup-30131",
+   "interet": 79.62068197983251,
+   "faisabilite": 81.95,
+   "pertinence": 80.55240918789951,
    "repere": [
-    38,
-    0.57,
+    63,
+    0.74,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "mcgill-ba-economics",
+   "interet": 86.66666666666667,
+   "faisabilite": 71.33333333333333,
+   "pertinence": 80.53333333333333,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-4138",
+   "interet": 80.08118408007638,
+   "faisabilite": 81.15,
+   "pertinence": 80.50871044804583,
+   "repere": [
+    41,
+    0.64,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31267",
+   "interet": 81.9339356769114,
+   "faisabilite": 78.35,
+   "pertinence": 80.50036140614684,
+   "repere": [
+    61,
+    0.45,
     "moyenne",
     "realiste"
    ],
@@ -689,32 +693,32 @@
    "exclu": null
   },
   {
-   "id": "psup-31395",
-   "interet": 83,
-   "faisabilite": 81,
-   "pertinence": 82,
+   "id": "psup-35341",
+   "interet": 78.50717650047406,
+   "faisabilite": 83.25,
+   "pertinence": 80.40430590028444,
    "repere": [
-    54,
-    0.67,
+    39,
+    0.82,
     "au_dessus",
-    "securite"
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "psup-31870",
-   "interet": 83,
-   "faisabilite": 80,
-   "pertinence": 82,
+   "id": "psup-35343",
+   "interet": 78.50717650047406,
+   "faisabilite": 83.25,
+   "pertinence": 80.40430590028444,
    "repere": [
-    52,
-    0.61,
+    39,
+    0.76,
     "au_dessus",
-    "securite"
+    "realiste"
    ],
-   "categorie": "securite",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -722,27 +726,27 @@
  "voeux": {
   "liste": [
    {
-    "id": "ps-1029",
+    "id": "psup-17165",
     "categorie": "securite",
-    "pertinence": 83,
+    "pertinence": 81.90291337785945,
     "repere": [
-     54,
+     81,
      "au_dessus"
     ]
    },
    {
-    "id": "psup-3277",
+    "id": "ps-10201",
     "categorie": "securite",
-    "pertinence": 82,
+    "pertinence": 81.65438442324705,
     "repere": [
-     99,
+     63,
      "au_dessus"
     ]
    },
    {
     "id": "psup-28381",
     "categorie": "ambitieux",
-    "pertinence": 84,
+    "pertinence": 81.61083620675909,
     "repere": [
      9,
      "au_dessus"
@@ -751,7 +755,7 @@
    {
     "id": "psup-31274",
     "categorie": "ambitieux",
-    "pertinence": 80,
+    "pertinence": 79.4883765203021,
     "repere": [
      82,
      "en_dessous"
@@ -760,52 +764,52 @@
    {
     "id": "paris1-dl-histoire-scpo",
     "categorie": "ambitieux",
-    "pertinence": 79,
+    "pertinence": 76.96720899717485,
     "repere": [
      10,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-6425",
+    "id": "psup-43011",
     "categorie": "realiste",
-    "pertinence": 78,
+    "pertinence": 77.41493906972416,
     "repere": [
-     47,
+     43,
      "au_dessus"
     ]
    },
    {
-    "id": "psup-48007",
+    "id": "psup-39224",
     "categorie": "realiste",
-    "pertinence": 78,
+    "pertinence": 77.00982896025488,
     "repere": [
-     46,
+     48,
      "au_dessus"
     ]
    },
    {
     "id": "psup-4138",
     "categorie": "realiste",
-    "pertinence": 82,
+    "pertinence": 80.50871044804583,
     "repere": [
      41,
      "au_dessus"
     ]
    },
    {
-    "id": "ps-13666",
+    "id": "psup-39294",
     "categorie": "realiste",
-    "pertinence": 81,
+    "pertinence": 73.544,
     "repere": [
-     53,
-     "moyenne"
+     43,
+     "au_dessus"
     ]
    },
    {
     "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
     "categorie": "securite",
-    "pertinence": 78,
+    "pertinence": 77.42157386371582,
     "repere": [
      100,
      "au_dessus"
@@ -826,21 +830,21 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre licence d'éco-gestion, prépa ECG et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
   "decouvertes": {}
  },
  "nouvelles": [
   {
    "id": "psup-52112",
-   "interet": 83
-  },
-  {
-   "id": "psup-52111",
-   "interet": 83
+   "interet": 81.44357504490765
   },
   {
    "id": "psup-51565",
-   "interet": 82
+   "interet": 80.93678310520774
+  },
+  {
+   "id": "psup-52111",
+   "interet": 79.17805487906591
   }
  ],
  "etranger": {
@@ -848,7 +852,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "350c72b1b49594f3b6e88903fd9a6377a1b030a76f9baea7132a43e36cf5df3c",
-  "textes": "1015a1bbee67930463cf358b8a2553cb7d064271b990f625d4fea33ede4d72a2"
+  "calculs": "125e6903370ef40602f28bfc2609c2b57fdd6e76b04f6fc29ec0d7f09ffaecad",
+  "textes": "6e54db2145dc8c20c5df8cf85a7fe7d240886b300ded7525c1e4f22c7fc6532c"
  }
 }

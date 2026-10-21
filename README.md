@@ -162,6 +162,20 @@ taux ≥ 50 % et position « au-dessus », ou taux ≥ `SEUIL_TAUX_TRES_OUVERT` 
 ou point bloquant ; réaliste = le reste. Moyenne sous 10 : message sur le bac en tête de Ma liste (`alerteBac`),
 sans effet sur les catégories. Sans notes, jamais « sécurité » (taux ≥ 50 % → réaliste, sinon ambitieux).
 
+## Académie, distance et départage
+
+Détails et sources : `docs/modele-chances.md`, section 8. L'académie du lycée et de chaque formation vient du
+département (`data/lieux.json`, `data/parcoursup.json`, table `ACADEMIES` sourcée sur education.gouv.fr). La note
+garde ses décimales ; à note égale, `departage()` classe : académie de l'élève, distance, taux d'accès, part de
+bacheliers généraux, places, code Parcoursup (jamais l'ordre du catalogue). La distance donne une pénalité continue
+(`PENALITE_DISTANCE`) selon la mobilité choisie ; Corse et outre-mer comptent comme loin pour un élève du continent ;
+les campus à l'étranger enregistrés « France » sont traités comme étrangers. Au-delà de la distance acceptée
+(`DISTANCE_ACCEPTEE_KM` : 45 km, 250 km, aucune limite), un vœu n'est jamais « sécurité » ; pour « domicile », une
+formation à plus de 45 km est exclue. Licences non sélectives du secteur de l'élève : règle `licence_secteur`.
+Corse, outre-mer et continent : en dehors de la zone de son lycée, seules les zones cochées dans « Si tu partais,
+où ? » (question « pays ») peuvent être « sécurité » (`REGLE_HORS_TERRITOIRE`, docs/modele-chances.md 8.5). Sans lycée, les règles de distance et d'académie ne s'appliquent pas et
+Ma liste affiche `MESSAGE_SANS_LYCEE`.
+
 ## Protection de la liste de vœux
 
 Le site n'affiche aucune probabilité globale d'admission pour la liste : les vœux ne sont pas indépendants

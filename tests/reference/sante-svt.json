@@ -32,6 +32,10 @@
    "lon": 7.2737,
    "nom": "Lycée Masséna (Nice)"
   },
+  "departement": "Alpes-Maritimes",
+  "academie": "Nice",
+  "secteur": "Nice",
+  "zone": "continent",
   "certifications": [],
   "specialites": [
    "SVT",
@@ -115,12 +119,42 @@
  },
  "top": [
   {
-   "id": "psup-11707",
-   "interet": 90,
-   "faisabilite": 79,
-   "pertinence": 86,
+   "id": "psup-23064",
+   "interet": 84.40788353370826,
+   "faisabilite": 78.75,
+   "pertinence": 82.14473012022495,
    "repere": [
-    83,
+    37,
+    0.5,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23066",
+   "interet": 84.39787800982134,
+   "faisabilite": 78.75,
+   "pertinence": 82.1387268058928,
+   "repere": [
+    35,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23065",
+   "interet": 83.94520060100774,
+   "faisabilite": 78.75,
+   "pertinence": 81.86712036060464,
+   "repere": [
+    36,
     0.51,
     "moyenne",
     "realiste"
@@ -130,13 +164,58 @@
    "exclu": null
   },
   {
-   "id": "psup-34546",
-   "interet": 86,
-   "faisabilite": 80,
-   "pertinence": 84,
+   "id": "diplome-d-etat-d-infirmier-ifsi-du-chu-de-nice-nice",
+   "interet": 84.41144826296843,
+   "faisabilite": 77.55,
+   "pertinence": 81.66686895778106,
+   "repere": [
+    22,
+    0.34,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23068",
+   "interet": 84.0523737503147,
+   "faisabilite": 77.95,
+   "pertinence": 81.61142425018882,
    "repere": [
     37,
-    0.56,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-25295",
+   "interet": 88.24386422162964,
+   "faisabilite": 71.15,
+   "pertinence": 81.40631853297778,
+   "repere": [
+    8,
+    0.13,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23070",
+   "interet": 83.46590858030287,
+   "faisabilite": 77.95,
+   "pertinence": 81.25954514818172,
+   "repere": [
+    30,
+    0.42,
     "moyenne",
     "realiste"
    ],
@@ -146,9 +225,9 @@
   },
   {
    "id": "psup-23027",
-   "interet": 86,
-   "faisabilite": 80,
-   "pertinence": 84,
+   "interet": 81.5919637581108,
+   "faisabilite": 79.95,
+   "pertinence": 80.93517825486649,
    "repere": [
     39,
     0.65,
@@ -161,9 +240,9 @@
   },
   {
    "id": "psup-23036",
-   "interet": 86,
-   "faisabilite": 80,
-   "pertinence": 84,
+   "interet": 81.28335285117545,
+   "faisabilite": 79.55,
+   "pertinence": 80.59001171070527,
    "repere": [
     33,
     0.55,
@@ -175,147 +254,12 @@
    "exclu": null
   },
   {
-   "id": "psup-23064",
-   "interet": 86,
-   "faisabilite": 79,
-   "pertinence": 83,
+   "id": "psup-25092",
+   "interet": 83.10928617648706,
+   "faisabilite": 76.75,
+   "pertinence": 80.56557170589224,
    "repere": [
-    37,
-    0.5,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-marseille-pass",
-   "interet": 76,
-   "faisabilite": 87,
-   "pertinence": 80,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-sciences-de-la-vie",
-   "interet": 78,
-   "faisabilite": 81,
-   "pertinence": 79,
-   "repere": [
-    56,
-    0.49,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-sciences-de-la-vie",
-   "interet": 78,
-   "faisabilite": 81,
-   "pertinence": 79,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-marseille-sciences-de-la-vie",
-   "interet": 78,
-   "faisabilite": 77,
-   "pertinence": 78,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-sciences-de-la-vie",
-   "interet": 78,
-   "faisabilite": 77,
-   "pertinence": 78,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-aix-en-provence-psychologie",
-   "interet": 71,
-   "faisabilite": 81,
-   "pertinence": 75,
-   "repere": [
-    43,
-    0.48,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "licence-psychologie-universite-de-nimes-nimes",
-   "interet": 71,
-   "faisabilite": 81,
-   "pertinence": 75,
-   "repere": [
-    41,
-    0.47,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-psychologie",
-   "interet": 71,
-   "faisabilite": 81,
-   "pertinence": 75,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "licence-psychologie-universite-savoie-mont-blanc-jacob-bellecombette",
-   "interet": 71,
-   "faisabilite": 81,
-   "pertinence": 75,
-   "repere": [
-    43,
+    30,
     0.4,
     "moyenne",
     "realiste"
@@ -325,14 +269,104 @@
    "exclu": null
   },
   {
-   "id": "u-cote-d-azur-geographie-et-amenagement",
-   "interet": 69,
-   "faisabilite": 80,
-   "pertinence": 73,
+   "id": "psup-23024",
+   "interet": 81.34445377422412,
+   "faisabilite": 78.35,
+   "pertinence": 80.14667226453447,
    "repere": [
-    98,
-    0.52,
+    31,
+    0.49,
     "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-25294",
+   "interet": 81.25642106619573,
+   "faisabilite": 78.35,
+   "pertinence": 80.09385263971744,
+   "repere": [
+    29,
+    0.46,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23071",
+   "interet": 81.9607364198213,
+   "faisabilite": 76.75,
+   "pertinence": 79.87644185189279,
+   "repere": [
+    25,
+    0.39,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "diplome-d-etat-d-infirmier-ifsi-de-l-ap-hm-marseille",
+   "interet": 81.31870429327962,
+   "faisabilite": 77.55,
+   "pertinence": 79.81122257596778,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23026",
+   "interet": 82.52543283178714,
+   "faisabilite": 75.55,
+   "pertinence": 79.73525969907229,
+   "repere": [
+    37,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-34546",
+   "interet": 79.84194700034095,
+   "faisabilite": 79.55,
+   "pertinence": 79.72516820020456,
+   "repere": [
+    37,
+    0.56,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43146",
+   "interet": 75.54088163521553,
+   "faisabilite": 85.85,
+   "pertinence": 79.66452898112931,
+   "repere": [
+    99,
+    0.6,
+    "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
@@ -340,44 +374,329 @@
    "exclu": null
   },
   {
-   "id": "u-cote-d-azur-psychologie",
-   "interet": 71,
-   "faisabilite": 77,
-   "pertinence": 73,
+   "id": "psup-23038",
+   "interet": 81.32889746639906,
+   "faisabilite": 77.15,
+   "pertinence": 79.65733847983944,
    "repere": [
-    31,
-    0.26,
+    28,
+    0.46,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23122",
+   "interet": 80.35970727194203,
+   "faisabilite": 78.35,
+   "pertinence": 79.55582436316521,
+   "repere": [
+    41,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23069",
+   "interet": 81.88492810382462,
+   "faisabilite": 75.95,
+   "pertinence": 79.51095686229478,
+   "repere": [
+    23,
+    0.34,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23033",
+   "interet": 80.97914721104262,
+   "faisabilite": 77.15,
+   "pertinence": 79.44748832662557,
+   "repere": [
+    24,
+    0.42,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23028",
+   "interet": 81.7723127620813,
+   "faisabilite": 75.55,
+   "pertinence": 79.28338765724877,
+   "repere": [
+    35,
+    0.34,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23039",
+   "interet": 80.61471440625691,
+   "faisabilite": 76.75,
+   "pertinence": 79.06882864375414,
+   "repere": [
+    27,
+    0.38,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23032",
+   "interet": 80.82274286338871,
+   "faisabilite": 76.35,
+   "pertinence": 79.03364571803323,
+   "repere": [
+    27,
+    0.38,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23031",
+   "interet": 81.56820839324585,
+   "faisabilite": 75.15,
+   "pertinence": 79.00092503594752,
+   "repere": [
+    27,
+    0.32,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23118",
+   "interet": 79.62094354660718,
+   "faisabilite": 77.95,
+   "pertinence": 78.9525661279643,
+   "repere": [
+    44,
+    0.45,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23030",
+   "interet": 80.22549235058733,
+   "faisabilite": 76.35,
+   "pertinence": 78.67529541035239,
+   "repere": [
+    28,
+    0.4,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23035",
+   "interet": 81.28421508702708,
+   "faisabilite": 74.75,
+   "pertinence": 78.67052905221625,
+   "repere": [
+    14,
+    0.28,
     "en_dessous",
-    "en_dessous"
+    "taux_bas"
    ],
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "u-grenoble-alpes-geographie-et-amenagement",
-   "interet": 69,
-   "faisabilite": 80,
-   "pertinence": 73,
+   "id": "psup-23117",
+   "interet": 79.35961182658136,
+   "faisabilite": 77.55,
+   "pertinence": 78.63576709594881,
    "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
+    45,
+    0.53,
+    "moyenne",
+    "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-geographie-et-amenagement",
-   "interet": 69,
-   "faisabilite": 76,
-   "pertinence": 72,
+   "id": "psup-23174",
+   "interet": 79.80440549049224,
+   "faisabilite": 76.75,
+   "pertinence": 78.58264329429534,
+   "repere": [
+    35,
+    0.42,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23120",
+   "interet": 80.01042046617424,
+   "faisabilite": 76.35,
+   "pertinence": 78.54625227970453,
+   "repere": [
+    38,
+    0.36,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23029",
+   "interet": 81.49251848384165,
+   "faisabilite": 73.95,
+   "pertinence": 78.47551109030499,
+   "repere": [
+    12,
+    0.23,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23162",
+   "interet": 78.23076981911183,
+   "faisabilite": 78.35,
+   "pertinence": 78.27846189146709,
+   "repere": [
+    39,
+    0.53,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23119",
+   "interet": 79.80740711806465,
+   "faisabilite": 75.55,
+   "pertinence": 78.10444427083878,
+   "repere": [
+    41,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23124",
+   "interet": 79.79368930076808,
+   "faisabilite": 75.15,
+   "pertinence": 77.93621358046084,
+   "repere": [
+    34,
+    0.3,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23176",
+   "interet": 80.08099597268571,
+   "faisabilite": 74.35,
+   "pertinence": 77.78859758361142,
+   "repere": [
+    35,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10369",
+   "interet": 73.19970623996853,
+   "faisabilite": 84.65,
+   "pertinence": 77.77982374398113,
+   "repere": [
+    59,
+    0.57,
+    "moyenne",
+    "licence_secteur"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-sciences-de-la-vie",
+   "interet": 75.54088163521553,
+   "faisabilite": 81.05,
+   "pertinence": 77.74452898112932,
+   "repere": [
+    56,
+    0.49,
+    "moyenne",
+    "licence_secteur"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10457",
+   "interet": 71.7271272402229,
+   "faisabilite": 86.65,
+   "pertinence": 77.69627634413374,
    "repere": [
     99,
-    0.52,
-    "moyenne",
+    0.69,
+    "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
@@ -385,332 +704,17 @@
    "exclu": null
   },
   {
-   "id": "u-claude-bernard-lyon-1-sciences-de-la-terre",
-   "interet": 61,
-   "faisabilite": 87,
-   "pertinence": 71,
+   "id": "psup-23175",
+   "interet": 79.72714757818072,
+   "faisabilite": 74.35,
+   "pertinence": 77.57628854690843,
    "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
+    28,
+    0.24,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-orleans-sciences-de-la-vie",
-   "interet": 61,
-   "faisabilite": 85,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bretagne-occidentale-sciences-de-la-vie",
-   "interet": 61,
-   "faisabilite": 85,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-poitiers-sciences-de-la-vie",
-   "interet": 61,
-   "faisabilite": 85,
-   "pertinence": 71,
-   "repere": [
-    100,
-    0.56,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rennes-sciences-de-la-terre",
-   "interet": 61,
-   "faisabilite": 87,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-strasbourg-sciences-de-la-vie",
-   "interet": 61,
-   "faisabilite": 85,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-chimie",
-   "interet": 61,
-   "faisabilite": 87,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-le-havre-normandie-sciences-de-la-vie",
-   "interet": 61,
-   "faisabilite": 87,
-   "pertinence": 71,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "nantes-universite-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-clermont-auvergne-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-angers-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bordeaux-bordeaux-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bourgogne-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bretagne-occidentale-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-franche-comte-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lille-lille-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-limoges-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lorraine-nancy-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rennes-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rouen-normandie-pass",
-   "interet": 59,
-   "faisabilite": 87,
-   "pertinence": 70,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   }
@@ -718,36 +722,36 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-7056",
+    "id": "psup-10369",
     "categorie": "securite",
-    "pertinence": 77,
+    "pertinence": 77.77982374398113,
     "repere": [
-     55,
-     "au_dessus"
-    ]
-   },
-   {
-    "id": "psup-4021",
-    "categorie": "securite",
-    "pertinence": 81,
-    "repere": [
-     99,
+     59,
      "moyenne"
     ]
    },
    {
-    "id": "psup-23035",
-    "categorie": "ambitieux",
-    "pertinence": 82,
+    "id": "psup-8820",
+    "categorie": "securite",
+    "pertinence": 75.81556201023328,
     "repere": [
-     14,
+     100,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-25295",
+    "categorie": "ambitieux",
+    "pertinence": 81.40631853297778,
+    "repere": [
+     8,
      "en_dessous"
     ]
    },
    {
     "id": "psup-45601",
     "categorie": "ambitieux",
-    "pertinence": 79,
+    "pertinence": 75.88140310138559,
     "repere": [
      26,
      "en_dessous"
@@ -756,62 +760,62 @@
    {
     "id": "psup-28013",
     "categorie": "ambitieux",
-    "pertinence": 78,
+    "pertinence": 74.22994173778501,
     "repere": [
      38,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-11707",
+    "id": "psup-23064",
     "categorie": "realiste",
-    "pertinence": 86,
-    "repere": [
-     83,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "psup-34546",
-    "categorie": "realiste",
-    "pertinence": 84,
+    "pertinence": 82.14473012022495,
     "repere": [
      37,
      "moyenne"
     ]
    },
    {
-    "id": "aix-marseille-universite-aix-en-provence-psychologie",
+    "id": "psup-48603",
     "categorie": "realiste",
-    "pertinence": 75,
+    "pertinence": 72.67790297456779,
     "repere": [
-     43,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "psup-10369",
-    "categorie": "realiste",
-    "pertinence": 81,
-    "repere": [
-     59,
-     "moyenne"
-    ]
-   },
-   {
-    "id": "psup-43146",
-    "categorie": "securite",
-    "pertinence": 81,
-    "repere": [
-     99,
+     30,
      "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-39258",
+    "categorie": "realiste",
+    "pertinence": 76.9922439969624,
+    "repere": [
+     69,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-39243",
+    "categorie": "realiste",
+    "pertinence": 76.68931584101952,
+    "repere": [
+     77,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-11707",
+    "categorie": "realiste",
+    "pertinence": 70.25629641368283,
+    "repere": [
+     83,
+     "moyenne"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 3,
-   "niveau": "bon",
-   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [],
   "certitude": {
@@ -822,21 +826,21 @@
     "ingenierie_tech"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec DEUST (diplôme universitaire bac + 2) et licence de sciences comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour la santé et le social : on a concentré tes vœux sur diplôme d'État santé ou social, avec licence de sciences et PASS ou LAS (santé) comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
   {
    "id": "psup-53243",
-   "interet": 81
+   "interet": 73.96418723021556
   },
   {
-   "id": "psup-50635",
-   "interet": 78
+   "id": "psup-52555",
+   "interet": 71.75888529579754
   },
   {
    "id": "psup-50680",
-   "interet": 77
+   "interet": 71.2411700230016
   }
  ],
  "etranger": {
@@ -844,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "bacd5df37a173bfad4f7d4c504a8f331c72001a5e3adcac476253ae3628f244f",
-  "textes": "9e0c4919962f01dea62782c657641de41fdc52ceadd06bbde1de3ec7016e9aeb"
+  "calculs": "bcde5ed49b26acec723fcc396fc2858e8bf5d2d07ade67b1fcde30f0ebee78ae",
+  "textes": "854afb8f9784d221bbf6a423b72cacb724eb78e3090e9e26fbe5589120852de4"
  }
 }

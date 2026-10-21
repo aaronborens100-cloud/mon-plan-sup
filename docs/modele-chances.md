@@ -176,12 +176,16 @@ spécialité obligatoire ou l'option maths expertes indispensable qui manque).
 | **Avec notes** : taux d'accès ≥ 85 % **et** position « en dessous » | réaliste (formation très ouverte) |
 | **Avec notes** : position « en dessous » | ambitieux |
 | **Avec notes** : taux d'accès ≥ 50 % **et** position « au-dessus » | sécurité |
+| **Avec notes** : licence non sélective du secteur de l'élève, taux d'accès ≥ 50 % (et < 85 %) **et** position « dans la moyenne » | sécurité (règle proposée, section 8.4) |
 | **Avec notes** : tout le reste (y compris position inconnue, ou taux non publié) | réaliste |
 | **Sans notes** : taux d'accès ≥ 50 % | réaliste |
 | **Sans notes** : taux d'accès < 50 % ou non publié | ambitieux |
 
 Les règles sont lues dans l'ordre (`REGLES_CATEGORIE`) : nouvelle formation, point bloquant, sans
 notes et taux non publié passent avant les règles des formations très ouvertes.
+
+Après la table, une formation « sécurité » au-delà de la distance acceptée par l'élève (ou de l'autre côté de la
+mer, à l'étranger, ou sans coordonnées) devient « réaliste » (section 8.3).
 
 ### Formations très ouvertes (`SEUIL_TAUX_TRES_OUVERT = 85`)
 
@@ -217,7 +221,9 @@ catégorie.
 ### Conséquences
 
 - un vœu « sécurité » a toujours un taux d'accès publié et une position connue : soit taux ≥ 50 %
-  et position « au-dessus », soit taux ≥ 85 % et position « dans la moyenne » ou « au-dessus » ;
+  et position « au-dessus », soit taux ≥ 85 % et position « dans la moyenne » ou « au-dessus », soit licence non
+  sélective du secteur de l'élève, taux ≥ 50 % et position « dans la moyenne » ; et, si l'élève a indiqué son lycée,
+  il est à la distance qu'il accepte ;
 - aucune formation à au moins 85 % de taux, sans point bloquant, n'est « ambitieux » pour un élève
   qui a renseigné ses notes ;
 - sans notes, aucune formation n'est « sécurité » : on ne peut pas savoir où se situe l'élève ;
@@ -296,3 +302,203 @@ une formation à 43 % → ambitieux.
   lycée d'origine. La catégorie n'en tient compte que pour les points bloquants.
 - Une liste peut ne pas trouver 3 vœux « sécurité » : c'est une information pour l'élève (alerte
   « Pas assez de vœux vraiment sûrs »), pas un défaut à corriger en relâchant les règles.
+
+## 8. Académie, distance et départage
+
+Code : `js/moteur.js` (sections « académies, zones, distance » et « départage », `evaluer`, `recommander`).
+Rien de cela n'utilise de donnée personnelle hors du navigateur : le lycée reste dans `localStorage`.
+
+### 8.1 Académie du lycée et de chaque formation
+
+- **Formation** : département de la cartographie Parcoursup 2026 (`data/parcoursup.json`, champ `departement`).
+  Sans département (fiches éditoriales non rattachées, campus « Non renseigné »), on prend le département du lieu
+  français connu le plus proche de ses coordonnées (`data/lieux.json`), à moins de `SEUIL_KM_LIEU_FRANCAIS` = 20 km.
+- **Lycée** : département enregistré avec le lycée (`data/lieux.json`), sinon retrouvé par son code UAI, sinon par
+  ses coordonnées (même règle).
+- **Correspondance département → académie** (`ACADEMIES`, 30 académies, 101 départements). Source : pages
+  « Académie de … » du ministère de l'Éducation nationale, rubrique « Directions des services départementaux de
+  l'Éducation nationale », consultées le 19/10/2026 :
+  liste des académies <https://www.education.gouv.fr/les-regions-academiques-academies-et-services-departementaux-de-l-education-nationale-6557>
+  (mise à jour du 11/12/2025) ; Paris <https://www.education.gouv.fr/academie-de-paris-100049> ;
+  Créteil (77, 93, 94) <https://www.education.gouv.fr/academie-de-creteil-100052> ;
+  Versailles (78, 91, 92, 95) <https://www.education.gouv.fr/academie-de-versailles-100046> ;
+  Normandie (14, 27, 50, 61, 76) <https://www.education.gouv.fr/academie-de-normandie-101186> ;
+  Corse (2A, 2B) <https://www.education.gouv.fr/academie-de-corse-100109> ;
+  Aix-Marseille <https://www.education.gouv.fr/academie-d-aix-marseille-100103> ;
+  Amiens <https://www.education.gouv.fr/academie-d-amiens-253> ;
+  Besançon <https://www.education.gouv.fr/academie-de-besancon-100076> ;
+  Bordeaux <https://www.education.gouv.fr/academie-de-bordeaux-100094> ;
+  Clermont-Ferrand <https://www.education.gouv.fr/academie-de-clermont-ferrand-100085> ;
+  Dijon <https://www.education.gouv.fr/academie-de-dijon-100073> ;
+  Grenoble <https://www.education.gouv.fr/academie-de-grenoble-100082> ;
+  Lille <https://www.education.gouv.fr/academie-de-lille-100043> ;
+  Limoges <https://www.education.gouv.fr/academie-de-limoges-100088> ;
+  Lyon <https://www.education.gouv.fr/academie-de-lyon-100079> ;
+  Montpellier <https://www.education.gouv.fr/academie-de-montpellier-100100> ;
+  Nancy-Metz <https://www.education.gouv.fr/academie-de-nancy-metz-100058> ;
+  Nantes <https://www.education.gouv.fr/academie-de-nantes-100067> ;
+  Nice <https://www.education.gouv.fr/academie-de-nice-100106> ;
+  Orléans-Tours <https://www.education.gouv.fr/academie-d-orleans-tours-100070> ;
+  Poitiers <https://www.education.gouv.fr/academie-de-poitiers-100091> ;
+  Reims <https://www.education.gouv.fr/academie-de-reims-100055> ;
+  Rennes <https://www.education.gouv.fr/academie-de-rennes-100064> ;
+  Strasbourg <https://www.education.gouv.fr/academie-de-strasbourg-100061> ;
+  Toulouse <https://www.education.gouv.fr/academie-de-toulouse-100097> ;
+  Guadeloupe <https://www.education.gouv.fr/academie-de-guadeloupe-100115> et La Réunion
+  <https://www.education.gouv.fr/academie-de-la-reunion-100118> (« la région académique … comprend uniquement
+  l'académie de … ») ; Martinique, Guyane et Mayotte : une académie chacune (liste des 30 académies ci-dessus).
+  Saint-Martin et Saint-Barthélemy : rattachés à l'académie de la Guadeloupe (compétences « exercées par le recteur de
+  l'académie de la Guadeloupe », article D. 271-1 du code de l'éducation, décret du 18/12/2008, BO n° 2 du 8 janvier
+  2009 : <https://www.education.gouv.fr/bo/2009/2/mene0814102d.htm>, consulté le 19/10/2026). La page de l'académie de
+  Guadeloupe ne cite pas ces deux collectivités. Ils forment une zone à part pour la distance (traversée).
+  La page de l'académie de Paris ne liste pas de département : Paris (75) est déduit des adresses de ses services.
+  Polynésie française, Nouvelle-Calédonie, Saint-Pierre-et-Miquelon, Wallis-et-Futuna : vice-rectorats, pas
+  d'académie (aucun départage par l'académie). Le référentiel officiel du MESR (`fr-esr-referentiel-geographique`)
+  et Légifrance n'étaient pas accessibles depuis l'environnement de travail (réseau bloqué) : à recouper.
+- **Île-de-France** : trois académies (Paris, Créteil, Versailles). Pour le départage « même académie », un élève de
+  Créteil et une formation de Paris ne sont **pas** de la même académie.
+
+### 8.2 Départage à note égale
+
+La note (pertinence = 60 % intérêt + 40 % faisabilité, ou faisabilité seule sans questionnaire) n'est plus
+arrondie : l'intérêt et la faisabilité gardent leurs décimales, seul l'affichage arrondit (note sur 5). À note
+exactement égale, `departage()` applique, dans cet ordre :
+
+1. formation de l'académie de l'élève d'abord (`memeAcademie`) ;
+2. la plus proche (`distTri`, la même distance équivalente que pour la pénalité : distance + `SURCOUT_TRAVERSEE_KM`
+   = 100 km en cas de traversée, section 8.3 ; distance inconnue en dernier). Un ancien décalage de 20 000 km
+   faisait passer une formation à Nice derrière Lille pour un élève d'Ajaccio : supprimé ;
+3. taux d'accès le plus élevé ;
+4. part de bacheliers généraux parmi les admis 2025 la plus élevée (`pct_bg`) ;
+5. nombre de places le plus élevé (`capa_fin`) ;
+6. code Parcoursup (`gta`) croissant, puis identifiant de la fiche : ordre totalement déterministe.
+
+Jamais l'ordre du catalogue : `recommander()` et la liste de 10 vœux sont identiques si on mélange le catalogue
+(test). Une note non numérique (NaN, aujourd'hui 4 formations canadiennes) est classée en dernier ; sa cause fait
+l'objet d'une issue. L'académie ne sert qu'à départager : elle ne change la catégorie d'aucune formation sélective.
+
+### 8.3 Distance continue
+
+Distance à vol d'oiseau entre le lycée et la formation. Plus de paliers 45 / 120 / 250 km ni de bonus de
+proximité : une pénalité d'intérêt continue (`penaliteDistance`), qui dépend de la réponse à la question
+« mobilite » :
+
+| Mobilité | Distance acceptée (`DISTANCE_ACCEPTEE_KM`) | Pénalité par 100 km, jusqu'à la distance acceptée | au-delà | plafond |
+|---|---|---|---|---|
+| domicile (0) | 45 km | 10 | 30 | 40 |
+| proche (1) | 250 km | 2 | 10 | 30 |
+| partout (2) | aucune limite | 0,5 | — | 6 |
+
+Exemples : domicile, 30 km → −3 ; 120 km → −27 ; 200 km → −40. Proche, 150 km → −3 ; 400 km → −20 ; 600 km → −30.
+Partout, Nice → Paris (≈ 690 km) → −3,5. Les distances acceptées sont celles annoncées dans la question
+(décision du fondateur). Les coefficients sont des **choix éditoriaux** : aucune donnée publique ne mesure l'effet
+de la distance. Ils sont gradués pour que, à distance acceptée, la pénalité reste faible (elle départage deux
+formations proches de note), et qu'au-delà elle écarte vite la formation du haut du classement, sans exclusion.
+
+- **Corse et outre-mer** (`zoneDe`) : continent, Corse et chaque territoire d'outre-mer sont des zones distinctes.
+  Changer de zone (traversée) compte comme au-delà de la distance acceptée, quelle que soit la distance à vol
+  d'oiseau (Nice → Corte ≈ 218 km) : jamais « sécurité » pour « domicile » et « proche ». La pénalité, elle, reste
+  **progressive** : on l'applique à la distance allongée de `SURCOUT_TRAVERSEE_KM` = 100 km (`distanceEquivalente`),
+  avec le plafond habituel. Élève d'Ajaccio, mobilité « proche » : Nice (233 km → 333 km équivalents) −13,3, Marseille
+  (315 km → 415) −21,5, Lille (1 060 km) −30 (plafond). Une traversée vers l'outre-mer dépasse toujours 1 000 km :
+  plafond, puis le départage met la plus proche devant (La Réunion : Mayotte avant la métropole). Les 100 km sont un
+  choix éditorial (ordre de grandeur d'un trajet supplémentaire en bateau ou en avion), pas une mesure.
+- **Campus à l'étranger enregistrés « France »** (Dauphine Londres, Madrid ; ESSEC Singapour, Rabat ; EM
+  Normandie Oxford, Dublin… ; 25 fiches) : repérés par leur ville (`VILLES_ETRANGERES`) ou par des coordonnées à
+  plus de 20 km de tout lieu français connu. Ils sont traités comme à l'étranger pour la distance (exclus pour
+  « domicile », −12 d'intérêt pour « proche »), mais restent dans le catalogue et dans les listes Parcoursup.
+- **Jamais « sécurité » au-delà de la distance acceptée** (`REGLE_HORS_DISTANCE`, après la table des
+  catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
+  l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :
+  on ne peut pas vérifier la distance. `protection()` ne compte donc que des vœux à distance acceptée.
+- **Règle « domicile »** (décision du fondateur, 20/10/2026) : pour un élève qui a indiqué son lycée et répondu
+  « Non, je veux rester chez mes parents » (mobilite 0), une formation à plus de `DISTANCE_ACCEPTEE_KM[0]` = 45 km
+  est **exclue**, par le même mécanisme (`exclu`) que l'étranger : elle n'entre ni dans la liste de 10 vœux, ni dans
+  les recommandations, et sa fiche affiche « Tu as indiqué vouloir rester chez tes parents : cette formation est à
+  X km de ton lycée. » (X = distance à vol d'oiseau, arrondie). La traversée compte : on compare la distance
+  équivalente (distance + `SURCOUT_TRAVERSEE_KM`), donc la Corse est toujours exclue pour un élève de Nice. Une
+  formation sans coordonnées n'est pas exclue (on ne peut pas mesurer) : elle reste soumise à
+  `REGLE_DISTANCE_INCONNUE`. Sans lycée, rien ne change. Conséquence assumée : la liste d'un élève « domicile » peut
+  compter moins de 10 vœux, et on ne la complète pas avec des formations lointaines.
+- **Sans lycée** : aucune distance, aucune pénalité, aucune académie, et la règle ci-dessus ne s'applique pas.
+  Ma liste affiche `MESSAGE_SANS_LYCEE` : « Indique ton lycée : sans lui, on ne peut pas tenir compte de ton
+  académie ni de la distance. »
+
+### 8.4 Licences non sélectives du secteur de l'élève (règle validée le 20/10/2026)
+
+Source : FAQ Parcoursup « Prise en compte du secteur géographique »,
+<https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique>, consultée le
+19/10/2026 (page sans date ; elle cite les dates de la session 2026). Elle dit : quand une licence est très demandée,
+« une priorité d'attribution des places est définie par le recteur au bénéfice des candidats du secteur » et « un
+pourcentage maximum de candidats hors secteur géographique sera fixé par le recteur de région académique » ; le
+secteur dépend de l'adresse du domicile et correspond en général à l'académie ; les candidats des académies de
+Créteil, Paris et Versailles « appartiennent au même secteur géographique ». Même règle dans la réponse du ministère
+à la question écrite n° 9332 (JO du 4 novembre 2025, p. 8976, article L. 612-3, V du code de l'éducation) :
+<https://questions.assemblee-nationale.fr/q17/17-9332QE.htm>.
+
+Traduction dans la table (`licence_secteur`, juste avant `tres_ouverte`) : licence non sélective
+(`select_form` = « formation non sélective » et catégorie Parcoursup « Licence »), du secteur de l'élève
+(son académie, l'Île-de-France comptant pour un seul secteur), taux d'accès d'au moins 50 % et moins de 85 %, position
+« dans la moyenne des admis » → **sécurité** (au lieu de « réaliste »). Sans changement : position « en dessous »
+(ambitieux), position inconnue (réaliste), taux sous 50 %, et toutes les formations sélectives.
+
+Limites : on suppose que l'adresse du domicile est dans l'académie du lycée (pas toujours vrai) ; on ne connaît ni
+le pourcentage hors secteur de chaque licence, ni la part des admis 2025 venus du secteur (`pct_aca_orig` existe
+dans `stats.json` mais ne mesure que l'académie d'origine des admis). La règle reste soumise à la règle de
+distance (8.3).
+
+Texte affiché (fiche, liste ; décision du fondateur du 20/10/2026, construit par `texteLicenceSecteur()` qui cite
+`SOURCE_SECTEUR`) : on n'écrit jamais que la licence est « sûre » à cause du secteur, on explique la priorité.
+
+| Réponse à « mobilite » | Texte |
+|---|---|
+| domicile ou proche (ou pas de réponse) | « Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup). » |
+| partout | la même phrase, puis « Même si tu veux partir, garder ce vœu te protège. » |
+
+### 8.5 Territoires : Corse et outre-mer (question « pays »)
+
+Décision du fondateur du 20/10/2026. La question « Où aimerais-tu étudier en France ? » (« lieu ») reste celle de
+main : idf, lyon, regions, « Peu importe » (`partout` = toute la France), même aide, même maximum, et cocher
+« Peu importe » décoche les autres. `lieuDe(f)` est aussi celui de main : la Corse et l'outre-mer comptent dans
+`regions`.
+
+La Corse et l'outre-mer se cochent dans « Si tu partais, où ? (plusieurs choix) » (« pays »), après « Canada » et
+avant « Rien d'autre que ce que j'ai coché » (`aucun`) : Corse (`corse`), Outre-mer (Guadeloupe, Martinique, Guyane,
+La Réunion, Mayotte…) (`outremer`), La France continentale (si tu vis en Corse ou outre-mer) (`continent`). `max` = 13 :
+toutes les cases.
+
+**« Rien d'autre que ce que j'ai coché »** (décision du fondateur du 20/10/2026 ; ancien libellé « Aucun », value
+`aucun` gardée pour les réponses déjà enregistrées). Elle veut dire « aucun autre endroit que ce que j'ai coché » et se
+combine avec toutes les cases de « pays » (js/app.js : cocher l'une ne décoche plus l'autre ; « Peu importe » de
+« lieu » reste exclusif). Aide affichée : « Coche « Rien d'autre que ce que j'ai coché » pour exclure tout le reste. »
+- seule ou avec seulement des territoires : toutes les formations à l'étranger sont exclues (« Tu as indiqué vouloir
+  rester en France. ») et `etranger()` renvoie le mode « non », comme avant ;
+- avec des pays : les formations d'un pays non coché sont exclues (« Tu as indiqué ne vouloir aucun autre pays que
+  ceux que tu as cochés. », `MESSAGE_AUCUN_AUTRE_PAYS`), les pays cochés gardent le comportement habituel, et
+  `etranger()` ne propose que ces pays (`paysCoche`) ;
+- non cochée : pays non choisi = malus « pays non choisi », comme avant. Les territoires suivent la règle ci-dessous
+  dans tous les cas.
+
+- `territoireDe(f)` : `corse` ou `outremer` d'après `zoneDe` (outre-mer = toute zone hors continent et Corse, y
+  compris Polynésie, Nouvelle-Calédonie, Saint-Martin…), sinon `continent` (zone inconnue comprise).
+- **Zones acceptées** = la zone du lycée de l'élève (toujours ; sans lycée, le continent) + les zones cochées dans
+  « pays » (`TERRITOIRES` : corse, outremer, continent). Pour un élève du continent, le continent est toujours
+  accepté. Pour un élève d'outre-mer, seul son territoire est compris d'office (élève de La Réunion : Mayotte
+  seulement avec « outremer »). Un élève de Corse ou d'outre-mer qui n'a pas coché « continent » n'a jamais de vœu
+  « sécurité » sur le continent (décision confirmée). Sans aucune réponse à « pays » : aucune restriction
+  (comportement de main). `aucun` seul est une réponse : seule la zone du lycée est alors acceptée.
+- **Hors des zones acceptées** : malus « ville hors de tes choix » (−12 d'intérêt, appliqué une seule fois même si
+  la ville est aussi hors des choix de « lieu »).
+- **Jamais « sécurité »** (`REGLE_HORS_TERRITOIRE`, clé `hors_territoire`, appliquée après la table et la règle de
+  distance), même avec la mobilité « partout » et « Peu importe » → « réaliste » au mieux, dans la liste comme dans
+  `protection()`. Texte : « Tu n'as pas coché la Corse dans « Si tu partais, où ? » : ce vœu ne compte pas comme
+  sûr. » (ou « l'outre-mer », « la France continentale »). Si la règle de distance s'applique déjà, c'est son texte
+  qui est affiché.
+- **Pas des pays étrangers** : corse, outremer et continent sont ignorés par le malus « pays non choisi » des
+  formations à l'étranger (`evaluer()`) et par `etranger()`. Un élève qui coche seulement « Corse » a les mêmes
+  formations étrangères et les mêmes propositions à l'étranger que s'il n'avait pas répondu à « pays ».
+- Pourquoi : un élève de Nice qui répond « peu importe » pense à la métropole ; une licence de Pointe-à-Pitre à
+  7 000 km ne doit pas être présentée comme son vœu de sécurité. La règle ne dit rien des chances d'admission : elle
+  vient des choix de l'élève, pas d'une donnée officielle.
+- Limites connues : la question est dans le thème « International » : un élève de Corse ou
+  d'outre-mer qui ne veut pas partir à l'étranger peut ne pas penser à y cocher « continent ».
