@@ -1180,18 +1180,43 @@
     if (!li) return;
     LIEUX = { lycees: li.lycees.map(([uai, nom, commune, dep, lat, lon]) => ({ uai, nom, commune, dep, lat, lon, cle: sansAccents(nom + " " + commune + " " + dep) })),
       communes: li.communes.map(([commune, dep, lat, lon]) => ({ commune, dep, lat, lon, cle: sansAccents(commune + " " + dep) })) };
-    for (const c of LIEUX.communes) { const k = sansAccents(c.commune); if (!VILLES_GPS[k]) VILLES_GPS[k] = c; }
+    // VILLES_GPS : nom de commune → toutes les communes de ce nom (homonymes : Saint-Denis 93 et La Réunion, Valence…)
+    VILLES_GPS = {};
+    for (const c of LIEUX.communes) (VILLES_GPS[sansAccents(c.commune)] = VILLES_GPS[sansAccents(c.commune)] || []).push(c);
     E.definirLieux(li);   // département d'un lycée ou d'un campus d'après ses coordonnées (académie, zone, campus à l'étranger)
   }
   // Champs Parcoursup lus par le moteur : département (académie), code gta et places (départage), sélectivité (secteur des licences)
   function lierParcoursup(f, r) {
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
   }
+  // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
+  // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs
+  // communes de ce nom sont éloignées (homonymes), le département départage : département Parcoursup de la fiche,
+  // département écrit dans la ville (« Saint-Pierre (Martinique) »), ou département commun aux formations Parcoursup
+  // probables de cette ville (data/fusion.json). Sans département pour trancher : null (distance inconnue), jamais un
+  // homonyme pris au hasard.
+  const SEUIL_KM_HOMONYMES = 20;   // deux communes de même nom à moins de 20 km : le même lieu (Papeete, Borgo)
+  function communeGps(ville, deps) {
+    const toutes = VILLES_GPS[sansAccents(String(ville || "").split(/\s*[/(]/)[0].trim())] || [];
+    if (!toutes.length) return null;
+    const homonymes = toutes.some((c) => E.km(c, toutes[0]) > SEUIL_KM_HOMONYMES);
+    if (!homonymes) return { lat: toutes[0].lat, lon: toutes[0].lon };
+    for (const d of deps) {
+      const c = d && toutes.find((x) => sansAccents(x.dep) === sansAccents(d));
+      if (c) return { lat: c.lat, lon: c.lon };
+    }
+    return null;
+  }
   function gpsDe(f, ps) {
     if (ps && ps.etab_gps && ps.etab_gps.lat != null) return { lat: ps.etab_gps.lat, lon: ps.etab_gps.lon };
+    if (ps && ps.commune && ps.departement) { const c = communeGps(ps.commune, [ps.departement]); if (c) return c; }
     if (f.pays !== "France") return null;
-    const c = VILLES_GPS[sansAccents(String(f.ville).split(/\s*[/(]/)[0].trim())];
-    return c ? { lat: c.lat, lon: c.lon } : null;
+    const ville = String(f.ville || "");
+    const entreParentheses = (ville.match(/\(([^)]+)\)/) || [])[1];
+    const x = FU && FU.anciennes[f.id];
+    const nomVille = sansAccents(ville.split(/\s*[/(]/)[0].trim());
+    const depsProbables = [...new Set(((x && x.c) || []).map((g) => PSBY[g]).filter((r) => r && r.departement && sansAccents(r.commune) === nomVille).map((r) => r.departement))];
+    return communeGps(ville, [f.__dep, entreParentheses, depsProbables.length === 1 ? depsProbables[0] : null]);
   }
   function construireCatalogue(d, psc, fu, st, fil, aj, sts, man) {
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};

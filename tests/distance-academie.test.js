@@ -610,3 +610,50 @@ test("interface : « Rien d'autre que ce que j'ai coché » puis « Outre-mer »
   html = s.changer({ q: "lieu" }, { value: "lyon", checked: true });
   assert.ok(coche(html, "lieu", "lyon") && !coche(html, "lieu", "partout"));
 });
+
+/* ------------------------------------------------ coordonnées : homonymes de communes (issue #14) */
+// Lieux connus (data/lieux.json) rangés par département, pour vérifier qu'un point est bien dans le sien.
+const LIEUX_PAR_DEP = (() => {
+  const li = require("../data/lieux.json"), n = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const m = new Map(), ajoute = (dep, lat, lon) => { if (!dep || lat == null) return; if (!m.has(n(dep))) m.set(n(dep), []); m.get(n(dep)).push({ lat, lon }); };
+  for (const [, , , dep, lat, lon] of li.lycees) ajoute(dep, lat, lon);
+  for (const [, dep, lat, lon] of li.communes) ajoute(dep, lat, lon);
+  return { de: (dep) => m.get(n(dep)) || [] };
+})();
+const HENRI_IV = { nom: "Lycée Henri-IV (Paris)", lat: 48.8463, lon: 2.3477 };
+
+test("Paris 8 (Saint-Denis, 93) : à moins de 20 km d'un lycée parisien, académie de Créteil, pas La Réunion", () => {
+  const { E, DATA } = site;
+  const p8 = DATA.formations.filter((f) => /^u-paris-8-vincennes-saint-denis-/.test(f.id));
+  assert.ok(p8.length >= 19, `${p8.length} fiches Paris 8`);
+  for (const f of p8) {
+    assert.ok(f.__gps, f.id);
+    assert.ok(E.km(HENRI_IV, f.__gps) < 20, `${f.id} : ${Math.round(E.km(HENRI_IV, f.__gps))} km`);
+    const l = E.situer(f);
+    assert.notEqual(l.academie, "La Réunion", f.id);
+    assert.equal(l.academie, "Créteil", f.id);
+    assert.equal(l.zone, "continent", f.id);
+  }
+  // Homonymes départagés par le département écrit dans la ville
+  const F = (id) => DATA.formations.find((f) => f.id === id);
+  assert.equal(E.situer(F("dnmade-espace-lycee-victor-anicet-saint-pierre-martinique")).dep, "Martinique");
+  assert.equal(E.situer(F("dnmade-graphisme-lycee-ambroise-vollard-saint-pierre-la-reunion")).dep, "La Réunion");
+  assert.equal(E.situer(F("u-de-la-reunion-saint-denis-la-reunion-licence-droit")).dep, "La Réunion");
+});
+
+test("toute fiche liée à Parcoursup a ses coordonnées dans son département Parcoursup (et celles de l'établissement)", () => {
+  const { E, DATA } = site;
+  const psc = require("../data/parcoursup.json"), K = psc.meta.cles, S = psc.s, GPS = new Map();
+  for (const L of psc.l) { const v = L[K.indexOf("etab_gps")]; if (Array.isArray(v)) GPS.set(S[L[K.indexOf("gta")]], { lon: v[0], lat: v[1] }); }
+  const liees = DATA.formations.filter((f) => f.__gta && f.__dep && f.__gps);
+  assert.ok(liees.length > 9000, `${liees.length} fiches liées`);
+  const horsDep = [], loinEtab = [];
+  for (const f of liees) {
+    // « dans son département » : à moins de 20 km (SEUIL_KM_LIEU_FRANCAIS) d'un lycée ou d'une commune de formation de ce département
+    if (!LIEUX_PAR_DEP.de(f.__dep).some((p) => E.km(p, f.__gps) <= E.SEUIL_KM_LIEU_FRANCAIS)) horsDep.push(`${f.id} (${f.ville}, ${f.__dep})`);
+    const g = GPS.get(f.__gta);
+    if (g && E.km(g, f.__gps) > 1) loinEtab.push(f.id);
+  }
+  assert.deepEqual(horsDep, [], "aucune exception");
+  assert.deepEqual(loinEtab, [], "coordonnées officielles de l'établissement (etab_gps) retenues");
+});
