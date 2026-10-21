@@ -412,9 +412,25 @@
   const voeuParcoursup = (f) => f.pays === "France" || f.__campusEtranger === true;
   // Campus à l'étranger : jamais « sécurité », sauf pour un élève qui veut étudier à l'étranger (« Oui » ou « Plutôt oui »)
   // et n'a pas restreint ses pays, ou a coché celui du campus. Choix éditorial, le plus proche d'une formation étrangère.
-  const REGLE_CAMPUS_ETRANGER = { cle: "campus_etranger", categorie: "realiste", texte: "Campus à l'étranger : ce vœu ne compte pas comme sûr, car tu n'as pas indiqué vouloir étudier dans ce pays." };
-  const campusNonVoulu = (f, p) => f.__campusEtranger === true
-    && !((p.etranger === 2 || p.etranger === 3) && (!paysVoulus(p).length || paysCoche(f, paysVoulus(p))));
+  // Le texte donne la raison réelle (raisonCampusNonVoulu) ; un campus exclu n'est jamais « sécurité » non plus.
+  const REGLE_CAMPUS_ETRANGER = { cle: "campus_etranger", categorie: "realiste", texte: "Campus à l'étranger : ce vœu ne compte pas comme sûr." };
+  const RAISONS_CAMPUS = {
+    sans_reponse: "tu n'as pas dit si tu voulais étudier à l'étranger",
+    echange: "tu envisages seulement un échange pendant tes études",
+    rester: "tu as indiqué vouloir rester en France",
+    pays: "tu n'as pas coché ce pays dans « Si tu partais, où ? »",
+  };
+  // Raison pour laquelle un campus à l'étranger ne peut pas être « sécurité » (clé de RAISONS_CAMPUS), ou null
+  function raisonCampusNonVoulu(f, p) {
+    if (f.__campusEtranger !== true) return null;
+    const voulus = paysVoulus(p), aucun = (p.pays || []).includes("aucun");
+    if (p.etranger === 0 || (aucun && !voulus.length)) return "rester";
+    if (p.etranger === 1) return "echange";
+    if (p.etranger !== 2 && p.etranger !== 3) return "sans_reponse";
+    if (voulus.length && !paysCoche(f, voulus)) return "pays";
+    return null;
+  }
+  const regleCampusEtranger = (raison) => Object.assign({}, REGLE_CAMPUS_ETRANGER, { texte: `Campus à l'étranger : ce vœu ne compte pas comme sûr, car ${RAISONS_CAMPUS[raison]}.` });
   const MESSAGE_AUCUN_AUTRE_PAYS = "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.";
   const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
   const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
@@ -736,7 +752,8 @@
     // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
     // campus à l'étranger, élève qui n'a pas dit vouloir étudier dans ce pays : jamais « sécurité »
-    if (regle.categorie === "securite" && campusNonVoulu(f, p)) regle = REGLE_CAMPUS_ETRANGER;
+    const raisonCampus = raisonCampusNonVoulu(f, p);
+    if (regle.categorie === "securite" && raisonCampus) regle = regleCampusEtranger(raisonCampus);
     // zone non cochée dans « pays » (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
     // établissement privé aux frais inconnus, budget serré : jamais « sécurité »
@@ -1166,6 +1183,6 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
+  window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
     SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

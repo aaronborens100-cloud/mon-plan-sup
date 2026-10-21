@@ -104,6 +104,34 @@ test("jamais « sécurité » sans envie d'étudier dans ce pays, sur les 14 pro
   for (const x of A.resultats.filter((r) => r.f.__campusEtranger)) assert.notEqual(x.categorie, "securite", x.f.id);
 });
 
+test("texte de la règle « campus_etranger » : la raison réelle", () => {
+  const { E } = site;
+  const R = E.RAISONS_CAMPUS;
+  const texte = (rep) => trouver(analyser(avecReponses(BASE, rep)).A, "psup-28555").repere.pourquoi;   // TBS Barcelone
+  // baisse-dernier-trimestre : Espagne cochée, « échange » → la raison est l'échange, pas le pays
+  const baisse = trouver(analyser(PROFILS.find((p) => p.id === "baisse-dernier-trimestre")).A, "psup-28555");
+  assert.equal(baisse.repere.regle, "campus_etranger");
+  assert.ok(baisse.repere.pourquoi.includes(R.echange), baisse.repere.pourquoi);
+  assert.equal(texte({ etranger: "echange", pays: ["Espagne"] }), `Campus à l'étranger : ce vœu ne compte pas comme sûr, car ${R.echange}.`);
+  assert.ok(texte({ etranger: "oui", pays: ["Italie"] }).includes(R.pays));
+  assert.ok(texte({ etranger: undefined, pays: [] }).includes(R.sans_reponse));
+  const F = (id) => site.DATA.formations.find((f) => f.id === id);
+  assert.equal(E.raisonCampusNonVoulu(F("psup-28555"), { etranger: 3, pays: ["Espagne"] }), null);
+  assert.equal(E.raisonCampusNonVoulu(F("psup-28555"), { etranger: 3, pays: [] }), null);
+});
+
+test("campus exclu : jamais « sécurité » (« Oui » + « Rien d'autre que ce que j'ai coché » seul)", () => {
+  for (const rep of [{ etranger: "oui", pays: ["aucun"] }, { etranger: "oui", pays: ["aucun", "corse"] }, { etranger: "non", pays: [] }, { etranger: "oui", pays: ["Italie", "aucun"] }]) {
+    const { A } = analyser(avecReponses(BASE, rep));
+    for (const x of A.resultats.filter((r) => r.f.__campusEtranger)) {
+      assert.ok(x.exclu, `${x.f.id}, ${JSON.stringify(rep)} : non exclu`);
+      assert.notEqual(x.categorie, "securite", `${x.f.id}, ${JSON.stringify(rep)}`);
+    }
+    // au moins un campus aurait été « sécurité » sans la règle : le test a une portée
+    if (rep.pays[0] === "aucun" && rep.pays.length === 1) assert.ok(A.resultats.some((x) => x.f.__campusEtranger && x.repere.regle === "campus_etranger"));
+  }
+});
+
 test("campus à l'étranger : vœu Parcoursup, pas dans « Et à l'étranger ? »", () => {
   const { E } = site;
   const F = (id) => site.DATA.formations.find((f) => f.id === id);
