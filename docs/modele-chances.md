@@ -315,6 +315,12 @@ Rien de cela n'utilise de donnée personnelle hors du navigateur : le lycée res
 - **Formation** : département de la cartographie Parcoursup 2026 (`data/parcoursup.json`, champ `departement`).
   Sans département (fiches éditoriales non rattachées, campus « Non renseigné »), on prend le département du lieu
   français connu le plus proche de ses coordonnées (`data/lieux.json`), à moins de `SEUIL_KM_LIEU_FRANCAIS` = 20 km.
+- **Coordonnées d'une formation** (`gpsDe`, `js/app.js`) : fiche liée à Parcoursup, coordonnées officielles de
+  l'établissement (`etab_gps`), sinon sa commune dans son département Parcoursup. Autre fiche : sa ville dans
+  `data/lieux.json`. Si plusieurs communes de ce nom sont à plus de 20 km l'une de l'autre (Saint-Denis 93 et
+  La Réunion, Saint-Pierre, Valence…), le département départage : département Parcoursup, département écrit dans la
+  ville (« Saint-Pierre (Martinique) »), ou département commun aux formations Parcoursup probables de la fiche
+  (`data/fusion.json`). Sans département pour trancher, pas de coordonnées : distance inconnue (issue #14).
 - **Lycée** : département enregistré avec le lycée (`data/lieux.json`), sinon retrouvé par son code UAI, sinon par
   ses coordonnées (même règle).
 - **Correspondance département → académie** (`ACADEMIES`, 30 académies, 101 départements). Source : pages
