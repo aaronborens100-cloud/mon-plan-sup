@@ -5,7 +5,9 @@
   "description": "Outil d’aide à l’orientation post-bac (Parcoursup)",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "test:reference": "node tests/generer-reference.js"
+    "test:reference": "node tests/generer-reference.js",
+    "controles": "node scripts/controles.js",
+    "comparer": "node scripts/comparer-versions.js"
   },
   "engines": {
     "node": ">=20"
