@@ -710,25 +710,39 @@ Sous chaque vœu de la liste de 10 (`wishlist`), Ma liste affiche jusqu'à `MAX_
   ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km pour « domicile » ; étranger pour
   « rester en France » ou un pays non coché…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des
   listes (`reglesHorsListe` : sans statistiques, bac pro, nouvelle formation 2026, filière à relire).
-- **Équivalent « sécurité »** : la catégorie vient des mêmes règles que la liste, donc jamais au-delà de la distance
-  acceptée (45 km domicile, 250 km proche, traversée comprise), hors des territoires choisis, sur un campus à
-  l'étranger non voulu, dans un établissement privé aux frais inconnus avec un budget serré, ni dans une fourchette de
-  frais qui dépasse le budget. **Une règle de plus que la liste** : une formation française sans coordonnées n'est
-  jamais un équivalent « sécurité » quand l'élève a indiqué son lycée, même avec la mobilité « partout » (où
-  `REGLE_DISTANCE_INCONNUE` ne s'applique pas). Cette règle ne touche que les équivalents : la liste de 10 et les
-  catégories ne changent pas. Sur les 14 profils types au 22/10/2026, elle n'écarte aucun équivalent.
+- **Équivalent « sécurité »** : exactement les interdictions de la liste, ni plus ni moins. La catégorie vient
+  d'`evaluer()`, comme pour la liste : jamais au-delà de la distance acceptée (45 km domicile, 250 km proche, traversée
+  comprise), jamais à distance inconnue pour « domicile » et « proche » (`REGLE_DISTANCE_INCONNUE`), hors des
+  territoires choisis, sur un campus à l'étranger non voulu, dans un établissement privé aux frais inconnus avec un
+  budget serré, ni dans une fourchette de frais qui dépasse le budget. Pour la mobilité « partout », une formation sans
+  coordonnées est traitée comme par le moteur : elle peut rester « sécurité » (le départage la place après les
+  formations à distance connue). Une première version ajoutait une règle plus stricte pour « partout » : retirée à la
+  relecture de la PR #51, pour que les équivalents suivent la liste.
+- **Règles de diversité de la liste** : la liste obtenue en mettant l'équivalent à la place du vœu doit respecter les
+  règles de `wishlist()` (`peut()`), avec les plafonds auxquels la liste a été construite : au plus 2 vœux par
+  établissement et par famille de prépas, plafond par voie (5, 4 ou 3 pour la voie principale selon que l'élève est
+  décidé, intermédiaire ou indécis ; 3 ou 2 pour les voies du cœur de projet ; 2 pour les autres, relâchés si la liste
+  a dû l'être), même filière et même catégorie interdit (si la liste ne l'a pas relâché), nombre de vœux d'une même
+  filière, un seul Oxford ou Cambridge. Le moteur l'expose sur l'objet de `wishlist()` (`W.peutRemplacer`,
+  `W.diversite`, propriétés non énumérables : l'objet de la liste et ses références ne changent pas). Exemple :
+  sciences-ingenieur a déjà 2 vœux à l'Université Claude Bernard Lyon 1 ; les doubles licences Lyon 1 ne sont plus
+  proposées sous son vœu de maths à Marseille. Les choix déjà faits par l'élève comptent : les équivalents des autres
+  vœux sont calculés sur la liste après ces choix.
 - **Ordre** : la règle de départage existante (`departage`, section 8.2 : académie de l'élève, distance, taux d'accès,
   part de bacheliers généraux, places, code `gta`), **pas** la pertinence. L'élève a déjà choisi la filière ; on lui
   montre la même formation ailleurs, d'abord dans son académie et près de chez lui.
 - **Jamais de doublon** : ni un vœu de la liste, ni deux fois la même formation sous deux vœux. Les vœux sont servis
   dans l'ordre de la liste : le premier vœu d'une filière prend les meilleurs équivalents, le suivant les suivants.
-- API : `CapEngine.equivalents(resultats, voeu, n = 3)` (avec l'objet de `recommander()`, la liste de 10 est recalculée
-  pour éviter les doublons ; avec le tableau `resultats`, passer la liste en 4e argument) et
-  `CapEngine.equivalentsListe(resultats, W)` (Map id du vœu → équivalents, utilisée par Ma liste).
+- API : `CapEngine.equivalents(resultats, voeu, n = 3)` (avec l'objet de `recommander()`, la liste de 10 est recalculée ;
+  avec le tableau `resultats`, la liste se passe en 4e argument ; sans liste : erreur, pour ne jamais renvoyer un vœu
+  de la liste) et `CapEngine.equivalentsListe(resultats, W, n, choix)` (Map id du vœu → équivalents ; `.choix` : les
+  choix de l'élève encore valables), utilisée par Ma liste.
 
 ### Ce qui est affiché
 
-Sous chaque vœu, un bloc replié « 3 formations équivalentes » (ou « Pas d'autre formation de la même filière et de la
+Sous chaque vœu, un bloc replié « 3 formations équivalentes », avec « Celles de ton académie et les plus proches de
+chez toi d'abord. » si le lycée est connu (sinon « Indique ton lycée pour voir d'abord celles de ton académie et les
+plus proches de chez toi. ») (ou « Pas d'autre formation de la même filière et de la
 même catégorie qui respecte tes critères. »). Pour chaque équivalent : intitulé (lien vers la fiche), établissement,
 ville, distance (« ≈ 25 km de chez toi », ou « distance inconnue »), taux d'accès et position parmi les admis, le texte
 de la règle de distance ou de territoire quand elle a retiré la catégorie « sécurité », et le message sur les frais
@@ -741,9 +755,12 @@ de la règle de distance ou de territoire quand elle a retiré la catégorie « 
 - Dans la proposition de liste, l'équivalent prend la place du vœu, avec « Ton choix, à la place de … » et le bouton
   « Revenir au vœu d'origine » (le bloc des équivalents montre alors le vœu proposé au départ). « Générer une liste
   équilibrée de 10 vœux » retient les équivalents choisis à la place des vœux remplacés.
-- Si le vœu est déjà retenu, il est échangé avec l'équivalent dans les vœux retenus (et inversement au retour).
-- Un remplacement qui n'est plus un équivalent (profil ou réponses modifiés, vœu sorti de la liste) est ignoré à
-  l'affichage ; il reste enregistré et reprend effet si le vœu revient.
+- Si le vœu (ou l'équivalent choisi avant) est retenu, il est échangé avec le nouvel équivalent dans les vœux retenus
+  (et inversement au retour). Si le vœu d'origine et l'équivalent sont tous deux retenus, « Choisir à la place » retire
+  le vœu d'origine.
+- Un remplacement qui n'est plus valable (plus un équivalent après un changement de profil ou de réponses, vœu sorti de
+  la liste, ou choix qui enfreindrait les règles de la liste) est ignoré et supprimé de `etat.remplacements` à
+  l'affichage de Mes vœux ; un clic « Choisir à la place » ne tient pas compte d'un ancien choix obsolète.
 - `wishlist()`, `protection()` et `etranger()` ne lisent jamais les remplacements : la liste calculée, son message de
   protection et les propositions à l'étranger ne changent pas. La protection des vœux retenus (`protection(sel)`)
   compte les vœux réellement retenus, donc l'équivalent choisi (même catégorie que le vœu remplacé).
@@ -773,7 +790,7 @@ de la règle de distance ou de territoire quand elle a retiré la catégorie « 
   peuvent être très différents (parcours, langue, accès santé). L'élève doit lire la fiche.
 - Profil « domicile » (« fragile ») : presque aucun équivalent, car toute formation à plus de 45 km est exclue. C'est
   voulu (section 8.3), pas un défaut.
-- Les équivalents ne sont pas soumis aux règles de diversité de la liste (au plus 2 vœux par établissement, plafonds
-  par voie) : choisir un équivalent peut mettre deux vœux dans le même établissement.
+- Les règles de diversité sont vérifiées pour chaque équivalent pris seul (la liste après ce remplacement et les choix
+  déjà faits) : deux choix faits l'un après l'autre restent compatibles, car le second est calculé après le premier.
 - Les équivalents d'un parcours d'une même licence (LEA Anglais-Allemand → Anglais-Chinois, même université) sont
   proposés : sur Parcoursup, ce sont des vœux distincts.

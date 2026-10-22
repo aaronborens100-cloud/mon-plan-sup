@@ -848,8 +848,17 @@
   // (E.equivalentsListe, mêmes garde-fous que la liste). L'élève peut en mettre une à la place du vœu : son choix est
   // gardé dans etat.remplacements (id du vœu proposé → id de l'équivalent), dans le navigateur seulement (CapStore).
   const remplacements = () => (etat.remplacements && typeof etat.remplacements === "object" && !Array.isArray(etat.remplacements) ? etat.remplacements : (etat.remplacements = {}));
-  // équivalent choisi à la place du vœu v, ou null (un choix qui n'est plus un équivalent, après un changement de profil, est ignoré)
-  const choixDe = (v, M) => { const id = remplacements()[v.f.id]; return (id && (M.get(v.f.id) || []).find((e) => e.f.id === id)) || null; };
+  // Équivalents de la liste W, calculés avec les choix de l'élève (E.equivalentsListe : un choix qui n'est plus un
+  // équivalent, ou qui enfreindrait les règles de la liste, est ignoré ; M.choix garde les choix encore valables).
+  const equivalentsDe = (A, W) => E.equivalentsListe(A.resultats, W, E.MAX_EQUIVALENTS, remplacements());
+  // Purge des choix obsolètes (profil ou réponses modifiés, vœu sorti de la liste) : renvoie true si l'état a changé
+  function purgerRemplacements(M) {
+    const R = remplacements(); let change = false;
+    for (const id of Object.keys(R)) if (!M.choix.has(id)) { delete R[id]; change = true; }
+    return change;
+  }
+  // équivalent choisi à la place du vœu v (encore valable), ou null
+  const choixDe = (v, M) => M.choix.get(v.f.id) || null;
   // vœux à afficher (ou à retenir) : chaque vœu proposé, ou l'équivalent choisi à sa place
   const voeuxAffiches = (W, M) => W.liste.map((v) => ({ v, x: choixDe(v, M) || v }));
   const distanceTxt = (x, s) => (x.dist != null ? `≈ ${nbFr(Math.round(x.dist))} km de chez toi` : s && s.geo ? "distance inconnue" : "");
@@ -873,7 +882,7 @@
     for (const e of eqs) if (e !== choix) lignes.push(item(e, `<button class="btn xs doux" data-action="remplacer" data-voeu="${v.f.id}" data-id="${e.f.id}" aria-label="Choisir ${esc(e.f.nom)} (${esc(e.f.etablissement)}) à la place">Choisir à la place</button>`));
     const n = eqs.length;
     return `<details class="equiv" ${choix ? "open" : ""}><summary>${n} formation${n > 1 ? "s" : ""} équivalente${n > 1 ? "s" : ""}</summary>
-      <p class="tiny muted">Même filière Parcoursup et même catégorie que ce vœu, avec les mêmes règles que ta liste. Celles de ton académie et les plus proches de chez toi d'abord.</p>
+      <p class="tiny muted">Même filière Parcoursup et même catégorie que ce vœu, avec les mêmes règles que ta liste. ${s && s.geo ? "Celles de ton académie et les plus proches de chez toi d'abord." : "Indique ton lycée pour voir d'abord celles de ton académie et les plus proches de chez toi."}</p>
       <ul class="equiv-liste">${lignes.join("")}</ul></details>`;
   }
   // ligne « à la place de » sous un équivalent choisi, avec le retour au vœu d'origine
@@ -902,7 +911,8 @@
   }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
-    const M = E.equivalentsListe(A.resultats, W);
+    const M = equivalentsDe(A, W);
+    if (purgerRemplacements(M)) sauver(true);
     const X = E.etranger(A.resultats, W, A.interets);
     const etr = blocNouvelles(A) + blocEtranger(X);
     const sel = A.resultats.filter((x) => etat.retenus.includes(x.f.id));
@@ -917,7 +927,10 @@
     }
     const compte = { ambitieux: 0, realiste: 0, securite: 0 }; sel.forEach((x) => compte[x.categorie]++);
     // vœu retenu venu de la liste proposée (le vœu lui-même ou l'équivalent choisi à sa place) → vœu proposé : ses équivalents s'affichent dessous
-    const origine = new Map(voeuxAffiches(W, M).map(({ v, x }) => [x.f.id, v]));
+    // indexé aussi sur le vœu d'origine : s'il est retenu (seul ou avec l'équivalent), ses équivalents restent affichés
+    const origine = new Map(voeuxAffiches(W, M).flatMap(({ v, x }) => [[v.f.id, v], [x.f.id, v]]));
+    // une seule ligne porte le bloc des équivalents : l'équivalent choisi s'il est retenu, sinon le vœu d'origine
+    const porteur = (v) => { const c = choixDe(v, M); return c && sel.includes(c) ? c : v; };
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
     const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.repere.taux ?? 101) - (b.repere.taux ?? 101));
     const alertes = [];
@@ -937,7 +950,7 @@
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
         <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
-          ${tri.map((x) => { const o = origine.get(x.f.id); return `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${o && o !== x ? ligneRemplace(o) : ""}${ligneRepere(x)}${o ? blocEquivalents(o, M, A.stats) : ""}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`; }).join("")}
+          ${tri.map((x) => { const o = origine.get(x.f.id); return `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${o && o !== x ? ligneRemplace(o) : ""}${ligneRepere(x)}${o && x === porteur(o) ? blocEquivalents(o, M, A.stats) : ""}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`; }).join("")}
         </tbody></table></div>
         <div class="row no-print">${btnAuto}<a class="btn ghost" href="#plan">Voir mon plan${ico("fleche")}</a></div>
       </div>${etr}</section>`;
@@ -1906,13 +1919,22 @@
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
     else if (a === "cat-plus") { app.limiteCat += 50; const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "retenir") { const id = b.dataset.id; etat.retenus = etat.retenus.includes(id) ? etat.retenus.filter((x) => x !== id) : etat.retenus.concat(id); sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y); }
-    else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets); etat.retenus = voeuxAffiches(W, E.equivalentsListe(A.resultats, W)).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
+    else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W); purgerRemplacements(M); etat.retenus = voeuxAffiches(W, M).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
     // formation équivalente choisie à la place d'un vœu de la liste proposée, ou retour au vœu d'origine ; si le vœu était
     // déjà retenu, il est échangé dans les vœux retenus. Enregistré dans le navigateur seulement (CapStore).
     else if (a === "remplacer" || a === "retablir") {
-      const voeu = b.dataset.voeu, R = remplacements(), avant = R[voeu] || voeu, apres = a === "remplacer" ? b.dataset.id : voeu;
+      // avant : ce qui occupe la place du vœu (équivalent choisi encore valable, sinon le vœu) ; un choix obsolète est ignoré
+      const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W);
+      purgerRemplacements(M);
+      const voeu = b.dataset.voeu, R = remplacements(), choisi = M.choix.get(voeu), apres = a === "remplacer" ? b.dataset.id : voeu;
       if (a === "remplacer") R[voeu] = apres; else delete R[voeu];
-      if (etat.retenus.includes(avant) && !etat.retenus.includes(apres)) etat.retenus = etat.retenus.map((id) => (id === avant ? apres : id));
+      // dans les vœux retenus, le vœu d'origine et l'ancien choix laissent leur place à apres (une seule fois)
+      const occupants = [voeu, choisi ? choisi.f.id : null].filter((id) => id && id !== apres);
+      const i = etat.retenus.findIndex((id) => occupants.includes(id));
+      if (i >= 0) {
+        etat.retenus = etat.retenus.map((id, j) => (j === i ? apres : id)).filter((id, j) => !(occupants.includes(id) && j !== i));
+        etat.retenus = etat.retenus.filter((id, j) => etat.retenus.indexOf(id) === j);
+      }
       sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y);
       toast(a === "remplacer" ? "Formation équivalente choisie" : "Vœu d'origine rétabli");
     }

@@ -1090,66 +1090,95 @@
         ? `Tu n'avais pas coché ce type de formation (${t}), mais il correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`
         : `Un type de formation auquel tu n'as peut-être pas pensé (${t}), mais qui correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`;
     };
-    return { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
+    const W = { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
+    // Règles de diversité pour les formations équivalentes (equivalentsListe) : la liste où x prend la place i respecte-t-elle
+    // les mêmes règles que peut(), avec les valeurs finales des plafonds (celles que la liste elle-même respecte) ?
+    // Propriété non énumérable : l'objet renvoyé (et les références des tests) ne change pas.
+    const peutRemplacer = (liste, i, x) => {
+      const autres = liste.filter((_, j) => j !== i), nb = (t) => autres.filter(t).length;
+      return nb((c) => c.f.etablissement === x.f.etablissement) < 2 && nb((c) => fil(c) === fil(x)) < maxFil
+        && (!fam(x) || nb((c) => fam(c) === fam(x)) < 2)
+        && !(maxFil <= 2 && autres.some((c) => fil(c) === fil(x) && c.categorie === x.categorie))
+        && nb((c) => V(c) === V(x)) < maxType(V(x))
+        && !(oxbridge(x) && autres.some(oxbridge));
+    };
+    Object.defineProperty(W, "peutRemplacer", { value: peutRemplacer, enumerable: false });
+    // valeurs des règles de diversité en fin de construction (lecture seule, pour les tests et la documentation)
+    Object.defineProperty(W, "diversite", { value: { maxFil, bonusType, plafonds: CAPS.slice(), principal }, enumerable: false });
+    return W;
   }
 
   /* ---------------------------------------------------------------- formations équivalentes */
   // Sous chaque vœu de la liste de 10 : jusqu'à n (3) formations de la même filière Parcoursup (code nmc, nmcDe) et de la
-  // même catégorie, que l'élève peut mettre à la place du vœu. Mêmes garde-fous que wishlist() : jamais exclue (budget,
-  // « domicile », étranger non voulu…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des listes
-  // (sans statistiques, bac pro, nouvelle 2026, filière à relire). La catégorie vient d'evaluer() : un équivalent
-  // « sécurité » respecte donc déjà la distance acceptée, les territoires choisis, le campus à l'étranger voulu, et n'est
-  // ni privé aux frais inconnus (budget serré) ni dans une fourchette de frais qui dépasse le budget, ni à distance inconnue.
-  // Ordre : la règle de départage (departage : académie, distance, taux d'accès, pct_bg, places, gta), pas la pertinence :
-  // l'élève a déjà choisi la filière, on lui montre la même formation ailleurs, la plus proche de chez lui d'abord.
-  // Jamais un vœu de la liste ni l'équivalent d'un autre vœu : les vœux sont servis dans l'ordre de la liste.
-  // Un vœu sans code nmc n'a pas d'équivalent (on ne peut pas vérifier que c'est la même filière).
+  // même catégorie, que l'élève peut mettre à la place du vœu. Les équivalents suivent exactement les interdictions de la
+  // liste, ni plus ni moins (docs/modele-chances.md, section 11) :
+  //   - garde-fous de wishlist() : jamais exclue (budget, « domicile », étranger non voulu…), jamais avec un point
+  //     bloquant, jamais hors Parcoursup, jamais écartée des listes (sans statistiques, bac pro, nouvelle 2026, à relire) ;
+  //   - catégorie : celle d'evaluer(), comme pour la liste. Un équivalent « sécurité » respecte donc la distance acceptée
+  //     (REGLE_HORS_DISTANCE ; REGLE_DISTANCE_INCONNUE pour « domicile » et « proche » seulement, comme la liste), les
+  //     territoires choisis, le campus à l'étranger voulu, et n'est ni privé aux frais inconnus (budget serré) ni dans une
+  //     fourchette de frais qui dépasse le budget ;
+  //   - diversité : la liste obtenue en mettant l'équivalent à la place du vœu respecte les règles de diversité de
+  //     wishlist() (W.peutRemplacer : 2 vœux au plus par établissement et par famille de prépas, plafond par voie, même
+  //     filière et même catégorie, nombre de vœux d'une même filière), avec les valeurs auxquelles la liste a été construite.
+  // Ordre : la règle de départage (departage : académie, distance, taux d'accès, pct_bg, places, gta), pas la pertinence.
+  // Jamais un vœu de la liste, ni un équivalent choisi à la place d'un autre vœu, ni deux fois la même formation : les
+  // vœux sont servis dans l'ordre de la liste. Un vœu sans code nmc n'a pas d'équivalent.
   const MAX_EQUIVALENTS = 3;
   const peutEtreVoeu = (x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f);
-  // Un équivalent « sécurité » doit l'être sans réserve. La catégorie le garantit déjà (règles appliquées après la table
-  // dans evaluer()), sauf un cas : avec la mobilité « partout », une formation sans coordonnées peut rester « sécurité »
-  // (REGLE_DISTANCE_INCONNUE ne vaut que pour « domicile » et « proche »). Ici, on l'écarte toujours quand l'élève a
-  // indiqué son lycée (avecLycee) : on ne propose pas comme sûre une formation dont on ne connaît pas la distance.
-  // (Un campus à l'étranger n'a pas de distance : il n'est « sécurité » que si l'élève veut ce pays, REGLE_CAMPUS_ETRANGER.)
-  const distanceInconnueFr = (x) => x.dist === null && voeuParcoursup(x.f) && x.f.pays === "France" && !situer(x.f).etranger;
-  const securiteSure = (x, avecLycee) => !x.horsDistance && !x.horsTerritoire && !x.repere.priveFraisInconnus && !x.repere.fraisFourchette
-    && !(avecLycee && distanceInconnueFr(x));
-  // liste : les vœux (tableau de résultats, ou l'objet renvoyé par wishlist()). Renvoie une Map id du vœu → équivalents.
-  function equivalentsListe(resultats, liste, n = MAX_EQUIVALENTS) {
-    const voeux = Array.isArray(liste) ? liste : (liste && liste.liste) || [];
+  // resultats : recommander().resultats ; W : l'objet renvoyé par wishlist() (règles de diversité comprises) ou un tableau
+  // de vœux (sans règle de diversité) ; choix : { id du vœu : id de l'équivalent choisi à sa place } (Ma liste).
+  // Renvoie une Map id du vœu → équivalents. La Map porte aussi .choix (Map id du vœu → équivalent choisi encore valable :
+  // un choix qui n'est plus un équivalent, ou qui enfreindrait les règles de la liste avec les choix précédents, est
+  // ignoré). Les autres équivalents sont calculés sur la liste après ces choix ; un équivalent choisi reste dans les
+  // équivalents de son vœu.
+  function equivalentsListe(resultats, W, n = MAX_EQUIVALENTS, choix = {}) {
+    const voeux = Array.isArray(W) ? W : (W && W.liste) || [];
+    const regle = !Array.isArray(W) && W && typeof W.peutRemplacer === "function" ? W.peutRemplacer : () => true;
     const pris = new Set(voeux.map((x) => x.f.id));
-    // l'élève a indiqué son lycée : au moins une formation a une distance
-    const avecLycee = resultats.some((x) => x.dist !== null && x.dist !== undefined);
     const parNmc = new Map();
     for (const x of resultats) {
       const k = nmcDe(x.f);
-      if (!k || !peutEtreVoeu(x) || (x.categorie === "securite" && !securiteSure(x, avecLycee))) continue;
+      if (!k || !peutEtreVoeu(x)) continue;
       if (!parNmc.has(k)) parNmc.set(k, []);
       parNmc.get(k).push(x);
     }
+    // liste courante : chaque vœu, ou l'équivalent choisi à sa place
+    const courante = voeux.slice(), acceptes = new Map();
+    const candidats = (v, i) => { const k = nmcDe(v.f); return k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && x.f.id !== v.f.id && regle(courante, i, x)) : []; };
+    voeux.forEach((v, i) => {
+      const id = choix && choix[v.f.id];
+      if (!id) return;
+      const x = candidats(v, i).find((y) => y.f.id === id && !pris.has(y.f.id));
+      if (x) { courante[i] = x; acceptes.set(v.f.id, x); pris.add(x.f.id); }
+    });
     const out = new Map();
-    for (const v of voeux) {
-      const k = nmcDe(v.f);
-      const cands = k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && !pris.has(x.f.id)) : [];
-      const choix = cands.sort(departage).slice(0, Math.max(0, n));
-      choix.forEach((x) => pris.add(x.f.id));
-      out.set(v.f.id, choix);
-    }
+    voeux.forEach((v, i) => {
+      const a = acceptes.get(v.f.id);
+      // la place i est à remplacer : on l'évalue avec le vœu d'origine à cette place (courante[i] est ignoré par la règle)
+      const cands = candidats(v, i).filter((x) => x === a || !pris.has(x.f.id)).sort(departage);
+      let sel = cands.slice(0, Math.max(0, n));
+      if (a && n > 0 && !sel.includes(a)) sel = sel.slice(0, n - 1).concat([a]).sort(departage);
+      sel.forEach((x) => pris.add(x.f.id));
+      out.set(v.f.id, sel);
+    });
+    out.choix = acceptes;
     return out;
   }
-  // Équivalents d'un vœu. resultats : le tableau de recommander().resultats, ou l'objet renvoyé par recommander() (la
-  // liste de 10 vœux est alors recalculée ici, avec les mêmes centres d'intérêt). Liste connue (objet de recommander(), ou
-  // 4e argument : wishlist() ou tableau de vœux) : ni doublon de la liste ni d'un autre équivalent ; sans elle, seul le
-  // vœu lui-même est écarté.
+  // Équivalents d'un vœu. resultats : l'objet renvoyé par recommander() (la liste de 10 vœux est alors recalculée ici,
+  // avec les mêmes centres d'intérêt), ou le tableau recommander().resultats avec la liste en 4e argument (objet de
+  // wishlist(), ou tableau de vœux). Sans liste : erreur, pour ne jamais renvoyer un vœu de la liste ni d'autres
+  // équivalents que ceux de Ma liste. Un vœu absent de la liste n'a pas d'équivalent.
   function equivalents(resultats, voeu, n = MAX_EQUIVALENTS, liste = null) {
     if (resultats && !Array.isArray(resultats) && Array.isArray(resultats.resultats)) {
       if (!liste) liste = wishlist(resultats.resultats, 10, resultats.interets);
       resultats = resultats.resultats;
     }
-    const voeux = Array.isArray(liste) ? liste : liste && liste.liste ? liste.liste : [voeu];
-    const v = voeux.find((x) => x.f.id === voeu.f.id) ? voeux : voeux.concat([voeu]);
-    return equivalentsListe(resultats, v, n).get(voeu.f.id) || [];
+    if (!liste) throw new Error("CapEngine.equivalents : passe l'objet de recommander(), ou la liste de vœux en 4e argument.");
+    const voeux = Array.isArray(liste) ? liste : liste.liste || [];
+    if (!voeux.some((x) => x.f.id === voeu.f.id)) return [];
+    return equivalentsListe(resultats, liste, n).get(voeu.f.id) || [];
   }
 
   /* ---------------------------------------------------------------- protection de la liste */
