@@ -19,8 +19,9 @@ const path = require("path");
 // Date figée : la même que tests/instantane.js (DATE_TEST), à midi (heure locale), pour éviter tout effet de fuseau.
 const DATE_FIGEE = "2026-10-01T12:00:00";
 
-// Objet global du contexte vm du site (le constructeur Function de ce contexte renvoie son « this » global)
-const globalDe = (site) => site.E.recommander.constructor("return this")();
+// Objet global du contexte vm du site (le constructeur Function de ce contexte renvoie son « this » global). Lu une
+// fois au chargement (site.__global) : ensuite, E.recommander est remplacé par une fonction du contexte de Node.
+const globalDe = (site) => site.__global || (site.__global = site.E.statsProfil.constructor("return this")());
 
 // Remplace Date dans le contexte du site : new Date() et Date.now() renvoient DATE_FIGEE ; avec des arguments,
 // Date se comporte normalement. Le site lit Date au moment de l'appel (jamais au chargement des scripts), donc
@@ -41,6 +42,7 @@ async function chargerCopie(dossier, { date = DATE_FIGEE } = {}) {
   const { chargerSite } = require(path.resolve(dossier, "tests", "charger-site.js"));
   // l'état initial n'est pas lu ici : chaque profil est importé ensuite par le site lui-même (voir importer())
   const site = await chargerSite({}, { etat: { profil: {}, reponses: {}, retenus: [], profilTermine: true, qIndex: 999 } });
+  globalDe(site);
   figerDate(site, date);
   // document.querySelector("#import") renvoie le champ d'import (seul champ lu par l'action « importer »)
   const g = globalDe(site);

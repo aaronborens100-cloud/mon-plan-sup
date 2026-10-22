@@ -248,7 +248,7 @@ Deux outils plus longs, hors de `npm test` (méthode, règles et limites : `docs
 questionnaire, profils vides, partiels et contradictoires) et figent la date du jour.
 
 ```
-npm run controles                                   # contrôles sur 300 profils (≈ 5 à 10 min)
+npm run controles                                   # contrôles sur 300 profils (≈ 6 min)
 node scripts/controles.js --n 50 --json rapport.json  # moins de profils, détail complet en JSON
 ```
 
@@ -258,8 +258,8 @@ prépa scientifique sans maths, pages sans « NaN », « undefined », « null �
 un exemple (profil, formation). Ils ne jugent pas la pertinence des vœux.
 
 ```
-git worktree add ../avant main
-npm run comparer -- ../avant . --n 300              # ou : node scripts/comparer-versions.js ../avant . --n 300
+git worktree add --detach ../avant main
+npm run comparer -- ../avant . --n 300              # ≈ 17 min ; ou : node scripts/comparer-versions.js ../avant . --n 300
 ```
 
 Compare deux copies du site sur les 14 profils types et N profils aléatoires : `recommander`, `wishlist`,

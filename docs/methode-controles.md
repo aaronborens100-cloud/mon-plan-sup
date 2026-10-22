@@ -7,8 +7,9 @@ Deux outils de vérification, qui ne changent rien au site :
 - `npm run comparer -- <dossierA> <dossierB>` (`scripts/comparer-versions.js`) : vérifie que deux versions du site
   donnent exactement les mêmes résultats et les mêmes pages (règle 5 de `CLAUDE.md`).
 
-Ni l'un ni l'autre n'est lancé par `npm test` (plusieurs minutes). `npm test` vérifie seulement que le générateur
-de profils est déterministe et couvre ce qu'il annonce (`tests/profils-aleatoires.test.js`).
+Ni l'un ni l'autre n'est lancé par `npm test` (plusieurs minutes). Durées mesurées le 22/10/2026 (machine à
+2 cœurs partagée avec d'autres tâches) : `npm run controles` ≈ 6 min pour 300 profils ; comparaison de deux copies
+≈ 17 min pour 314 profils (14 types + 300 aléatoires).
 
 ## Les profils aléatoires (`tests/profils-aleatoires.js`)
 
@@ -97,7 +98,7 @@ lancement. Preuve : comparer `main` à `main` donne 0 différence.
 ## Comparer deux versions
 
 ```
-git worktree add ../avant main          # copie de référence
+git worktree add --detach ../avant main   # copie de référence (dossier distinct)
 node scripts/comparer-versions.js ../avant . --n 300
 git worktree remove ../avant
 ```
