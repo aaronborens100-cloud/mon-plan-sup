@@ -652,9 +652,11 @@
   const nbFr = (n) => Number(n).toLocaleString("fr-FR");
   // Texte des frais d'une fiche (cout.texte, sinon frais.texte), affiché tel quel quand le montant n'est pas chiffré
   const texteFrais = (f) => (f.cout && f.cout.texte) || (f.frais && f.frais.texte) || "";
-  // Apprentissage relevé sur la fiche Parcoursup (data/frais-prives.json) : texte relevé, tel quel. Il ne change jamais
-  // le montant affiché (pas de « gratuit » : l'apprentissage dépend d'un contrat avec un employeur).
-  const texteApprentissage = (t) => `Apprentissage : ${t.replace(/\.$/, "")}.`;
+  // Apprentissage relevé sur la fiche Parcoursup (data/frais-prives.json) : texte relevé, tel quel, toujours précédé de
+  // son contexte (un contrat avec un employeur), pour qu'un « gratuit » du relevé ne se lise jamais comme « la formation
+  // est gratuite ». Il ne change jamais le montant affiché.
+  const PREFIXE_APPRENTISSAGE = "En contrat d'apprentissage (avec un employeur) : ";
+  const texteApprentissage = (t) => `${PREFIXE_APPRENTISSAGE}${t.replace(/\.$/, "")}.`;
   function carteResultat(x, rang) {
     const f = x.f, retenu = etat.retenus.includes(f.id), cout = f.cout.valeur_annuelle_eur, a = f.admission || {};
     const C = [["Notes", x.crit.notes], ["Spécialités", x.crit.specialites], ["Appréciations", x.crit.appreciations], ["Langues", x.crit.langues], ["Tests", x.crit.tests], ["Extrascolaire", x.crit.extra]];
@@ -969,7 +971,7 @@
     const tuiles = [
       ["horloge", "Durée", `${String(f.duree_ans).replace(".", ",")} an${f.duree_ans > 1 ? "s" : ""}`, f.langue ? `en ${f.langue}` : "", "bleu"],
       // frais relevés sur Parcoursup : fourchette en entier ; « Droits d'inscription » pour les IFSI et le travail social
-      ["euro", f.cout && f.cout.libelle === "droits_inscription" ? "Droits d'inscription" : "Coût annuel", cout != null ? montantFrais(f.cout) : "n. c.", cout === 0 ? "gratuit" : f.cout && f.cout.statut === "releve_parcoursup" ? "relevé sur Parcoursup" : "", "ambre"],
+      ["euro", f.cout && f.cout.libelle === "droits_inscription" ? "Droits d'inscription" : "Coût annuel", cout != null ? montantFrais(f.cout) : "n. c.", cout === 0 ? "gratuit" : "", "ambre"],
       ["cible", "Sélectivité", (!f.selectivite.estimee && E.SEL_LABEL[f.selectivite.niveau]) || "n. c.", tx ? `${tx} d'accès` : f.selectivite.estimee ? "taux non publié" : "", "violet"],
       ["groupe", "Places", a.places ? nbFr(a.places) : "n. c.", a.candidats ? `${nbFr(a.candidats)} vœux` : "", "ciel"],
       ["envoi", "Candidature", plat, "", "menthe"],

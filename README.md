@@ -187,19 +187,20 @@ Détails : `docs/modele-chances.md`, section 9. Pour un élève au budget « gra
 (`MALUS_PRIVE_FRAIS_INCONNUS` = 18), n'est jamais « sécurité » (règle `prive_frais_inconnus`) et affiche
 `MESSAGE_PRIVE_FRAIS_INCONNUS`. Statut inconnu (fiche non liée à Parcoursup) ou frais connus : cette règle ne joue pas.
 
-Les frais de 1 179 formations privées ont été relevés sur leur fiche Parcoursup (21-22/10/2026,
+Les frais de 1 172 formations privées ont été relevés sur leur fiche Parcoursup (21-22/10/2026,
 `docs/releves/frais-formations-privees-2026-10-22.csv`). Après une correction du relevé :
 
 ```
 python3 scripts/construire-frais-prives.py
 ```
 
-Le script ne garde que les montants en euros par an (ni francs CFP, ni dirhams, ni montant par mois ou pour tout le
-cursus, jamais convertis) et régénère `data/frais-prives.json`. Une fourchette (selon les revenus ou l'année
+Le script ne garde que les montants en euros par an (ni francs CFP, ni dirhams, ni montant par mois, ni montant pour
+tout le cursus ou « sur 3 ans » : jamais convertis) et régénère `data/frais-prives.json`. Une fourchette (selon les revenus ou l'année
 d'études) est affichée en entier ; le seul nombre lu par le moteur est le maximum. Budget sous le minimum : règle
 normale sur le minimum ; budget dans la fourchette : pas de malus, jamais « sécurité », message « vérifie ce que tu
 paierais » (`REGLE_BUDGET_FOURCHETTE`, décision du fondateur du 22/10/2026). Écoles d'infirmiers et du travail
-social : « Droits d'inscription et participation annuelle ». Détails : `docs/modele-chances.md`, sections 9.2 et 9.3.
+social dont la fiche ne détaille que des droits d'inscription, la CVEC et une participation : « Droits d'inscription
+et participation annuelle ». Détails : `docs/modele-chances.md`, sections 9.2 et 9.3.
 
 ## Protection de la liste de vœux
 

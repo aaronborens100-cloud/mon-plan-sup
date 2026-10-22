@@ -74,6 +74,9 @@ test("CFP, dirhams, par mois, non trouvé, à vérifier : frais inconnus (règle
   for (const g of ["31987", "43117"]) assert.ok(E.autre_monnaie.includes(g), `${g} : dirhams`);
   for (const g of ["2997", "8884", "25358", "35928", "8312", "12041"]) assert.ok(E.par_mois_ou_trimestre.includes(g), `${g} : par mois ou par trimestre`);
   assert.ok(E.cursus.includes("37012"), "coût du cursus de 3 ans");
+  for (const g of ["3346", "6392"]) assert.ok(E.par_mois_ou_trimestre.includes(g), `${g} : montant mensuel × 10, jamais multiplié`);
+  for (const g of ["12043", "12051", "27159", "35153"]) assert.ok(E.an_ou_cursus_incertain.includes(g), `${g} : « par an (sur 3 ans) »`);
+  assert.ok(E.a_reverifier.includes("26091"), "26091 : psychomotricien à 230 €, non revérifié");
   assert.equal(E.non_trouve.length, 14);
   assert.equal(E.a_verifier.length, 4);
   for (const l of Object.values(E)) for (const g of l) {
@@ -85,6 +88,34 @@ test("CFP, dirhams, par mois, non trouvé, à vérifier : frais inconnus (règle
   const p = profil("fragile"), f = fiche("19457");
   assert.ok(f && f.__tc !== "Publics");
   assert.equal(evaluer(p, f).repere.priveFraisInconnus, true);
+});
+
+test("« maximum non indiqué » (48177, ICES : part fixe 3 975 € + part variable) : règle « frais inconnus » sur données réelles", () => {
+  assert.ok(FP.meta.exclus.maximum_non_indique.includes("48177"));
+  assert.equal(FP.formations["48177"], undefined);
+  const f = fiche("48177");
+  assert.ok(f, "48177 dans le catalogue");
+  assert.notEqual(f.__tc, "Publics");
+  assert.equal(f.cout.valeur_annuelle_eur, null, "aucun montant : ni la part fixe, ni une estimation");
+  const p = profil("fragile");
+  const x = evaluer(p, f);
+  assert.equal(x.repere.priveFraisInconnus, true);
+  assert.equal(x.repere.alerteFrais, MESSAGE_INCONNUS);
+  assert.ok(x.ajust.includes("établissement privé aux frais non relevés"));
+  assert.notEqual(x.categorie, "securite");
+  assert.equal(x.repere.fraisFourchette, false);
+  // budget « moyen » : la règle ne joue pas
+  assert.equal(evaluer(avecReponses(p, { budget: "moyen" }), f).repere.priveFraisInconnus, false);
+});
+
+test("corrections tirées du relevé : tarif d'une autre population ou d'un semestre en apprentissage retiré", () => {
+  // TBS Paris 39147 : 12 700 € = tarif des candidats des lycées français de l'étranger
+  assert.deepEqual([FP.formations["39147"].min, FP.formations["39147"].max, FP.formations["39147"].nature_fourchette], [10900, 11100, "annee"]);
+  assert.match(FP.formations["39147"].correction, /L\.F\.E/);
+  // 43500, 43502 : 4 450 € = 2e année avec un semestre en apprentissage → montant unique sous statut étudiant
+  for (const g of ["43500", "43502"]) assert.deepEqual([FP.formations[g].min, FP.formations[g].max, FP.formations[g].nature_fourchette], [7500, 7500, null], g);
+  assert.deepEqual(Object.keys(FP.meta.corrections), ["39147", "43500", "43502"]);
+  assert.equal(fiche("39147").cout.valeur_annuelle_eur, 11100);
 });
 
 test("catalogue : chaque formation du relevé reçoit son montant (fiche générée ou fusionnée), relevé prioritaire", () => {
@@ -125,7 +156,7 @@ test("fourchette (min ≤ budget < max) : pas de malus, jamais « sécurité »,
   assert.equal(E.REGLE_BUDGET_FOURCHETTE.malus, 0);
   assert.equal(dedans.repere.fraisFourchette, true);
   assert.equal(dedans.repere.priveFraisInconnus, false);
-  assert.equal(dedans.repere.alerteFrais, "Les frais vont de 500 € à 5 665 € par an selon tes revenus : vérifie ce que tu paierais avant de le mettre dans tes vœux.".replace(/ /g, " ").replace(/(\d) (\d)/g, "$1 $2"));
+  assert.equal(dedans.repere.alerteFrais, "Les frais vont de 500 € à 5 665 € par an selon les revenus de ta famille : vérifie ce que tu paierais avant de le mettre dans tes vœux.".replace(/ /g, " ").replace(/(\d) (\d)/g, "$1 $2"));
   assert.ok(dedans.repere.pourquoi.includes("Les frais vont de"));
   // fourchette selon l'année d'études
   const annee = evaluer(p, f, { cout: cout(500, 1500, { nature_fourchette: "annee" }) });
@@ -179,9 +210,11 @@ test("droits d'inscription : IFSI et travail social, libellé affiché sur la fi
     assert.ok(new RegExp(`^${g},[^\n]*,D\\.E `, "m").test(CSV), `${g} : intitulé Parcoursup « D.E »`);
     assert.match(f.cout.texte, /^Droits d'inscription et participation annuelle : /, g);
   }
-  for (const g of ["23064", "24813", "24814"]) assert.equal(FP.formations[g].libelle, "droits_inscription", g);
-  // pédicure-podologue, psychomotricien à plusieurs milliers d'euros : « Coût »
-  for (const g of ["26058", "26071"]) assert.equal(FP.formations[g].libelle, "cout", g);
+  // droits d'inscription, CVEC, contribution ou participation forfaitaire seulement
+  for (const g of ["23064", "23101", "23174", "23390", "24813", "25090", "36282"]) assert.equal(FP.formations[g].libelle, "droits_inscription", g);
+  // relecture de la PR #46 : frais pédagogiques, scolarité, gestion, montant sans détail ou au-dessus du seuil → « Coût »
+  for (const g of ["23135", "23163", "23143", "23142", "49579", "24814", "23677", "23730", "23701", "25298", "26058", "26071"]) assert.equal(FP.formations[g].libelle, "cout", g);
+  assert.equal(FP.formations["26091"], undefined, "26091 : laissé inconnu (non revérifié)");
   const p = profil("fragile"), f = fiche("24813");
   const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
   const html = s.afficher("#formation-" + f.id);
@@ -212,15 +245,23 @@ test("apprentissage : texte affiché, jamais « gratuit » ni 0 €", async () =
     assert.equal(f.cout.valeur_annuelle_eur, x.max, g);
     assert.equal(f.cout.apprentissage, x.apprentissage, g);
   }
-  // 76 : « gratuité totale en apprentissage », frais de 4 100 à 9 100 € par an
+  // 76 : « gratuité totale en apprentissage », frais de 4 100 à 9 100 € par an : le mot « gratuit » n'est affiché
+  // qu'avec son contexte (contrat d'apprentissage avec un employeur)
   const f = fiche("76");
   assert.match(f.cout.apprentissage, /gratuit/);
   const p = profil("sciences-ingenieur");
   const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
   const html = s.afficher("#formation-" + f.id);
-  assert.ok(html.includes("Apprentissage : année 5 gratuite en alternance (gratuité totale en apprentissage)."), "texte d'apprentissage absent");
+  assert.ok(html.includes("En contrat d&#39;apprentissage (avec un employeur) : année 5 gratuite en alternance (gratuité totale en apprentissage).")
+    || html.includes("En contrat d'apprentissage (avec un employeur) : année 5 gratuite en alternance (gratuité totale en apprentissage)."), "texte d'apprentissage absent ou sans contexte");
+  for (const m of html.matchAll(/gratuit/gi)) {
+    const avant = html.slice(Math.max(0, m.index - 160), m.index);
+    assert.ok(/En contrat d(&#39;|')apprentissage \(avec un employeur\) : /.test(avant), `« gratuit » sans contexte : …${avant.slice(-80)}`);
+  }
   assert.ok(/4.100 € à 9.100 €/.test(html), "fourchette absente de la fiche");
   assert.ok(!/Coût annuel<\/span><span class="tuile-v">0 €|tuile-s">gratuit/.test(html), "jamais « gratuit »");
+  // un seul « relevé sur Parcoursup » : le badge de la rubrique des frais (plus de doublon sur la tuile)
+  assert.equal(html.split("relevé sur Parcoursup").length - 1, 1, "badge « relevé sur Parcoursup » en double");
 });
 
 test("fiche en fourchette et Ma liste du profil fragile : message affiché (liste, section « Nouvelle formation », fiche)", async () => {
@@ -239,7 +280,7 @@ test("fiche en fourchette et Ma liste du profil fragile : message affiché (list
   // fiche en fourchette (31876, CPGE ECG à Balma : 500 à 5 665 € selon les revenus), budget « gratuit » (1 000 €)
   const f = fiche("31876");
   const html = s.afficher("#formation-" + f.id);
-  assert.ok(/Les frais vont de 500 € à 5.665 € par an selon tes revenus : vérifie ce que tu paierais avant de le mettre dans tes vœux\./.test(html), "message de fourchette absent de la fiche");
+  assert.ok(/Les frais vont de 500 € à 5.665 € par an selon les revenus de ta famille : vérifie ce que tu paierais avant de le mettre dans tes vœux\./.test(html), "message de fourchette absent de la fiche");
   assert.ok(html.includes("relevé sur Parcoursup"));
   assert.ok(/500 € à 5.665 €/.test(html), "fourchette absente de la tuile");
   // 9450 (2 200 à 7 780 €) : min > 2 × budget, exclue comme un montant connu trop élevé
@@ -279,14 +320,33 @@ test("script : règles de détection", { skip: !python && "python3 absent" }, ()
     ["nature", ligne({ precision: "fourchette (critère non précisé sur la fiche)" }), 4828, 6857, "autre"],
     ["nature", ligne({ par_an_ou_cursus: "par an (6150 € en 1 ou 2 versements, 6250 € en 4, 6450 € en 8)" }), 6150, 6450, "autre"],
     ["nature", ligne({}), 1000, 1000, null],
-    ["libelle", ligne({ formation: "D.E Infirmier" }), 0, 783, "droits_inscription"],
-    ["libelle", ligne({ formation: "D.E Educateur Spécialisé" }), 0, 710, "droits_inscription"],
-    ["libelle", ligne({ formation: "D.E Assistant de Service Social" }), 0, 638, "droits_inscription"],
-    ["libelle", ligne({ formation: "D.E Educateur de Jeunes Enfants" }), 0, 928, "droits_inscription"],
+    ["nature", ligne({ par_an_ou_cursus: "par an (7100 € années 1-2, 9100 € années 3-5, 9300 € sur le campus de Nantes)" }), 7100, 9300, "autre"],
+    ["nature", ligne({ par_an_ou_cursus: "par an (4500 € suivant revenus familiaux, 9700 € en cycle ingénieur étudiant)" }), 4500, 9700, "autre"],
+    ["nature", ligne({ par_an_ou_cursus: "par an (1re année : 4600 € parcours Commerce, 5800 € parcours International, + 172 € de droits d'inscription)" }), 4772, 5972, "autre"],
+    ["nature", ligne({ precision: "3500 € (mineures histoire de l'art, géographie, philosophie) ou 4100 € (mineure sciences politiques)" }), 3500, 4100, "autre"],
+    ["nature", ligne({ precision: "3500 € (Lettres classiques) ou 4100 € (Lettres, cultures et patrimoine)", boursiers_eur: "3150 € ou 3900 € selon le parcours" }), 3500, 4100, "autre"],
+    ["nature", ligne({ par_an_ou_cursus: "par an (10900 € L1, 11000 € L2, 11100 € L3; 12700 €/an candidats des L.F.E.)" }), 10900, 12700, "autre"],
+    ["nature", ligne({ precision: "selon revenus; internationaux hors Schengen 8020 €/an" }), 4075, 7280, "revenus"],
+    ["nature", ligne({ precision: "vérif. fiche Parcoursup", par_an_ou_cursus: "par an (8000 € en 1re année, 9000 € ensuite)" }), 8000, 9000, "annee"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "178 € de droits d'inscription + 105 € de CVEC; formation continue 7100 €" }), 0, 283, "droits_inscription"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "178 € d'inscription universitaire + 800 € de contribution forfaitaire; formation continue 9100 € + 178 €" }), 0, 978, "droits_inscription"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "1995 € de frais pédagogiques + 250 € de frais de gestion (prévision); formation continue 8000 € + 250 €" }), 0, 2245, "cout"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "2198 € + 178 € (droit légal) + 105 € de CVEC; formation continue 8300 €" }), 0, 2481, "cout"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "2095 € de scolarité + frais d'inscription universitaire (non chiffrés); formation continue 8400 €" }), 0, 2095, "cout"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "selon revenus; formation continue 7942 €" }), 1872, 2772, "cout"],
+    ["libelle", ligne({ formation: "D.E manipulateur/trice en électroradiologie médicale", precision: "formation continue 7100 €" }), 0, 785, "cout"],
+    ["libelle", ligne({ formation: "D.E Educateur Spécialisé", precision: "170 € de droits d'inscription + 540 € de frais de scolarité" }), 0, 710, "cout"],
+    ["libelle", ligne({ formation: "D.E Educateur Spécialisé", precision: "720 € + 105 € de CVEC" }), 0, 825, "cout"],
+    ["libelle", ligne({ formation: "D.E Educateur de Jeunes Enfants", precision: "dont 175 € de frais d'inscription; formation continue 15,50 €/heure" }), 0, 836, "cout"],
+    ["libelle", ligne({ formation: "D.E Assistant de Service Social", precision: "vérif. fiche 2026-10-22 (autre) : frais réduits de formation sociale (591 €, contenu non détaillé)" }), 0, 591, "cout"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "formation continue 9100 €; vérif. fiche 2026-10-22 (seulement droits d'inscription/CVEC) : droits d'inscription seulement" }), 0, 178, "droits_inscription"],
+    ["libelle", ligne({ formation: "D.E Infirmier", precision: "178 € de droits d'inscription + 1200 € de contribution" }), 0, 1378, "cout"],
     ["libelle", ligne({ formation: "D.E Infirmier", precision: "8200 € de frais de formation" }), 0, 8470, "cout"],
-    ["libelle", ligne({ formation: "D.E Ergothérapeute", precision: "600 € + 105 € de CVEC" }), 0, 705, "droits_inscription"],
     ["libelle", ligne({ formation: "D.E Pédicure-Podologue" }), 0, 9855, "cout"],
-    ["libelle", ligne({ formation: "Licence - Droit" }), 0, 500, "cout"],
+    ["libelle", ligne({ formation: "Licence - Droit", precision: "178 € de droits d'inscription" }), 0, 178, "cout"],
+    ["motif", ligne({ par_an_ou_cursus: "par an (110 €/mois sur 10 mois)", frais_min_eur: "1100", frais_max_eur: "1100" }), 0, 0, "par_mois_ou_trimestre"],
+    ["motif", ligne({ par_an_ou_cursus: "par an (sur 3 ans)", frais_min_eur: "6100", frais_max_eur: "6100" }), 0, 0, "an_ou_cursus_incertain"],
+    ["motif", ligne({ gta: "26091", frais_min_eur: "230", frais_max_eur: "230" }), 0, 0, "a_reverifier"],
     ["motif", ligne({ precision: "montant en francs CFP : 470700 CFP (non converti en euros)", frais_min_eur: "", frais_max_eur: "" }), 0, 0, "autre_monnaie"],
     ["motif", ligne({ precision: "montant en dirhams : 186500 MAD", frais_min_eur: "", frais_max_eur: "" }), 0, 0, "autre_monnaie"],
     ["motif", ligne({ precision: "formation initiale financée par la Région Île-de-France" }), 0, 0, null],
@@ -301,6 +361,12 @@ test("script : règles de détection", { skip: !python && "python3 absent" }, ()
   const code = `cas=json.loads(sys.stdin.read())\nout=[]\nfor t,l,a,b,att in cas:\n  l=json.loads(l)\n  v={'nature':lambda:m['nature'](l,a,b),'libelle':lambda:m['libelle'](l,b),'motif':lambda:m['motif_exclusion'](l)}[t]()\n  out.append([t,l['formation']+' | '+l['par_an_ou_cursus']+' | '+l['precision'],v,att])\nprint(json.dumps(out))`;
   const res = JSON.parse(execFileSync("python3", ["-I", "-c", `import runpy,json,sys\nm=runpy.run_path(${JSON.stringify(path.join(RACINE, "scripts/construire-frais-prives.py"))})\n${code}`], { input: JSON.stringify(cas), encoding: "utf8" }));
   for (const [t, ctx, v, att] of res) assert.equal(v, att, `${t} : ${ctx}`);
+});
+
+test("relecture PR #46 : codes réels (nature et libellé)", () => {
+  const nat = { 39147: "annee", 46033: "autre", 46036: "autre", 475: "autre", 476: "autre", 30944: "autre", 39001: "autre", 47277: "autre",
+    24653: "autre", 24656: "autre", 39321: "autre", 39322: "autre", 9553: "autre", 17415: "autre" };
+  for (const [g, n] of Object.entries(nat)) assert.equal(FP.formations[g].nature_fourchette, n, g);
 });
 
 test("script : data/frais-prives.json est à jour (relancer le script sinon)", { skip: !python && "python3 absent" }, () => {

@@ -465,13 +465,16 @@
   //     message texteFourchette().
   // Un montant unique (min = max, ou fiche sans min) suit la règle normale.
   const REGLE_BUDGET_FOURCHETTE = { malus: 0, jamaisSecurite: true, message: true };
-  const SELON_FOURCHETTE = { revenus: "selon tes revenus", annee: "selon l'année d'études" };
+  // mêmes mots que le texte des frais de la fiche (app.js, coutReleve)
+  const SELON_FOURCHETTE = { revenus: "selon les revenus de ta famille", annee: "selon l'année d'études" };
   const texteFourchette = (c) => `Les frais vont de ${fmtEur(c.min)} à ${fmtEur(c.max)} par an${SELON_FOURCHETTE[c.nature_fourchette] ? " " + SELON_FOURCHETTE[c.nature_fourchette] : ""} : vérifie ce que tu paierais avant de le mettre dans tes vœux.`;
   const REGLE_FRAIS_FOURCHETTE = { cle: "frais_fourchette", categorie: "realiste" };
   // Montants annuels { min, max } d'une fiche, ou null si les frais ne sont pas chiffrés
   function bornesFrais(f) {
     const c = f.cout || {}, v = c.valeur_annuelle_eur;
     if (v == null) return null;
+    // un min au-dessus du max (donnée incohérente) est ignoré et signalé : le max reste le seul montant
+    if (typeof c.min === "number" && c.min > v && typeof console !== "undefined") console.warn(`Frais incohérents (min ${c.min} > max ${v}) : ${f.id}`);
     const min = typeof c.min === "number" && c.min <= v ? c.min : v;
     return { min, max: v };
   }

@@ -12,8 +12,9 @@ Pour chaque formation retenue (clé = code gta) :
                       « revenus » (selon les revenus ou le quotient familial) ou « autre » (voir nature()) ;
   par                 texte de la colonne par_an_ou_cursus (« par an », « par an (1re année) »…) ;
   apprentissage       texte relevé sur l'apprentissage, ou null (« non mentionné ») ;
-  libelle             « droits_inscription » (écoles d'infirmiers, travail social et cas semblables : droits
-                      d'inscription + participation, voir libelle()) ou « cout » ;
+  libelle             « droits_inscription » (droits d'inscription, CVEC et participation seulement, voir libelle())
+                      ou « cout » ;
+  correction          raison d'une correction de min ou de max tirée du texte du relevé (CORRECTIONS), si besoin ;
   boursiers_eur       texte relevé pour les boursiers, ou null (gardé pour information, jamais affiché) ;
   source, consulte_le fiche Parcoursup et date de consultation.
 
@@ -24,7 +25,8 @@ meta.exclus :
   - montant dans une autre monnaie (francs CFP, dirhams) : jamais converti ;
   - montant par mois ou par trimestre sans total annuel : jamais multiplié ;
   - « non précisé » (on ne sait pas si le montant est par an ou pour tout le cursus) ;
-  - montant pour tout le cursus (jamais divisé par la durée) ;
+  - montant pour tout le cursus (jamais divisé par la durée), ou « par an (sur 3 ans) » (annuel ou pour 3 ans ?) ;
+  - fiche mise en doute à la relecture et non revérifiée (A_REVERIFIER) ;
   - maximum non indiqué (« à partir de… », part variable non chiffrée) : seul un minimum est connu.
 
 Usage : python3 scripts/construire-frais-prives.py            (écrit data/frais-prives.json)
@@ -52,6 +54,24 @@ MONNAIES_ETRANGERES = re.compile(r"\bCFP\b|\bCPF\b|\bXPF\b|\bMAD\b|dirham|francs
 CURSUS = re.compile(r"co[uû]t (total )?du cursus|pour (tout le|l'ensemble du) cursus", re.I)
 
 
+# Fiches mises en doute à la relecture de la PR #46 (22/10/2026), sans revérification possible (fiche Parcoursup
+# inaccessible depuis l'environnement de construction) : laissées inconnues plutôt que devinées.
+A_REVERIFIER = {
+    "26091": "psychomotricien à 230 €/an sans détail, très en dessous de la formation continue (15 030 €)",
+}
+
+# Corrections d'un montant, tirées du texte du relevé lui-même (jamais d'estimation) : un montant qui concerne un autre
+# public que l'élève qui candidate en formation initiale sous statut étudiant est retiré de la fourchette.
+CORRECTIONS = {
+    "39147": {"max": 11100, "nature": "annee",
+              "raison": "12 700 €/an est le tarif des candidats des lycées français de l'étranger (L.F.E.) ; pour les autres : 10 900 € (L1), 11 000 € (L2), 11 100 € (L3)"},
+    "43500": {"min": 7500,
+              "raison": "4 450 € est le tarif d'une 2e année dont le 2e semestre est en apprentissage ; sous statut étudiant, le relevé ne donne que 7 500 € (DN MADE 1)"},
+    "43502": {"min": 7500,
+              "raison": "4 450 € est le tarif d'une 2e année dont le 2e semestre est en apprentissage ; sous statut étudiant, le relevé ne donne que 7 500 € (DN MADE 1)"},
+}
+
+
 def montant(texte):
     """Montant en euros (« 1586.40 » → 1586.4, « 3950 » → 3950), ou None si vide."""
     t = (texte or "").strip().replace(",", ".")
@@ -74,10 +94,18 @@ def motif_exclusion(l):
     par = l["par_an_ou_cursus"].strip()
     if MONNAIES_ETRANGERES.search(l["precision"] + " " + par):
         return "autre_monnaie"
-    if par.startswith("par mois") or par.startswith("par trimestre"):
+    # montant donné par mois ou par trimestre, même avec le nombre de mois (« par an (110 €/mois sur 10 mois) ») :
+    # jamais multiplié, même quand le relevé donne déjà le produit (3346, 6392)
+    if par.startswith("par mois") or par.startswith("par trimestre") or re.search(r"€ ?/ ?mois|par mois", par):
         return "par_mois_ou_trimestre"
     if par.startswith("non précis"):
         return "non_precise"
+    # « par an (sur 3 ans) » : on ne sait pas si le montant est annuel ou pour les 3 ans (12043, 12051, 27159, 35153)
+    if re.search(r"\bsur \d+ ans\b", par):
+        return "an_ou_cursus_incertain"
+    # fiches dont le relevé est mis en doute à la relecture et qu'on n'a pas pu revérifier : inconnues
+    if l["gta"] in A_REVERIFIER:
+        return "a_reverifier"
     if CURSUS.search(l["precision"]) or not par.startswith("par an"):
         return "cursus"
     if montant(l["frais_min_eur"]) is None or montant(l["frais_max_eur"]) is None:
@@ -86,17 +114,22 @@ def motif_exclusion(l):
 
 
 # ---------------------------------------------------------------- nature de la fourchette
-# « annee » : la parenthèse de par_an_ou_cursus donne au moins deux montants en euros ET les rattache à des années
-# d'études ou à des cycles (« 7700 € années 1-2, 8750 € année 3 », « 1640 € en 1re année DN MADE, 2285 € dès la
-# 2e année », « 9000 € prépa CII, 10500 € cycle ingénieur », « DTS1 1959 €, DTS2 1820 € », « 7700 € pendant 3 ans,
-# 9500 € pendant 2 ans »). Une parenthèse sans montant (« par an (1re année) ») ne suffit pas.
+# Ordre des règles (la première qui s'applique) :
+#   1. « autre » si la précision entre parenthèses de par_an_ou_cursus (« détail ») parle d'une autre population ou
+#      d'une autre option que l'année d'études (campus, L.F.E., hors UE, internationaux, parcours, mineure, versements)
+#      ou si la précision ou la colonne des boursiers parlent de mineure ou de parcours (Institut Saint-Pie X) ;
+#   2. « annee » si le détail donne au moins deux montants en euros rattachés à des années ou des cycles
+#      (« 7700 € années 1-2, 8750 € année 3 », « 9000 € prépa CII, 10500 € cycle ingénieur », « DTS1 1959 € ») ;
+#      mais « autre » si le détail dit aussi que l'un des montants dépend des revenus (Icam : « 4500 € suivant revenus
+#      familiaux, 9700 € en cycle ingénieur » : le min change avec les revenus ET le max avec le cycle) ;
+#   3. « revenus » si le détail, la précision ou la colonne des boursiers parlent de revenus, quotient familial… ;
+#   4. « autre » sinon (critère non précisé sur la fiche, prise en charge par la Région…).
+# Un montant d'une autre population retenu à tort comme max (39147, 47277) est corrigé dans CORRECTIONS.
 ANNEE = re.compile(r"ann[ée]es?\b|\b\d(re|e|er)\b|\bL[1-3]\b|DN ?MADE ?\d|DTS ?\d|cycle|prépa|\bCPA\b|bachelor|ensuite|pendant \d ans", re.I)
 MONTANT_EUR = re.compile(r"\d[\d ]*(,\d+)? ?€")
-# « revenus » : montant selon les revenus de la famille (universités catholiques, CPGE privées, DN MADE…), d'après
-# la parenthèse, la précision ou la colonne des boursiers
+AUTRE_OPTION = re.compile(r"campus|L\.?F\.?E\.?\b|hors (UE|Schengen)|internationa|parcours\b|mineure|versements?\b|\ben \d (ou \d )?versements", re.I)
+AUTRE_OPTION_PRECISION = re.compile(r"mineure|parcours\b", re.I)
 REVENUS = re.compile(r"revenu|quotient|coefficient familial|situation familiale|ressources|imposable|imposition|fiscal|péréquation|même barème", re.I)
-# « autre » : tout le reste (fourchette sans critère précisé sur la fiche, selon la mineure ou le parcours, selon le
-# nombre de versements, frais pris en charge par la Région…)
 
 
 def nature(l, mini, maxi):
@@ -104,33 +137,48 @@ def nature(l, mini, maxi):
         return None
     par = l["par_an_ou_cursus"]
     detail = par[par.find("(") + 1:] if "(" in par else ""
+    if AUTRE_OPTION.search(detail) or AUTRE_OPTION_PRECISION.search(l["precision"] + " " + l["boursiers_eur"]):
+        return "autre"
     if len(MONTANT_EUR.findall(detail)) >= 2 and ANNEE.search(detail):
-        return "annee"
+        return "autre" if REVENUS.search(detail) else "annee"
     if REVENUS.search(detail + " " + l["precision"] + " " + l["boursiers_eur"]):
         return "revenus"
     return "autre"
 
 
 # ---------------------------------------------------------------- libellé « droits d'inscription »
-# Écoles d'infirmiers (IFSI) et diplômes d'État du travail social : en formation initiale, la Région finance la
-# formation et l'étudiant paie des droits d'inscription (souvent 178 €), la CVEC et une participation (frais de
-# scolarité, contribution forfaitaire). Le site affiche alors « Droits d'inscription et participation annuelle »,
-# pas « Coût ». Cas semblables : autre diplôme d'État paramédical (« D.E ») dont le montant reste sous
-# SEUIL_DROITS_SEMBLABLES et dont la fiche décrit des droits, la CVEC ou une formation continue bien plus chère.
-FORMATIONS_DROITS = re.compile(r"^D\.E\.? ?(Infirmier|Assistant de Service Social|Educateur Spécialisé|Educateur de Jeunes Enfants|"
-                               r"Educateur Technique Spécialisé|Moniteur|Conseiller en économie sociale)", re.I)
-# Au-delà, le montant n'est plus des droits + participation (frais de formation non pris en charge) : « Coût »
-SEUIL_DROITS = 3000
-SEUIL_DROITS_SEMBLABLES = 1000
-TEXTE_DROITS = re.compile(r"droits?|inscription|CVEC|contribution|participation|formation continue|frais réduits", re.I)
+# Écoles d'infirmiers (IFSI), diplômes d'État paramédicaux et du travail social : en formation initiale, la Région
+# finance la formation et l'étudiant paie des droits d'inscription (souvent 178 €), la CVEC et parfois une
+# contribution ou une participation forfaitaire. Le site affiche alors « Droits d'inscription et participation
+# annuelle », pas « Coût ». La précision ne doit détailler QUE ces postes :
+#   - intitulé d'un diplôme d'État (« D.E ») et montant maximum sous SEUIL_DROITS ;
+#   - texte lu : la précision avant la note de revérification (« vérif. fiche … »), sans la formation continue
+#     (reconversion, autre public) ni les tarifs d'autres publics (étrangers, extracommunautaires) ;
+#   - aucun autre poste (FRAIS_AUTRES : frais pédagogiques, scolarité, formation, gestion, service, dossier, tenues,
+#     matériel, montant « non détaillé », montant global « dont » ou « incluant » des droits sans le reste) ;
+#   - chaque montant en euros est rattaché à des droits, une inscription, la CVEC, une contribution ou une
+#     participation (TEXTE_DROITS) ; « 720 € + 105 € de CVEC » (720 € sans nature) reste un « Coût ». Exception :
+#     la revérification ciblée du 22/10/2026 a classé la fiche « seulement droits d'inscription/CVEC ».
+SEUIL_DROITS = 1300
+TEXTE_DROITS = re.compile(r"\bdroits?\b|inscription|CVEC|contribution|participation", re.I)
+FRAIS_AUTRES = re.compile(r"scolarit|pédagogique|de formation\b|gestion|frais de service|dossier|tenues?\b|matériel|non détaillé|sans détail|\bdont\b|incluant|y compris", re.I)
+AUTRE_PUBLIC = re.compile(r"formation continue|extracommunautaire|étrangers|internationa", re.I)
+VERIF_DROITS = "(seulement droits d'inscription/CVEC)"
 
 
 def libelle(l, maxi):
-    if FORMATIONS_DROITS.search(l["formation"]) and maxi < SEUIL_DROITS:
-        return "droits_inscription"
-    if re.match(r"^D\.E\.? ", l["formation"]) and maxi < SEUIL_DROITS_SEMBLABLES and TEXTE_DROITS.search(l["precision"]):
-        return "droits_inscription"
-    return "cout"
+    if not re.match(r"^D\.E\.? ", l["formation"]) or maxi >= SEUIL_DROITS:
+        return "cout"
+    principal = l["precision"].split("vérif. fiche")[0]
+    morceaux = [m for m in re.split(r";", principal) if not AUTRE_PUBLIC.search(m)]
+    texte = ";".join(morceaux)
+    if FRAIS_AUTRES.search(texte):
+        return "cout"
+    verifie = VERIF_DROITS in l["precision"]
+    for m in re.split(r"[+;]", texte):
+        if MONTANT_EUR.search(m) and not TEXTE_DROITS.search(m) and not verifie:
+            return "cout"
+    return "droits_inscription" if TEXTE_DROITS.search(texte) or verifie else "cout"
 
 
 def texte_ou_null(t, vides=("non mentionné", "")):
@@ -154,15 +202,19 @@ def construire():
             exclus[m].append(l["gta"])
             continue
         mini, maxi = montant(l["frais_min_eur"]), montant(l["frais_max_eur"])
+        corr = CORRECTIONS.get(l["gta"], {})
+        mini, maxi = corr.get("min", mini), corr.get("max", maxi)
         if mini > maxi:
             sys.exit(f"Erreur : {l['gta']} : minimum {mini} au-dessus du maximum {maxi}.")
         if not re.match(r"^https://dossierappel\.parcoursup\.fr/", l["url_source"]) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", l["consulte_le"]):
             sys.exit(f"Erreur : {l['gta']} : source ou date de consultation manquante.")
         formations[l["gta"]] = {
-            "min": mini, "max": maxi, "nature_fourchette": nature(l, mini, maxi), "par": l["par_an_ou_cursus"].strip(),
+            "min": mini, "max": maxi, "nature_fourchette": corr.get("nature") if "nature" in corr and mini < maxi else nature(l, mini, maxi), "par": l["par_an_ou_cursus"].strip(),
             "apprentissage": texte_ou_null(l["apprentissage"]), "libelle": libelle(l, maxi),
             "boursiers_eur": texte_ou_null(l["boursiers_eur"]), "source": l["url_source"], "consulte_le": l["consulte_le"],
         }
+        if corr:
+            formations[l["gta"]]["correction"] = corr["raison"]
     dates = sorted({l["consulte_le"] for l in lignes})
     natures = collections.Counter(f["nature_fourchette"] for f in formations.values() if f["nature_fourchette"])
     return {
@@ -174,6 +226,8 @@ def construire():
             "nb_lignes": len(lignes), "nb_retenues": len(formations),
             "exclus": {k: sorted(v, key=int) for k, v in sorted(exclus.items())},
             "natures": dict(sorted(natures.items())),
+            "corrections": {g: c["raison"] for g, c in sorted(CORRECTIONS.items(), key=lambda kv: int(kv[0]))},
+            "a_reverifier": A_REVERIFIER,
             "nb_droits_inscription": sum(1 for f in formations.values() if f["libelle"] == "droits_inscription"),
         },
         "formations": dict(sorted(formations.items(), key=lambda kv: int(kv[0]))),

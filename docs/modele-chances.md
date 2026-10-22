@@ -556,7 +556,7 @@ cinquième fiche sans lien Parcoursup) sur 10 vœux.
 - **Formations concernées** (budget « gratuit » ou « faible ») : avant le relevé du 22/10/2026, 3 287 formations
   françaises (1 976 privées sous contrat ou consulaires, 1 311 privées), dont 1 241 pouvaient entrer dans la liste de
   vœux (990 et 251). Depuis le relevé (section 9.2), la règle ne vaut plus que pour les formations privées **sans
-  montant relevé** : 2 119 fiches du catalogue (3 298 privées, dont 1 179 avec un montant).
+  montant relevé** : 2 126 fiches du catalogue (3 298 privées, dont 1 172 avec un montant).
 - **Limites** : le statut ne dit rien du montant (un établissement privé peut avoir des frais faibles) ; seul un
   relevé sourcé des frais lève la règle pour une formation.
 
@@ -572,37 +572,48 @@ Tests : `tests/frais-prives.test.js`.
   24 fiches revérifiées, toutes exactes (`docs/releves/frais-controle-qualite-2026-10-22.txt`) ; fiches aux frais très
   bas revérifiées une à une (`docs/releves/frais-verification-ciblee-2026-10-22.txt`). Le relevé par établissement
   (`docs/releves/frais-etablissements-prives-2026-10-21.csv`) est gardé pour mémoire, il n'est pas lu par le script.
-- **Retenues** : 1 179 formations (932 privées sous contrat ou consulaires, 247 privées), seulement les lignes
-  « trouvé » avec un montant minimum et maximum **en euros, par an**. 502 coûtent au plus 5 000 € par an (dont 211 au
+- **Retenues** : 1 172 formations (926 privées sous contrat ou consulaires, 246 privées), seulement les lignes
+  « trouvé » avec un montant minimum et maximum **en euros, par an**. 499 coûtent au plus 5 000 € par an (dont 210 au
   plus 1 000 €).
-- **Restent inconnues** (62 lignes, la règle 9.1 continue de s'appliquer) : 14 « non trouvé », 4 « à vérifier »,
-  7 montants en francs CFP ou en dirhams (jamais convertis), 6 montants par mois ou par trimestre sans total annuel
-  (jamais multipliés), 1 montant pour tout le cursus (37012 : « coût du cursus de 3 ans », jamais divisé), 30 sans
-  maximum (« à partir de… », part variable selon les revenus non chiffrée : seul un minimum est connu). Aucune ligne
-  « non précisé » (par an ou cursus) ne reste parmi les « trouvé ».
+- **Restent inconnues** (69 lignes, la règle 9.1 continue de s'appliquer) : 14 « non trouvé », 4 « à vérifier »,
+  7 montants en francs CFP ou en dirhams (jamais convertis), 8 montants par mois ou par trimestre (jamais multipliés,
+  y compris 3346 et 6392, où le relevé donne « 110 €/mois sur 10 mois » et « 165 €/mois sur 10 mois »), 1 montant pour
+  tout le cursus (37012 : « coût du cursus de 3 ans », jamais divisé), 4 « par an (sur 3 ans) » dont on ne sait pas
+  s'ils sont annuels ou pour les 3 ans (12043, 12051, 27159, 35153), 1 fiche mise en doute à la relecture et non
+  revérifiée (26091, psychomotricien à 230 €/an sans détail), 30 sans maximum (« à partir de… », part variable selon
+  les revenus non chiffrée : seul un minimum est connu). Aucune ligne « non précisé » ne reste parmi les « trouvé ».
+- **Corrections** tirées du texte du relevé (`CORRECTIONS`, raison dans le champ `correction`) : 39147 (TBS Paris),
+  max 12 700 € → 11 100 € (12 700 € est le tarif des candidats des lycées français de l'étranger) ; 43500 et 43502
+  (DN MADE, Nantes), min 4 450 € retiré (tarif d'une 2e année avec un semestre en apprentissage) : 7 500 €.
 - **Le relevé prime** sur le coût d'une fiche de `data/formations.json` fusionnée avec la formation Parcoursup
-  (79 fiches ; aucune n'avait de montant avant) et sur le texte « frais non relevés » des fiches générées (1 100).
+  (79 fiches ; aucune n'avait de montant avant) et sur le texte « frais non relevés » des fiches générées (1 093).
 - **Un seul nombre** (`valeur_annuelle_eur`, lu par le moteur, les cartes et le tri) : le **maximum** de la
   fourchette. Choix : ne jamais afficher un montant plus bas que ce que l'élève pourrait payer. La fourchette
   complète est affichée en texte (« De 500 € à 5 665 € par an selon les revenus de ta famille ») et sur la tuile de la
-  fiche, avec le badge « relevé sur Parcoursup », la source et la date.
-- **Nature de la fourchette** (364 formations avec min < max), règle du script (`nature()`) : « annee » (147) si la
-  précision entre parenthèses de `par_an_ou_cursus` donne au moins deux montants en euros rattachés à des années ou
-  des cycles (« 7700 € années 1-2, 8750 € année 3 », « 9000 € prépa CII, 10500 € cycle ingénieur ») ; sinon
-  « revenus » (192) si la parenthèse, la précision ou la colonne des boursiers parlent de revenus, quotient ou
-  coefficient familial, revenu fiscal, imposition, situation familiale ; sinon « autre » (25 : fourchette sans critère
-  précisé, selon la mineure ou le nombre de versements, frais pris en charge par la Région).
-- **Droits d'inscription** (242 formations), règle du script (`libelle()`) : intitulé « D.E Infirmier », « D.E
-  Assistant de Service Social », « D.E Educateur Spécialisé », « D.E Educateur de Jeunes Enfants », « D.E Educateur
-  Technique Spécialisé » avec un maximum sous 3 000 €, ou autre diplôme d'État (« D.E ») sous 1 000 € dont la précision
-  parle de droits, d'inscription, de CVEC, de contribution, de participation ou de formation continue (1 psychomotricien,
-  1 ergothérapeute, 1 manipulateur en électroradiologie). Le site affiche « Droits d'inscription et participation
-  annuelle : X € » et la tuile « Droits d'inscription », jamais « Coût ». Restent en « Coût » : 2 IFSI à 8 200 € de
-  frais de formation (23242, 40993, pris en charge par la Région Grand Est « généralement » selon la fiche), les
-  pédicures-podologues, psychomotriciens et ergothérapeutes à plusieurs milliers d'euros.
-- **Apprentissage** (240 formations) : le texte relevé est affiché sur la fiche (« Apprentissage : … »). Il ne change
-  jamais le montant : pas de « gratuit » ni de 0 € à cause de l'apprentissage (il dépend d'un contrat avec un
-  employeur).
+  fiche ; la rubrique des frais porte le badge « relevé sur Parcoursup » (une seule fois), la source et la date.
+- **Nature de la fourchette** (362 formations avec min < max), règle du script (`nature()`), dans l'ordre :
+  « autre » si la précision entre parenthèses de `par_an_ou_cursus` parle d'une autre population ou option que l'année
+  d'études (campus, L.F.E., hors UE, internationaux, parcours, mineure, versements), ou si la précision ou la colonne
+  des boursiers parlent de mineure ou de parcours (ISEN « 9 300 € sur le campus de Nantes », ECM « parcours
+  International », Institut Saint-Pie X) ; « annee » (120) si la parenthèse donne au moins deux montants en euros
+  rattachés à des années ou des cycles (« 7700 € années 1-2, 8750 € année 3 », « 9000 € prépa CII, 10500 € cycle
+  ingénieur »), mais « autre » si l'un des montants dépend aussi des revenus (Icam : « 4500 € suivant revenus
+  familiaux, 9700 € en cycle ingénieur ») ; « revenus » (192) si la parenthèse, la précision ou la colonne des
+  boursiers parlent de revenus, quotient ou coefficient familial, revenu fiscal, imposition, situation familiale ;
+  « autre » sinon. Total « autre » : 50.
+- **Droits d'inscription** (22 formations : 20 IFSI, 1 éducateur de jeunes enfants, 1 assistant de service social),
+  règle du script (`libelle()`, révisée à la relecture de la PR #46) : diplôme d'État (« D.E »), maximum sous
+  1 300 €, et la précision ne détaille **que** des droits d'inscription, la CVEC, une contribution ou une participation
+  (chaque montant est rattaché à l'un d'eux), sans frais pédagogiques, de scolarité, de formation, de gestion, de
+  service, de dossier, de tenues ou de matériel, sans montant global « dont » / « incluant » et sans montant « non
+  détaillé ». La formation continue et les tarifs d'autres publics cités dans la précision sont ignorés. Exception : la
+  revérification ciblée du 22/10/2026 a classé la fiche « seulement droits d'inscription/CVEC ». Le site affiche
+  « Droits d'inscription et participation annuelle : X € » et la tuile « Droits d'inscription ». Tout le reste,
+  y compris la plupart des écoles du travail social (droits + frais de scolarité), est un « Coût » : le montant est
+  affiché de la même façon, seul le libellé change.
+- **Apprentissage** (238 formations) : le texte relevé est affiché sur la fiche, toujours précédé de « En contrat
+  d'apprentissage (avec un employeur) : », pour que « gratuit » ne se lise jamais sans contexte. Il ne change jamais
+  le montant : pas de « gratuit » ni de 0 € à cause de l'apprentissage.
 - **Bourses** : la colonne `boursiers_eur` est gardée dans `data/frais-prives.json` mais n'est affichée nulle part et
   n'entre dans aucun calcul (décision du fondateur encore ouverte).
 
@@ -615,7 +626,7 @@ est une fourchette où min = max.
 |---|---|
 | budget ≥ max | frais connus sous le budget : rien (ni malus, ni message) |
 | budget < min | règle « frais au-dessus de ton budget » appliquée au **min** : malus de 18, ou exclusion si min > 2 × budget avec un budget ≤ 5 000 (« Frais (au moins X €/an) au-delà de ton budget. ») |
-| min ≤ budget < max | pas de malus (`REGLE_BUDGET_FOURCHETTE.malus` = 0), jamais « sécurité » (règle `frais_fourchette`), message : « Les frais vont de X € à Y € par an selon tes revenus / selon l'année d'études : vérifie ce que tu paierais avant de le mettre dans tes vœux. » (sans critère pour la nature « autre ») |
+| min ≤ budget < max | pas de malus (`REGLE_BUDGET_FOURCHETTE.malus` = 0), jamais « sécurité » (règle `frais_fourchette`), message : « Les frais vont de X € à Y € par an selon les revenus de ta famille / selon l'année d'études : vérifie ce que tu paierais avant de le mettre dans tes vœux. » (sans critère pour la nature « autre ») |
 | privé sans montant relevé, budget ≤ 5 000 | règle 9.1 inchangée |
 
 Le message (fourchette ou frais inconnus, `repere.alerteFrais`) s'affiche sous le repère dans Ma liste, sur les
@@ -629,7 +640,9 @@ d'après Parcoursup, même sous 1 000 € (IFSI, écoles du travail social).
   736 lignes) ; la CVEC, l'internat, le matériel ou les frais fixes non chiffrés ne sont pas ajoutés ; une fourchette
   « revenus » ne dit pas ce que paiera une famille donnée ; les tarifs internationaux ou de formation continue cités
   dans la précision ne sont pas retenus. Le relevé ne couvre que les formations privées qui pouvaient entrer dans la
-  liste de vœux au 21/10/2026 : 2 119 formations privées du catalogue restent sans montant.
+  liste de vœux au 21/10/2026 : 2 126 formations privées du catalogue restent sans montant. Les fiches Parcoursup
+  mises en doute à la relecture (26091 ; « sur 3 ans ») n'ont pas pu être revérifiées depuis l'environnement de
+  construction (site inaccessible) : elles restent inconnues.
 
 ## 10. Section « Nouvelle formation à la rentrée 2026 » : une formation, avertissement de niveau
 
