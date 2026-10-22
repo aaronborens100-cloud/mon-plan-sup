@@ -1234,6 +1234,10 @@
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
+    // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
+    // une fiche de type BUT ou BTS, ou fusionnée avec une formation Parcoursup BUT ou BTS, n'est ni affichée ni
+    // recommandée (données gardées dans le fichier). Sans cela, ces fiches entraient dans les listes de vœux.
+    d.formations = d.formations.filter((f) => !ficheHorsPerimetre(f));
     if (st) { STATS = st.rows; STCOLS = st.meta.cols; STCONS = st.meta.consulte_le; }
     STATUTS_ST = (sts && sts.formations) || {};
     // relevés manuels : retenus seulement s'ils citent leur source et leur date (vérifiés par scripts/construire-statuts-stats.py)
@@ -1331,6 +1335,15 @@
   }
   const statDe = (g, col) => { const L = STATS[g]; const i = STCOLS.indexOf(col); return L && i >= 0 ? L[i] : null; };
   function horsPerimetre(r) { const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || []; return r.tf.some((t) => cats.includes(t)); }
+  // Catégorie Parcoursup correspondant à un type de fiche de data/formations.json
+  const CATEGORIE_DU_TYPE = { but: "BUT", bts: "BTS - BTSA - BTSM" };
+  function ficheHorsPerimetre(f) {
+    const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || [];
+    if (cats.includes(CATEGORIE_DU_TYPE[f.type])) return true;
+    const x = FU && FU.anciennes[f.id];
+    const ps = x && x.m === "C" ? PSBY[x.g] : null;   // fusion certaine avec Parcoursup
+    return !!(ps && horsPerimetre(ps));
+  }
   const NIV_TAUX = (t) => (t == null ? null : t < 10 ? "tres_haute" : t < 25 ? "haute" : t < 50 ? "moyenne" : "ouverte");
   const TC_ETAB = { "Publics": "public", "Privés en contrat avec l’Etat / EESC": "prive_sous_contrat", "Privés": "prive" };
   // Mentions affichées pour les formations sans statistiques d'admission (statut « stats » de la fiche)

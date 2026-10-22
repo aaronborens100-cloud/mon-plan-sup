@@ -1,7 +1,7 @@
 {
  "profil": "fragile",
  "description": "9,5 de moyenne, SES + AMC, appréciations négatives : la liste doit rester prudente",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 9.5,
   "moyennePeriodes": [
@@ -862,7 +862,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "d8aa4117ea2260ea9300dec6f220907fa0b069570b3894d505e832ddf9f133bf",
-  "textes": "e4548dadd02cf2745d2ea2fc102a33d2434a8f427729e4e49cd8484ef537e5f9"
+  "calculs": "7870f0c88da7cd40c678404ac9f3efcfcddda5de282d47c93c46ea30a588dcda",
+  "textes": "dd48272b4a9184815f130ab37d3e11b8186cfd49a0166462c0f4e03c59307b33"
  }
 }

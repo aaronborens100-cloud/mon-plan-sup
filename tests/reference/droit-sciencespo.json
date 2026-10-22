@@ -1,7 +1,7 @@
 {
  "profil": "droit-sciencespo",
  "description": "14 de moyenne, HGGSP + HLP, sans maths, veut faire du droit ou de la science politique",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 14.1,
   "moyennePeriodes": [
@@ -892,7 +892,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "60cfb0cc8d0d4b9be36c2f1494aea440cb3456c6410e1e80e13156bb570e275e",
-  "textes": "88d5cccb9f95100ae26ffd8896c7175747c7498fc5f3a1f0be680c8a8f25ccac"
+  "calculs": "02f568436c120c0510635a44f9fea0d352db9e9b746abd344bfa0e77befe6b03",
+  "textes": "d98801dc76d1d9788adbed1daffcbf26c5b714da0ff8c4d3ebf7e3e2bb7c1906"
  }
 }

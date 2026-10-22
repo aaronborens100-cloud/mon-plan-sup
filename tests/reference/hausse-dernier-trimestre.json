@@ -1,7 +1,7 @@
 {
  "profil": "hausse-dernier-trimestre",
  "description": "Autour de 11 en première, 14,5 au 1er trimestre de terminale : dernier bulletin nettement en hausse",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 11.8,
   "moyennePeriodes": [
@@ -893,7 +893,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "a4d182304e8451b6b6546eeb8f0571b58b8ce2d099268fba940b32921d9bae62",
-  "textes": "4c60848b8fc11d6be1c2111001c13c828a6032daccd9aa0b17c2b327edeccfbd"
+  "calculs": "3c63afe6d5d936faced0431bc88017c346db4975487f3b4a4a33afb121c5b513",
+  "textes": "09f9d1381e34a16bc32dd804b98a98c5000d5a89be41fa6f4bce438824848583"
  }
 }

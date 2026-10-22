@@ -1,7 +1,7 @@
 {
  "profil": "eco-moyen",
  "description": "11,5 de moyenne, SES + HGGSP, maths complémentaires, intéressé par le commerce, reste près de chez lui",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 11.4,
   "moyennePeriodes": [
@@ -848,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "dd9721493638a624d4c57ddd33aa6362239476d77c184fe24f405fa803598270",
-  "textes": "baad18be26b14daf26b5d0331fdd8f8a31b2a37bdcbcfc197825df0fe89cb69d"
+  "calculs": "b72b399c063f180df7c620c7a377af68bac9a2665120f5d0e054c6bc52beb2b7",
+  "textes": "84a111779bc17c452f0837e1262415e1c8296b596945c6b818f410160726e279"
  }
 }

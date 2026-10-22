@@ -1,7 +1,7 @@
 {
  "profil": "premiere-arts",
  "description": "Élève de première, 13 de moyenne, spécialité arts, veut un parcours créatif",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 13,
   "moyennePeriodes": [
@@ -944,7 +944,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "251500addec4bff11d3aef69098bdc01fcc816bd08eea137060aa4c407c26372",
-  "textes": "4fd6ae9d6940bd3371ddb76c74fa158f3537f0292e04030007b2874d356aaaa3"
+  "calculs": "7b4546add20620b82ada28ee035764cbea5887e39d5aad1e6ffb4cd2b33dc33e",
+  "textes": "f56423521b7bbea5c70ea650fd82ade33fe2230196eec63adfa04c6a504c3a04"
  }
 }

@@ -1,7 +1,7 @@
 {
  "profil": "eco-excellent-decide",
  "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 16.95,
   "moyennePeriodes": [
@@ -811,15 +811,6 @@
     ]
    },
    {
-    "id": "ps-9107",
-    "categorie": "realiste",
-    "pertinence": 83.34213113489358,
-    "repere": [
-     29,
-     "au_dessus"
-    ]
-   },
-   {
     "id": "ps-5824",
     "categorie": "realiste",
     "pertinence": 82.81527193453914,
@@ -829,11 +820,20 @@
     ]
    },
    {
-    "id": "psup-17165",
-    "categorie": "securite",
-    "pertinence": 88.64291337785944,
+    "id": "psup-35612",
+    "categorie": "realiste",
+    "pertinence": 88.5620535138556,
     "repere": [
-     81,
+     33,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-28974",
+    "categorie": "securite",
+    "pertinence": 83.30099000028265,
+    "repere": [
+     95,
      "au_dessus"
     ]
    }
@@ -852,7 +852,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et DCG (comptabilité et gestion), plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence d'éco-gestion.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre prépa ECG, licence d'éco-gestion et DCG (comptabilité et gestion), plus quelques autres pistes.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -883,11 +883,11 @@
      ]
     },
     "ancre": {
-     "id": "psup-17165",
-     "categorie": "securite",
-     "pertinence": 88.64291337785944,
+     "id": "psup-28724",
+     "categorie": "ambitieux",
+     "pertinence": 88.6428149504188,
      "repere": [
-      81,
+      18,
       "au_dessus"
      ]
     },
@@ -916,11 +916,11 @@
      ]
     },
     "ancre": {
-     "id": "psup-17165",
-     "categorie": "securite",
-     "pertinence": 88.64291337785944,
+     "id": "psup-28724",
+     "categorie": "ambitieux",
+     "pertinence": 88.6428149504188,
      "repere": [
-      81,
+      18,
       "au_dessus"
      ]
     },
@@ -949,11 +949,11 @@
      ]
     },
     "ancre": {
-     "id": "psup-28724",
-     "categorie": "ambitieux",
-     "pertinence": 88.6428149504188,
+     "id": "psup-35612",
+     "categorie": "realiste",
+     "pertinence": 88.5620535138556,
      "repere": [
-      18,
+      33,
       "au_dessus"
      ]
     },
@@ -976,7 +976,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "57e6a037ce37e7258a232818bcaddbb16c814b6174820b8e8e9101b8074984a0",
-  "textes": "f1e74485a2f9c292e82356947583738c9c52e0800ce342ec08d490dad41dcaa3"
+  "calculs": "d4b872d5824c99909bcd670d7ecb93288e0a0c6930f973c2585e49a8d384a704",
+  "textes": "cf959d35b5a04f6b348efa7615e1467de0cbbd0c19acaf6484ef777bcc4f9371"
  }
 }

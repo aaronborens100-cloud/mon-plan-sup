@@ -1,7 +1,7 @@
 {
  "profil": "sante-svt",
  "description": "13 de moyenne, SVT + physique-chimie, veut travailler dans la santé",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 13.2,
   "moyennePeriodes": [
@@ -848,7 +848,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "a0a5623acbc4e712c75566b48d9ef4885bfe0a3a73bed9016b788faa45a3db6f",
-  "textes": "98e5ed7307cf73ece5dcb67fd6e0c854e8d7754b01a07cbf2a82f2cbaaf3734c"
+  "calculs": "d6652c409c78cdebaf074ba65cf63bada50f7883228c2594ec8fd67e63c23c2c",
+  "textes": "17fbdc5e676375dbfb61b339039d0c593fbd2eab37ce8af0af55f45703abe419"
  }
 }
