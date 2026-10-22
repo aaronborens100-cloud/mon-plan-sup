@@ -466,8 +466,11 @@ ol.wish li.equiv-item::before { content: none; }
   .cat-tab small { display: none; }
   .segments { align-self: stretch; }
   .segments button { flex: 1; justify-content: center; padding: 9px 10px; }
-  ol.wish li { grid-template-columns: auto minmax(0, 1fr) auto; }
+  /* issue #50 : sur téléphone, la pastille des repères passait devant le nom (colonne du nom à 0 px). Deux colonnes :
+     numéro, puis le nom ; la pastille passe sous le nom, sans déborder. */
+  ol.wish li { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
   ol.wish li .wish-cat { display: none; }
+  ol.wish li > .chance-txt { grid-column: 2; justify-self: start; max-width: 100%; white-space: normal; }
   .fam-table td:first-child { min-width: 140px; }
 }
 
