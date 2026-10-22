@@ -648,6 +648,8 @@
 
   /* ================================================================ RÉSULTATS */
   const nbFr = (n) => Number(n).toLocaleString("fr-FR");
+  // Texte des frais d'une fiche (cout.texte, sinon frais.texte), affiché tel quel quand le montant n'est pas chiffré
+  const texteFrais = (f) => (f.cout && f.cout.texte) || (f.frais && f.frais.texte) || "";
   function carteResultat(x, rang) {
     const f = x.f, retenu = etat.retenus.includes(f.id), cout = f.cout.valeur_annuelle_eur, a = f.admission || {};
     const C = [["Notes", x.crit.notes], ["Spécialités", x.crit.specialites], ["Appréciations", x.crit.appreciations], ["Langues", x.crit.langues], ["Tests", x.crit.tests], ["Extrascolaire", x.crit.extra]];
@@ -819,7 +821,7 @@
           <div><dt>Candidature</dt><dd>${esc(plat)}${e.date ? ` · avant le ${fmtDate(e.date)}` : ""}</dd></div>
           <div><dt>Admission</dt><dd>Pas de repère : peu d'universités publient leurs statistiques.${taux} Repère : ${esc((f.notes && f.notes.texte) || "voir la fiche").slice(0, 140)}${f.notes && f.notes.texte && f.notes.texte.length > 140 ? "…" : ""}</dd></div>
         </dl>
-        ${(f.cout && f.cout.texte && /réduction|Scholarship|bourse/i.test(f.cout.texte)) ? `<p class="tiny muted">${esc(f.cout.texte)}</p>` : ""}
+        ${texteFrais(f) && (e.frais == null || /réduction|Scholarship|bourse/i.test(texteFrais(f))) ? `<p class="tiny muted">${esc(texteFrais(f))}</p>` : ""}
         <div class="row f-actions"><a class="btn sm" href="#formation-${f.id}">Voir la fiche${ico("fleche")}</a>${btnRetenir(e.x)}</div>
       </li>`;
     }).join("");
@@ -965,6 +967,7 @@
       ["dossier", "Tests et épreuves", f.tests.length ? f.tests.map((t) => `<div class="test"><span class="fw">${esc(t.nom)}</span> <span class="pill ${t.obligatoire ? "ton-corail" : "neutral"}">${t.obligatoire ? "obligatoire" : "facultatif"}</span> ${esc(t.texte)}${statutBadge(t.statut)}${srcLien(t)}</div>`).join("") : "Aucun test spécifique relevé.", "ambre"],
       ["crayon", "Dossier à fournir", `<div class="chips-info">${f.pieces.map((p) => `<span>${esc(p)}</span>`).join("")}</div>`, "menthe"],
       ...(f.classement && f.classement.texte ? [["trophee", "Classement", val(f.classement, esc(f.classement.texte)), "corail"]] : []),
+      ...(cout == null && texteFrais(f) ? [["euro", "Frais de scolarité", val(f.cout, esc(texteFrais(f))), "ambre"]] : []),   // montant non chiffré : le texte de la fiche, sans réécriture
     ];
     const typeCourt = f.type_label || "Formation";
     const nbP = (f.poursuites || []).length + (f.integrations || []).length;
@@ -1191,9 +1194,12 @@
   // Champs Parcoursup lus par le moteur : département (académie), code gta et places (départage), sélectivité (secteur des
   // licences), statut de l'établissement (champ tc : « Publics », « Privés en contrat avec l'Etat / EESC », « Privés » ;
   // règle « prive_frais_inconnus »). Fiche non liée à Parcoursup : __tc absent, statut inconnu.
+  // statut_etab (« public », « prive_sous_contrat », « prive ») vient lui aussi du seul champ tc : null s'il est absent
+  // ou inconnu, jamais « public » par défaut (décision du fondateur : statut inconnu, la règle ne s'applique pas).
   function lierParcoursup(f, r) {
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
     f.__tc = r.tc || null;
+    f.statut_etab = TC_ETAB[r.tc] || null;
   }
   // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
   // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs
@@ -1272,6 +1278,7 @@
       const x = fu && fu.anciennes[f.id];
       const ps = x && x.m === "C" ? PSBY[x.g] : null;
       if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); lierParcoursup(f, ps); }   // __tf, __pctBG : garde-fou des listes (moteur)
+      else f.statut_etab = null;   // fiche non liée à Parcoursup : le statut de data/formations.json n'est pas sourcé, il est inconnu
       const avTxt = [];
       if (x && x.m === "P") avTxt.push("Correspondance Parcoursup probable mais non confirmée.");
       if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
@@ -1381,10 +1388,10 @@
         ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : aucun repère d'admission, et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
         ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
       domaines: fam.domaines,
-      cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: r.tc === "Publics" ? "Frais non relevés pour cette formation : vérifie sur le site de l'établissement." : "Établissement privé : frais non relevés, vérifie sur le site de l'établissement.", statut: "non_communique" },
+      cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: TC_ETAB[r.tc] && r.tc !== "Publics" ? "Établissement privé : frais non relevés, vérifie sur le site de l'établissement." : "Frais non relevés pour cette formation : vérifie sur le site de l'établissement.", statut: "non_communique" },   // « privé » seulement si Parcoursup le dit
       specialites: { obligatoires: sp.obligatoires, recommandees: sp.recommandees, maths_expertes: sp.maths_expertes,
         texte: ([sp.obligatoires.length ? `Attendues : ${spLib(sp.obligatoires)}.` : "", sp.recommandees.length ? `Conseillées : ${spLib(sp.recommandees)}.` : "", sp.maths_expertes ? "Option maths expertes " + { indispensable: "indispensable", fortement_conseillee: "fortement conseillée", conseillee: "conseillée" }[sp.maths_expertes] + "." : ""].filter(Boolean).join(" ") || "Pas de spécialité conseillée relevée pour cette filière.") + (deduite ? " (déduit de l'intitulé de la filière)" : " (repris des fiches Mon Plan Sup de la même filière)"), statut: "estimation" },
-      statut_etab: TC_ETAB[r.tc] || "public", selectivite: taux != null ? { niveau: NIV_TAUX(taux) } : { niveau: "moyenne", estimee: true },   // niveau par défaut pour le calcul, non affiché
+      statut_etab: TC_ETAB[r.tc] || null, selectivite: taux != null ? { niveau: NIV_TAUX(taux) } : { niveau: "moyenne", estimee: true },   // niveau par défaut pour le calcul, non affiché
       notes: { moyenne_cible: moy, maths_cible: null, texte: moy != null ? `Moyenne au bac estimée des admis 2025 : ${String(moy).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions (Parcoursup 2025).` : "Pas de repère chiffré.", statut: "estimation", source: src, consulte_le: cons },
       metiers: fam.metiers, poursuites: fam.poursuites,
       __gen: { gta: g, fam },
@@ -1410,6 +1417,7 @@
     }
     f.incertitudes = [`Fiche reprise de « ${o.nom} » (${o.etablissement}), qui ne précisait pas l'option HGG ou ESH : contenu éditorial commun aux options, chiffres d'admission propres à cette option.`, ...(o.incertitudes || [])];
     f.__gen = { gta: g, modele: o.id, modeleNom: o.nom };
+    f.statut_etab = TC_ETAB[r.tc] || null;   // statut de cet établissement d'après Parcoursup, pas celui du modèle
     return f;
   }
   function blocStats(g) {
