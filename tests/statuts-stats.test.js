@@ -4,8 +4,8 @@
  *
  * Règles vérifiées, pour les 10 profils types :
  *   - aucune formation « nouvelle_2026 » ni « sans_stats » dans la liste de 10 vœux (wishlist) ;
- *   - la section « Nouvelles à la rentrée 2026 » (nouvelles) compte au plus 3 formations, toutes
- *     « nouvelle_2026 », d'une catégorie Parcoursup de la liste blanche, triées par intérêt ;
+ *   - la section « Nouvelle formation à la rentrée 2026 » (nouvelles) compte au plus 1 formation (MAX_NOUVELLES), toujours
+ *     « nouvelle_2026 », d'une catégorie Parcoursup de la liste blanche, la mieux classée par intérêt ;
  *   - ni repère d'admission pour une nouvelle formation, ni taux ni « sécurité » pour une « sans_stats » ;
  *   - un relevé manuel sourcé fait passer la formation en « avec_stats », un relevé sans source est ignoré ;
  *   - des statistiques de la session 2024 rendent la formation éligible, pas celles de 2023.
@@ -35,7 +35,7 @@ function verifier({ W, N }, E) {
     assert.notEqual(x.f.stats, "nouvelle_2026", `${x.f.id} : nouvelle formation dans la liste de 10 vœux.`);
     assert.notEqual(x.f.stats, "sans_stats", `${x.f.id} : formation sans statistiques dans la liste de 10 vœux.`);
   }
-  assert.ok(N.length <= 3, `${N.length} formations dans la section « Nouvelles » (au plus 3).`);
+  assert.ok(N.length <= E.MAX_NOUVELLES, `${N.length} formations dans la section « Nouvelles » (au plus ${E.MAX_NOUVELLES}).`);
   for (const x of N) {
     assert.equal(x.f.stats, "nouvelle_2026", `${x.f.id} : pas une nouvelle formation.`);
     assert.ok((x.f.__tf || []).some((t) => E.CATEGORIES_NOUVELLES.includes(t)), `${x.f.id} : catégorie hors liste blanche (${x.f.__tf}).`);
@@ -62,7 +62,7 @@ for (const p of PROFILS) {
   });
 }
 
-test("section « Nouvelles » : au plus 3, même quand les nouvelles formations sont les plus pertinentes", () => {
+test("section « Nouvelles » : au plus MAX_NOUVELLES (1), même quand les nouvelles formations sont les plus pertinentes", () => {
   // Les 40 formations les plus pertinentes de chaque profil deviennent artificiellement « nouvelles ».
   let plein = 0;
   for (const p of PROFILS) {
@@ -71,9 +71,9 @@ test("section « Nouvelles » : au plus 3, même quand les nouvelles formations 
     const formations = site.DATA.formations.map((f) => (cibles.has(f.id) ? Object.assign({}, f, { stats: "nouvelle_2026" }) : f));
     const a = analyser(site, formations, p);
     verifier(a, site.E);
-    if (a.N.length === 3) plein++;
+    if (a.N.length === site.E.MAX_NOUVELLES) plein++;
   }
-  assert.ok(plein > 0, "Le plafond de 3 n'est jamais atteint : test sans portée.");
+  assert.ok(plein > 0, "Le plafond n'est jamais atteint : test sans portée.");
 });
 
 test("liste blanche : une nouvelle formation hors des catégories retenues n'est jamais proposée", () => {

@@ -858,15 +858,8 @@
  "nouvelles": [
   {
    "id": "psup-52112",
-   "interet": 81.44357504490765
-  },
-  {
-   "id": "psup-51565",
-   "interet": 80.93678310520774
-  },
-  {
-   "id": "psup-52111",
-   "interet": 79.17805487906591
+   "interet": 81.44357504490765,
+   "avertissement": null
   }
  ],
  "etranger": {

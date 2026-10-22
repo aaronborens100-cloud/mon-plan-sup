@@ -103,8 +103,10 @@ Les formations du périmètre absentes de `stats.json` ont un statut (`data/stat
 
 - `nouvelle_2026` : formation qui n'a jamais eu de session Parcoursup. Mention « Nouvelle formation à la rentrée
   2026 : pas encore de statistiques d'admission ». Pas de catégorie ni de repère d'admission. Jamais dans la
-  liste de 10 vœux (`wishlist`) : `CapEngine.nouvelles(resultats, it, n)` en propose au plus `MAX_NOUVELLES` = 3
-  dans une section à part, « Nouvelles à la rentrée 2026 », sous la liste. Tri par intérêt seulement (sans
+  liste de 10 vœux (`wishlist`) : `CapEngine.nouvelles(resultats, it, n)` en propose au plus `MAX_NOUVELLES` = 1
+  dans une section à part, « Nouvelle formation à la rentrée 2026 », sous la liste, avec un avertissement si la
+  filière est très sélective et la moyenne de l'élève sous 12 (`alerteFiliereSelective`, voir
+  `docs/modele-chances.md`, section 10). Tri par intérêt seulement (sans
   chiffres, la faisabilité est artificiellement haute), section vide sans réponse au questionnaire. Seules les
   catégories Parcoursup de `CATEGORIES_NOUVELLES` (licences, CPGE, ingénieurs, commerce, santé, IEP, CMI, DEUST,
   arts) sont proposées : sans statistiques, le filtre sur la part de bacheliers généraux ne peut pas jouer ;

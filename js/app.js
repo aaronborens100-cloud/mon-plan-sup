@@ -836,13 +836,21 @@
     </section>`;
   }
   const btnRetenir = (x) => { const r = etat.retenus.includes(x.f.id); return `<button class="btn sm ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}">${ico("etoile", r ? "plein" : "")}${r ? "Dans mes vœux" : "Ajouter à mes vœux"}</button>`; };
-  // Section « Nouvelles à la rentrée 2026 » (E.nouvelles) : sans catégorie ni repère d'admission
+  // Section « Nouvelle formation à la rentrée 2026 » (E.nouvelles) : une seule formation (E.MAX_NOUVELLES), sans catégorie ni
+  // repère d'admission ; avertissement si la filière est très sélective et la moyenne de l'élève sous 12 (E.alerteFiliereSelective)
+  const SOURCE_FR_ESR_PARCOURSUP = "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup/";
   function blocNouvelles(A) {
     const N = E.nouvelles(A.resultats, A.interets);
     if (!N.length) return "";
-    return `<section class="card stack" aria-labelledby="nouv-titre"><div class="row" style="justify-content:space-between"><h3 id="nouv-titre">Nouvelles à la rentrée 2026</h3><span class="pill ton-menthe">${N.length} formation${N.length > 1 ? "s" : ""}</span></div>
-      <p class="small">Ces formations ouvrent cette année : elles correspondent à ton profil, mais on n'a encore aucune statistique pour te situer parmi les admis.</p>
-      <ul class="wish" style="list-style:none;padding-left:0">${N.map((x) => `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span></span><span class="no-print">${btnRetenir(x)}</span></li>`).join("")}</ul>
+    const plus = N.length > 1;   // textes justes au singulier comme au pluriel
+    const item = (x) => {
+      const al = E.alerteFiliereSelective(x.f, A.stats);
+      const avert = al ? `<span class="notice small sun" style="display:block;margin-top:6px">${esc(al.texte)}${srcBadge("P")} ${srcLien({ source: SOURCE_FR_ESR_PARCOURSUP, consulte_le: STCONS })}</span>` : "";
+      return `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span>${avert}</span><span class="no-print">${btnRetenir(x)}</span></li>`;
+    };
+    return `<section class="card stack" aria-labelledby="nouv-titre"><div class="row" style="justify-content:space-between"><h3 id="nouv-titre">${plus ? "Nouvelles formations" : "Nouvelle formation"} à la rentrée 2026</h3><span class="pill ton-menthe">${N.length} formation${plus ? "s" : ""}</span></div>
+      <p class="small">${plus ? "Ces formations ouvrent" : "Cette formation ouvre"} cette année : elle${plus ? "s" : ""} correspond${plus ? "ent" : ""} à ton profil, mais on n'a encore aucune statistique pour te situer parmi les admis.</p>
+      <ul class="wish" style="list-style:none;padding-left:0">${N.map(item).join("")}</ul>
     </section>`;
   }
   // Protection de la liste (E.protection) : nombre de vœux sûrs et conseil, sans probabilité globale
@@ -986,7 +994,7 @@
         <div class="tuiles">${tuiles.map(([i, l, v, s, t]) => `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(i)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${esc(v)}</span>${s ? `<span class="tuile-s">${esc(s)}</span>` : ""}</div>`).join("")}</div>
       </header>
       ${f.__campusEtranger ? blocCampusEtranger(f) : ""}
-      ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelles à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
+      ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelle formation à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
       ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
       ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${E.CAT_LABEL[r.categorie].toLowerCase()} · ${repereTxt(r.repere)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
       <nav class="sommaire" aria-label="Sur cette fiche"><button data-action="ancre" data-cible="sec-formation"><span>1</span>Formation</button><button data-action="ancre" data-cible="sec-poursuites"><span>2</span>Poursuite d'études</button><button data-action="ancre" data-cible="sec-metiers"><span>3</span>Métiers et débouchés</button></nav>
@@ -1244,6 +1252,14 @@
     MANUELLES = {};
     for (const [g, e] of Object.entries((man && man.formations) || {}))
       if (e && typeof e.taux === "number" && /^https?:\/\//.test(e.source || "") && /^\d{4}-\d{2}-\d{2}$/.test(e.consulte_le || "") && e.session && e.statut === "releve_manuel" && !STATS[g]) MANUELLES[g] = e;
+    // Taux d'accès moyen 2025 de chaque filière (code nmc) : moyenne de taux_acces_ens sur les formations de la
+    // cartographie 2026 présentes dans stats.json (avertissement de la section « Nouvelles », E.alerteFiliereSelective)
+    const parNmc = {};
+    for (const r of lignesPs) {
+      const t = r.nmc && STATS[r.gta] ? statDe(r.gta, "taux_acces_ens") : null;
+      if (typeof t === "number") (parNmc[r.nmc] = parNmc[r.nmc] || []).push(t);
+    }
+    E.definirTauxFilieres(Object.fromEntries(Object.entries(parNmc).map(([n, v]) => [n, { moyenne: v.reduce((a, x) => a + x, 0) / v.length, nb: v.length }])));
     if (fil) for (const [k, l] of Object.entries(fil.meta.types_label)) if (!d.meta.types[k]) d.meta.types[k] = l;   // types ajoutés par la table des filières
     // compléments officiels (champs vides de l'ancienne base) : on ne remplace jamais une valeur existante
     if (fu) for (const f of d.formations) {
@@ -1397,7 +1413,7 @@
           : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
         ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
         ...(man ? [`Pas de statistiques Parcoursup 2025 : chiffres ${man === anc ? "de la session" : "relevés à la main (session"} ${man.session}${man === anc ? "" : ")"}, sans les mentions des admis.`] : []),
-        ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère d'admission. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelles à la rentrée 2026 »)."] : []),
+        ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère d'admission. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelle formation à la rentrée 2026 »)."] : []),
         ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : aucun repère d'admission, et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
         ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
       domaines: fam.domaines,
