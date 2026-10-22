@@ -52,7 +52,7 @@ for (const p of PROFILS) {
       assert.equal(W.liste.length, 10, `${ctx} : ${W.liste.length} vœux`);
       assert.equal(new Set(W.liste.map((x) => x.f.id)).size, W.liste.length, `${ctx} : vœu en double`);
       for (const x of W.liste) {
-        assert.equal(x.f.pays, "France", `${ctx} : ${x.f.id} à l'étranger`);
+        assert.ok(E.voeuParcoursup(x.f), `${ctx} : ${x.f.id} à l'étranger hors Parcoursup`);
         const regles = E.reglesHorsListe(x.f);
         assert.equal(regles.length, 0, `${ctx} : ${x.f.id} ne devrait pas être dans la liste (${regles.join(", ")})`);
         assert.equal(typeof x.f.admission.taux, "number", `${ctx} : ${x.f.id} sans statistiques`);

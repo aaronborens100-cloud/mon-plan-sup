@@ -982,6 +982,7 @@
         </div>
         <div class="tuiles">${tuiles.map(([i, l, v, s, t]) => `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(i)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${esc(v)}</span>${s ? `<span class="tuile-s">${esc(s)}</span>` : ""}</div>`).join("")}</div>
       </header>
+      ${f.__campusEtranger ? blocCampusEtranger(f) : ""}
       ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelles à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
       ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
       ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${E.CAT_LABEL[r.categorie].toLowerCase()} · ${repereTxt(r.repere)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
@@ -1103,7 +1104,7 @@
       ${r.fl && r.fl.length ? `<dt>Formations et mentions</dt><dd>${L(r.fl)}</dd>` : ""}
       <dt>Catégorie</dt><dd>${esc(r.tf.join(" · "))}</dd>
       <dt>Établissement</dt><dd>${esc(r.etab_nom)}<br><span class="small muted">${esc(r.tc)}${r.etab_uai ? ` · UAI ${esc(r.etab_uai)}` : ""}</span>${r.etab_url ? `<span class="src"><a href="${esc(r.etab_url)}" target="_blank" rel="noopener">Site de l'établissement</a></span>` : ""}</dd>
-      <dt>Lieu</dt><dd>${esc([r.commune, r.departement, r.region].filter(Boolean).join(" · ") || "Non renseigné")}${r.etab_gps && r.etab_gps.lat != null ? `<span class="src"><a href="https://www.openstreetmap.org/?mlat=${r.etab_gps.lat}&mlon=${r.etab_gps.lon}#map=16/${r.etab_gps.lat}/${r.etab_gps.lon}" target="_blank" rel="noopener">Voir sur une carte</a></span>` : ""}</dd>
+      <dt>Lieu</dt><dd>${esc([r.commune, r.departement, r.region].filter(Boolean).join(" · ") || (CAMPUS["psup-" + r.gta] ? `${CAMPUS["psup-" + r.gta].ville}, ${CAMPUS["psup-" + r.gta].pays} (campus à l'étranger, d'après le nom de l'établissement)` : "Non renseigné"))}${r.etab_gps && r.etab_gps.lat != null ? `<span class="src"><a href="https://www.openstreetmap.org/?mlat=${r.etab_gps.lat}&mlon=${r.etab_gps.lon}#map=16/${r.etab_gps.lat}/${r.etab_gps.lon}" target="_blank" rel="noopener">Voir sur une carte</a></span>` : ""}</dd>
       <dt>Admission</dt><dd>${r.aut && r.aut.length ? L(r.aut) : "Pas d'épreuve de sélection ni de modalité particulière signalée."}</dd>
       <dt>Enseignement</dt><dd>${L(r.amg) || "Non renseigné"}</dd>
       <dt>Apprentissage</dt><dd>${r.app && r.app.length ? "Oui, formation en apprentissage" : "Non signalé"}</dd>
@@ -1146,7 +1147,7 @@
     } else if (d.m === "P") {
       h += `<div class="notice small"><strong>À vérifier : correspondance Parcoursup probable.</strong> ${esc(d.r)} Les fiches restent séparées tant que la correspondance n'est pas confirmée.<ul class="why">${(d.c || []).map((g) => `<li>${lienFiche("psup-" + g)}</li>`).join("")}</ul></div>`;
     } else {
-      h += `<p class="small muted">${f.pays === "France" ? "Aucune fiche Parcoursup 2026 correspondante trouvée de façon sûre." : "Formation hors de France : pas de fiche Parcoursup."}</p>`;
+      h += `<p class="small muted">${f.pays === "France" || f.__campusEtranger ? "Aucune fiche Parcoursup 2026 correspondante trouvée de façon sûre." : "Formation hors de France : pas de fiche Parcoursup."}</p>`;
     }
     if (prov.length) h += `<h4>Provenance des informations de Mon Plan Sup</h4><p class="small muted">Provenance déclarée lors de la saisie ; ces informations n'ont pas été revérifiées pendant la fusion.</p><dl class="facts small">${prov.map(([k, v]) => `<dt>${esc(BLOC_LIB[k])}</dt><dd>${srcBadge(v)}</dd>`).join("")}<dt>Profil, domaines, métiers, sélectivité</dt><dd>${srcBadge("E")}</dd></dl>`;
     return h + `</div>`;
@@ -1294,10 +1295,32 @@
     }
     for (const e of CAT) if (e.f && !e.f.__gps) e.f.__gps = gpsDe(e.f, e.ps);
     for (const f of d.formations) if (!f.__gps) f.__gps = gpsDe(f, null);
+    corrigerCampusEtranger(aj);
     E.lierFilieres(d.formations);
     CAT.sort((a, b) => a.nom.localeCompare(b.nom, "fr") || a.ville.localeCompare(b.ville, "fr"));
     for (const e of CAT) CATBY[e.id] = e;
     window.__CAT = CAT;
+  }
+  // Campus à l'étranger enregistrés « France » (Dauphine Londres, ESSEC Singapour…), décision du fondateur du 19/10/2026 :
+  // pays et ville réels lus dans l'intitulé officiel Parcoursup (data/ajustements.json, campus_etranger, avec sa source).
+  // La fiche garde son lien Parcoursup (__campusEtranger : le moteur la laisse dans les listes de vœux) mais suit les
+  // règles « étranger ». Appelé après le calcul des coordonnées (gpsDe ne cherche pas de commune française hors de France).
+  let CAMPUS = {};
+  // Encadré de la fiche d'un campus à l'étranger : lieu réel et coût de la vie du pays (COUT_VIE du moteur) s'il est connu
+  function blocCampusEtranger(f) {
+    const v = E.coutVie(f);
+    const vie = v ? `Vie sur place : ${v.min === v.max ? "≈ " + E.fmtEur(v.min) : `${E.fmtEur(v.min)} à ${E.fmtEur(v.max)}`}/mois, hors frais de scolarité${v.texte ? ` (${esc(v.texte)})` : ""}<span class="badge-statut ${v.statut}">${STATUT_COUT[v.statut] || v.statut}</span>${v.source ? `<span class="src"><a href="${esc(v.source)}" target="_blank" rel="noopener">Source</a></span>` : ""}`
+      : "Coût de la vie dans ce pays non relevé : renseigne-toi avant de mettre ce vœu dans ta liste.";
+    return `<p class="notice small"><strong>Campus à l'étranger : ${esc(f.ville)}, ${esc(f.pays)}.</strong> Tu candidates sur Parcoursup, mais tu étudies et tu vis dans ce pays. ${vie}</p>`;
+  }
+  function corrigerCampusEtranger(aj) {
+    CAMPUS = {};
+    for (const [id, c] of Object.entries((aj && aj.campus_etranger) || {})) if (!id.startsWith("_") && c && c.pays && c.ville) CAMPUS[id] = c;
+    for (const e of CAT) {
+      const c = CAMPUS[e.id]; if (!c) continue;
+      e.pays = c.pays; e.ville = c.ville; e.cle += " " + sansAccents(c.ville + " " + c.pays);
+      if (e.f) Object.assign(e.f, { pays: c.pays, ville: c.ville, __campusEtranger: true });
+    }
   }
   const statDe = (g, col) => { const L = STATS[g]; const i = STCOLS.indexOf(col); return L && i >= 0 ? L[i] : null; };
   function horsPerimetre(r) { const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || []; return r.tf.some((t) => cats.includes(t)); }

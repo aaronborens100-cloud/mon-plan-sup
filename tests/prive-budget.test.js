@@ -29,7 +29,8 @@ const analyser = (p) => {
 };
 const avecReponses = (p, modif) => Object.assign({}, p, { reponses: Object.assign({}, p.reponses, modif) });
 const profil = (id) => PROFILS.find((x) => x.id === id);
-const prive = (f) => f.pays === "France" && typeof f.__tc === "string" && f.__tc !== "Publics";
+// formation Parcoursup : en France ou campus à l'étranger (issue #16), comme sur main où ces campus étaient « France »
+const prive = (f) => (f.pays === "France" || f.__campusEtranger === true) && typeof f.__tc === "string" && f.__tc !== "Publics";
 const fraisInconnus = (f) => !f.cout || f.cout.valeur_annuelle_eur == null;
 
 test("constantes et message", () => {

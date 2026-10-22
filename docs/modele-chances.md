@@ -416,6 +416,18 @@ formations proches de note), et qu'au-delà elle écarte vite la formation du ha
   Normandie Oxford, Dublin… ; 25 fiches) : repérés par leur ville (`VILLES_ETRANGERES`) ou par des coordonnées à
   plus de 20 km de tout lieu français connu. Ils sont traités comme à l'étranger pour la distance (exclus pour
   « domicile », −12 d'intérêt pour « proche »), mais restent dans le catalogue et dans les listes Parcoursup.
+  Depuis l'issue #16 (décision du fondateur du 19/10/2026 : « Un campus à l'étranger enregistré « France » est traité
+  comme étranger »), 22 d'entre eux ont leur pays et leur ville réels, lus dans l'intitulé officiel Parcoursup (champ
+  `etab_nom`, recoupé avec `etab_gps`) et enregistrés dans `data/ajustements.json` (`campus_etranger`, avec la source).
+  La fiche porte `__campusEtranger` : elle reste un vœu Parcoursup (`voeuParcoursup` : liste de 10 vœux, nouvelles 2026,
+  garde-fou des listes) mais suit toutes les règles « étranger » de `evaluer()` : exclusion pour « Non, je veux rester
+  en France » ou « Rien d'autre que ce que j'ai coché » sans ce pays, malus « pays non choisi », bonus / malus de la
+  question « etranger », coût de la vie du pays (`COUT_VIE`, encadré de la fiche). Elle n'est jamais « sécurité »
+  (`REGLE_CAMPUS_ETRANGER`) sauf pour un élève qui a répondu « Oui » ou « Plutôt oui » à « etranger » et qui n'a pas
+  restreint ses pays ou a coché celui du campus. Elle n'est pas proposée dans « Et à l'étranger ? » (candidatures hors
+  Parcoursup). « Autre pays d'Europe » ne couvre pas les pays de `PAYS_HORS_EUROPE` (Maroc, Singapour, Émirats arabes
+  unis, Vietnam, Cameroun, Chine). Trois fiches gardent « France » faute de pays sûr (intitulé en France, coordonnées à
+  l'étranger) : Sciences Po Nancy / FU Berlin, Le Havre / Hong Kong University, Le Havre / Keio University.
 - **Jamais « sécurité » au-delà de la distance acceptée** (`REGLE_HORS_DISTANCE`, après la table des
   catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
   l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :

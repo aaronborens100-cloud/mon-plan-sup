@@ -367,7 +367,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+   "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
    "id": "psup-45703",
@@ -382,7 +382,7 @@
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester chez tes parents."
+   "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
    "id": "psup-51924",
@@ -862,7 +862,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "acfa9940210f0bb1402fa7df843a670c99a98a5c5eaa1fc31786a86844c98f7e",
+  "calculs": "d8aa4117ea2260ea9300dec6f220907fa0b069570b3894d505e832ddf9f133bf",
   "textes": "e4548dadd02cf2745d2ea2fc102a33d2434a8f427729e4e49cd8484ef537e5f9"
  }
 }

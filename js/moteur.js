@@ -335,7 +335,7 @@
     if (f.stats === "nouvelle_2026") return Object.assign(r, { nouvelle: true, texte: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère." });
     if (f.stats === "sans_stats") return Object.assign(r, { sansStats: true, texte: HORS_LISTE.sans_stats });
     const a = f.admission || {};
-    if (typeof a.taux === "number") Object.assign(r, { taux: a.taux, session: a.session || (f.pays === "France" ? "2025" : null), source: a.source || null, consulte_le: a.consulte_le || null, statut: a.statut || null });
+    if (typeof a.taux === "number") Object.assign(r, { taux: a.taux, session: a.session || (voeuParcoursup(f) ? "2025" : null), source: a.source || null, consulte_le: a.consulte_le || null, statut: a.statut || null });
     const m = f.mentions_admis;
     if (m && !sansNotes) {
       // arrondi au pour cent affiché, pour que la phrase et le niveau ne se contredisent jamais (29,6 % → 30 % → « moyenne »)
@@ -400,7 +400,37 @@
   // formation en fait partie (« autre_europe » = tout pays hors des pays nommés)
   const paysVoulus = (p) => (p.pays || []).filter((x) => x !== "aucun" && !TERRITOIRES.includes(x));
   const PAYS_NOMMES = ["Royaume-Uni", "Pays-Bas", "Italie", "Espagne", "Suisse", "Allemagne", "États-Unis", "Canada"];
-  const paysCoche = (f, voulus) => voulus.some((x) => (x === "autre_europe" ? !PAYS_NOMMES.includes(f.pays) : f.pays.includes(x)));
+  // Pays hors d'Europe sans case dans « Si tu partais, où ? » : jamais couverts par « Autre pays d'Europe »
+  // (campus à l'étranger de formations Parcoursup : Maroc, Singapour…)
+  const PAYS_HORS_EUROPE = ["Maroc", "Singapour", "Émirats arabes unis", "Vietnam", "Cameroun", "Chine"];
+  const paysCoche = (f, voulus) => voulus.some((x) => (x === "autre_europe" ? !PAYS_NOMMES.includes(f.pays) && !PAYS_HORS_EUROPE.includes(f.pays) : f.pays.includes(x)));
+  // Campus à l'étranger d'une formation française (Dauphine Londres, ESSEC Singapour…), décision du fondateur du
+  // 19/10/2026 : f.pays est le pays réel (posé par app.js depuis data/ajustements.json, campus_etranger) et
+  // f.__campusEtranger vaut true. Toutes les règles « étranger » s'appliquent, mais la formation reste un vœu Parcoursup :
+  // listes de 10 vœux, nouvelles 2026, garde-fou des listes (reglesHorsListe). Elle n'est pas proposée dans
+  // « Et à l'étranger ? » (section réservée aux candidatures hors Parcoursup).
+  const voeuParcoursup = (f) => f.pays === "France" || f.__campusEtranger === true;
+  // Campus à l'étranger : jamais « sécurité », sauf pour un élève qui veut étudier à l'étranger (« Oui » ou « Plutôt oui »)
+  // et n'a pas restreint ses pays, ou a coché celui du campus. Choix éditorial, le plus proche d'une formation étrangère.
+  // Le texte donne la raison réelle (raisonCampusNonVoulu) ; un campus exclu n'est jamais « sécurité » non plus.
+  const REGLE_CAMPUS_ETRANGER = { cle: "campus_etranger", categorie: "realiste", texte: "Campus à l'étranger : ce vœu ne compte pas comme sûr." };
+  const RAISONS_CAMPUS = {
+    sans_reponse: "tu n'as pas dit si tu voulais étudier à l'étranger",
+    echange: "tu envisages seulement un échange pendant tes études",
+    rester: "tu as indiqué vouloir rester en France",
+    pays: "tu n'as pas coché ce pays dans « Si tu partais, où ? »",
+  };
+  // Raison pour laquelle un campus à l'étranger ne peut pas être « sécurité » (clé de RAISONS_CAMPUS), ou null
+  function raisonCampusNonVoulu(f, p) {
+    if (f.__campusEtranger !== true) return null;
+    const voulus = paysVoulus(p), aucun = (p.pays || []).includes("aucun");
+    if (p.etranger === 0 || (aucun && !voulus.length)) return "rester";
+    if (p.etranger === 1) return "echange";
+    if (p.etranger !== 2 && p.etranger !== 3) return "sans_reponse";
+    if (voulus.length && !paysCoche(f, voulus)) return "pays";
+    return null;
+  }
+  const regleCampusEtranger = (raison) => Object.assign({}, REGLE_CAMPUS_ETRANGER, { texte: `Campus à l'étranger : ce vœu ne compte pas comme sûr, car ${RAISONS_CAMPUS[raison]}.` });
   const MESSAGE_AUCUN_AUTRE_PAYS = "Tu as indiqué ne vouloir aucun autre pays que ceux que tu as cochés.";
   const NOM_TERRITOIRE = { corse: "la Corse", outremer: "l'outre-mer", continent: "la France continentale" };
   const texteHorsTerritoire = (t) => `Tu n'as pas coché ${NOM_TERRITOIRE[t]} dans « Si tu partais, où ? » : ce vœu ne compte pas comme sûr.`;
@@ -421,7 +451,7 @@
   const TC_PUBLIC = "Publics";
   // f.__tc est posé par app.js (lierParcoursup) pour les seules fiches liées à Parcoursup
   const priveFraisInconnus = (f, cout, budgetMax) => budgetMax !== undefined && budgetMax <= BUDGET_SERRE_MAX
-    && f.pays === "France" && typeof f.__tc === "string" && f.__tc !== TC_PUBLIC && cout == null;
+    && voeuParcoursup(f) && typeof f.__tc === "string" && f.__tc !== TC_PUBLIC && cout == null;
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
   const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
   const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
@@ -721,6 +751,9 @@
     let regle = regleCategorie(rep, bloque);
     // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
+    // campus à l'étranger, élève qui n'a pas dit vouloir étudier dans ce pays : jamais « sécurité »
+    const raisonCampus = raisonCampusNonVoulu(f, p);
+    if (regle.categorie === "securite" && raisonCampus) regle = regleCampusEtranger(raisonCampus);
     // zone non cochée dans « pays » (Corse, outre-mer, ou continent pour un élève de Corse ou d'outre-mer) : jamais « sécurité »
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
     // établissement privé aux frais inconnus, budget serré : jamais « sécurité »
@@ -886,7 +919,7 @@
   };
   // Règles qui écartent la formation des listes (tableau vide : la formation peut y entrer)
   function reglesHorsListe(f) {
-    if (f.pays !== "France") return [];
+    if (!voeuParcoursup(f)) return [];
     const r = [];
     if (f.stats === "nouvelle_2026") {
       r.push("nouvelle_2026");
@@ -899,10 +932,10 @@
   const horsListe = (f) => reglesHorsListe(f).length > 0;
 
   /* ---------------------------------------------------------------- wishlist */
-  // 10 vœux Parcoursup (formations en France). Diversité adaptée au profil : un élève décidé concentre ses vœux
+  // 10 vœux Parcoursup (formations en France et campus à l'étranger de formations françaises). Diversité adaptée au profil : un élève décidé concentre ses vœux
   // sur son projet, un élève indécis les répartit sur plus de types. Les formations à l'étranger sont proposées à part.
   function wishlist(resultats, n = 10, it = null) {
-    const ok = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !horsListe(x.f));
+    const ok = resultats.filter((x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f));
     const cert = certitude(it);
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
@@ -1034,7 +1067,7 @@
   // règle « nouvelle_2026 » elle-même. Sans réponse au questionnaire, l'intérêt ne distingue rien : section vide.
   function nouvelles(resultats, it, n = MAX_NOUVELLES) {
     if (!it || !it.repondues) return [];
-    return resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && x.f.stats === "nouvelle_2026"
+    return resultats.filter((x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && x.f.stats === "nouvelle_2026"
       && reglesHorsListe(x.f).every((r) => r === "nouvelle_2026"))
       .sort((a, b) => b.interet - a.interet)   // tri stable : à intérêt égal, l'ordre de recommander() est conservé
       .slice(0, n);
@@ -1083,6 +1116,7 @@
     if (p.etranger === 0 || (aucun && !voulus.length) || p.mobilite === 0) return { mode: "non", liste: [] };
     if (p.etranger === 1) {
       // « seulement un échange » : formations françaises très ouvertes à l'international, dans les mêmes voies que les vœux
+      // (en France seulement : un campus à l'étranger n'est pas un échange)
       const voies = new Set(W.liste.map((x) => voie(x.f))), pris = new Set(W.liste.map((x) => x.f.id));
       const liste = resultats.filter((x) => !x.exclu && !x.bloque && x.f.pays === "France" && !horsListe(x.f) && !pris.has(x.f.id) && voies.has(voie(x.f)) && ((x.f.profil || {}).international || 0) >= 2)
         .sort(comparer).slice(0, 3);
@@ -1091,10 +1125,10 @@
     const n = p.etranger === 3 ? 5 : p.etranger === 2 ? 3 : 2;
     const budget = p.budget_max, budgetSerre = budget !== undefined && budget <= 5000;
     const anglaisFragile = p.anglais !== undefined && p.anglais <= 2;
-    const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && x.f.pays === "France" && !horsListe(x.f)).slice(0, 10);
+    const ancres = W.liste.length ? W.liste : resultats.filter((x) => !x.exclu && voeuParcoursup(x.f) && !horsListe(x.f)).slice(0, 10);
     // seules exclusions acceptées : le budget (on propose alors les options les moins chères du pays)
     // « aucun » avec des pays : seulement ces pays
-    const cands = resultats.filter((x) => x.f.pays !== "France" && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj) && (!aucun || paysCoche(x.f, voulus)))
+    const cands = resultats.filter((x) => !voeuParcoursup(x.f) && !x.bloque && (!x.exclu || /^Frais/.test(x.exclu)) && !toutesPassees(x.f, auj) && (!aucun || paysCoche(x.f, voulus)))
       .map((x) => {
         const proches = ancres.map((a) => ({ a, s: ressemblance(x.f, a.f) + a.pertinence / 10000 })).filter((o) => o.s >= 0.35).sort((u, v) => v.s - u.s);
         const best = proches.length ? proches[0].a : null, bs = proches.length ? proches[0].s : 0;
@@ -1149,6 +1183,6 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
+  window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
     SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
