@@ -843,6 +843,41 @@
     </section>`;
   }
   const btnRetenir = (x) => { const r = etat.retenus.includes(x.f.id); return `<button class="btn sm ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}">${ico("etoile", r ? "plein" : "")}${r ? "Dans mes vœux" : "Ajouter à mes vœux"}</button>`; };
+  /* ---------------------------------------------------------------- formations équivalentes (docs/modele-chances.md, section 11) */
+  // Sous chaque vœu de la liste proposée (E.wishlist) : jusqu'à 3 formations de la même filière et de la même catégorie
+  // (E.equivalentsListe, mêmes garde-fous que la liste). L'élève peut en mettre une à la place du vœu : son choix est
+  // gardé dans etat.remplacements (id du vœu proposé → id de l'équivalent), dans le navigateur seulement (CapStore).
+  const remplacements = () => (etat.remplacements && typeof etat.remplacements === "object" && !Array.isArray(etat.remplacements) ? etat.remplacements : (etat.remplacements = {}));
+  // équivalent choisi à la place du vœu v, ou null (un choix qui n'est plus un équivalent, après un changement de profil, est ignoré)
+  const choixDe = (v, M) => { const id = remplacements()[v.f.id]; return (id && (M.get(v.f.id) || []).find((e) => e.f.id === id)) || null; };
+  // vœux à afficher (ou à retenir) : chaque vœu proposé, ou l'équivalent choisi à sa place
+  const voeuxAffiches = (W, M) => W.liste.map((v) => ({ v, x: choixDe(v, M) || v }));
+  const distanceTxt = (x, s) => (x.dist != null ? `≈ ${nbFr(Math.round(x.dist))} km de chez toi` : s && s.geo ? "distance inconnue" : "");
+  // messages de distance déjà affichés ailleurs (règle qui a retiré la catégorie « sécurité »)
+  const REGLES_DISTANCE = ["hors_distance", "distance_inconnue", "hors_territoire", "campus_etranger"];
+  function infosEquivalent(x, s) {
+    const r = x.repere, lieu = [x.f.etablissement, x.f.ville, distanceTxt(x, s)].filter(Boolean).map(esc).join(" · ");
+    const taux = r.taux !== null ? `${libTauxAcces(r)} : ${tauxFr(r.taux)}` : "Taux d'accès non publié";
+    const position = r.sansNotes ? "notes à renseigner" : POSITION_COURT[r.position] || "";
+    return `<span class="small muted">${lieu}</span><span class="small">${esc([taux, position].filter(Boolean).join(" · "))}</span>`
+      + (REGLES_DISTANCE.includes(r.regle) ? `<span class="tiny muted">${esc(r.pourquoi)}</span>` : "")
+      + (r.alerteFrais ? `<span class="small texte-bad">${esc(r.alerteFrais)}</span>` : "");
+  }
+  // bloc replié sous un vœu : l'original (si l'élève l'a remplacé) puis les autres équivalents, chacun avec son bouton
+  function blocEquivalents(v, M, s) {
+    const eqs = M.get(v.f.id) || [], choix = choixDe(v, M);
+    if (!eqs.length) return `<p class="tiny muted equiv-aucun">Pas d'autre formation de la même filière et de la même catégorie qui respecte tes critères.</p>`;
+    const item = (x, bouton, etiquette) => `<li class="equiv-item"><span class="wish-nom">${etiquette || ""}<a href="#formation-${x.f.id}">${esc(x.f.nom)}</a>${infosEquivalent(x, s)}</span><span class="no-print">${bouton}</span></li>`;
+    const lignes = [];
+    if (choix) lignes.push(item(v, `<button class="btn xs" data-action="retablir" data-voeu="${v.f.id}">Revenir à ce vœu</button>`, `<span class="tiny muted">Vœu proposé au départ</span>`));
+    for (const e of eqs) if (e !== choix) lignes.push(item(e, `<button class="btn xs doux" data-action="remplacer" data-voeu="${v.f.id}" data-id="${e.f.id}" aria-label="Choisir ${esc(e.f.nom)} (${esc(e.f.etablissement)}) à la place">Choisir à la place</button>`));
+    const n = eqs.length;
+    return `<details class="equiv" ${choix ? "open" : ""}><summary>${n} formation${n > 1 ? "s" : ""} équivalente${n > 1 ? "s" : ""}</summary>
+      <p class="tiny muted">Même filière Parcoursup et même catégorie que ce vœu, avec les mêmes règles que ta liste. Celles de ton académie et les plus proches de chez toi d'abord.</p>
+      <ul class="equiv-liste">${lignes.join("")}</ul></details>`;
+  }
+  // ligne « à la place de » sous un équivalent choisi, avec le retour au vœu d'origine
+  const ligneRemplace = (v) => `<span class="small equiv-choix">${ico("check")}Ton choix, à la place de <a href="#formation-${v.f.id}">${esc(v.f.nom)}</a> <span class="muted">(${esc(v.f.etablissement)})</span> <button class="btn xs ghost no-print" data-action="retablir" data-voeu="${v.f.id}">Revenir au vœu d'origine</button></span>`;
   // Section « Nouvelle formation à la rentrée 2026 » (E.nouvelles) : une seule formation (E.MAX_NOUVELLES), sans catégorie ni
   // repère d'admission ; avertissement si la filière est très sélective et la moyenne de l'élève sous 12 (E.alerteFiliereSelective)
   const SOURCE_FR_ESR_PARCOURSUP = "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup/";
@@ -867,6 +902,7 @@
   }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
+    const M = E.equivalentsListe(A.resultats, W);
     const X = E.etranger(A.resultats, W, A.interets);
     const etr = blocNouvelles(A) + blocEtranger(X);
     const sel = A.resultats.filter((x) => etat.retenus.includes(x.f.id));
@@ -874,12 +910,14 @@
     const btnAuto = `<button class="btn ${sel.length ? "" : "primary"}" data-action="auto-retenir">${ico("etoile")}${sel.length ? "Recalculer une liste équilibrée de 10 vœux" : "Générer une liste équilibrée de 10 vœux"}</button>`;
     if (!sel.length) {
       return `<section class="stack">${intro}
-        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${W.liste.map((x) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${ligneRepere(x)}${W.decouvertes.has(x.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(x.f.id))}</span>` : ""}</span><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
+        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${voeuxAffiches(W, M).map(({ v, x }) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><div class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${x !== v ? ligneRemplace(v) : ""}${ligneRepere(x)}${W.decouvertes.has(v.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(v.f.id))}</span>` : ""}${blocEquivalents(v, M, A.stats)}</div><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
           ${W.liste.length ? blocProtection(W.protection) : ""}
           ${W.alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
           <div class="row no-print">${btnAuto}</div></div>${etr}</section>`;
     }
     const compte = { ambitieux: 0, realiste: 0, securite: 0 }; sel.forEach((x) => compte[x.categorie]++);
+    // vœu retenu venu de la liste proposée (le vœu lui-même ou l'équivalent choisi à sa place) → vœu proposé : ses équivalents s'affichent dessous
+    const origine = new Map(voeuxAffiches(W, M).map(({ v, x }) => [x.f.id, v]));
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
     const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.repere.taux ?? 101) - (b.repere.taux ?? 101));
     const alertes = [];
@@ -899,7 +937,7 @@
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
         <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
-          ${tri.map((x) => `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${ligneRepere(x)}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`).join("")}
+          ${tri.map((x) => { const o = origine.get(x.f.id); return `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${o && o !== x ? ligneRemplace(o) : ""}${ligneRepere(x)}${o ? blocEquivalents(o, M, A.stats) : ""}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`; }).join("")}
         </tbody></table></div>
         <div class="row no-print">${btnAuto}<a class="btn ghost" href="#plan">Voir mon plan${ico("fleche")}</a></div>
       </div>${etr}</section>`;
@@ -1868,7 +1906,16 @@
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
     else if (a === "cat-plus") { app.limiteCat += 50; const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "retenir") { const id = b.dataset.id; etat.retenus = etat.retenus.includes(id) ? etat.retenus.filter((x) => x !== id) : etat.retenus.concat(id); sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y); }
-    else if (a === "auto-retenir") { { const A = analyse(); etat.retenus = E.wishlist(A.resultats, 10, A.interets).liste.map((x) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
+    else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets); etat.retenus = voeuxAffiches(W, E.equivalentsListe(A.resultats, W)).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
+    // formation équivalente choisie à la place d'un vœu de la liste proposée, ou retour au vœu d'origine ; si le vœu était
+    // déjà retenu, il est échangé dans les vœux retenus. Enregistré dans le navigateur seulement (CapStore).
+    else if (a === "remplacer" || a === "retablir") {
+      const voeu = b.dataset.voeu, R = remplacements(), avant = R[voeu] || voeu, apres = a === "remplacer" ? b.dataset.id : voeu;
+      if (a === "remplacer") R[voeu] = apres; else delete R[voeu];
+      if (etat.retenus.includes(avant) && !etat.retenus.includes(apres)) etat.retenus = etat.retenus.map((id) => (id === avant ? apres : id));
+      sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y);
+      toast(a === "remplacer" ? "Formation équivalente choisie" : "Vœu d'origine rétabli");
+    }
     else if (a === "imprimer") window.print();
     else if (a === "copier-plan") copier(planTexte(), "Plan copié");
     else if (a === "copier-json") copier(JSON.stringify(etat, null, 1), "Données copiées");

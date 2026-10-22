@@ -1094,6 +1094,64 @@
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
   }
 
+  /* ---------------------------------------------------------------- formations équivalentes */
+  // Sous chaque vœu de la liste de 10 : jusqu'à n (3) formations de la même filière Parcoursup (code nmc, nmcDe) et de la
+  // même catégorie, que l'élève peut mettre à la place du vœu. Mêmes garde-fous que wishlist() : jamais exclue (budget,
+  // « domicile », étranger non voulu…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des listes
+  // (sans statistiques, bac pro, nouvelle 2026, filière à relire). La catégorie vient d'evaluer() : un équivalent
+  // « sécurité » respecte donc déjà la distance acceptée, les territoires choisis, le campus à l'étranger voulu, et n'est
+  // ni privé aux frais inconnus (budget serré) ni dans une fourchette de frais qui dépasse le budget, ni à distance inconnue.
+  // Ordre : la règle de départage (departage : académie, distance, taux d'accès, pct_bg, places, gta), pas la pertinence :
+  // l'élève a déjà choisi la filière, on lui montre la même formation ailleurs, la plus proche de chez lui d'abord.
+  // Jamais un vœu de la liste ni l'équivalent d'un autre vœu : les vœux sont servis dans l'ordre de la liste.
+  // Un vœu sans code nmc n'a pas d'équivalent (on ne peut pas vérifier que c'est la même filière).
+  const MAX_EQUIVALENTS = 3;
+  const peutEtreVoeu = (x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f);
+  // Un équivalent « sécurité » doit l'être sans réserve. La catégorie le garantit déjà (règles appliquées après la table
+  // dans evaluer()), sauf un cas : avec la mobilité « partout », une formation sans coordonnées peut rester « sécurité »
+  // (REGLE_DISTANCE_INCONNUE ne vaut que pour « domicile » et « proche »). Ici, on l'écarte toujours quand l'élève a
+  // indiqué son lycée (avecLycee) : on ne propose pas comme sûre une formation dont on ne connaît pas la distance.
+  // (Un campus à l'étranger n'a pas de distance : il n'est « sécurité » que si l'élève veut ce pays, REGLE_CAMPUS_ETRANGER.)
+  const distanceInconnueFr = (x) => x.dist === null && voeuParcoursup(x.f) && x.f.pays === "France" && !situer(x.f).etranger;
+  const securiteSure = (x, avecLycee) => !x.horsDistance && !x.horsTerritoire && !x.repere.priveFraisInconnus && !x.repere.fraisFourchette
+    && !(avecLycee && distanceInconnueFr(x));
+  // liste : les vœux (tableau de résultats, ou l'objet renvoyé par wishlist()). Renvoie une Map id du vœu → équivalents.
+  function equivalentsListe(resultats, liste, n = MAX_EQUIVALENTS) {
+    const voeux = Array.isArray(liste) ? liste : (liste && liste.liste) || [];
+    const pris = new Set(voeux.map((x) => x.f.id));
+    // l'élève a indiqué son lycée : au moins une formation a une distance
+    const avecLycee = resultats.some((x) => x.dist !== null && x.dist !== undefined);
+    const parNmc = new Map();
+    for (const x of resultats) {
+      const k = nmcDe(x.f);
+      if (!k || !peutEtreVoeu(x) || (x.categorie === "securite" && !securiteSure(x, avecLycee))) continue;
+      if (!parNmc.has(k)) parNmc.set(k, []);
+      parNmc.get(k).push(x);
+    }
+    const out = new Map();
+    for (const v of voeux) {
+      const k = nmcDe(v.f);
+      const cands = k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && !pris.has(x.f.id)) : [];
+      const choix = cands.sort(departage).slice(0, Math.max(0, n));
+      choix.forEach((x) => pris.add(x.f.id));
+      out.set(v.f.id, choix);
+    }
+    return out;
+  }
+  // Équivalents d'un vœu. resultats : le tableau de recommander().resultats, ou l'objet renvoyé par recommander() (la
+  // liste de 10 vœux est alors recalculée ici, avec les mêmes centres d'intérêt). Liste connue (objet de recommander(), ou
+  // 4e argument : wishlist() ou tableau de vœux) : ni doublon de la liste ni d'un autre équivalent ; sans elle, seul le
+  // vœu lui-même est écarté.
+  function equivalents(resultats, voeu, n = MAX_EQUIVALENTS, liste = null) {
+    if (resultats && !Array.isArray(resultats) && Array.isArray(resultats.resultats)) {
+      if (!liste) liste = wishlist(resultats.resultats, 10, resultats.interets);
+      resultats = resultats.resultats;
+    }
+    const voeux = Array.isArray(liste) ? liste : liste && liste.liste ? liste.liste : [voeu];
+    const v = voeux.find((x) => x.f.id === voeu.f.id) ? voeux : voeux.concat([voeu]);
+    return equivalentsListe(resultats, v, n).get(voeu.f.id) || [];
+  }
+
   /* ---------------------------------------------------------------- protection de la liste */
   // Repère sans probabilité globale : pas de « chances d'avoir au moins une admission », car les vœux ne sont pas
   // indépendants (les formations lisent le même dossier). Avec la table des catégories (REGLES_CATEGORIE), un vœu
@@ -1257,5 +1315,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

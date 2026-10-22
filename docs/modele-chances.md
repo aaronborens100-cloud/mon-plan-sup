@@ -691,3 +691,89 @@ Décisions du fondateur du 22/10/2026 (issue #8, points 1 et 2). Code : `js/mote
   `nmc` sont larges (`FECM-B3`) et la moyenne de la filière peut être loin de la sélectivité réelle de la
   formation. Sur les 14 profils types, aucun ne déclenche l'avertissement au 22/10/2026 (le profil « fragile »
   reçoit le bachelor ISG Nice, `FECM-B3`).
+
+## 11. Formations équivalentes
+
+Tâche 4 de la feuille de route (clôt la phase 1). Code : `js/moteur.js` (`equivalents`, `equivalentsListe`,
+`MAX_EQUIVALENTS`), affichage et remplacement dans `js/app.js` (`blocEquivalents`, `voeuxAffiches`, actions
+`remplacer` et `retablir`). Tests : `tests/equivalents.test.js`.
+
+Sous chaque vœu de la liste de 10 (`wishlist`), Ma liste affiche jusqu'à `MAX_EQUIVALENTS` = 3 formations
+« équivalentes » : la même formation dans d'autres établissements, que l'élève peut mettre à la place du vœu.
+
+- **Même filière** : même code de filière Parcoursup (`nmc`, `nmcDe`). Un vœu sans code `nmc` (fiche éditoriale non
+  liée à Parcoursup, par exemple le programme post-bac SKEMA) n'a pas d'équivalent : on ne peut pas vérifier que c'est
+  la même formation. Les codes larges (`FECM-B3` : tous les bachelors d'écoles de commerce) donnent des équivalents
+  plus éloignés que les codes précis (`ECG-Mapp-ESH`).
+- **Même catégorie** que le vœu (sécurité, réaliste, ambitieux), calculée par `evaluer()` comme pour la liste.
+- **Mêmes garde-fous et interdictions que la liste** : jamais une formation exclue (`exclu` : frais au-delà d'un budget
+  ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km pour « domicile » ; étranger pour
+  « rester en France » ou un pays non coché…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des
+  listes (`reglesHorsListe` : sans statistiques, bac pro, nouvelle formation 2026, filière à relire).
+- **Équivalent « sécurité »** : la catégorie vient des mêmes règles que la liste, donc jamais au-delà de la distance
+  acceptée (45 km domicile, 250 km proche, traversée comprise), hors des territoires choisis, sur un campus à
+  l'étranger non voulu, dans un établissement privé aux frais inconnus avec un budget serré, ni dans une fourchette de
+  frais qui dépasse le budget. **Une règle de plus que la liste** : une formation française sans coordonnées n'est
+  jamais un équivalent « sécurité » quand l'élève a indiqué son lycée, même avec la mobilité « partout » (où
+  `REGLE_DISTANCE_INCONNUE` ne s'applique pas). Cette règle ne touche que les équivalents : la liste de 10 et les
+  catégories ne changent pas. Sur les 14 profils types au 22/10/2026, elle n'écarte aucun équivalent.
+- **Ordre** : la règle de départage existante (`departage`, section 8.2 : académie de l'élève, distance, taux d'accès,
+  part de bacheliers généraux, places, code `gta`), **pas** la pertinence. L'élève a déjà choisi la filière ; on lui
+  montre la même formation ailleurs, d'abord dans son académie et près de chez lui.
+- **Jamais de doublon** : ni un vœu de la liste, ni deux fois la même formation sous deux vœux. Les vœux sont servis
+  dans l'ordre de la liste : le premier vœu d'une filière prend les meilleurs équivalents, le suivant les suivants.
+- API : `CapEngine.equivalents(resultats, voeu, n = 3)` (avec l'objet de `recommander()`, la liste de 10 est recalculée
+  pour éviter les doublons ; avec le tableau `resultats`, passer la liste en 4e argument) et
+  `CapEngine.equivalentsListe(resultats, W)` (Map id du vœu → équivalents, utilisée par Ma liste).
+
+### Ce qui est affiché
+
+Sous chaque vœu, un bloc replié « 3 formations équivalentes » (ou « Pas d'autre formation de la même filière et de la
+même catégorie qui respecte tes critères. »). Pour chaque équivalent : intitulé (lien vers la fiche), établissement,
+ville, distance (« ≈ 25 km de chez toi », ou « distance inconnue »), taux d'accès et position parmi les admis, le texte
+de la règle de distance ou de territoire quand elle a retiré la catégorie « sécurité », et le message sur les frais
+(`repere.alerteFrais` : privé aux frais inconnus, fourchette) quand il s'applique. Bouton « Choisir à la place ».
+
+### Remplacement d'un vœu
+
+- « Choisir à la place » enregistre `etat.remplacements[id du vœu proposé] = id de l'équivalent`, dans `localStorage`
+  (clé `capsup.v1`, `CapStore`) : rien ne quitte le navigateur. Le choix survit à un rechargement.
+- Dans la proposition de liste, l'équivalent prend la place du vœu, avec « Ton choix, à la place de … » et le bouton
+  « Revenir au vœu d'origine » (le bloc des équivalents montre alors le vœu proposé au départ). « Générer une liste
+  équilibrée de 10 vœux » retient les équivalents choisis à la place des vœux remplacés.
+- Si le vœu est déjà retenu, il est échangé avec l'équivalent dans les vœux retenus (et inversement au retour).
+- Un remplacement qui n'est plus un équivalent (profil ou réponses modifiés, vœu sorti de la liste) est ignoré à
+  l'affichage ; il reste enregistré et reprend effet si le vœu revient.
+- `wishlist()`, `protection()` et `etranger()` ne lisent jamais les remplacements : la liste calculée, son message de
+  protection et les propositions à l'étranger ne changent pas. La protection des vœux retenus (`protection(sel)`)
+  compte les vœux réellement retenus, donc l'équivalent choisi (même catégorie que le vœu remplacé).
+
+### Chiffres sur les 14 profils types (22/10/2026)
+
+| Profil | Moyenne d'équivalents par vœu | Vœux sans équivalent |
+|---|---|---|
+| vide | 3,0 | 0 |
+| eco-excellent-decide | 3,0 | 0 |
+| eco-moyen | 2,2 | 2 |
+| sciences-ingenieur | 2,7 | 1 (vœu sans code `nmc`) |
+| droit-sciencespo | 2,1 | 2 |
+| sante-svt | 2,8 | 0 |
+| indecis | 1,8 | 4 |
+| fragile | 0,4 | 8 (dont 1 vœu sans code `nmc`) |
+| international-langues | 2,1 | 2 |
+| premiere-arts | 2,5 | 1 |
+| hausse-dernier-trimestre | 2,4 | 1 |
+| baisse-dernier-trimestre | 1,7 | 3 |
+| ecg-expertes-fort | 3,0 | 0 |
+| ecg-expertes-faible | 3,0 | 0 |
+
+### Limites
+
+- « Même filière » veut dire même code `nmc`, pas même contenu : deux licences d'économie ou deux bachelors `FECM-B3`
+  peuvent être très différents (parcours, langue, accès santé). L'élève doit lire la fiche.
+- Profil « domicile » (« fragile ») : presque aucun équivalent, car toute formation à plus de 45 km est exclue. C'est
+  voulu (section 8.3), pas un défaut.
+- Les équivalents ne sont pas soumis aux règles de diversité de la liste (au plus 2 vœux par établissement, plafonds
+  par voie) : choisir un équivalent peut mettre deux vœux dans le même établissement.
+- Les équivalents d'un parcours d'une même licence (LEA Anglais-Allemand → Anglais-Chinois, même université) sont
+  proposés : sur Parcoursup, ce sont des vœux distincts.

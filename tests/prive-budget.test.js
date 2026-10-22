@@ -81,8 +81,11 @@ test("fragile (budget « gratuit ») : aucun vœu « sécurité » privé aux fr
   // onglet « Mes vœux » : une fois par vœu concerné de la proposition de 10 vœux, et une fois par formation concernée
   // de la section « Nouvelle formation à la rentrée 2026 » (fragile y reçoit ISG Nice, privé aux frais inconnus)
   const nouv = site.E.nouvelles(A.resultats, A.interets).filter((x) => x.repere.priveFraisInconnus);
+  // et une fois par formation équivalente concernée affichée sous un vœu (tâche 4, docs/modele-chances.md, section 11)
+  const M = siteSansReleve.E.equivalentsListe(A.resultats, W);
+  const equiv = [...M.values()].flat().filter((x) => x.repere.priveFraisInconnus);
   const voeux = s.cliquer({ action: "onglet-liste", o: "voeux" });
-  assert.equal(voeux.split(MESSAGE).length - 1, dansListe.length + nouv.length, "message absent de la proposition de vœux ou de la section « Nouvelle formation »");
+  assert.equal(voeux.split(MESSAGE).length - 1, dansListe.length + nouv.length + equiv.length, "message absent de la proposition de vœux, des équivalents ou de la section « Nouvelle formation »");
 });
 
 test("budget serré : une formation privée qui serait « sécurité » devient « réaliste » (règle nommée)", () => {

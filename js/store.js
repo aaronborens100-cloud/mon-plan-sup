@@ -2,7 +2,7 @@
  * js/store.js : enregistrement des données de l'élève (CapStore).
  *
  * Rôle : lire, écrire et effacer l'état de l'élève (profil, notes, réponses au questionnaire,
- * vœux retenus) dans le stockage local du navigateur (localStorage, clé « capsup.v1 »).
+ * vœux retenus, formations équivalentes choisies à la place d'un vœu) dans le stockage local du navigateur (localStorage, clé « capsup.v1 »).
  * Si le stockage est indisponible, l'état est gardé en mémoire le temps de la visite.
  * Rien n'est envoyé sur un serveur.
  *
@@ -20,7 +20,8 @@
         prenom: "", niveau: "terminale", specialites: [], specialiteAbandonnee: "", optionMaths: "aucune", autresOptions: "",
         anglaisAuto: "", periodes: [], bacFrancais: { ecrit: "", oral: "" }, certifications: [], experiences: [],
       },
-      reponses: {}, qIndex: 0, retenus: [], faits: {}, majLe: null,
+      // remplacements : { id du vœu proposé : id de la formation équivalente choisie à sa place } (Ma liste)
+      reponses: {}, qIndex: 0, retenus: [], remplacements: {}, faits: {}, majLe: null,
     };
   }
 
