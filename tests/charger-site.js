@@ -9,7 +9,8 @@
  * Renvoie { E, B, DATA, QUEST, afficher, cliquer } : E = CapEngine, B = CapBulletin, DATA.formations = catalogue complet,
  * QUEST = questionnaire. Pour lire les pages : passer l'état de l'élève (options.etat, même forme que
  * CapStore), puis afficher("#liste") renvoie le HTML de la page, et cliquer({ action, ... }) simule un
- * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }) ; changer() simule une case cochée.
+ * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }) ; changer() simule une case cochée ;
+ * etatEnregistre() relit l'état écrit dans le faux localStorage.
  */
 "use strict";
 const fs = require("fs");
@@ -92,7 +93,9 @@ async function chargerSite(remplacements = {}, options = {}) {
     (ecouteurs.change || []).forEach((f) => f({ target: cible }));
     return html;
   };
-  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer, changer };
+  // état enregistré dans le faux localStorage (clé « capsup.v1 »), relu tel quel, ou null
+  const etatEnregistre = () => (stockage.has("capsup.v1") ? JSON.parse(stockage.get("capsup.v1")) : null);
+  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer, changer, etatEnregistre };
 }
 
 module.exports = { chargerSite };

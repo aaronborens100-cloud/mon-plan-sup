@@ -1090,8 +1090,107 @@
         ? `Tu n'avais pas coché ce type de formation (${t}), mais il correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`
         : `Un type de formation auquel tu n'as peut-être pas pensé (${t}), mais qui correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`;
     };
-    return { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
+    const W = { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
+    // Règles de diversité pour les formations équivalentes (equivalentsListe) : la liste où x prend la place i respecte-t-elle
+    // les mêmes règles que peut(), avec les valeurs finales des plafonds (celles que la liste elle-même respecte) ?
+    // Propriété non énumérable : l'objet renvoyé (et les références des tests) ne change pas.
+    const peutRemplacer = (liste, i, x) => {
+      const autres = liste.filter((_, j) => j !== i), nb = (t) => autres.filter(t).length;
+      return nb((c) => c.f.etablissement === x.f.etablissement) < 2 && nb((c) => fil(c) === fil(x)) < maxFil
+        && (!fam(x) || nb((c) => fam(c) === fam(x)) < 2)
+        && !(maxFil <= 2 && autres.some((c) => fil(c) === fil(x) && c.categorie === x.categorie))
+        && nb((c) => V(c) === V(x)) < maxType(V(x))
+        && !(oxbridge(x) && autres.some(oxbridge));
+    };
+    Object.defineProperty(W, "peutRemplacer", { value: peutRemplacer, enumerable: false });
+    // valeurs des règles de diversité en fin de construction (lecture seule, pour les tests et la documentation)
+    Object.defineProperty(W, "diversite", { value: { maxFil, bonusType, plafonds: CAPS.slice(), principal }, enumerable: false });
+    return W;
+  }
+
+  /* ---------------------------------------------------------------- formations équivalentes */
+  // Sous chaque vœu de la liste de 10 : jusqu'à n (3) formations de la même filière Parcoursup (code nmc, nmcDe) et de la
+  // même catégorie, que l'élève peut mettre à la place du vœu. Les équivalents suivent exactement les interdictions de la
+  // liste, ni plus ni moins (docs/modele-chances.md, section 11) :
+  //   - garde-fous de wishlist() : jamais exclue (budget, « domicile », étranger non voulu…), jamais avec un point
+  //     bloquant, jamais hors Parcoursup, jamais écartée des listes (sans statistiques, bac pro, nouvelle 2026, à relire) ;
+  //   - catégorie : celle d'evaluer(), comme pour la liste. Un équivalent « sécurité » respecte donc la distance acceptée
+  //     (REGLE_HORS_DISTANCE ; REGLE_DISTANCE_INCONNUE pour « domicile » et « proche » seulement, comme la liste), les
+  //     territoires choisis, le campus à l'étranger voulu, et n'est ni privé aux frais inconnus (budget serré) ni dans une
+  //     fourchette de frais qui dépasse le budget ;
+  //   - diversité : la liste obtenue en mettant l'équivalent à la place du vœu respecte les règles de diversité de
+  //     wishlist() (W.peutRemplacer : 2 vœux au plus par établissement et par famille de prépas, plafond par voie, même
+  //     filière et même catégorie, nombre de vœux d'une même filière), avec les valeurs auxquelles la liste a été construite.
+  // Ordre : la règle de départage (departage : académie, distance, taux d'accès, pct_bg, places, gta), pas la pertinence.
+  // Jamais un vœu de la liste, ni un équivalent choisi à la place d'un autre vœu, ni deux fois la même formation : les
+  // vœux sont servis dans l'ordre de la liste. Un vœu sans code nmc n'a pas d'équivalent.
+  const MAX_EQUIVALENTS = 3;
+  const peutEtreVoeu = (x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f);
+  // Décision du fondateur du 22/10/2026 : un équivalent a aussi
+  //   - le même intitulé Parcoursup que le vœu quand le code nmc en regroupe plusieurs (f.__variante, posé par app.js
+  //     depuis data/filieres.json, « variantes » : "" = intitulé de base, sinon l'intitulé de la variante ; absent quand
+  //     le code n'a qu'un intitulé) ;
+  //   - le même type de formation : la voie (voie(f)) et la forme, lue dans l'intitulé : double licence ou double diplôme,
+  //     licence accès santé (LAS), sinon formation simple. Une double licence n'a donc jamais pour équivalent une licence
+  //     simple ou une LAS, et inversement.
+  const DOUBLE = /double\s+licence|double[\s-]+dipl[oô]me|bi-?licence|\bbi-?dipl[oô]me/i;
+  const LAS = /acc[eè]s\s+sant[ée]|\bL\.?A\.?S\b/i;
+  const formeDe = (f) => (f.type === "double_licence" || DOUBLE.test(f.nom) ? "double" : LAS.test(f.nom) ? "las" : "simple");
+  const typeFormation = (f) => `${voie(f)}|${formeDe(f)}`;
+  const cleEquivalent = (f) => { const k = nmcDe(f); return k ? `${k}|${f.__variante == null ? "" : f.__variante}|${typeFormation(f)}` : null; };
+  // resultats : recommander().resultats ; W : l'objet renvoyé par wishlist() (règles de diversité comprises) ou un tableau
+  // de vœux (sans règle de diversité) ; choix : { id du vœu : id de l'équivalent choisi à sa place } (Ma liste).
+  // Renvoie une Map id du vœu → équivalents. La Map porte aussi .choix (Map id du vœu → équivalent choisi encore valable :
+  // un choix qui n'est plus un équivalent, ou qui enfreindrait les règles de la liste avec les choix précédents, est
+  // ignoré). Les autres équivalents sont calculés sur la liste après ces choix ; un équivalent choisi reste dans les
+  // équivalents de son vœu.
+  function equivalentsListe(resultats, W, n = MAX_EQUIVALENTS, choix = {}) {
+    const voeux = Array.isArray(W) ? W : (W && W.liste) || [];
+    const regle = !Array.isArray(W) && W && typeof W.peutRemplacer === "function" ? W.peutRemplacer : () => true;
+    const pris = new Set(voeux.map((x) => x.f.id));
+    const parNmc = new Map();
+    for (const x of resultats) {
+      const k = cleEquivalent(x.f);
+      if (!k || !peutEtreVoeu(x)) continue;
+      if (!parNmc.has(k)) parNmc.set(k, []);
+      parNmc.get(k).push(x);
+    }
+    // liste courante : chaque vœu, ou l'équivalent choisi à sa place
+    const courante = voeux.slice(), acceptes = new Map();
+    const candidats = (v, i) => { const k = cleEquivalent(v.f); return k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && x.f.id !== v.f.id && regle(courante, i, x)) : []; };
+    voeux.forEach((v, i) => {
+      const id = choix && choix[v.f.id];
+      if (!id) return;
+      const x = candidats(v, i).find((y) => y.f.id === id && !pris.has(y.f.id));
+      if (x) { courante[i] = x; acceptes.set(v.f.id, x); pris.add(x.f.id); }
+    });
+    const out = new Map();
+    voeux.forEach((v, i) => {
+      const a = acceptes.get(v.f.id);
+      // la place i est à remplacer : on l'évalue avec le vœu d'origine à cette place (courante[i] est ignoré par la règle)
+      const cands = candidats(v, i).filter((x) => x === a || !pris.has(x.f.id)).sort(departage);
+      let sel = cands.slice(0, Math.max(0, n));
+      if (a && n > 0 && !sel.includes(a)) sel = sel.slice(0, n - 1).concat([a]).sort(departage);
+      sel.forEach((x) => pris.add(x.f.id));
+      out.set(v.f.id, sel);
+    });
+    out.choix = acceptes;
+    return out;
+  }
+  // Équivalents d'un vœu. resultats : l'objet renvoyé par recommander() (la liste de 10 vœux est alors recalculée ici,
+  // avec les mêmes centres d'intérêt), ou le tableau recommander().resultats avec la liste en 4e argument (objet de
+  // wishlist(), ou tableau de vœux). Sans liste : erreur, pour ne jamais renvoyer un vœu de la liste ni d'autres
+  // équivalents que ceux de Ma liste. Un vœu absent de la liste n'a pas d'équivalent.
+  function equivalents(resultats, voeu, n = MAX_EQUIVALENTS, liste = null) {
+    if (resultats && !Array.isArray(resultats) && Array.isArray(resultats.resultats)) {
+      if (!liste) liste = wishlist(resultats.resultats, 10, resultats.interets);
+      resultats = resultats.resultats;
+    }
+    if (!liste) throw new Error("CapEngine.equivalents : passe l'objet de recommander(), ou la liste de vœux en 4e argument.");
+    const voeux = Array.isArray(liste) ? liste : liste.liste || [];
+    if (!voeux.some((x) => x.f.id === voeu.f.id)) return [];
+    return equivalentsListe(resultats, liste, n).get(voeu.f.id) || [];
   }
 
   /* ---------------------------------------------------------------- protection de la liste */
@@ -1257,5 +1356,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

@@ -843,6 +843,50 @@
     </section>`;
   }
   const btnRetenir = (x) => { const r = etat.retenus.includes(x.f.id); return `<button class="btn sm ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}">${ico("etoile", r ? "plein" : "")}${r ? "Dans mes vœux" : "Ajouter à mes vœux"}</button>`; };
+  /* ---------------------------------------------------------------- formations équivalentes (docs/modele-chances.md, section 11) */
+  // Sous chaque vœu de la liste proposée (E.wishlist) : jusqu'à 3 formations de la même filière et de la même catégorie
+  // (E.equivalentsListe, mêmes garde-fous que la liste). L'élève peut en mettre une à la place du vœu : son choix est
+  // gardé dans etat.remplacements (id du vœu proposé → id de l'équivalent), dans le navigateur seulement (CapStore).
+  const remplacements = () => (etat.remplacements && typeof etat.remplacements === "object" && !Array.isArray(etat.remplacements) ? etat.remplacements : (etat.remplacements = {}));
+  // Équivalents de la liste W, calculés avec les choix de l'élève (E.equivalentsListe : un choix qui n'est plus un
+  // équivalent, ou qui enfreindrait les règles de la liste, est ignoré ; M.choix garde les choix encore valables).
+  const equivalentsDe = (A, W) => E.equivalentsListe(A.resultats, W, E.MAX_EQUIVALENTS, remplacements());
+  // Purge des choix obsolètes (profil ou réponses modifiés, vœu sorti de la liste) : renvoie true si l'état a changé
+  function purgerRemplacements(M) {
+    const R = remplacements(); let change = false;
+    for (const id of Object.keys(R)) if (!M.choix.has(id)) { delete R[id]; change = true; }
+    return change;
+  }
+  // équivalent choisi à la place du vœu v (encore valable), ou null
+  const choixDe = (v, M) => M.choix.get(v.f.id) || null;
+  // vœux à afficher (ou à retenir) : chaque vœu proposé, ou l'équivalent choisi à sa place
+  const voeuxAffiches = (W, M) => W.liste.map((v) => ({ v, x: choixDe(v, M) || v }));
+  const distanceTxt = (x, s) => (x.dist != null ? `≈ ${nbFr(Math.round(x.dist))} km de chez toi` : s && s.geo ? "distance inconnue" : "");
+  // messages de distance déjà affichés ailleurs (règle qui a retiré la catégorie « sécurité »)
+  const REGLES_DISTANCE = ["hors_distance", "distance_inconnue", "hors_territoire", "campus_etranger"];
+  function infosEquivalent(x, s) {
+    const r = x.repere, lieu = [x.f.etablissement, x.f.ville, distanceTxt(x, s)].filter(Boolean).map(esc).join(" · ");
+    const taux = r.taux !== null ? `${libTauxAcces(r)} : ${tauxFr(r.taux)}` : "Taux d'accès non publié";
+    const position = r.sansNotes ? "notes à renseigner" : POSITION_COURT[r.position] || "";
+    return `<span class="small muted">${lieu}</span><span class="small">${esc([taux, position].filter(Boolean).join(" · "))}</span>`
+      + (REGLES_DISTANCE.includes(r.regle) ? `<span class="tiny muted">${esc(r.pourquoi)}</span>` : "")
+      + (r.alerteFrais ? `<span class="small texte-bad">${esc(r.alerteFrais)}</span>` : "");
+  }
+  // bloc replié sous un vœu : l'original (si l'élève l'a remplacé) puis les autres équivalents, chacun avec son bouton
+  function blocEquivalents(v, M, s) {
+    const eqs = M.get(v.f.id) || [], choix = choixDe(v, M);
+    if (!eqs.length) return `<p class="tiny muted equiv-aucun">Pas d'autre formation de la même filière et de la même catégorie qui respecte tes critères.</p>`;
+    const item = (x, bouton, etiquette) => `<li class="equiv-item"><span class="wish-nom">${etiquette || ""}<a href="#formation-${x.f.id}">${esc(x.f.nom)}</a>${infosEquivalent(x, s)}</span><span class="no-print">${bouton}</span></li>`;
+    const lignes = [];
+    if (choix) lignes.push(item(v, `<button class="btn xs" data-action="retablir" data-voeu="${v.f.id}">Revenir à ce vœu</button>`, `<span class="tiny muted">Vœu proposé au départ</span>`));
+    for (const e of eqs) if (e !== choix) lignes.push(item(e, `<button class="btn xs doux" data-action="remplacer" data-voeu="${v.f.id}" data-id="${e.f.id}" aria-label="Choisir ${esc(e.f.nom)} (${esc(e.f.etablissement)}) à la place">Choisir à la place</button>`));
+    const n = eqs.length;
+    return `<details class="equiv" ${choix ? "open" : ""}><summary>${n} formation${n > 1 ? "s" : ""} équivalente${n > 1 ? "s" : ""}</summary>
+      <p class="tiny muted">Même filière Parcoursup et même catégorie que ce vœu, avec les mêmes règles que ta liste. ${s && s.geo ? "Celles de ton académie et les plus proches de chez toi d'abord." : "Indique ton lycée pour voir d'abord celles de ton académie et les plus proches de chez toi."}</p>
+      <ul class="equiv-liste">${lignes.join("")}</ul></details>`;
+  }
+  // ligne « à la place de » sous un équivalent choisi, avec le retour au vœu d'origine
+  const ligneRemplace = (v) => `<span class="small equiv-choix">${ico("check")}Ton choix, à la place de <a href="#formation-${v.f.id}">${esc(v.f.nom)}</a> <span class="muted">(${esc(v.f.etablissement)})</span> <button class="btn xs ghost no-print" data-action="retablir" data-voeu="${v.f.id}">Revenir au vœu d'origine</button></span>`;
   // Section « Nouvelle formation à la rentrée 2026 » (E.nouvelles) : une seule formation (E.MAX_NOUVELLES), sans catégorie ni
   // repère d'admission ; avertissement si la filière est très sélective et la moyenne de l'élève sous 12 (E.alerteFiliereSelective)
   const SOURCE_FR_ESR_PARCOURSUP = "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup/";
@@ -867,6 +911,8 @@
   }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
+    const M = equivalentsDe(A, W);
+    if (purgerRemplacements(M)) sauver(true);
     const X = E.etranger(A.resultats, W, A.interets);
     const etr = blocNouvelles(A) + blocEtranger(X);
     const sel = A.resultats.filter((x) => etat.retenus.includes(x.f.id));
@@ -874,12 +920,17 @@
     const btnAuto = `<button class="btn ${sel.length ? "" : "primary"}" data-action="auto-retenir">${ico("etoile")}${sel.length ? "Recalculer une liste équilibrée de 10 vœux" : "Générer une liste équilibrée de 10 vœux"}</button>`;
     if (!sel.length) {
       return `<section class="stack">${intro}
-        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${W.liste.map((x) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${ligneRepere(x)}${W.decouvertes.has(x.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(x.f.id))}</span>` : ""}</span><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
+        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${voeuxAffiches(W, M).map(({ v, x }) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><div class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))} · ${f5(sur5(x.pertinence))}/5</span>${x !== v ? ligneRemplace(v) : ""}${ligneRepere(x)}${W.decouvertes.has(v.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(v.f.id))}</span>` : ""}${blocEquivalents(v, M, A.stats)}</div><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>'}
           ${W.liste.length ? blocProtection(W.protection) : ""}
           ${W.alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
           <div class="row no-print">${btnAuto}</div></div>${etr}</section>`;
     }
     const compte = { ambitieux: 0, realiste: 0, securite: 0 }; sel.forEach((x) => compte[x.categorie]++);
+    // vœu retenu venu de la liste proposée (le vœu lui-même ou l'équivalent choisi à sa place) → vœu proposé : ses équivalents s'affichent dessous
+    // indexé aussi sur le vœu d'origine : s'il est retenu (seul ou avec l'équivalent), ses équivalents restent affichés
+    const origine = new Map(voeuxAffiches(W, M).flatMap(({ v, x }) => [[v.f.id, v], [x.f.id, v]]));
+    // une seule ligne porte le bloc des équivalents : l'équivalent choisi s'il est retenu, sinon le vœu d'origine
+    const porteur = (v) => { const c = choixDe(v, M); return c && sel.includes(c) ? c : v; };
     const ordre = { ambitieux: 0, realiste: 1, securite: 2 };
     const tri = sel.slice().sort((a, b) => ordre[a.categorie] - ordre[b.categorie] || (a.repere.taux ?? 101) - (b.repere.taux ?? 101));
     const alertes = [];
@@ -899,7 +950,7 @@
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
         <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
-          ${tri.map((x) => `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${ligneRepere(x)}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`).join("")}
+          ${tri.map((x) => { const o = origine.get(x.f.id); return `<tr><td>${catPill(x.categorie)}</td><td><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><div class="tiny muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)}</div>${o && o !== x ? ligneRemplace(o) : ""}${ligneRepere(x)}${o && x === porteur(o) ? blocEquivalents(o, M, A.stats) : ""}</td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td><td class="no-print"><button class="btn sm ghost" data-action="retenir" data-id="${x.f.id}" aria-label="Retirer ${esc(x.f.nom)}">Retirer</button></td></tr>`; }).join("")}
         </tbody></table></div>
         <div class="row no-print">${btnAuto}<a class="btn ghost" href="#plan">Voir mon plan${ico("fleche")}</a></div>
       </div>${etr}</section>`;
@@ -1219,6 +1270,11 @@
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
     f.__tc = r.tc || null;
     f.statut_etab = TC_ETAB[r.tc] || null;
+    // code nmc partagé par plusieurs intitulés officiels (data/filieres.json, « variantes » : L1-SS, L1-AP, FP-CC-App…) :
+    // intitulé Parcoursup de la formation (champ fl), ou "" pour l'intitulé de base du code. Formations équivalentes
+    // (moteur, décision du fondateur du 22/10/2026) : même code nmc ET même intitulé.
+    const fam = FIL && FIL.filieres && r.nmc ? FIL.filieres[r.nmc] : null;
+    if (fam && fam.variantes) f.__variante = (r.fl || []).find((x) => fam.variantes[x]) || "";
     // frais relevés sur la fiche Parcoursup (établissement privé) : ils priment sur le coût d'une fiche maison
     const c = r.tc && r.tc !== "Publics" ? coutReleve(r.gta) : null;
     if (c) {
@@ -1868,7 +1924,25 @@
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
     else if (a === "cat-plus") { app.limiteCat += 50; const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "retenir") { const id = b.dataset.id; etat.retenus = etat.retenus.includes(id) ? etat.retenus.filter((x) => x !== id) : etat.retenus.concat(id); sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y); }
-    else if (a === "auto-retenir") { { const A = analyse(); etat.retenus = E.wishlist(A.resultats, 10, A.interets).liste.map((x) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
+    else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W); purgerRemplacements(M); etat.retenus = voeuxAffiches(W, M).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }
+    // formation équivalente choisie à la place d'un vœu de la liste proposée, ou retour au vœu d'origine ; si le vœu était
+    // déjà retenu, il est échangé dans les vœux retenus. Enregistré dans le navigateur seulement (CapStore).
+    else if (a === "remplacer" || a === "retablir") {
+      // avant : ce qui occupe la place du vœu (équivalent choisi encore valable, sinon le vœu) ; un choix obsolète est ignoré
+      const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W);
+      purgerRemplacements(M);
+      const voeu = b.dataset.voeu, R = remplacements(), choisi = M.choix.get(voeu), apres = a === "remplacer" ? b.dataset.id : voeu;
+      if (a === "remplacer") R[voeu] = apres; else delete R[voeu];
+      // dans les vœux retenus, le vœu d'origine et l'ancien choix laissent leur place à apres (une seule fois)
+      const occupants = [voeu, choisi ? choisi.f.id : null].filter((id) => id && id !== apres);
+      const i = etat.retenus.findIndex((id) => occupants.includes(id));
+      if (i >= 0) {
+        etat.retenus = etat.retenus.map((id, j) => (j === i ? apres : id)).filter((id, j) => !(occupants.includes(id) && j !== i));
+        etat.retenus = etat.retenus.filter((id, j) => etat.retenus.indexOf(id) === j);
+      }
+      sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y);
+      toast(a === "remplacer" ? "Formation équivalente choisie" : "Vœu d'origine rétabli");
+    }
     else if (a === "imprimer") window.print();
     else if (a === "copier-plan") copier(planTexte(), "Plan copié");
     else if (a === "copier-json") copier(JSON.stringify(etat, null, 1), "Données copiées");

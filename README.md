@@ -214,6 +214,16 @@ vœu « sécurité » est solide par construction : on compte les vœux « sécu
 (élève sans notes), `aucun` (0 vœu « sécurité »), `insuffisant` (1), `minimum` (2) ou `bon` (3 ou plus). Ma liste
 affiche le message, suivi de `PROTECTION_REPERE` (« Aucun site ne peut calculer tes chances exactes d'admission… »).
 
+## Formations équivalentes
+
+Sous chaque vœu de la liste de 10, Ma liste propose jusqu'à 3 formations de la même filière Parcoursup (code `nmc`,
+même intitulé quand le code en regroupe plusieurs), du même type (double licence, LAS, licence simple…) et de la
+même catégorie : `CapEngine.equivalents(resultats, voeu, n = 3)` (un vœu) et
+`CapEngine.equivalentsListe(resultats, W)` (toute la liste, sans doublon). Mêmes garde-fous, mêmes interdictions et
+mêmes règles de diversité que la liste (`W.peutRemplacer`), classées par la règle de départage (`departage`). L'élève peut choisir un équivalent à la place d'un vœu : le choix est gardé dans
+`localStorage` (`etat.remplacements`, id du vœu proposé → id de l'équivalent) et peut être annulé. La liste de 10
+vœux calculée ne change pas. Détails : `docs/modele-chances.md`, section 11.
+
 ## Tests
 
 ```
@@ -227,7 +237,8 @@ références de `tests/reference/`. Si un changement de résultats est voulu, r�
 références avec `node tests/generer-reference.js` et expliquer le changement dans la PR.
 `tests/moyennes.test.js` vérifie le calcul des moyennes du profil (moyenne simple des périodes, aucune
 reconstitution ni coefficient, maths et maths expertes séparées, seuils 10 et 14) et que l'import d'un
-bulletin PDF donne la même moyenne que la saisie manuelle.
+bulletin PDF donne la même moyenne que la saisie manuelle. `tests/equivalents.test.js` vérifie les formations
+équivalentes (garde-fous, ordre, doublons) et leur remplacement dans Ma liste.
 
 ## Avertissement
 
