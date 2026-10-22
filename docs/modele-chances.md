@@ -436,16 +436,32 @@ formations proches de note), et qu'au-delà elle écarte vite la formation du ha
 - **Jamais « sécurité » au-delà de la distance acceptée** (`REGLE_HORS_DISTANCE`, après la table des
   catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
   l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :
-  on ne peut pas vérifier la distance. `protection()` ne compte donc que des vœux à distance acceptée.
+  on ne peut pas vérifier la distance (pour « domicile », elle est même exclue, voir plus bas). `protection()` ne
+  compte donc que des vœux à distance acceptée.
 - **Règle « domicile »** (décision du fondateur, 20/10/2026) : pour un élève qui a indiqué son lycée et répondu
   « Non, je veux rester chez mes parents » (mobilite 0), une formation à plus de `DISTANCE_ACCEPTEE_KM[0]` = 45 km
   est **exclue**, par le même mécanisme (`exclu`) que l'étranger : elle n'entre ni dans la liste de 10 vœux, ni dans
   les recommandations, et sa fiche affiche « Tu as indiqué vouloir rester chez tes parents : cette formation est à
   X km de ton lycée. » (X = distance à vol d'oiseau, arrondie). La traversée compte : on compare la distance
-  équivalente (distance + `SURCOUT_TRAVERSEE_KM`), donc la Corse est toujours exclue pour un élève de Nice. Une
-  formation sans coordonnées n'est pas exclue (on ne peut pas mesurer) : elle reste soumise à
-  `REGLE_DISTANCE_INCONNUE`. Sans lycée, rien ne change. Conséquence assumée : la liste d'un élève « domicile » peut
-  compter moins de 10 vœux, et on ne la complète pas avec des formations lointaines.
+  équivalente (distance + `SURCOUT_TRAVERSEE_KM`), donc la Corse est toujours exclue pour un élève de Nice. Sans
+  lycée, rien ne change. Conséquence assumée : la liste d'un élève « domicile » peut compter moins de 10 vœux, et on
+  ne la complète pas avec des formations lointaines.
+- **Règle « domicile », distance inconnue** (issue #41, 22/10/2026) : pour le même élève (lycée indiqué, mobilite 0),
+  une formation française sans coordonnées (distance inconnue) est **exclue** comme une formation à plus de 45 km :
+  on ne peut pas vérifier qu'elle est assez près. Elle n'entre ni dans la liste de 10 vœux, ni dans les
+  recommandations, ni dans les équivalents (section 11), ni dans la section « Nouvelle formation à la rentrée 2026 »
+  (section 10), ni en « découverte » : toutes ces listes écartent les formations `exclu`. Sa fiche affiche
+  `MESSAGE_DOMICILE_DISTANCE_INCONNUE` : « Tu as indiqué vouloir rester chez tes parents : on ne connaît pas l'adresse
+  de cette formation, on ne peut donc pas vérifier qu'elle est à moins de 45 km de ton lycée. » Un message de frais
+  (section 9.3), posé avant, reste prioritaire. Avant cette règle, la formation était seulement privée de la
+  catégorie « sécurité » (`REGLE_DISTANCE_INCONNUE`) et pouvait entrer dans la liste : un élève de Mauriac (Cantal)
+  recevait le Programme Grande École IÉSEG « Paris-La Défense » (ps-12929, ville alors non localisée, issue #48).
+  **Sans changement** : mobilité « proche » (pas d'exclusion, jamais « sécurité », `REGLE_DISTANCE_INCONNUE`),
+  « partout », élève sans lycée (voir l'issue #43). Formations concernées au 22/10/2026 : 4 fiches de
+  `data/formations.json` sans coordonnées (multi-campus : Arts et Métiers, SKEMA Global BBA, réseau Polytech ; DN MADE
+  Arue, Polynésie), toutes déjà écartées des listes (`sans_stats`) : la règle ne change aucune liste des 14 profils
+  types, seulement l'exclusion de ces 4 fiches pour le profil « fragile » (empreinte « calculs » de sa référence). Elle
+  protège contre toute fiche qui perdrait ses coordonnées (commune non reconnue, nouvelle fiche).
 - **Sans lycée** : aucune distance, aucune pénalité, aucune académie, et la règle ci-dessus ne s'applique pas.
   Ma liste affiche `MESSAGE_SANS_LYCEE` : « Indique ton lycée : sans lui, on ne peut pas tenir compte de ton
   académie ni de la distance. »
@@ -718,7 +734,8 @@ Sous chaque vœu de la liste de 10 (`wishlist`), Ma liste affiche jusqu'à `MAX_
   peut différer.
 - **Même catégorie** que le vœu (sécurité, réaliste, ambitieux), calculée par `evaluer()` comme pour la liste.
 - **Mêmes garde-fous et interdictions que la liste** : jamais une formation exclue (`exclu` : frais au-delà d'un budget
-  ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km pour « domicile » ; étranger pour
+  ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km ou distance inconnue pour
+  « domicile » avec lycée ; étranger pour
   « rester en France » ou un pays non coché…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des
   listes (`reglesHorsListe` : sans statistiques, bac pro, nouvelle formation 2026, filière à relire).
 - **Équivalent « sécurité »** : exactement les interdictions de la liste, ni plus ni moins. La catégorie vient
