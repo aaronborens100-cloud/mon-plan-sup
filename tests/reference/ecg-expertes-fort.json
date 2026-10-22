@@ -1,7 +1,7 @@
 {
  "profil": "ecg-expertes-fort",
  "description": "Maths 13, maths expertes 17,5 (très au-dessus des maths), vise une prépa ECG maths approfondies",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 13.75,
   "moyennePeriodes": [
@@ -852,7 +852,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "9c9afb9d7c01bc8b9aa9c0fab5e89c4d232fac31d88d6f0e2b7a0f6bb1ca2151",
-  "textes": "7d3b9d078cd7068039e115049fc0043aad65956098b64fa2f5a39c5802c0000b"
+  "calculs": "d6bec120d5c68c3b62cf2dae59657d8903e8b260b18d8d49a600879eebfa423b",
+  "textes": "4d5b4d8cce7951907edb86394570ab639e21bec4554e6d555df29f5b4fd9cb97"
  }
 }

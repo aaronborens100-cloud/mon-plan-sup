@@ -1,7 +1,7 @@
 {
  "profil": "international-langues",
  "description": "15,5 de moyenne, LLCER anglais + HGGSP, veut partir étudier à l'étranger",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 15.5,
   "moyennePeriodes": [
@@ -1028,7 +1028,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "2846e9368717de183b524bb20b305fc49c1d08023763699cb44639baf743bd38",
-  "textes": "0009225f10bbfa816f6d98bac55aeb0ed342c665791c3f78f881e576eb0cf4ce"
+  "calculs": "e295115afac1dcb42ed8db252e22b7094e25eaa656f4493da829a860a94937d3",
+  "textes": "078aac9da6f5067ebee257d0ae261b4e2d452065738d6bb90c22663ccc02ac38"
  }
 }

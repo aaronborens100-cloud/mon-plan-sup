@@ -1,7 +1,7 @@
 {
  "profil": "sciences-ingenieur",
  "description": "15 de moyenne, maths + physique-chimie, maths expertes, attiré par l'ingénierie et l'informatique",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 15.2,
   "moyennePeriodes": [
@@ -759,20 +759,20 @@
     ]
    },
    {
-    "id": "ps-11322",
-    "categorie": "ambitieux",
-    "pertinence": 82.11837881666042,
-    "repere": [
-     16,
-     "au_dessus"
-    ]
-   },
-   {
     "id": "ps-8242",
     "categorie": "ambitieux",
     "pertinence": 81.59153036622959,
     "repere": [
      6,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "jean-perrin-lyon-mpsi",
+    "categorie": "ambitieux",
+    "pertinence": 81.22698866655486,
+    "repere": [
+     33,
      "en_dessous"
     ]
    },
@@ -795,15 +795,6 @@
     ]
    },
    {
-    "id": "psup-3089",
-    "categorie": "realiste",
-    "pertinence": 78.76330467000493,
-    "repere": [
-     37,
-     "au_dessus"
-    ]
-   },
-   {
     "id": "psup-28894",
     "categorie": "realiste",
     "pertinence": 76.03705139957864,
@@ -813,11 +804,20 @@
     ]
    },
    {
-    "id": "ps-2415",
-    "categorie": "securite",
-    "pertinence": 82.30698796192235,
+    "id": "ps-13328",
+    "categorie": "realiste",
+    "pertinence": 81.22081757331918,
     "repere": [
-     57,
+     70,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "u-jean-monnet-informatique",
+    "categorie": "securite",
+    "pertinence": 85.37195218265563,
+    "repere": [
+     52,
      "au_dessus"
     ]
    }
@@ -836,7 +836,7 @@
     "data_informatique"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et BUT comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour les mathématiques : on a concentré tes vœux sur licence de maths ou d'informatique, avec licence de sciences et école d'ingénieurs post-bac comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -892,7 +892,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "07858ccd3e1508f08e983fe117ac54cacd7da4f257c73dd063c47b24a17b8e0f",
-  "textes": "dce6481cae73c0eac26a7d62604c2d5ed26214cf6d895feb5efd5cd0f1dc86a2"
+  "calculs": "cab84ae35de449393d12fc8bfca1581f5e278ee5e1924c0bb53c66c80813e7b1",
+  "textes": "2ad942e39c4ccc3f3fd965db047b0b8f0294b6fc3aee4756d0f49181160665cd"
  }
 }

@@ -1,7 +1,7 @@
 {
  "profil": "indecis",
  "description": "12,5 de moyenne, SES + SVT, ne sait pas ce qu'il veut : réponses neutres",
- "nbFormationsNotees": 11530,
+ "nbFormationsNotees": 11527,
  "statsEleve": {
   "moyenneGenerale": 12.5,
   "moyennePeriodes": [
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "8e9b7595bc0638601ef3fac4c05354554165385a39b442b3677bd7710e458258",
-  "textes": "65b4ebb06e82148fbd6d40836de886a65c941118bd70793f0ad4da3f97bef4f3"
+  "calculs": "01bd41a39c87bf93f2f360d8b4f167d278c9d4c85f10a2ba801a735d6b07b7a2",
+  "textes": "ff4cc7fc9cc896065334539f3086ff43c21254090cd9db9a9b6933e1ce78f10b"
  }
 }
