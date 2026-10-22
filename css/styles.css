@@ -175,6 +175,7 @@ details > summary::-webkit-details-marker { display: none; }
 .badges { gap: 6px; }
 .badge-statut { font-size: .7rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--surface-2); color: var(--gris); margin-left: 6px; white-space: nowrap; }
 .badge-statut.officiel { background: var(--menthe-pale); color: var(--menthe); }
+.badge-statut.releve_parcoursup { background: var(--menthe-pale); color: var(--menthe); }
 .badge-statut.estimation, .badge-statut.source_secondaire { background: var(--ambre-pale); color: var(--ambre); }
 .badge-statut.non_communique { background: var(--corail-pale); color: var(--corail); }
 .badge-src { font-size: .68rem; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); color: var(--gris); margin-left: 6px; white-space: nowrap; }

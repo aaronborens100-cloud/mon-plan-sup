@@ -196,6 +196,36 @@
    "exclu": null
   },
   {
+   "id": "psup-26131",
+   "interet": 78.60252440657935,
+   "faisabilite": 61.36,
+   "pertinence": 71.70551464394761,
+   "repere": [
+    55,
+    0.16,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 14 500 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-31192",
+   "interet": 78.60252440657935,
+   "faisabilite": 59.760000000000005,
+   "pertinence": 71.06551464394761,
+   "repere": [
+    69,
+    0.11,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (au moins 11 500 €/an) au-delà de ton budget."
+  },
+  {
    "id": "montpellier-business-school-bachelor-in-international-business",
    "interet": 79.60691446634921,
    "faisabilite": 57.6,
@@ -211,6 +241,96 @@
    "exclu": null
   },
   {
+   "id": "psup-26296",
+   "interet": 75.85801573360962,
+   "faisabilite": 62.96,
+   "pertinence": 70.69880944016577,
+   "repere": [
+    52,
+    0.25,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 400 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26149",
+   "interet": 75.9955785671935,
+   "faisabilite": 61.36,
+   "pertinence": 70.1413471403161,
+   "repere": [
+    86,
+    0.2,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 800 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-39081",
+   "interet": 78.89375502398863,
+   "faisabilite": 55.6,
+   "pertinence": 69.57625301439319,
+   "repere": [
+    45,
+    0.01,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 15 900 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26115",
+   "interet": 72.98738736194103,
+   "faisabilite": 63.92,
+   "pertinence": 69.36043241716462,
+   "repere": [
+    18,
+    0.3,
+    "moyenne",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-43192",
+   "interet": 78.89375502398863,
+   "faisabilite": 54,
+   "pertinence": 68.93625301439317,
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 15 900 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-44895",
+   "interet": 74.85958801759512,
+   "faisabilite": 59.760000000000005,
+   "pertinence": 68.81975281055708,
+   "repere": [
+    19,
+    0.13,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (au moins 11 950 €/an) au-delà de ton budget."
+  },
+  {
    "id": "psup-4018",
    "interet": 65.22116675002485,
    "faisabilite": 72.25,
@@ -224,6 +344,51 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-39082",
+   "interet": 78.89375502398863,
+   "faisabilite": 51.44,
+   "pertinence": 67.91225301439317,
+   "repere": [
+    6,
+    0.03,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 23 900 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26113",
+   "interet": 72.98738736194103,
+   "faisabilite": 60.08,
+   "pertinence": 67.82443241716462,
+   "repere": [
+    16,
+    0.15,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26117",
+   "interet": 72.98738736194103,
+   "faisabilite": 59.760000000000005,
+   "pertinence": 67.69643241716463,
+   "repere": [
+    14,
+    0.3,
+    "moyenne",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
   },
   {
    "id": "psup-10451",
@@ -331,6 +496,21 @@
    "exclu": null
   },
   {
+   "id": "psup-26007",
+   "interet": 69.9955785671935,
+   "faisabilite": 60.720000000000006,
+   "pertinence": 66.2853471403161,
+   "repere": [
+    75,
+    0.13,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 14 470 €/an) au-delà de ton budget."
+  },
+  {
    "id": "psup-21268",
    "interet": 63.0862261695399,
    "faisabilite": 70.65,
@@ -359,6 +539,21 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-48015",
+   "interet": 67,
+   "faisabilite": 64.24,
+   "pertinence": 65.89599999999999,
+   "repere": [
+    90,
+    0.32,
+    "moyenne",
+    "hors_distance"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
    "id": "psup-4555",
@@ -466,6 +661,21 @@
    "exclu": null
   },
   {
+   "id": "psup-31816",
+   "interet": 67,
+   "faisabilite": 62,
+   "pertinence": 65,
+   "repere": [
+    77,
+    0.2,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "psup-49979",
    "interet": 67.1965763721674,
    "faisabilite": 61.25,
@@ -507,216 +717,6 @@
     "sans_taux"
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-49740",
-   "interet": 66.28070211130807,
-   "faisabilite": 61.25,
-   "pertinence": 64.26842126678484,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35351",
-   "interet": 60.71614423949666,
-   "faisabilite": 69.45,
-   "pertinence": 64.20968654369798,
-   "repere": [
-    50,
-    0.23,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35454",
-   "interet": 60.716043507873295,
-   "faisabilite": 69.45,
-   "pertinence": 64.20962610472398,
-   "repere": [
-    56,
-    0.18,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-4543",
-   "interet": 63.08624045188889,
-   "faisabilite": 65.45,
-   "pertinence": 64.03174427113333,
-   "repere": [
-    46,
-    0.07,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-10367",
-   "interet": 58.796738863997305,
-   "faisabilite": 71.85,
-   "pertinence": 64.01804331839838,
-   "repere": [
-    90,
-    0.29,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-42301",
-   "interet": 65.63243615971551,
-   "faisabilite": 61.25,
-   "pertinence": 63.879461695829306,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-43011",
-   "interet": 65.8662604648277,
-   "faisabilite": 60.8,
-   "pertinence": 63.83975627889662,
-   "repere": [
-    43,
-    0.17,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-53600",
-   "interet": 65.40316844439215,
-   "faisabilite": 61.25,
-   "pertinence": 63.741901066635286,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-50439",
-   "interet": 65.3162297643001,
-   "faisabilite": 61.25,
-   "pertinence": 63.68973785858006,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-51869",
-   "interet": 65.3162297643001,
-   "faisabilite": 61.25,
-   "pertinence": 63.68973785858006,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35353",
-   "interet": 60.716668048479825,
-   "faisabilite": 67.85,
-   "pertinence": 63.570000829087896,
-   "repere": [
-    43,
-    0.11,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-20745",
-   "interet": 58.11645506849963,
-   "faisabilite": 71.45,
-   "pertinence": 63.44987304109978,
-   "repere": [
-    84,
-    0.29,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-52738",
-   "interet": 64.86825611373115,
-   "faisabilite": 61.25,
-   "pertinence": 63.42095366823869,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-53275",
-   "interet": 64.86825611373115,
-   "faisabilite": 61.25,
-   "pertinence": 63.42095366823869,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   }
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "b72b399c063f180df7c620c7a377af68bac9a2665120f5d0e054c6bc52beb2b7",
-  "textes": "84a111779bc17c452f0837e1262415e1c8296b596945c6b818f410160726e279"
+  "calculs": "09f9255544b23f47be7323e9ef4b4efb972def80603cc756aae52a24c283eba9",
+  "textes": "af4ad16fd039ca35d97f9d45bfcd5f7420e178747f59c12199344897cd7f9745"
  }
 }

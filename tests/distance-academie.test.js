@@ -361,7 +361,12 @@ test("règle « domicile » : avec un lycée, rien à plus de 45 km (fragile) ; 
   assert.equal(fragile.reponses.mobilite, "domicile");
   const { A, W } = analyser(fragile);
   assert.ok(W.liste.length > 0);
-  for (const x of W.liste) assert.ok(x.dist !== null && E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
+  // distance inconnue (fiche sans coordonnées) : pas exclue mais jamais « sécurité » (règle distance_inconnue). Depuis
+  // le relevé des frais privés (22/10/2026), fragile reçoit ps-12929 (IÉSEG « Paris-La Défense », ville non localisée)
+  for (const x of W.liste) {
+    if (x.dist === null) { assert.notEqual(x.categorie, "securite", `${x.f.id} : distance inconnue`); continue; }
+    assert.ok(E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
+  }
   // toute formation au-delà de 45 km (traversée comprise) est exclue, avec la distance dans le message
   for (const x of A.resultats) {
     if (x.dist === null || E.distanceEquivalente(x.dist, x.traversee) <= 45) continue;

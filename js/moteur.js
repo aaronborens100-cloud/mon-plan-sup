@@ -452,6 +452,29 @@
   // f.__tc est posé par app.js (lierParcoursup) pour les seules fiches liées à Parcoursup
   const priveFraisInconnus = (f, cout, budgetMax) => budgetMax !== undefined && budgetMax <= BUDGET_SERRE_MAX
     && voeuParcoursup(f) && typeof f.__tc === "string" && f.__tc !== TC_PUBLIC && cout == null;
+  const estPrive = (f) => typeof f.__tc === "string" && f.__tc !== TC_PUBLIC;
+  // Frais en fourchette (relevé des fiches Parcoursup des formations privées, data/frais-prives.json, 22/10/2026) :
+  // f.cout.min et f.cout.max (montants annuels en euros). f.cout.valeur_annuelle_eur vaut le max : quand le site
+  // affiche un seul nombre, c'est le montant le plus haut, jamais un montant plus bas que ce que l'élève pourrait payer
+  // (la fourchette complète est dans le texte).
+  // Règle de budget, décision du fondateur du 22/10/2026 (REGLE_BUDGET_FOURCHETTE, à changer ici) :
+  //   - budget ≥ max : frais connus et sous le budget, rien ne change ;
+  //   - budget < min : règle « frais au-dessus de ton budget » appliquée au min (malus de 18, ou exclusion si
+  //     min > 2 × budget avec un budget ≤ BUDGET_SERRE_MAX), comme pour un montant unique ;
+  //   - min ≤ budget < max (« dans la fourchette ») : malus REGLE_BUDGET_FOURCHETTE.malus (0), jamais « sécurité »,
+  //     message texteFourchette().
+  // Un montant unique (min = max, ou fiche sans min) suit la règle normale.
+  const REGLE_BUDGET_FOURCHETTE = { malus: 0, jamaisSecurite: true, message: true };
+  const SELON_FOURCHETTE = { revenus: "selon tes revenus", annee: "selon l'année d'études" };
+  const texteFourchette = (c) => `Les frais vont de ${fmtEur(c.min)} à ${fmtEur(c.max)} par an${SELON_FOURCHETTE[c.nature_fourchette] ? " " + SELON_FOURCHETTE[c.nature_fourchette] : ""} : vérifie ce que tu paierais avant de le mettre dans tes vœux.`;
+  const REGLE_FRAIS_FOURCHETTE = { cle: "frais_fourchette", categorie: "realiste" };
+  // Montants annuels { min, max } d'une fiche, ou null si les frais ne sont pas chiffrés
+  function bornesFrais(f) {
+    const c = f.cout || {}, v = c.valeur_annuelle_eur;
+    if (v == null) return null;
+    const min = typeof c.min === "number" && c.min <= v ? c.min : v;
+    return { min, max: v };
+  }
   // Moyenne des bulletins (sans la marge) sous 10 : message en tête de Ma liste, sans effet sur les catégories
   const MESSAGE_BAC = "Ta moyenne est sous 10 : toute admission sur Parcoursup dépend de l'obtention de ton bac. C'est ta priorité n° 1 cette année.";
   const alerteBac = (s) => (s && s.moyenneGenerale !== null && s.moyenneGenerale < 10 ? MESSAGE_BAC : null);
@@ -695,10 +718,17 @@
       if (voulus.length && !paysCoche(f, voulus)) { interet -= 15; ajust.push("pays non choisi"); }
     } else if (p.etranger === 3) interet -= 5;
     if (anglaisSeul && p.anglais !== undefined && p.anglais <= 2) { interet -= 15; ajust.push("cours entièrement en anglais"); }
-    if (cout != null && p.budget_max !== undefined && cout > p.budget_max) {
-      if (p.budget_max <= 5000 && cout > p.budget_max * 2) exclu = exclu || `Frais (≈ ${fmtEur(cout)}/an) au-delà de ton budget.`;
+    // frais connus : la règle s'applique au montant le plus bas (min, égal au montant s'il est unique) ; dans la
+    // fourchette (min ≤ budget < max), REGLE_BUDGET_FOURCHETTE (décision du fondateur du 22/10/2026)
+    const bornes = bornesFrais(f);
+    const fourchette = !!bornes && p.budget_max !== undefined && bornes.min <= p.budget_max && p.budget_max < bornes.max;
+    if (bornes && p.budget_max !== undefined && bornes.min > p.budget_max) {
+      const montant = bornes.min < bornes.max ? `au moins ${fmtEur(bornes.min)}/an` : `≈ ${fmtEur(bornes.min)}/an`;
+      if (p.budget_max <= 5000 && bornes.min > p.budget_max * 2) exclu = exclu || `Frais (${montant}) au-delà de ton budget.`;
       else { interet -= 18; ajust.push("frais au-dessus de ton budget"); }
     }
+    if (fourchette && REGLE_BUDGET_FOURCHETTE.malus) { interet -= REGLE_BUDGET_FOURCHETTE.malus; ajust.push("frais dans une fourchette qui dépasse ton budget"); }
+    const messageFourchette = fourchette && REGLE_BUDGET_FOURCHETTE.message ? texteFourchette(f.cout) : null;
     // budget serré et établissement privé (Parcoursup) aux frais non chiffrés : malus, jamais « sécurité », message
     const priveFI = priveFraisInconnus(f, cout, p.budget_max);
     if (priveFI) { interet -= MALUS_PRIVE_FRAIS_INCONNUS; ajust.push("établissement privé aux frais non relevés"); }
@@ -758,11 +788,17 @@
     if (regle.categorie === "securite" && horsTerritoire) regle = Object.assign({}, REGLE_HORS_TERRITOIRE, { texte: texteHorsTerritoire(territoire) });
     // établissement privé aux frais inconnus, budget serré : jamais « sécurité »
     if (regle.categorie === "securite" && priveFI) regle = REGLE_PRIVE_FRAIS_INCONNUS;
+    // frais dans une fourchette qui dépasse le budget (min ≤ budget < max) : jamais « sécurité »
+    if (regle.categorie === "securite" && fourchette && REGLE_BUDGET_FOURCHETTE.jamaisSecurite) regle = Object.assign({}, REGLE_FRAIS_FOURCHETTE, { texte: texteFourchette(f.cout) });
     rep.regle = regle.cle;
     rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
     // le message est affiché même quand une autre règle donne la catégorie
     if (priveFI && regle !== REGLE_PRIVE_FRAIS_INCONNUS) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_PRIVE_FRAIS_INCONNUS}`;
+    if (messageFourchette && regle.cle !== REGLE_FRAIS_FOURCHETTE.cle) rep.pourquoi = `${rep.pourquoi} ${messageFourchette}`;
     rep.priveFraisInconnus = priveFI;
+    rep.fraisFourchette = fourchette;
+    // message sur les frais affiché sous le repère (Ma liste, cartes, section « Nouvelle formation », fiche) ou null
+    rep.alerteFrais = priveFI ? MESSAGE_PRIVE_FRAIS_INCONNUS : messageFourchette;
     // source de la règle, distincte de rep.source (source du taux d'accès)
     if (regle.cle === "licence_secteur") rep.sourceRegle = SOURCE_SECTEUR;
     const categorie = regle.categorie;
@@ -786,7 +822,8 @@
     if (crit.specialites.niveau === "fort") out.push("Tes spécialités correspondent aux attendus.");
     if (crit.appreciations.niveau === "fort") out.push("Tes appréciations sont très positives : un vrai atout sur Parcoursup.");
     if (crit.langues.niveau === "fort") out.push(`Ton anglais certifié couvre l'exigence (${crit.langues.requis}).`);
-    if (cout != null && cout < 1000 && (it.prefs.budget_max || 0) <= 5000 && it.repondues) out.push("Formation publique quasi gratuite.");
+    // jamais pour un établissement privé d'après Parcoursup (IFSI, écoles du travail social : droits d'inscription bas)
+    if (cout != null && cout < 1000 && !estPrive(f) && (it.prefs.budget_max || 0) <= 5000 && it.repondues) out.push("Formation publique quasi gratuite.");
     if (f.selectivite.niveau === "tres_haute") out.push("Très sélective : à combiner avec des vœux plus sûrs.");
     return out.slice(0, 4);
   }
@@ -1205,5 +1242,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

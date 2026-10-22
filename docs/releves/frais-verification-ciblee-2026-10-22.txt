@@ -1,0 +1,92 @@
+# gta|raison|ajout à precision|a_verifier(0/1)
+23024|autre|frais réduits de formation sanitaire (droits + CVEC + contribution forfaitaire), aucune prise en charge mentionnée; vaccinations et déplacements de stage non chiffrés|0
+23506|autre|frais réduits (poursuite de scolarité et demandeurs d'emploi; prise en charge par le Conseil régional évoquée pour la formation continue)|0
+23677|autre|frais réduits de formation sociale (591 €, contenu non détaillé), CVEC non chiffrée en plus|0
+23713|autre|frais réduits (inscription + 375 € de scolarité + CVEC)|0
+23945|autre|frais réduits de formation sanitaire (droits + CVEC + 300 € de scolarité)|0
+24823|autre|frais réduits de formation sociale (591 €, contenu non détaillé), CVEC non chiffrée en plus|0
+24825|autre|frais réduits (inscription + 375 € de scolarité + CVEC)|0
+24826|autre|frais réduits (inscription + 375 € de scolarité + CVEC)|0
+24832|autre|frais réduits (178 € de droits + 100 € de scolarité), CVEC non chiffrée en plus|0
+24833|autre|frais réduits (178 € de droits + 100 € de scolarité), CVEC non chiffrée en plus|0
+24834|autre|frais réduits (178 € de droits + 100 € de scolarité), CVEC non chiffrée en plus|0
+24870|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+24872|autre|frais réduits de formation sociale (337 € + CVEC)|0
+24873|autre|frais réduits de formation sociale (337 € + CVEC)|0
+24875|autre|frais réduits de formation sociale (337 € + CVEC)|0
+24886|autre|frais réduits (poursuite de scolarité et demandeurs d'emploi; prise en charge par le Conseil régional évoquée pour la formation continue)|0
+24887|autre|frais réduits (poursuite de scolarité et demandeurs d'emploi; prise en charge par le Conseil régional évoquée pour la formation continue)|0
+24892|autre|frais réduits de formation sociale (450 €/an), CVEC non chiffrée en plus; boursiers 0 €|0
+24893|autre|frais réduits de formation sociale (450 €/an), CVEC non chiffrée en plus; boursiers 0 €|0
+24975|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+24976|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+24977|autre|frais réduits de formation sociale (555 €, boursiers 380 €), CVEC non chiffrée en plus|0
+24978|autre|frais réduits de formation sociale (555 €, boursiers 380 €), CVEC non chiffrée en plus|0
+24982|autre|frais réduits de formation sociale (623 €, boursiers 430 €), CVEC non chiffrée en plus|0
+24983|autre|frais réduits de formation sociale (623 €, boursiers 430 €), CVEC non chiffrée en plus|0
+24986|autre|frais réduits de formation sociale (598 €, boursiers 420 €), CVEC non chiffrée en plus|0
+25002|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+25004|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+25020|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+25022|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+25086|autre|frais réduits de formation sociale (670 €), CVEC non chiffrée en plus; en apprentissage, formation prise en charge par le dispositif d'apprentissage|0
+25298|autre|frais réduits de formation sociale (836 € dont 175 € d'inscription, boursiers 661 €), CVEC non chiffrée en plus|0
+25299|autre|frais réduits de formation sociale (836 € dont 175 € d'inscription, boursiers 661 €), CVEC non chiffrée en plus|0
+25300|autre|frais réduits de formation sociale (836 € dont 175 € d'inscription, boursiers 661 €), CVEC non chiffrée en plus|0
+25301|autre|frais réduits de formation sociale (836 € dont 175 € d'inscription, boursiers 661 €), CVEC non chiffrée en plus|0
+26022|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+26091|autre|230 €/an sans détail, très inférieur à la formation continue (15030 €); aucune prise en charge mentionnée|0
+32546|inscription seule|seule la CVEC (105 €) est indiquée, aucun frais de scolarité; la formation continue affiche 337 € (montant des frais de l'IRTS de La Réunion) : montant probablement incomplet|1
+34528|autre|frais réduits de formation sanitaire (droits + CVEC + 300 € de scolarité)|0
+35720|autre|frais réduits de formation sociale (100 €/an, boursiers 0 €), CVEC non chiffrée en plus|0
+35721|autre|frais réduits de formation sociale (100 €/an, boursiers 0 €), CVEC non chiffrée en plus|0
+36282|inscription seule|droits d'inscription + CVEC seulement : coût de la formation pris en charge par la Région, les OPCO ou le contrat d'apprentissage (selon la fiche)|0
+23064|inscription seule|seuls les droits d'inscription universitaires (178 €) sont dus en formation initiale selon la fiche; CVEC non chiffrée en plus|0
+3437|autre|420 €/an (contenu non détaillé), mise à niveau en lycée professionnel consulaire|0
+23066|inscription seule|seuls les droits d'inscription universitaires (178 €) sont dus en formation initiale selon la fiche; CVEC non chiffrée en plus|0
+23069|inscription seule|droits d'inscription seulement : formation initiale subventionnée par la Région Sud (selon la fiche); CVEC non chiffrée en plus|0
+23101|inscription seule|droits d'inscription + CVEC seulement en formation initiale (boursiers 0 €)|0
+23116|inscription seule|178 €/an seulement en formation initiale (boursiers 0 €); CVEC non chiffrée en plus|0
+23160|autre|frais réduits de formation sanitaire (droits + CVEC + 150 € non détaillés)|0
+23181|inscription seule|droits d'inscription seulement : frais de scolarité pris en charge par la Région pour les étudiants en poursuite d'études (selon la fiche); CVEC en plus|0
+23189|inscription seule|droits d'inscription + CVEC seulement en formation initiale; formation pris en charge par le Conseil régional Grand Est pour les étudiants en poursuite d'études (selon la fiche)|0
+23286|autre|frais pédagogiques mentionnés mais non chiffrés (renvoi au site de l'établissement) : montant incomplet|1
+23290|inscription seule|frais d'inscription + CVEC seulement; dispense des frais de scolarité en apprentissage|0
+23442|autre|frais réduits de formation sociale (310 €/an, contenu non détaillé), CVEC non chiffrée en plus|0
+23443|autre|frais réduits de formation sociale (310 €/an, contenu non détaillé), CVEC non chiffrée en plus|0
+23444|autre|frais réduits de formation sociale (310 €/an, contenu non détaillé), CVEC non chiffrée en plus|0
+23609|autre|frais réduits (160 € de scolarité + CVEC), remboursés aux bénéficiaires de l'aide régionale|0
+23611|autre|frais réduits (160 € de scolarité + CVEC), remboursés aux bénéficiaires de l'aide régionale|0
+23686|autre|178 €/an (contenu non détaillé); statut étudiant financé par la Région selon la fiche; CVEC non chiffrée en plus|0
+23735|autre|frais réduits de formation sociale (425 €, boursiers 250 €), CVEC non chiffrée en plus|0
+24812|autre|frais réduits (175 € de scolarité + CVEC), remboursables aux boursiers du Conseil régional|0
+24813|inscription seule|frais d'inscription + CVEC seulement, remboursables aux boursiers du Conseil régional|0
+24814|autre|frais réduits (frais de scolarité + CVEC = 270 €), remboursables aux boursiers|0
+24815|autre|frais réduits de formation sociale (420 €/an, contenu non détaillé), CVEC non chiffrée en plus|0
+24817|autre|frais réduits (178 € de frais de scolarité + CVEC), boursiers exonérés|0
+24818|autre|frais réduits (178 € de frais de scolarité + CVEC), boursiers exonérés|0
+24819|autre|frais réduits (178 € de frais de scolarité + CVEC), boursiers exonérés|0
+24865|autre|frais réduits de formation sociale (425 €, boursiers 250 €), CVEC non chiffrée en plus|0
+24866|autre|frais réduits de formation sociale (425 €, boursiers 250 €), CVEC non chiffrée en plus|0
+24944|autre|178 €/an (contenu non détaillé); statut étudiant financé par la Région selon la fiche; CVEC non chiffrée en plus|0
+24945|autre|frais réduits (160 € de scolarité + CVEC), remboursés aux bénéficiaires de l'aide régionale|0
+24952|autre|178 €/an (contenu non détaillé), remboursables aux boursiers; CVEC non chiffrée en plus|0
+24953|autre|178 €/an (contenu non détaillé), remboursables aux boursiers; CVEC non chiffrée en plus|0
+25272|inscription seule|droits d'inscription + CVEC + 90 € de tenues (révisable)|0
+25308|autre|frais réduits (178 € de droits + 295 € de scolarité), CVEC non chiffrée en plus|0
+25309|autre|frais réduits (178 € de droits + 295 € de scolarité), CVEC non chiffrée en plus|0
+28395|autre|frais réduits de formation sociale (425 €, boursiers 250 €), CVEC non chiffrée en plus|0
+34167|autre|178 €/an (contenu non détaillé); CVEC non chiffrée en plus|0
+34634|inscription seule|178 €/an seulement (« aucun frais de formation supplémentaire n'est à prévoir » selon la fiche); CVEC non chiffrée en plus|0
+36501|autre|frais réduits : formation initiale financée par la Région Île-de-France (droits + CVEC + 200 € de frais pédagogiques); dispense des frais en apprentissage|0
+23714|autre|frais réduits (inscription + 375 € de scolarité + CVEC)|0
+40658|autre|frais réduits (450 € de scolarité + droits + CVEC)|0
+41201|inscription seule|droits d'inscription + CVEC seulement en formation initiale; formation pris en charge par la Région Grand Est pour les étudiants en poursuite d'études (selon la fiche)|0
+45706|inscription seule|droits d'inscription + CVEC seulement; boursiers sans frais|0
+47343|autre|frais réduits de formation sociale (591 €, boursiers 395 €), CVEC non chiffrée en plus|0
+47823|autre|frais réduits (170 € de droits + 540 € de scolarité), CVEC non chiffrée en plus|0
+44326|inscription seule|la ligne « Par année » n'indique que 178 € de « frais de sélection » + CVEC : frais de scolarité annuels non chiffrés; boursiers exonérés|1
+44327|inscription seule|la ligne « Par année » n'indique que 178 € de « frais de sélection » + CVEC : frais de scolarité annuels non chiffrés; boursiers exonérés|1
+44335|inscription seule|droits d'inscription + CVEC seulement en formation initiale; formation pris en charge par la Région Grand Est pour les étudiants en poursuite d'études (selon la fiche)|0
+47573|autre|frais réduits (170 € de scolarité + CVEC), remboursables aux boursiers du Conseil régional|0
+47574|autre|frais réduits (170 € de scolarité + CVEC), remboursables aux boursiers du Conseil régional|0

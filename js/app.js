@@ -52,8 +52,8 @@
   }
   const chargerLycees = () => une("lieux", async () => { if (!LIEUX) chargerLieux(await charger("data-lieux", "data/lieux.json")); });
   const chargerFormations = () => une("formations", async () => {
-    const [d, ps, fu, st, fil, aj, sts, man] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null)]);
-    construireCatalogue(d, ps, fu, st, fil, aj, sts, man);
+    const [d, ps, fu, st, fil, aj, sts, man, , fpr] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null)]);
+    construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr);
     etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
     const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
     DATA = d; window.__DATA = DATA;
@@ -142,7 +142,7 @@
   }
   function progressionProfil() { const p = etat.profil; return [p.specialites.length, p.periodes.length, p.certifications.length || p.anglaisAuto, p.experiences.length].filter(Boolean).length; }
   const nbReponses = () => Object.values(etat.reponses).filter((r) => r !== undefined && !(Array.isArray(r) && !r.length)).length;
-  const STATUTS = { releve_manuel: "relevé manuel", officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", non_communique: "non communiqué", indicatif: "indicatif" };
+  const STATUTS = { releve_manuel: "relevé manuel", releve_parcoursup: "relevé sur Parcoursup", officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", non_communique: "non communiqué", indicatif: "indicatif" };
   const statutBadge = (st) => (st ? `<span class="badge-statut ${esc(st)}">${STATUTS[st] || esc(st)}</span>` : "");
   function srcLien(o) {
     if (!o || !o.source) return "";
@@ -184,10 +184,12 @@
   }
   const libTauxAcces = (r) => `Taux d'accès${r.session ? " " + r.session : ""}`;
   // Ligne courte des cartes : taux d'accès (session, source) et position de l'élève en une phrase
-  // (cartes et Ma liste), suivie du message « établissement privé aux frais inconnus » (budget serré) s'il s'applique
+  // (cartes et Ma liste), suivie du message sur les frais s'il s'applique (r.alerteFrais : établissement privé aux frais
+  // inconnus avec un budget serré, ou frais dans une fourchette qui dépasse le budget)
+  const alerteFraisHtml = (x, balise = "p", classe = "small") => (x.repere.alerteFrais && !x.exclu ? `<${balise} class="${classe} texte-bad">${esc(x.repere.alerteFrais)}</${balise}>` : "");
   function ligneRepere(x) {
     const r = x.repere;
-    const alerteFrais = r.priveFraisInconnus && !x.exclu ? `<p class="small texte-bad">${esc(E.MESSAGE_PRIVE_FRAIS_INCONNUS)}</p>` : "";
+    const alerteFrais = alerteFraisHtml(x);
     if (r.nouvelle || r.sansStats) return alerteFrais;
     const st = sourceTaux(x.f);
     return `<p class="small repere-ligne">${r.taux !== null ? `<strong>${libTauxAcces(r)} : ${tauxFr(r.taux)}</strong>${statutBadge(st.statut)}${srcLien(st)}` : "<strong>Taux d'accès non publié.</strong>"} ${esc(r.texte)}</p>${alerteFrais}`;
@@ -650,13 +652,16 @@
   const nbFr = (n) => Number(n).toLocaleString("fr-FR");
   // Texte des frais d'une fiche (cout.texte, sinon frais.texte), affiché tel quel quand le montant n'est pas chiffré
   const texteFrais = (f) => (f.cout && f.cout.texte) || (f.frais && f.frais.texte) || "";
+  // Apprentissage relevé sur la fiche Parcoursup (data/frais-prives.json) : texte relevé, tel quel. Il ne change jamais
+  // le montant affiché (pas de « gratuit » : l'apprentissage dépend d'un contrat avec un employeur).
+  const texteApprentissage = (t) => `Apprentissage : ${t.replace(/\.$/, "")}.`;
   function carteResultat(x, rang) {
     const f = x.f, retenu = etat.retenus.includes(f.id), cout = f.cout.valeur_annuelle_eur, a = f.admission || {};
     const C = [["Notes", x.crit.notes], ["Spécialités", x.crit.specialites], ["Appréciations", x.crit.appreciations], ["Langues", x.crit.langues], ["Tests", x.crit.tests], ["Extrascolaire", x.crit.extra]];
     const faits = [
       a.places ? ["groupe", `${nbFr(a.places)} places`] : ["groupe", "Places n. c."],
       a.candidats ? ["bulle", `${nbFr(a.candidats)} vœux`] : null,
-      ["euro", cout != null ? `≈ ${E.fmtEur(cout)}/an` : "Coût n. c."],
+      ["euro", cout != null ? `${f.cout.libelle === "droits_inscription" ? "Droits d'inscription " : ""}${f.cout.min != null && f.cout.min < cout ? montantFrais(f.cout) : "≈ " + E.fmtEur(cout)}/an` : "Coût n. c."],
       x.dist != null ? ["pin", `≈ ${nbFr(Math.round(x.dist))} km de chez toi`] : null,
       f.classement && f.classement.texte ? ["trophee", f.classement.texte] : null,
     ].filter(Boolean);
@@ -703,7 +708,7 @@
       ${notesSur5(best)}
       <div class="crit">${C.map(([l, c]) => `<div class="crit-item" title="${esc(c.texte)}"><span class="crit-l">${l}</span>${niveauBarre(c.niveau)}<span class="crit-v lvl-${c.niveau}">${E.NIVEAUX[c.niveau].label}</span></div>`).join("")}</div>
       ${(() => { const tete = `<div class="table-wrap"><table class="fam-table"><thead><tr><th scope="col">${prepa ? "Lycée" : "Établissement"}</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th></tr></thead><tbody>`;
-        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div>${x.repere.priveFraisInconnus && !x.exclu ? `<div class="tiny texte-bad">${esc(E.MESSAGE_PRIVE_FRAIS_INCONNUS)}</div>` : ""}<div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td></tr>`; };
+        const ligne = (x) => { const r = etat.retenus.includes(x.f.id); return `<tr><td><a href="#formation-${x.f.id}">${esc(court(x))}</a><div class="tiny muted">${esc(x.f.ville)}${prepa ? " · " + esc(x.f.nom.replace(/^CPGE /, "")) : ""}</div>${alerteFraisHtml(x, "div", "tiny")}<div class="row" style="gap:6px;margin-top:6px">${catPill(x.categorie)}<button class="btn xs ${r ? "primary" : "doux"}" data-action="retenir" data-id="${x.f.id}" aria-pressed="${r}" aria-label="${r ? "Retirer" : "Ajouter"} ${esc(court(x))} ${r ? "de" : "à"} mes vœux">${ico("etoile", r ? "plein" : "")}${r ? "Retenu" : "Ajouter"}</button></div></td><td class="num">${f5(sur5(x.pertinence))}/5</td><td class="num">${x.f.admission && x.f.admission.places ? x.f.admission.places : "n. c."}</td><td class="num"><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></td></tr>`; };
         const VIS = 5, debut = membres.slice(0, VIS), reste = membres.slice(VIS);
         return tete + debut.map(ligne).join("") + "</tbody></table></div>" + (reste.length ? `<details class="fam-plus"><summary>${ico("groupe")}Voir les ${reste.length} autres ${lieu}</summary>${tete}${reste.map(ligne).join("")}</tbody></table></div></details>` : ""); })()}
       <p class="tiny muted">Sur Parcoursup, chaque ${prepa ? "lycée" : "établissement"} est un vœu distinct : choisis-en un ou deux dans cette famille et complète avec d'autres niveaux d'exigence.</p>
@@ -786,7 +791,7 @@
     </div>`;
   }
   // Bloc « Et à l'étranger ? » : hors Parcoursup, chaque proposition est rattachée à un vœu français
-  const STATUT_COUT = { officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", indicatif: "indicatif", non_communique: "non communiqué" };
+  const STATUT_COUT = { releve_parcoursup: "relevé sur Parcoursup", officiel: "officiel", source_secondaire: "source secondaire", estimation: "estimation", indicatif: "indicatif", non_communique: "non communiqué" };
   function blocEtranger(X) {
     const tete = (sous) => `<div class="carte-tete"><span class="info-ico ton-ciel">${ico("globe")}</span><div><h3 id="etr-titre">Et à l'étranger ?</h3><p class="small muted">${sous}</p></div></div>`;
     if (X.mode === "non") return `<details class="card-flat no-print"><summary>${ico("globe")}Et à l'étranger ?</summary><p class="small muted" style="margin-top:8px">Tu as indiqué vouloir rester en France, on n'insiste pas. Si tu changes d'avis, modifie ta réponse dans <a href="#profil" data-action="profil-edition" data-i="${ETAPE_Q}">le questionnaire</a>.</p></details>`;
@@ -846,7 +851,7 @@
     const item = (x) => {
       const al = E.alerteFiliereSelective(x.f, A.stats);
       const avert = al ? `<span class="notice small sun" style="display:block;margin-top:6px">${esc(al.texte)}${srcBadge("P")} ${srcLien({ source: SOURCE_FR_ESR_PARCOURSUP, consulte_le: STCONS })}</span>` : "";
-      return `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span>${avert}</span><span class="no-print">${btnRetenir(x)}</span></li>`;
+      return `<li><span class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))}</span>${avert}${x.repere.alerteFrais ? `<span class="small texte-bad" style="display:block;margin-top:6px">${esc(x.repere.alerteFrais)}</span>` : ""}</span><span class="no-print">${btnRetenir(x)}</span></li>`;
     };
     return `<section class="card stack" aria-labelledby="nouv-titre"><div class="row" style="justify-content:space-between"><h3 id="nouv-titre">${plus ? "Nouvelles formations" : "Nouvelle formation"} à la rentrée 2026</h3><span class="pill ton-menthe">${N.length} formation${plus ? "s" : ""}</span></div>
       <p class="small">${plus ? "Ces formations ouvrent" : "Cette formation ouvre"} cette année : elle${plus ? "s" : ""} correspond${plus ? "ent" : ""} à ton profil, mais on n'a encore aucune statistique pour te situer parmi les admis.</p>
@@ -963,7 +968,8 @@
     const cout = f.cout && f.cout.valeur_annuelle_eur;
     const tuiles = [
       ["horloge", "Durée", `${String(f.duree_ans).replace(".", ",")} an${f.duree_ans > 1 ? "s" : ""}`, f.langue ? `en ${f.langue}` : "", "bleu"],
-      ["euro", "Coût annuel", cout != null ? E.fmtEur(cout) : "n. c.", cout === 0 ? "gratuit" : "", "ambre"],
+      // frais relevés sur Parcoursup : fourchette en entier ; « Droits d'inscription » pour les IFSI et le travail social
+      ["euro", f.cout && f.cout.libelle === "droits_inscription" ? "Droits d'inscription" : "Coût annuel", cout != null ? montantFrais(f.cout) : "n. c.", cout === 0 ? "gratuit" : f.cout && f.cout.statut === "releve_parcoursup" ? "relevé sur Parcoursup" : "", "ambre"],
       ["cible", "Sélectivité", (!f.selectivite.estimee && E.SEL_LABEL[f.selectivite.niveau]) || "n. c.", tx ? `${tx} d'accès` : f.selectivite.estimee ? "taux non publié" : "", "violet"],
       ["groupe", "Places", a.places ? nbFr(a.places) : "n. c.", a.candidats ? `${nbFr(a.candidats)} vœux` : "", "ciel"],
       ["envoi", "Candidature", plat, "", "menthe"],
@@ -975,7 +981,10 @@
       ["dossier", "Tests et épreuves", f.tests.length ? f.tests.map((t) => `<div class="test"><span class="fw">${esc(t.nom)}</span> <span class="pill ${t.obligatoire ? "ton-corail" : "neutral"}">${t.obligatoire ? "obligatoire" : "facultatif"}</span> ${esc(t.texte)}${statutBadge(t.statut)}${srcLien(t)}</div>`).join("") : "Aucun test spécifique relevé.", "ambre"],
       ["crayon", "Dossier à fournir", `<div class="chips-info">${f.pieces.map((p) => `<span>${esc(p)}</span>`).join("")}</div>`, "menthe"],
       ...(f.classement && f.classement.texte ? [["trophee", "Classement", val(f.classement, esc(f.classement.texte)), "corail"]] : []),
-      ...(cout == null && texteFrais(f) ? [["euro", "Frais de scolarité", val(f.cout, esc(texteFrais(f))), "ambre"]] : []),   // montant non chiffré : le texte de la fiche, sans réécriture
+      ...(cout == null && texteFrais(f) ? [["euro", "Frais de scolarité", val(f.cout, esc(texteFrais(f))) + alerteFraisHtml(x), "ambre"]] : []),   // montant non chiffré : le texte de la fiche, sans réécriture
+      // frais relevés sur la fiche Parcoursup : texte, badge, source et date ; apprentissage (jamais « gratuit » à cause de lui)
+      ...(cout != null && f.cout.statut === "releve_parcoursup" ? [["euro", f.cout.libelle === "droits_inscription" ? "Droits d'inscription et participation" : "Frais de scolarité", val(f.cout, esc(f.cout.texte))
+        + (f.cout.apprentissage ? `<p class="small">${esc(texteApprentissage(f.cout.apprentissage))}</p>` : "") + alerteFraisHtml(x), "ambre"]] : []),
     ];
     const typeCourt = f.type_label || "Formation";
     const nbP = (f.poursuites || []).length + (f.integrations || []).length;
@@ -1082,7 +1091,7 @@
           <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}${e.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : e.stats === "sans_stats" ? '<span class="pill neutral">Stats non publiées</span>' : ""}</div>
           <h3>${esc(e.nom)}</h3>
           <p class="f-lieu"><span>${ico("ecole")}${esc(e.etablissement)}</span></p>
-          <div class="cat-pied"><span>${ico("pin")}${esc(e.ville)}${e.pays !== "France" ? ", " + esc(e.pays) : ""}</span><span>${ico("groupe")}${e.places ? nbFr(e.places) + " places" : "places n. c."}</span><span>${ico("euro")}${e.cout != null ? E.fmtEur(e.cout) + "/an" : "coût n. c."}</span></div>
+          <div class="cat-pied"><span>${ico("pin")}${esc(e.ville)}${e.pays !== "France" ? ", " + esc(e.pays) : ""}</span><span>${ico("groupe")}${e.places ? nbFr(e.places) + " places" : "places n. c."}</span><span>${ico("euro")}${e.cout != null ? (e.coutMin != null && e.coutMin < e.cout ? `${E.fmtEur(e.coutMin)} à ${E.fmtEur(e.cout)}` : E.fmtEur(e.cout)) + "/an" : "coût n. c."}</span></div>
         </a>`).join("") || `<div class="card vide">${ico("loupe")}<p>Aucune formation ne correspond à ces critères.</p></div>`}</div>
       ${liste.length > app.limiteCat ? `<div class="plus-bloc"><button class="btn lg" data-action="cat-plus">Afficher la suite <span class="compteur">${nbFr(liste.length - app.limiteCat)}</span></button></div>` : ""}
     </div>`;
@@ -1208,6 +1217,32 @@
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
     f.__tc = r.tc || null;
     f.statut_etab = TC_ETAB[r.tc] || null;
+    // frais relevés sur la fiche Parcoursup (établissement privé) : ils priment sur le coût d'une fiche maison
+    const c = r.tc && r.tc !== "Publics" ? coutReleve(r.gta) : null;
+    if (c) {
+      f.__coutMaison = f.cout || null;   // gardé pour comparaison (contrôle du relevé), jamais affiché
+      f.cout = c;
+      if (Array.isArray(f.incertitudes)) f.incertitudes = f.incertitudes.filter((t) => t !== "Frais non relevés.");
+    }
+  }
+  // Frais des formations privées relevés sur leur fiche Parcoursup (data/frais-prives.json, construit par
+  // scripts/construire-frais-prives.py). Seules les formations au montant annuel en euros sont dans le fichier : les
+  // autres gardent des frais inconnus (règle « prive_frais_inconnus » du moteur). Une fourchette (min < max) est
+  // affichée en entier ; valeur_annuelle_eur, le seul nombre lu par le moteur et les cartes, vaut le max.
+  let FRAIS_PRIVES = {}, FRAIS_PRIVES_META = null;
+  const SELON_FOURCHETTE = { revenus: " selon les revenus de ta famille", annee: " selon l'année d'études" };
+  const montantFrais = (c) => (typeof c.min === "number" && c.min < c.valeur_annuelle_eur ? `${E.fmtEur(c.min)} à ${E.fmtEur(c.valeur_annuelle_eur)}` : E.fmtEur(c.valeur_annuelle_eur));
+  function coutReleve(g) {
+    const x = FRAIS_PRIVES[g];
+    if (!x || typeof x.min !== "number" || typeof x.max !== "number" || x.min > x.max) return null;
+    const c = { valeur_annuelle_eur: x.max, min: x.min, max: x.max, nature_fourchette: x.nature_fourchette || null, par: x.par || "par an",
+      libelle: x.libelle === "droits_inscription" ? "droits_inscription" : "cout", apprentissage: x.apprentissage || null,
+      boursiers_eur: x.boursiers_eur || null, statut: "releve_parcoursup", source: x.source, consulte_le: x.consulte_le };
+    const m = montantFrais(c), detail = (c.par.match(/\((.*)\)\s*$/) || [])[1];
+    c.texte = c.libelle === "droits_inscription"
+      ? `Droits d'inscription et participation annuelle : ${m}${detail ? ` (${detail})` : ""}.`
+      : `${c.min < c.max ? "De " : ""}${m} par an${c.min < c.max ? SELON_FOURCHETTE[c.nature_fourchette] || "" : ""}${detail ? ` (${detail})` : ""}.`;
+    return c;
   }
   // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
   // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs
@@ -1238,8 +1273,9 @@
     const depsProbables = [...new Set(((x && x.c) || []).map((g) => PSBY[g]).filter((r) => r && r.departement && sansAccents(r.commune) === nomVille).map((r) => r.departement))];
     return communeGps(ville, [f.__dep, entreParentheses, depsProbables.length === 1 ? depsProbables[0] : null]);
   }
-  function construireCatalogue(d, psc, fu, st, fil, aj, sts, man) {
+  function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp) {
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
+    FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null;
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
     // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
@@ -1304,7 +1340,7 @@
       if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
       if (ps && fu.ps_doublons[ps.gta]) avTxt.push("Doublon Parcoursup possible.");
       CAT.push({ id: f.id, nom: f.nom, etablissement: f.etablissement, ville: f.ville, pays: f.pays, type: f.type, type_label: f.type_label,
-        places: (f.admission && f.admission.places) || (ps && statDe(ps.gta, "capa_fin")), cout: f.cout ? f.cout.valeur_annuelle_eur : null, src: ps ? "fusion" : "ancienne", ps, f,
+        places: (f.admission && f.admission.places) || (ps && statDe(ps.gta, "capa_fin")), cout: f.cout ? f.cout.valeur_annuelle_eur : null, coutMin: f.cout ? f.cout.min : null, src: ps ? "fusion" : "ancienne", ps, f,
         region: ps ? ps.region : null, app: ps ? !!(ps.app && ps.app.length) : /apprentissage/i.test(f.nom), av: avTxt.length > 0, avTxt,
         cle: sansAccents([f.nom, f.etablissement, f.ville, f.pays, f.type_label, ps ? [ps.nm.join(" "), ps.fl.join(" "), ps.etab_nom, ps.departement, ps.region].join(" ") : ""].join(" ")) });
     }
@@ -1316,7 +1352,7 @@
       if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); lierParcoursup(gf, r); }
       const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
-        type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin") || (gf && gf.admission.places), cout: gf ? gf.cout.valeur_annuelle_eur : null, src: "parcoursup", ps: r, region: r.region, f: gf, stats: gf ? gf.stats : null,
+        type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin") || (gf && gf.admission.places), cout: gf ? gf.cout.valeur_annuelle_eur : null, coutMin: gf ? gf.cout.min : null, src: "parcoursup", ps: r, region: r.region, f: gf, stats: gf ? gf.stats : null,
         app: !!(r.app && r.app.length), av: prob.length + dup.length > 0, avTxt: [],
         cle: sansAccents([r.nm.join(" "), r.fl.join(" "), r.etab_nom, r.commune, r.departement, r.region, r.tf.join(" ")].join(" ")) });
     }

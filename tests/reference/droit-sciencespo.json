@@ -639,6 +639,21 @@
    "exclu": null
   },
   {
+   "id": "institut-catholique-de-toulouse-toulouse-licence-droit-parcours-culture-juridique",
+   "interet": 80.07072323318462,
+   "faisabilite": 99.9,
+   "pertinence": 88.00243393991079,
+   "repere": [
+    71,
+    0.66,
+    "au_dessus",
+    "frais_fourchette"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-27741",
    "interet": 79.98998165210341,
    "faisabilite": 100,
@@ -712,21 +727,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "le-mans-u-campus-de-laval-laval-licence-droit-parcours-sciences-politiques",
-   "interet": 85.14001743034449,
-   "faisabilite": 91.9,
-   "pertinence": 87.8440104582067,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -795,6 +795,15 @@
     ]
    },
    {
+    "id": "psup-32304",
+    "categorie": "realiste",
+    "pertinence": 77.28577211964797,
+    "repere": [
+     38,
+     "au_dessus"
+    ]
+   },
+   {
     "id": "psup-43210",
     "categorie": "realiste",
     "pertinence": 75.14817769982778,
@@ -804,21 +813,12 @@
     ]
    },
    {
-    "id": "psup-11488",
+    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
     "categorie": "realiste",
-    "pertinence": 72.51098679555363,
+    "pertinence": 85.78687587749553,
     "repere": [
-     43,
+     100,
      "au_dessus"
-    ]
-   },
-   {
-    "id": "psup-33111",
-    "categorie": "realiste",
-    "pertinence": 83.05732310949091,
-    "repere": [
-     65,
-     "moyenne"
     ]
    }
   ],
@@ -873,19 +873,19 @@
    },
    {
     "x": {
-     "id": "u-paris-nanterre-nanterre-double-licence-droit-philosophie",
-     "categorie": "ambitieux",
-     "pertinence": 82.51050961770008,
+     "id": "institut-catholique-de-paris-paris-double-licence-droit-philosophie",
+     "categorie": "realiste",
+     "pertinence": 82.54017644507533,
      "repere": [
-      29,
-      "en_dessous"
+      73,
+      "moyenne"
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "02f568436c120c0510635a44f9fea0d352db9e9b746abd344bfa0e77befe6b03",
-  "textes": "d98801dc76d1d9788adbed1daffcbf26c5b714da0ff8c4d3ebf7e3e2bb7c1906"
+  "calculs": "bae0abe52cfc93e2d798ccc08891e59a2438da52620819e87b4f8d79dd099e3f",
+  "textes": "fab90aed788a071d42cf7380284d7e8f2757bdd5ac2918275e7c948b555404ce"
  }
 }

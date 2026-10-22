@@ -34,6 +34,7 @@ sur `window` (`CapStore`, `CapBulletin`, `CapEngine`), utilisé par `app.js`.
 | `stats.json` | vœux, admis, mentions, types de bac (session 2025) | open data MESR (fr-esr-parcoursup) |
 | `statuts-stats.json` | statut des formations du périmètre sans statistiques 2025 : `nouvelle_2026` ou `sans_stats`, avec sa certitude (et, si retrouvées, les statistiques d'une session antérieure) | calculé par `scripts/construire-statuts-stats.py` (code gta, sessions antérieures fr-esr-parcoursup) |
 | `stats-manuelles.json` | statistiques d'admission relevées à la main pour des formations sans statistiques 2025 (taux, places, vœux, admis, session, source, date de consultation) | relevés manuels, source citée dans chaque entrée |
+| `frais-prives.json` | frais annuels des formations Parcoursup d'établissements privés (min, max, nature de la fourchette, libellé « coût » ou « droits d'inscription », apprentissage, source, date) | relevé manuel des fiches Parcoursup (21-22/10/2026, `docs/releves/`), construit par `scripts/construire-frais-prives.py` |
 | `fusion.json` | correspondances entre `formations.json` et Parcoursup, périmètre affiché | calculé |
 | `filieres.json` | une entrée par filière Parcoursup (code `nmc`) du périmètre : profil, domaines, spécialités, métiers… utilisés pour noter toutes les formations Parcoursup | éditorial, construit par `scripts/construire-filieres.py` (familles de `generees.json` + déductions à partir des intitulés officiels, corrections dans `scripts/filieres-corrections.json`) |
 | `generees.json` | familles par filière tirées des fiches Mon Plan Sup (plus chargé par le site : source des familles reprises dans `filieres.json`) | calculé |
@@ -50,7 +51,7 @@ Pour que la page s'ouvre vite sur téléphone, `js/app.js` ne charge pas tout au
 - quand l'élève cherche son lycée : `lieux.json` ;
 - pour les pages qui affichent des formations (Ma liste, Mon plan, Catalogue, fiches, résumé du profil,
   Mes données) : `formations.json`, `parcoursup.json`, `stats.json`, `statuts-stats.json`, `stats-manuelles.json`,
-  `fusion.json`, `filieres.json`, `ajustements.json` et `lieux.json`. L'accueil lance aussi ce chargement en arrière-plan pour afficher
+  `frais-prives.json`, `fusion.json`, `filieres.json`, `ajustements.json` et `lieux.json`. L'accueil lance aussi ce chargement en arrière-plan pour afficher
   ses chiffres.
 
 Si l'attente dépasse une seconde, un message « Chargement des formations… » s'affiche.
@@ -74,7 +75,7 @@ Pour publier le site en un seul fichier (artefact Claude, ou fichier à ouvrir s
 python3 scripts/build-standalone.py
 ```
 
-Le fichier `dist/index.html` (≈ 14,4 Mo) intègre le CSS, les scripts, les données et pdf.js.
+Le fichier `dist/index.html` (≈ 14,9 Mo) intègre le CSS, les scripts, les données et pdf.js.
 Le dossier `dist/` n'est pas versionné.
 
 ## Table des filières
@@ -184,7 +185,21 @@ Détails : `docs/modele-chances.md`, section 9. Pour un élève au budget « gra
 `BUDGET_SERRE_MAX` = 5 000), une formation française d'un établissement qui n'est pas « Publics » selon Parcoursup
 (champ `tc`) et dont les frais ne sont pas chiffrés reste proposée, avec un malus d'intérêt
 (`MALUS_PRIVE_FRAIS_INCONNUS` = 18), n'est jamais « sécurité » (règle `prive_frais_inconnus`) et affiche
-`MESSAGE_PRIVE_FRAIS_INCONNUS`. Statut inconnu (fiche non liée à Parcoursup) ou frais connus : rien ne change.
+`MESSAGE_PRIVE_FRAIS_INCONNUS`. Statut inconnu (fiche non liée à Parcoursup) ou frais connus : cette règle ne joue pas.
+
+Les frais de 1 179 formations privées ont été relevés sur leur fiche Parcoursup (21-22/10/2026,
+`docs/releves/frais-formations-privees-2026-10-22.csv`). Après une correction du relevé :
+
+```
+python3 scripts/construire-frais-prives.py
+```
+
+Le script ne garde que les montants en euros par an (ni francs CFP, ni dirhams, ni montant par mois ou pour tout le
+cursus, jamais convertis) et régénère `data/frais-prives.json`. Une fourchette (selon les revenus ou l'année
+d'études) est affichée en entier ; le seul nombre lu par le moteur est le maximum. Budget sous le minimum : règle
+normale sur le minimum ; budget dans la fourchette : pas de malus, jamais « sécurité », message « vérifie ce que tu
+paierais » (`REGLE_BUDGET_FOURCHETTE`, décision du fondateur du 22/10/2026). Écoles d'infirmiers et du travail
+social : « Droits d'inscription et participation annuelle ». Détails : `docs/modele-chances.md`, sections 9.2 et 9.3.
 
 ## Protection de la liste de vœux
 
