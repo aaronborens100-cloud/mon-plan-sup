@@ -1127,6 +1127,18 @@
   // vœux sont servis dans l'ordre de la liste. Un vœu sans code nmc n'a pas d'équivalent.
   const MAX_EQUIVALENTS = 3;
   const peutEtreVoeu = (x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f);
+  // Décision du fondateur du 22/10/2026 : un équivalent a aussi
+  //   - le même intitulé Parcoursup que le vœu quand le code nmc en regroupe plusieurs (f.__variante, posé par app.js
+  //     depuis data/filieres.json, « variantes » : "" = intitulé de base, sinon l'intitulé de la variante ; absent quand
+  //     le code n'a qu'un intitulé) ;
+  //   - le même type de formation : la voie (voie(f)) et la forme, lue dans l'intitulé : double licence ou double diplôme,
+  //     licence accès santé (LAS), sinon formation simple. Une double licence n'a donc jamais pour équivalent une licence
+  //     simple ou une LAS, et inversement.
+  const DOUBLE = /double\s+licence|double[\s-]+dipl[oô]me|bi-?licence|\bbi-?dipl[oô]me/i;
+  const LAS = /acc[eè]s\s+sant[ée]|\bL\.?A\.?S\b/i;
+  const formeDe = (f) => (f.type === "double_licence" || DOUBLE.test(f.nom) ? "double" : LAS.test(f.nom) ? "las" : "simple");
+  const typeFormation = (f) => `${voie(f)}|${formeDe(f)}`;
+  const cleEquivalent = (f) => { const k = nmcDe(f); return k ? `${k}|${f.__variante == null ? "" : f.__variante}|${typeFormation(f)}` : null; };
   // resultats : recommander().resultats ; W : l'objet renvoyé par wishlist() (règles de diversité comprises) ou un tableau
   // de vœux (sans règle de diversité) ; choix : { id du vœu : id de l'équivalent choisi à sa place } (Ma liste).
   // Renvoie une Map id du vœu → équivalents. La Map porte aussi .choix (Map id du vœu → équivalent choisi encore valable :
@@ -1139,14 +1151,14 @@
     const pris = new Set(voeux.map((x) => x.f.id));
     const parNmc = new Map();
     for (const x of resultats) {
-      const k = nmcDe(x.f);
+      const k = cleEquivalent(x.f);
       if (!k || !peutEtreVoeu(x)) continue;
       if (!parNmc.has(k)) parNmc.set(k, []);
       parNmc.get(k).push(x);
     }
     // liste courante : chaque vœu, ou l'équivalent choisi à sa place
     const courante = voeux.slice(), acceptes = new Map();
-    const candidats = (v, i) => { const k = nmcDe(v.f); return k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && x.f.id !== v.f.id && regle(courante, i, x)) : []; };
+    const candidats = (v, i) => { const k = cleEquivalent(v.f); return k ? (parNmc.get(k) || []).filter((x) => x.categorie === v.categorie && x.f.id !== v.f.id && regle(courante, i, x)) : []; };
     voeux.forEach((v, i) => {
       const id = choix && choix[v.f.id];
       if (!id) return;
@@ -1344,5 +1356,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

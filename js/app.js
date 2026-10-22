@@ -1270,6 +1270,11 @@
     f.__gta = r.gta; f.__dep = r.departement || null; f.__capa = statDe(r.gta, "capa_fin"); f.__selectForm = statDe(r.gta, "select_form");
     f.__tc = r.tc || null;
     f.statut_etab = TC_ETAB[r.tc] || null;
+    // code nmc partagé par plusieurs intitulés officiels (data/filieres.json, « variantes » : L1-SS, L1-AP, FP-CC-App…) :
+    // intitulé Parcoursup de la formation (champ fl), ou "" pour l'intitulé de base du code. Formations équivalentes
+    // (moteur, décision du fondateur du 22/10/2026) : même code nmc ET même intitulé.
+    const fam = FIL && FIL.filieres && r.nmc ? FIL.filieres[r.nmc] : null;
+    if (fam && fam.variantes) f.__variante = (r.fl || []).find((x) => fam.variantes[x]) || "";
     // frais relevés sur la fiche Parcoursup (établissement privé) : ils priment sur le coût d'une fiche maison
     const c = r.tc && r.tc !== "Publics" ? coutReleve(r.gta) : null;
     if (c) {

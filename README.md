@@ -216,8 +216,9 @@ affiche le message, suivi de `PROTECTION_REPERE` (« Aucun site ne peut calculer
 
 ## Formations équivalentes
 
-Sous chaque vœu de la liste de 10, Ma liste propose jusqu'à 3 formations de la même filière Parcoursup (code `nmc`)
-et de la même catégorie : `CapEngine.equivalents(resultats, voeu, n = 3)` (un vœu) et
+Sous chaque vœu de la liste de 10, Ma liste propose jusqu'à 3 formations de la même filière Parcoursup (code `nmc`,
+même intitulé quand le code en regroupe plusieurs), du même type (double licence, LAS, licence simple…) et de la
+même catégorie : `CapEngine.equivalents(resultats, voeu, n = 3)` (un vœu) et
 `CapEngine.equivalentsListe(resultats, W)` (toute la liste, sans doublon). Mêmes garde-fous, mêmes interdictions et
 mêmes règles de diversité que la liste (`W.peutRemplacer`), classées par la règle de départage (`departage`). L'élève peut choisir un équivalent à la place d'un vœu : le choix est gardé dans
 `localStorage` (`etat.remplacements`, id du vœu proposé → id de l'équivalent) et peut être annulé. La liste de 10

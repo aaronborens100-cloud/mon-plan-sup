@@ -703,8 +703,19 @@ Sous chaque vœu de la liste de 10 (`wishlist`), Ma liste affiche jusqu'à `MAX_
 
 - **Même filière** : même code de filière Parcoursup (`nmc`, `nmcDe`). Un vœu sans code `nmc` (fiche éditoriale non
   liée à Parcoursup, par exemple le programme post-bac SKEMA) n'a pas d'équivalent : on ne peut pas vérifier que c'est
-  la même formation. Les codes larges (`FECM-B3` : tous les bachelors d'écoles de commerce) donnent des équivalents
-  plus éloignés que les codes précis (`ECG-Mapp-ESH`).
+  la même formation.
+- **Même intitulé Parcoursup** (décision du fondateur du 22/10/2026) : quand un code `nmc` regroupe plusieurs intitulés
+  officiels (« variantes » de `data/filieres.json` : `L1-SS` Sciences pour la santé / Sciences sociales, `L1-AP` Arts
+  plastiques / Administration publique, `FP-CC-App`, `FP-CPMC-App`), l'équivalent a le même intitulé que le vœu
+  (`f.__variante`, posé par `lierParcoursup` d'après le champ `fl` de Parcoursup ; "" pour l'intitulé de base du code).
+  Exemple (profil « vide ») : la licence Sciences sociales – Sciences politiques et écologie humaine n'a plus pour
+  équivalent des licences « Sciences pour la santé ».
+- **Même type de formation** (même décision) : même voie (`voie(f)` : licence de droit, d'éco-gestion…, prépa, école…)
+  et même forme, lue dans l'intitulé (`formeDe`) : double licence ou double diplôme (type `double_licence`, ou intitulé
+  « double licence », « double diplôme », « bi-licence »), licence accès santé (« accès santé », « LAS »), sinon
+  formation simple. Une double licence n'a jamais pour équivalent une licence simple ou une LAS, et inversement. Les
+  codes larges (`FECM-B3` : tous les bachelors d'écoles de commerce) restent larges : le type est le même, le contenu
+  peut différer.
 - **Même catégorie** que le vœu (sécurité, réaliste, ambitieux), calculée par `evaluer()` comme pour la liste.
 - **Mêmes garde-fous et interdictions que la liste** : jamais une formation exclue (`exclu` : frais au-delà d'un budget
   ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km pour « domicile » ; étranger pour
@@ -767,22 +778,24 @@ de la règle de distance ou de territoire quand elle a retiré la catégorie « 
 
 ### Chiffres sur les 14 profils types (22/10/2026)
 
+Avec toutes les règles (garde-fous, diversité, même intitulé, même type de formation) :
+
 | Profil | Moyenne d'équivalents par vœu | Vœux sans équivalent |
 |---|---|---|
 | vide | 3,0 | 0 |
-| eco-excellent-decide | 3,0 | 0 |
-| eco-moyen | 2,2 | 2 |
-| sciences-ingenieur | 2,7 | 1 (vœu sans code `nmc`) |
-| droit-sciencespo | 2,1 | 2 |
+| eco-excellent-decide | 2,5 | 1 |
+| eco-moyen | 1,9 | 2 |
+| sciences-ingenieur | 2,5 | 1 (vœu sans code `nmc`) |
+| droit-sciencespo | 2,0 | 2 |
 | sante-svt | 2,8 | 0 |
-| indecis | 1,8 | 4 |
+| indecis | 1,7 | 4 |
 | fragile | 0,4 | 8 (dont 1 vœu sans code `nmc`) |
-| international-langues | 2,1 | 2 |
-| premiere-arts | 2,5 | 1 |
-| hausse-dernier-trimestre | 2,4 | 1 |
-| baisse-dernier-trimestre | 1,7 | 3 |
-| ecg-expertes-fort | 3,0 | 0 |
-| ecg-expertes-faible | 3,0 | 0 |
+| international-langues | 2,0 | 2 |
+| premiere-arts | 2,2 | 2 |
+| hausse-dernier-trimestre | 2,1 | 2 |
+| baisse-dernier-trimestre | 1,6 | 4 |
+| ecg-expertes-fort | 2,9 | 0 |
+| ecg-expertes-faible | 2,8 | 0 |
 
 ### Limites
 
@@ -794,3 +807,5 @@ de la règle de distance ou de territoire quand elle a retiré la catégorie « 
   déjà faits) : deux choix faits l'un après l'autre restent compatibles, car le second est calculé après le premier.
 - Les équivalents d'un parcours d'une même licence (LEA Anglais-Allemand → Anglais-Chinois, même université) sont
   proposés : sur Parcoursup, ce sont des vœux distincts.
+- La forme (double licence, LAS) est lue dans l'intitulé : une double licence dont l'intitulé ne le dit pas serait
+  traitée comme une licence simple.

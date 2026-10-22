@@ -77,8 +77,11 @@ for (const p of PROFILS) {
         }
         // « domicile » avec un lycée : jamais au-delà de 45 km
         if (mob === 0 && avecLycee && x.dist !== null) assert.ok(E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${c} : à ${Math.round(x.dist)} km pour « domicile »`);
-        // même filière, même catégorie
+        // même filière, même intitulé Parcoursup (codes à variantes), même type de formation, même catégorie
         assert.equal(E.nmcDe(x.f), E.nmcDe(v.f), `${c} : autre filière`);
+        assert.equal(x.f.__variante || "", v.f.__variante || "", `${c} : autre intitulé Parcoursup du même code`);
+        assert.equal(E.voie(x.f), E.voie(v.f), `${c} : autre type de formation`);
+        assert.equal(E.formeDe(x.f), E.formeDe(v.f), `${c} : ${E.formeDe(v.f)} → ${E.formeDe(x.f)}`);
         assert.equal(x.categorie, v.categorie, `${c} : autre catégorie`);
         // jamais un doublon de la liste ni d'un autre équivalent
         assert.ok(!vus.has(x.f.id), `${c} : doublon`);
@@ -114,7 +117,7 @@ for (const p of PROFILS) {
     W.liste.forEach((v, i) => {
       const eqs = M.get(v.f.id);
       if (!E.nmcDe(v.f)) return;
-      const libres = A.resultats.filter((x) => E.nmcDe(x.f) === E.nmcDe(v.f) && x.categorie === v.categorie && !pris.has(x.f.id)
+      const libres = A.resultats.filter((x) => E.cleEquivalent(x.f) === E.cleEquivalent(v.f) && x.categorie === v.categorie && !pris.has(x.f.id)
         && !x.exclu && !x.bloque && E.voeuParcoursup(x.f) && !E.horsListe(x.f) && W.peutRemplacer(W.liste, i, x));
       if (eqs.length < 3) for (const x of libres) assert.ok(eqs.includes(x), `${p.id}, vœu ${v.f.id} : ${x.f.id} oublié`);
       else {
@@ -289,6 +292,37 @@ test("diversité : jamais un équivalent qui enfreindrait les règles de la list
       assert.ok(l.filter((y) => E.voie(y.f) === "lic-droit").length <= D.plafonds[0] + D.bonusType, `${v.f.id} → ${x.f.id} : plafond de la voie dépassé`);
     }
   });
+});
+
+test("même intitulé Parcoursup et même type de formation (décision du fondateur du 22/10/2026)", () => {
+  const { E, DATA } = site;
+  // profil vide : la licence Sciences sociales (code L1-SS, partagé avec « Sciences pour la santé ») n'a plus
+  // d'équivalent « Sciences pour la santé »
+  const { A, W } = analyser(PROFILS.find((x) => x.id === "vide"));
+  const M = E.equivalentsListe(A.resultats, W);
+  const v = W.liste.find((x) => /Sciences sociales - Parcours Sciences politiques et écologie humaine/.test(x.f.nom));
+  assert.ok(v, "vœu « Sciences sociales – Sciences politiques et écologie humaine » attendu dans la liste du profil vide");
+  assert.equal(E.nmcDe(v.f), "L1-SS");
+  assert.ok(M.get(v.f.id).length > 0);
+  for (const x of M.get(v.f.id)) assert.ok(!/Sciences pour la santé/i.test(x.f.nom), `${x.f.id} : ${x.f.nom}`);
+  // sans le filtre, le même code regroupait bien les deux intitulés dans le catalogue
+  assert.ok(DATA.formations.some((f) => E.nmcDe(f) === "L1-SS" && /Sciences pour la santé/i.test(f.nom)));
+  // sur les 14 profils : une double licence n'a jamais pour équivalent une licence simple ou une LAS, et inversement
+  let doubles = 0;
+  for (const p of PROFILS) {
+    const B = analyser(p), Mp = E.equivalentsListe(B.A.resultats, B.W);
+    for (const w of B.W.liste) for (const x of Mp.get(w.f.id)) {
+      if (E.formeDe(w.f) === "double") { doubles++; assert.equal(E.formeDe(x.f), "double", `${p.id} : ${w.f.nom} → ${x.f.nom}`); }
+      if (E.formeDe(x.f) === "double") assert.equal(E.formeDe(w.f), "double", `${p.id} : ${w.f.nom} → ${x.f.nom}`);
+      if (E.formeDe(w.f) !== E.formeDe(x.f)) assert.fail(`${p.id} : ${w.f.nom} → ${x.f.nom}`);
+    }
+  }
+  assert.ok(doubles > 0, "aucune double licence avec équivalent : le test ne vérifie rien");
+  // formes reconnues dans l'intitulé
+  assert.equal(E.formeDe({ type: "licence", nom: "Double licence - Economie / Philosophie -" }), "double");
+  assert.equal(E.formeDe({ type: "double_licence", nom: "Formation valant grade de licence" }), "double");
+  assert.equal(E.formeDe({ type: "licence", nom: "Licence - Lettres -  Accès Santé (LAS)" }), "las");
+  assert.equal(E.formeDe({ type: "licence", nom: "Licence - Economie" }), "simple");
 });
 
 test("texte d'aide des équivalents : académie et distance seulement si le lycée est connu", async () => {
