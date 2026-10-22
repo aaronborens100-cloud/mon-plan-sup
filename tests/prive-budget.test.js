@@ -9,6 +9,11 @@
  * Rien ne change : formation publique, frais connus, statut inconnu (fiche non liée à Parcoursup), budget
  * « moyen » ou « eleve », pas de réponse au budget.
  *
+ * Depuis le relevé des frais des formations privées (data/frais-prives.json, 22/10/2026), la plupart des écoles de
+ * commerce de ces profils ont des frais connus : les tests qui partent de cas réels de 10 vœux (fragile,
+ * baisse-dernier-trimestre) chargent le site SANS ce relevé (siteSansReleve), pour continuer de vérifier la règle
+ * elle-même. Le comportement avec le relevé est vérifié dans tests/frais-prives.test.js.
+ *
  * Lancer : npm test
  */
 "use strict";
@@ -17,13 +22,16 @@ const assert = require("node:assert/strict");
 const { chargerSite } = require("./charger-site");
 const PROFILS = require("./profils");
 
-let site;
-test.before(async () => { site = await chargerSite(); });
+let site, siteSansReleve;
+test.before(async () => {
+  site = await chargerSite();
+  siteSansReleve = await chargerSite({ "data/frais-prives.json": { meta: {}, formations: {} } });
+});
 
 const MESSAGE = "Établissement privé : vérifie les frais avant de le mettre dans tes vœux, ils peuvent dépasser ton budget.";
 const LIBELLE = "établissement privé aux frais non relevés";
-const analyser = (p) => {
-  const { E, DATA, QUEST } = site;
+const analyser = (p, s = site) => {
+  const { E, DATA, QUEST } = s;
   const A = E.recommander(DATA.formations, p.profil, QUEST, p.reponses);
   return { A, W: E.wishlist(A.resultats, 10, A.interets) };
 };
@@ -52,7 +60,7 @@ test("statut : uniquement Parcoursup (tc) ; toute fiche liée à Parcoursup a un
 
 test("fragile (budget « gratuit ») : aucun vœu « sécurité » privé aux frais inconnus, message affiché", async () => {
   const p = profil("fragile");
-  const { A, W } = analyser(p);
+  const { A, W } = analyser(p, siteSansReleve);
   const concernes = A.resultats.filter((x) => prive(x.f) && fraisInconnus(x.f));
   assert.ok(concernes.length > 0);
   for (const x of concernes) {
@@ -68,17 +76,19 @@ test("fragile (budget « gratuit ») : aucun vœu « sécurité » privé aux fr
   assert.ok(!dansListe.some((x) => x.categorie === "securite"));
   assert.equal(W.protection.nbSecurite, W.liste.filter((x) => x.categorie === "securite" && !x.repere.priveFraisInconnus).length);
   // Ma liste (proposition de 10 vœux) : le message est affiché
-  const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
+  const s = await chargerSite({ "data/frais-prives.json": { meta: {}, formations: {} } }, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
   assert.ok(s.afficher("#liste").includes(MESSAGE), "message absent de Ma liste (Recommandées)");
-  // onglet « Mes vœux » : une fois par vœu concerné de la proposition de 10 vœux
+  // onglet « Mes vœux » : une fois par vœu concerné de la proposition de 10 vœux, et une fois par formation concernée
+  // de la section « Nouvelle formation à la rentrée 2026 » (fragile y reçoit ISG Nice, privé aux frais inconnus)
+  const nouv = site.E.nouvelles(A.resultats, A.interets).filter((x) => x.repere.priveFraisInconnus);
   const voeux = s.cliquer({ action: "onglet-liste", o: "voeux" });
-  assert.equal(voeux.split(MESSAGE).length - 1, dansListe.length, "message absent de la proposition de vœux");
+  assert.equal(voeux.split(MESSAGE).length - 1, dansListe.length + nouv.length, "message absent de la proposition de vœux ou de la section « Nouvelle formation »");
 });
 
 test("budget serré : une formation privée qui serait « sécurité » devient « réaliste » (règle nommée)", () => {
   // baisse-dernier-trimestre (budget « moyen ») a 2 vœux « sécurité » privés aux frais inconnus ; avec « faible », aucun
   const p = profil("baisse-dernier-trimestre");
-  const moyen = analyser(p), faible = analyser(avecReponses(p, { budget: "faible" }));
+  const moyen = analyser(p, siteSansReleve), faible = analyser(avecReponses(p, { budget: "faible" }), siteSansReleve);
   const avant = moyen.W.liste.filter((x) => x.categorie === "securite" && prive(x.f) && fraisInconnus(x.f));
   assert.ok(avant.length > 0, "cas de test : un vœu « sécurité » privé aux frais inconnus avec le budget « moyen »");
   const parId = new Map(faible.A.resultats.map((x) => [x.f.id, x]));
@@ -108,7 +118,7 @@ test("budget « moyen », « eleve » ou sans réponse : écoles privées inchan
   }
   // les profils « moyen » ont toujours leurs écoles privées : même liste que sans la règle (références), et
   // des vœux privés aux frais inconnus, y compris en « sécurité »
-  const { W } = analyser(profil("baisse-dernier-trimestre"));
+  const { W } = analyser(profil("baisse-dernier-trimestre"), siteSansReleve);
   assert.ok(W.liste.some((x) => x.categorie === "securite" && prive(x.f) && fraisInconnus(x.f)));
 });
 

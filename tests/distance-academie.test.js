@@ -97,7 +97,8 @@ test("formations : académie d'après le département Parcoursup ; campus à l'�
     assert.notEqual(x.categorie, "securite");
   }
   // le même élève, ouvert à l'étranger mais qui veut rester chez ses parents : exclue par la règle « domicile »
-  const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [] })).A;
+  // (budget « moyen » : depuis le 22/10/2026, des frais connus au-dessus d'un budget serré excluent aussi, avant la distance)
+  const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [], budget: "moyen" })).A;
   for (const id of ["ps-12025", "psup-25819"]) assert.equal(ouvert.resultats.find((r) => r.f.id === id).exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
   // des formations de chaque académie d'Île-de-France sont bien reconnues
   const aca = new Set(DATA.formations.filter((f) => f.pays === "France").map((f) => E.situer(f).academie));

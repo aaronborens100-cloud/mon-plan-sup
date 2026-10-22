@@ -175,6 +175,21 @@
    "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
+   "id": "psup-48015",
+   "interet": 77.75,
+   "faisabilite": 58.160000000000004,
+   "pertinence": 69.914,
+   "repere": [
+    90,
+    0,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "buas-breda-bachelor-tourism",
    "interet": 75.00555555555556,
    "faisabilite": 61.4,
@@ -250,10 +265,130 @@
    "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
+   "id": "psup-31816",
+   "interet": 77.75,
+   "faisabilite": 55.92,
+   "pertinence": 69.018,
+   "repere": [
+    77,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-443",
+   "interet": 77.64359866562378,
+   "faisabilite": 55.279999999999994,
+   "pertinence": 68.69815919937427,
+   "repere": [
+    62,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 8 990 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-48535",
+   "interet": 77.68693680970517,
+   "faisabilite": 54.96,
+   "pertinence": 68.5961620858231,
+   "repere": [
+    69,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 8 950 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-39903",
+   "interet": 77.68693680970517,
+   "faisabilite": 54,
+   "pertinence": 68.21216208582311,
+   "repere": [
+    30,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 9 500 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-28555",
+   "interet": 77.75,
+   "faisabilite": 53.36,
+   "pertinence": 67.994,
+   "repere": [
+    78,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "brunel-business",
    "interet": 74.68333333333334,
    "faisabilite": 57.2,
    "pertinence": 67.69,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-26131",
+   "interet": 75.76262203289673,
+   "faisabilite": 55.279999999999994,
+   "pertinence": 67.56957321973803,
+   "repere": [
+    55,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 14 500 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-31192",
+   "interet": 75.76262203289673,
+   "faisabilite": 53.67999999999999,
+   "pertinence": 66.92957321973803,
+   "repere": [
+    69,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (au moins 11 500 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "ihecs-bruxelles-bachelier-en-communication-appliquee",
+   "interet": 65.02777777777777,
+   "faisabilite": 69.5,
+   "pertinence": 66.81666666666666,
    "repere": [
     null,
     null,
@@ -278,6 +413,66 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-28455",
+   "interet": 77.75,
+   "faisabilite": 50.4,
+   "pertinence": 66.81,
+   "repere": [
+    15,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-39081",
+   "interet": 77.21877511994319,
+   "faisabilite": 50.4,
+   "pertinence": 66.49126507196591,
+   "repere": [
+    45,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 15 900 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-43192",
+   "interet": 77.21877511994319,
+   "faisabilite": 50.4,
+   "pertinence": 66.49126507196591,
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 15 900 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26115",
+   "interet": 71.68693680970517,
+   "faisabilite": 57.839999999999996,
+   "pertinence": 66.1481620858231,
+   "repere": [
+    18,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
   },
   {
    "id": "psup-48655",
@@ -338,6 +533,66 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-39294",
+   "interet": 71.75,
+   "faisabilite": 54,
+   "pertinence": 64.65,
+   "repere": [
+    43,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-28453",
+   "interet": 71.75,
+   "faisabilite": 54,
+   "pertinence": 64.65,
+   "repere": [
+    43,
+    0,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "psup-26113",
+   "interet": 71.68693680970517,
+   "faisabilite": 54,
+   "pertinence": 64.6121620858231,
+   "repere": [
+    16,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26117",
+   "interet": 71.68693680970517,
+   "faisabilite": 53.67999999999999,
+   "pertinence": 64.4841620858231,
+   "repere": [
+    14,
+    0,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 11 200 €/an) au-delà de ton budget."
   },
   {
    "id": "psup-49919",
@@ -430,6 +685,36 @@
    "exclu": null
   },
   {
+   "id": "uclouvain-sciences-politiques",
+   "interet": 63.89444444444444,
+   "faisabilite": 64,
+   "pertinence": 63.93666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ulb-sciences-politiques",
+   "interet": 63.89444444444444,
+   "faisabilite": 64,
+   "pertinence": 63.93666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "psup-49978",
    "interet": 65.36531224917752,
    "faisabilite": 61.25,
@@ -443,291 +728,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
-  },
-  {
-   "id": "luiss-economics-management",
-   "interet": 66.68333333333334,
-   "faisabilite": 57,
-   "pertinence": 62.81,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "psup-49918",
-   "interet": 66.55560895362916,
-   "faisabilite": 55.6,
-   "pertinence": 62.1733653721775,
-   "repere": [
-    98,
-    0,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "warwick-politics-international-studies",
-   "interet": 62.22777777777778,
-   "faisabilite": 61.25,
-   "pertinence": 61.836666666666666,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "bath-politics-economics",
-   "interet": 65.53888888888889,
-   "faisabilite": 55.75,
-   "pertinence": 61.623333333333335,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "warwick-accounting-finance",
-   "interet": 70.97222222222223,
-   "faisabilite": 47.5,
-   "pertinence": 61.583333333333336,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "psup-2220",
-   "interet": 66.42226766030407,
-   "faisabilite": 54,
-   "pertinence": 61.45336059618244,
-   "repere": [
-    28,
-    0,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "lse-management",
-   "interet": 74.68333333333334,
-   "faisabilite": 41.6,
-   "pertinence": 61.45,
-   "repere": [
-    14.5,
-    null,
-    "inconnue",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "lancaster-accounting-finance",
-   "interet": 69.30555555555556,
-   "faisabilite": 49.6,
-   "pertinence": 61.42333333333334,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "univie-vienne-ba-publizistik-und-kommunikationswissenschaft",
-   "interet": 57.02777777777778,
-   "faisabilite": 68,
-   "pertinence": 61.41666666666667,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "psup-49979",
-   "interet": 61.36531224917752,
-   "faisabilite": 61.25,
-   "pertinence": 61.319187349506514,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
-  },
-  {
-   "id": "manchester-accounting",
-   "interet": 69.30555555555556,
-   "faisabilite": 49.2,
-   "pertinence": 61.263333333333335,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "durham-ppe",
-   "interet": 64.88333333333333,
-   "faisabilite": 55.75,
-   "pertinence": 61.22999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "exeter-ppe",
-   "interet": 64.88333333333333,
-   "faisabilite": 55.75,
-   "pertinence": 61.22999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "laval-etudes-internationales-langues",
-   "interet": 59.583333333333336,
-   "faisabilite": 63.6,
-   "pertinence": 61.19,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "ie-bba",
-   "interet": 73.75,
-   "faisabilite": 42,
-   "pertinence": 61.05,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "glendon-etudes-internationales",
-   "interet": 58.64999999999999,
-   "faisabilite": 63.6,
-   "pertinence": 60.629999999999995,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "leiden-international-studies",
-   "interet": 58.64999999999999,
-   "faisabilite": 63.6,
-   "pertinence": 60.629999999999995,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "umontreal-etudes-internationales",
-   "interet": 58.64999999999999,
-   "faisabilite": 63.6,
-   "pertinence": 60.629999999999995,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "psup-48660",
-   "interet": 60.2087186285179,
-   "faisabilite": 61.25,
-   "pertinence": 60.62523117711074,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -778,24 +778,6 @@
     ]
    },
    {
-    "id": "psup-443",
-    "categorie": "ambitieux",
-    "pertinence": 57.89815919937426,
-    "repere": [
-     62,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-26131",
-    "categorie": "ambitieux",
-    "pertinence": 56.769573219738035,
-    "repere": [
-     55,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-36460",
     "categorie": "ambitieux",
     "pertinence": 53.28091124063294,
@@ -814,11 +796,29 @@
     ]
    },
    {
-    "id": "psup-48535",
+    "id": "psup-24813",
     "categorie": "ambitieux",
-    "pertinence": 57.796162085823106,
+    "pertinence": 45.826579720778206,
     "repere": [
-     69,
+     63,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-24814",
+    "categorie": "ambitieux",
+    "pertinence": 44.9305797207782,
+    "repere": [
+     57,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "massena-nice-al",
+    "categorie": "ambitieux",
+    "pertinence": 40.919555419168674,
+    "repere": [
+     54,
      "en_dessous"
     ]
    }
@@ -840,7 +840,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec école de commerce post-bac et bachelor (France) comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec diplôme d'État santé ou social et licence de langues comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "7870f0c88da7cd40c678404ac9f3efcfcddda5de282d47c93c46ea30a588dcda",
-  "textes": "dd48272b4a9184815f130ab37d3e11b8186cfd49a0166462c0f4e03c59307b33"
+  "calculs": "17bd805c371c86fdcaecb836b85682fd9d37103d5bf3b52ed88dbd30c4c73fdb",
+  "textes": "4f6b61ef498d34349d1b514dcb64b92e6aa3195a4acc6384a0c29377f1bed0ae"
  }
 }

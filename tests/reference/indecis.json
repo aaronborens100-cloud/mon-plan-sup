@@ -335,6 +335,21 @@
    "exclu": null
   },
   {
+   "id": "psup-18647",
+   "interet": 85.33333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 82.22,
+   "repere": [
+    84,
+    0.51,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-6613",
    "interet": 85.33333333333334,
    "faisabilite": 77.55,
@@ -693,21 +708,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-10704",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.35,
-   "pertinence": 81.74000000000001,
-   "repere": [
-    24,
-    0.37,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -930,7 +930,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "01bd41a39c87bf93f2f360d8b4f167d278c9d4c85f10a2ba801a735d6b07b7a2",
-  "textes": "ff4cc7fc9cc896065334539f3086ff43c21254090cd9db9a9b6933e1ce78f10b"
+  "calculs": "46e8cdcf58fd0f90edc2e1027a7ef04a489abfa1097a9b7a67e10d15483f1bc2",
+  "textes": "98f78d815a05e72260c637dc5994170e1272b5064f4dd9476e1e67460b4f0ce7"
  }
 }
