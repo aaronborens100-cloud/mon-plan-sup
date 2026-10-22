@@ -323,6 +323,10 @@ Rien de cela n'utilise de donnée personnelle hors du navigateur : le lycée res
   La Réunion, Saint-Pierre, Valence…), le département départage : département Parcoursup, département écrit dans la
   ville (« Saint-Pierre (Martinique) »), ou département commun aux formations Parcoursup probables de la fiche
   (`data/fusion.json`). Sans département pour trancher, pas de coordonnées : distance inconnue (issue #14).
+  Lieu ajouté à la main (mode souple, accepté par le fondateur le 22/10/2026, issue #48) : « Paris-La Défense »
+  (Hauts-de-Seine), écrit tel quel dans deux fiches de `data/formations.json` (IÉSEG ps-12929, ESILV), avec les
+  coordonnées officielles du campus IÉSEG Paris La Défense dans la cartographie Parcoursup 2026 (gta 31742,
+  `etab_gps`) ; source dans `data/lieux.json` (`meta.ajouts`).
 - **Lycée** : département enregistré avec le lycée (`data/lieux.json`), sinon retrouvé par son code UAI, sinon par
   ses coordonnées (même règle).
 - **Correspondance département → académie** (`ACADEMIES`, 30 académies, 101 départements). Source : pages
@@ -545,10 +549,10 @@ cinquième fiche sans lien Parcoursup) sur 10 vœux.
   (`REGLE_PRIVE_FRAIS_INCONNUS`, clé `prive_frais_inconnus`, appliquée après les règles de distance et de territoire),
   ni dans la liste ni dans `protection()`. Elle affiche (texte de catégorie, Ma liste, cartes) : « Établissement
   privé : vérifie les frais avant de le mettre dans tes vœux, ils peuvent dépasser ton budget. »
-- **Malus de 18** : la même valeur que « frais au-dessus de ton budget » (frais connus, mais pas plus du double du
-  budget). C'est le malus le plus fort que le site applique sans exclure. Choix éditorial : on ne sait pas si les
-  frais dépassent le budget, donc on n'exclut pas (l'exclusion reste réservée aux frais connus à plus du double du
-  budget), mais on ne les traite pas mieux qu'un dépassement connu.
+- **Malus de 18** : la même valeur que « frais au-dessus de ton budget » (budgets « moyen » et « eleve »). C'est le
+  malus le plus fort que le site applique sans exclure. Choix éditorial : on ne sait pas si les frais dépassent le
+  budget, donc on n'exclut pas (l'exclusion reste réservée aux frais connus, section 9.3, ou à un minimum « à partir
+  de X € » supérieur au budget), mais on ne les traite pas mieux qu'un dépassement connu.
 - **Sans effet** : établissement « Publics » ; frais chiffrés (règle actuelle) ; budget « moyen », « eleve » ou pas
   de réponse ; statut inconnu (fiche de `data/formations.json` non liée à Parcoursup : 194 fiches françaises aux frais
   inconnus, dont 6 peuvent entrer dans la liste de vœux). Aucun montant n'est inventé et « cher » n'est déduit de rien
@@ -581,7 +585,9 @@ Tests : `tests/frais-prives.test.js`.
   tout le cursus (37012 : « coût du cursus de 3 ans », jamais divisé), 4 « par an (sur 3 ans) » dont on ne sait pas
   s'ils sont annuels ou pour les 3 ans (12043, 12051, 27159, 35153), 1 fiche mise en doute à la relecture et non
   revérifiée (26091, psychomotricien à 230 €/an sans détail), 30 sans maximum (« à partir de… », part variable selon
-  les revenus non chiffrée : seul un minimum est connu). Aucune ligne « non précisé » ne reste parmi les « trouvé ».
+  les revenus non chiffrée : seul un minimum est connu ; ce minimum est gardé dans `a_partir_de` et sert seulement à
+  l'exclusion de la section 9.3 ; la fiche affiche « À partir de X € par an (la fiche Parcoursup n'indique pas de
+  maximum) »). Aucune ligne « non précisé » ne reste parmi les « trouvé ».
 - **Corrections** tirées du texte du relevé (`CORRECTIONS`, raison dans le champ `correction`) : 39147 (TBS Paris),
   max 12 700 € → 11 100 € (12 700 € est le tarif des candidats des lycées français de l'étranger) ; 43500 et 43502
   (DN MADE, Nantes), min 4 450 € retiré (tarif d'une 2e année avec un semestre en apprentissage) : 7 500 €.
@@ -620,12 +626,25 @@ Tests : `tests/frais-prives.test.js`.
 ### 9.3 Règle de budget avec des frais connus (décision du fondateur du 22/10/2026)
 
 Les montants min et max s'appliquent à tous les budgets (pas seulement « gratuit » et « faible »). Un montant unique
-est une fourchette où min = max.
+est une fourchette où min = max. Le budget s'entend **avant une éventuelle bourse** (décision du fondateur du
+22/10/2026) : l'aide de la question « budget » le dit à l'élève (« Indique ce que ta famille peut payer sans compter
+une éventuelle bourse : les écoles qui baissent leurs frais pour les boursiers le précisent sur leur fiche. Le coût de
+la vie s'ajoute. »).
+
+**Exclusion au-delà du budget serré (décision du fondateur du 22/10/2026, `EXCLUSION_FRAIS_AU_DELA_DU_BUDGET`,
+`js/moteur.js`)** : avec un budget ≤ `BUDGET_SERRE_MAX` (5 000 €, réponses « gratuit » et « faible »), une formation
+dont les frais connus **minimums** dépassent le budget est exclue (« Frais (≈ X €/an) au-delà de ton budget. », ou
+« (au moins X €/an) » pour une fourchette ou un « à partir de X € »). Avant, seulement au-delà de 2 × budget (entre
+budget et 2 × budget : malus de 18). À budget égal au minimum : pas d'exclusion. Budget au-dessus de 5 000 € : malus de
+18, jamais d'exclusion par les frais (inchangé). Effet sur les profils types (formations exclues pour les frais,
+avant → après) : budget « gratuit » (fragile, sante-svt) 818 → 987, dont 30 « à partir de » ; budget « faible »
+(eco-moyen) 157 → 530, (droit-sciencespo, indecis, premiere-arts) 335 → 767, dont 7 « à partir de ».
 
 | Situation | Effet |
 |---|---|
 | budget ≥ max | frais connus sous le budget : rien (ni malus, ni message) |
-| budget < min | règle « frais au-dessus de ton budget » appliquée au **min** : malus de 18, ou exclusion si min > 2 × budget avec un budget ≤ 5 000 (« Frais (au moins X €/an) au-delà de ton budget. ») |
+| budget < min | budget ≤ 5 000 : **exclusion** (« Frais (au moins X €/an) au-delà de ton budget. ») ; budget plus haut : malus de 18 |
+| « à partir de X € » (maximum non indiqué) | budget ≤ 5 000 et X > budget : exclusion ; sinon, règle 9.1 (frais inconnus) |
 | min ≤ budget < max | pas de malus (`REGLE_BUDGET_FOURCHETTE.malus` = 0), jamais « sécurité » (règle `frais_fourchette`), message : « Les frais vont de X € à Y € par an selon les revenus de ta famille / selon l'année d'études : vérifie ce que tu paierais avant de le mettre dans tes vœux. » (sans critère pour la nature « autre ») |
 | privé sans montant relevé, budget ≤ 5 000 | règle 9.1 inchangée |
 

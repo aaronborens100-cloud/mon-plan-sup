@@ -441,6 +441,11 @@
   // d'intérêt, n'est jamais « sécurité » et affiche MESSAGE_PRIVE_FRAIS_INCONNUS. Statut inconnu (fiche non liée à
   // Parcoursup) ou frais connus : rien ne change.
   const BUDGET_SERRE_MAX = 5000;
+  // Exclusion par les frais, décision du fondateur du 22/10/2026 : avec un budget ≤ BUDGET_SERRE_MAX, une formation dont
+  // les frais connus minimums dépassent le budget (bornes.min > budget, ou « à partir de X € » avec X > budget) est
+  // exclue (avant : seulement au-delà de 2 × budget). Au-dessus de BUDGET_SERRE_MAX : malus de 18, pas d'exclusion
+  // (règle inchangée). Le budget s'entend avant une éventuelle bourse (question « budget », même décision).
+  const EXCLUSION_FRAIS_AU_DELA_DU_BUDGET = true;
   // Malus d'intérêt : la même valeur que « frais au-dessus de ton budget » (−18, frais connus mais pas assez au-dessus du
   // budget pour exclure la formation). Choix éditorial : les frais d'un établissement privé non relevés peuvent dépasser
   // le budget, sans qu'on sache de combien ; on applique donc le malus le plus fort que le site donne sans exclure, et
@@ -459,8 +464,8 @@
   // (la fourchette complète est dans le texte).
   // Règle de budget, décision du fondateur du 22/10/2026 (REGLE_BUDGET_FOURCHETTE, à changer ici) :
   //   - budget ≥ max : frais connus et sous le budget, rien ne change ;
-  //   - budget < min : règle « frais au-dessus de ton budget » appliquée au min (malus de 18, ou exclusion si
-  //     min > 2 × budget avec un budget ≤ BUDGET_SERRE_MAX), comme pour un montant unique ;
+  //   - budget < min : budget ≤ BUDGET_SERRE_MAX : exclusion (EXCLUSION_FRAIS_AU_DELA_DU_BUDGET) ; budget plus haut :
+  //     malus « frais au-dessus de ton budget » (18) ; comme pour un montant unique ;
   //   - min ≤ budget < max (« dans la fourchette ») : malus REGLE_BUDGET_FOURCHETTE.malus (0), jamais « sécurité »,
   //     message texteFourchette().
   // Un montant unique (min = max, ou fiche sans min) suit la règle normale.
@@ -725,11 +730,18 @@
     // fourchette (min ≤ budget < max), REGLE_BUDGET_FOURCHETTE (décision du fondateur du 22/10/2026)
     const bornes = bornesFrais(f);
     const fourchette = !!bornes && p.budget_max !== undefined && bornes.min <= p.budget_max && p.budget_max < bornes.max;
+    const budgetSerre = p.budget_max !== undefined && p.budget_max <= BUDGET_SERRE_MAX;
+    // ancienne règle (avant le 22/10/2026), gardée si EXCLUSION_FRAIS_AU_DELA_DU_BUDGET est faux : exclusion au-delà de 2 × budget
+    const seuilExclusion = EXCLUSION_FRAIS_AU_DELA_DU_BUDGET ? p.budget_max : p.budget_max * 2;
     if (bornes && p.budget_max !== undefined && bornes.min > p.budget_max) {
       const montant = bornes.min < bornes.max ? `au moins ${fmtEur(bornes.min)}/an` : `≈ ${fmtEur(bornes.min)}/an`;
-      if (p.budget_max <= 5000 && bornes.min > p.budget_max * 2) exclu = exclu || `Frais (${montant}) au-delà de ton budget.`;
+      if (budgetSerre && bornes.min > seuilExclusion) exclu = exclu || `Frais (${montant}) au-delà de ton budget.`;
       else { interet -= 18; ajust.push("frais au-dessus de ton budget"); }
     }
+    // frais « à partir de X € » (maximum non indiqué sur la fiche Parcoursup, f.cout.a_partir_de) : montant inconnu, mais
+    // minimum connu ; budget serré et X > budget : exclusion ; sinon, règle « frais inconnus » (plus bas)
+    const aPartirDe = bornes ? null : (f.cout || {}).a_partir_de;
+    if (typeof aPartirDe === "number" && budgetSerre && aPartirDe > seuilExclusion) exclu = exclu || `Frais (au moins ${fmtEur(aPartirDe)}/an) au-delà de ton budget.`;
     if (fourchette && REGLE_BUDGET_FOURCHETTE.malus) { interet -= REGLE_BUDGET_FOURCHETTE.malus; ajust.push("frais dans une fourchette qui dépasse ton budget"); }
     const messageFourchette = fourchette && REGLE_BUDGET_FOURCHETTE.message ? texteFourchette(f.cout) : null;
     // budget serré et établissement privé (Parcoursup) aux frais non chiffrés : malus, jamais « sécurité », message
@@ -1245,5 +1257,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

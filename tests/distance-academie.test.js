@@ -97,7 +97,8 @@ test("formations : académie d'après le département Parcoursup ; campus à l'�
     assert.notEqual(x.categorie, "securite");
   }
   // le même élève, ouvert à l'étranger mais qui veut rester chez ses parents : exclue par la règle « domicile »
-  const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [] })).A;
+  // (budget « moyen » : depuis le 22/10/2026, des frais connus au-dessus d'un budget serré excluent aussi, avant la distance)
+  const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [], budget: "moyen" })).A;
   for (const id of ["ps-12025", "psup-25819"]) assert.equal(ouvert.resultats.find((r) => r.f.id === id).exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
   // des formations de chaque académie d'Île-de-France sont bien reconnues
   const aca = new Set(DATA.formations.filter((f) => f.pays === "France").map((f) => E.situer(f).academie));
@@ -361,12 +362,7 @@ test("règle « domicile » : avec un lycée, rien à plus de 45 km (fragile) ; 
   assert.equal(fragile.reponses.mobilite, "domicile");
   const { A, W } = analyser(fragile);
   assert.ok(W.liste.length > 0);
-  // distance inconnue (fiche sans coordonnées) : pas exclue mais jamais « sécurité » (règle distance_inconnue). Depuis
-  // le relevé des frais privés (22/10/2026), fragile reçoit ps-12929 (IÉSEG « Paris-La Défense », ville non localisée)
-  for (const x of W.liste) {
-    if (x.dist === null) { assert.notEqual(x.categorie, "securite", `${x.f.id} : distance inconnue`); continue; }
-    assert.ok(E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
-  }
+  for (const x of W.liste) assert.ok(x.dist !== null && E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
   // toute formation au-delà de 45 km (traversée comprise) est exclue, avec la distance dans le message
   for (const x of A.resultats) {
     if (x.dist === null || E.distanceEquivalente(x.dist, x.traversee) <= 45) continue;

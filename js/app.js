@@ -1226,12 +1226,19 @@
       f.cout = c;
       if (Array.isArray(f.incertitudes)) f.incertitudes = f.incertitudes.filter((t) => t !== "Frais non relevés.");
     }
+    // « à partir de X € » (maximum non indiqué sur la fiche) : montant toujours inconnu, minimum gardé pour la règle
+    // d'exclusion du budget serré (moteur, décision du fondateur du 22/10/2026) et affiché dans le texte des frais
+    const ap = r.tc && r.tc !== "Publics" && !c ? FRAIS_A_PARTIR_DE[r.gta] : null;
+    if (ap && typeof ap.min === "number") {
+      f.cout = Object.assign({}, f.cout || {}, { valeur_annuelle_eur: null, a_partir_de: ap.min, statut: "releve_parcoursup", source: ap.source, consulte_le: ap.consulte_le,
+        texte: `À partir de ${E.fmtEur(ap.min)} par an (la fiche Parcoursup n'indique pas de maximum).` });
+    }
   }
   // Frais des formations privées relevés sur leur fiche Parcoursup (data/frais-prives.json, construit par
   // scripts/construire-frais-prives.py). Seules les formations au montant annuel en euros sont dans le fichier : les
   // autres gardent des frais inconnus (règle « prive_frais_inconnus » du moteur). Une fourchette (min < max) est
   // affichée en entier ; valeur_annuelle_eur, le seul nombre lu par le moteur et les cartes, vaut le max.
-  let FRAIS_PRIVES = {}, FRAIS_PRIVES_META = null;
+  let FRAIS_PRIVES = {}, FRAIS_PRIVES_META = null, FRAIS_A_PARTIR_DE = {};
   const SELON_FOURCHETTE = { revenus: " selon les revenus de ta famille", annee: " selon l'année d'études" };
   const montantFrais = (c) => (typeof c.min === "number" && c.min < c.valeur_annuelle_eur ? `${E.fmtEur(c.min)} à ${E.fmtEur(c.valeur_annuelle_eur)}` : E.fmtEur(c.valeur_annuelle_eur));
   function coutReleve(g) {
@@ -1277,7 +1284,7 @@
   }
   function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp) {
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
-    FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null;
+    FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null; FRAIS_A_PARTIR_DE = (fp && fp.a_partir_de) || {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
     // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :

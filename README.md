@@ -186,6 +186,9 @@ Détails : `docs/modele-chances.md`, section 9. Pour un élève au budget « gra
 (champ `tc`) et dont les frais ne sont pas chiffrés reste proposée, avec un malus d'intérêt
 (`MALUS_PRIVE_FRAIS_INCONNUS` = 18), n'est jamais « sécurité » (règle `prive_frais_inconnus`) et affiche
 `MESSAGE_PRIVE_FRAIS_INCONNUS`. Statut inconnu (fiche non liée à Parcoursup) ou frais connus : cette règle ne joue pas.
+Avec un budget serré, des frais connus dont le minimum dépasse le budget (ou un « à partir de X € » au-dessus du
+budget) excluent la formation (`EXCLUSION_FRAIS_AU_DELA_DU_BUDGET`, décision du fondateur du 22/10/2026). Le budget
+s'entend avant une éventuelle bourse.
 
 Les frais de 1 172 formations privées ont été relevés sur leur fiche Parcoursup (21-22/10/2026,
 `docs/releves/frais-formations-privees-2026-10-22.csv`). Après une correction du relevé :

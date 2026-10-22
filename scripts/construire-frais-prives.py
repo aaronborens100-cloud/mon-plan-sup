@@ -27,7 +27,9 @@ meta.exclus :
   - « non précisé » (on ne sait pas si le montant est par an ou pour tout le cursus) ;
   - montant pour tout le cursus (jamais divisé par la durée), ou « par an (sur 3 ans) » (annuel ou pour 3 ans ?) ;
   - fiche mise en doute à la relecture et non revérifiée (A_REVERIFIER) ;
-  - maximum non indiqué (« à partir de… », part variable non chiffrée) : seul un minimum est connu.
+  - maximum non indiqué (« à partir de… », part variable non chiffrée) : seul un minimum est connu. Il est gardé à
+    part, dans « a_partir_de » (gta → { min, source, consulte_le }) : le moteur exclut la formation pour un budget
+    serré inférieur à ce minimum (décision du fondateur du 22/10/2026) ; sinon les frais restent inconnus.
 
 Usage : python3 scripts/construire-frais-prives.py            (écrit data/frais-prives.json)
         python3 scripts/construire-frais-prives.py --verifier (vérifie que le fichier est à jour, sans l'écrire)
@@ -193,13 +195,15 @@ def construire():
     gtas = [l["gta"] for l in lignes]
     if len(set(gtas)) != len(gtas):
         sys.exit("Erreur : code gta en double dans le relevé.")
-    formations, exclus = {}, collections.defaultdict(list)
+    formations, exclus, a_partir_de = {}, collections.defaultdict(list), {}
     for l in lignes:
         if not re.fullmatch(r"\d+", l["gta"]):
             sys.exit(f"Erreur : code gta illisible {l['gta']!r}.")
         m = motif_exclusion(l)
         if m:
             exclus[m].append(l["gta"])
+            if m == "maximum_non_indique" and montant(l["frais_min_eur"]) is not None:
+                a_partir_de[l["gta"]] = {"min": montant(l["frais_min_eur"]), "source": l["url_source"], "consulte_le": l["consulte_le"]}
             continue
         mini, maxi = montant(l["frais_min_eur"]), montant(l["frais_max_eur"])
         corr = CORRECTIONS.get(l["gta"], {})
@@ -231,6 +235,7 @@ def construire():
             "nb_droits_inscription": sum(1 for f in formations.values() if f["libelle"] == "droits_inscription"),
         },
         "formations": dict(sorted(formations.items(), key=lambda kv: int(kv[0]))),
+        "a_partir_de": dict(sorted(a_partir_de.items(), key=lambda kv: int(kv[0]))),
     }
 
 

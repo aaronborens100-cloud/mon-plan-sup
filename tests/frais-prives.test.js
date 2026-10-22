@@ -4,7 +4,8 @@
  *
  *   - frais connus sous le budget : plus de malus ni de message « frais inconnus » ;
  *   - fourchette (min ≤ budget < max) : pas de malus, jamais « sécurité », message « Les frais vont de X € à Y € » ;
- *   - budget < min : règle normale sur le min (malus, exclusion si min > 2 × budget avec un budget ≤ 5 000) ;
+ *   - budget < min : budget ≤ 5 000 : exclusion (décision du fondateur du 22/10/2026), y compris « à partir de X € » ;
+ *     budget plus haut : malus de 18 ;
  *   - formation privée absente du relevé : règle « prive_frais_inconnus » inchangée ;
  *   - IFSI et travail social : libellé « Droits d'inscription et participation annuelle » ;
  *   - francs CFP, dirhams, montants par mois : jamais retenus (frais inconnus) ;
@@ -97,8 +98,10 @@ test("« maximum non indiqué » (48177, ICES : part fixe 3 975 € + part varia
   assert.ok(f, "48177 dans le catalogue");
   assert.notEqual(f.__tc, "Publics");
   assert.equal(f.cout.valeur_annuelle_eur, null, "aucun montant : ni la part fixe, ni une estimation");
-  const p = profil("fragile");
+  // budget « faible » (5 000 €) : « à partir de 3 975 € » ne dépasse pas le budget → frais inconnus
+  const p = avecReponses(profil("fragile"), { budget: "faible", mobilite: "partout" });
   const x = evaluer(p, f);
+  assert.equal(x.exclu, null);
   assert.equal(x.repere.priveFraisInconnus, true);
   assert.equal(x.repere.alerteFrais, MESSAGE_INCONNUS);
   assert.ok(x.ajust.includes("établissement privé aux frais non relevés"));
@@ -183,22 +186,60 @@ test("fourchette (min ≤ budget < max) : pas de malus, jamais « sécurité »,
   assert.equal(riche.repere.alerteFrais, null);
 });
 
-test("budget < min : règle normale appliquée au min (malus 18, ou exclusion si min > 2 × budget)", () => {
-  const p = profil("fragile"), f = base();   // budget 1 000
+test("budget serré (≤ 5 000) < min : exclusion (décision du fondateur du 22/10/2026) ; budget plus haut : malus", () => {
+  const { E } = site;
+  assert.equal(E.EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, true);
+  const p = profil("fragile"), f = base();   // budget « gratuit » = 1 000
   const ref = evaluer(p, f, { cout: cout(500, 500) });
-  const malus = evaluer(p, f, { cout: cout(1500, 6000) });
-  assert.equal(malus.exclu, null);
-  assert.ok(malus.ajust.includes("frais au-dessus de ton budget"));
-  assert.equal(malus.interet, Math.max(0, ref.interet - 18));
-  assert.equal(malus.repere.fraisFourchette, false);
-  const exclu = evaluer(p, f, { cout: cout(2500, 6000) });
-  assert.match(exclu.exclu, /^Frais \(au moins 2.500 €\/an\) au-delà de ton budget\.$/);
-  const unique = evaluer(p, f, { cout: cout(2500, 2500) });
-  assert.match(unique.exclu, /^Frais \(≈ 2.500 €\/an\) au-delà de ton budget\.$/);
-  // budget « faible » (5 000) : min de 9 000 > 2 × 5 000 ? non → malus ; 10 500 → exclu
+  // budget = min : pas d'exclusion (frais connus sous le budget, ou fourchette)
+  assert.equal(evaluer(p, f, { cout: cout(1000, 1000) }).exclu, null);
+  assert.equal(evaluer(p, f, { cout: cout(1000, 1000) }).interet, ref.interet);
+  const egalMin = evaluer(p, f, { cout: cout(1000, 4000) });
+  assert.equal(egalMin.exclu, null);
+  assert.equal(egalMin.repere.fraisFourchette, true, "budget = min : dans la fourchette");
+  // budget + 1 € : exclusion, montant unique ou fourchette
+  assert.equal(evaluer(p, f, { cout: cout(1001, 1001) }).exclu, "Frais (≈ 1\u202f001 €/an) au-delà de ton budget.");
+  assert.equal(evaluer(p, f, { cout: cout(1001, 6000) }).exclu, "Frais (au moins 1\u202f001 €/an) au-delà de ton budget.");
+  assert.match(evaluer(p, f, { cout: cout(1500, 6000) }).exclu, /^Frais \(au moins 1.500 €\/an\) au-delà de ton budget\.$/, "avant : malus seulement (pas au-delà de 2 × budget)");
+  // budget « faible » (5 000) : 5 000 → rien ; 5 001 → exclu (avant : malus jusqu'à 10 000)
   const q = avecReponses(p, { budget: "faible" });
-  assert.equal(evaluer(q, f, { cout: cout(9000, 9000) }).exclu, null);
-  assert.ok(evaluer(q, f, { cout: cout(10500, 12000) }).exclu);
+  assert.equal(evaluer(q, f, { cout: cout(5000, 5000) }).exclu, null);
+  assert.ok(evaluer(q, f, { cout: cout(5001, 5001) }).exclu);
+  assert.ok(evaluer(q, f, { cout: cout(9000, 9000) }).exclu);
+  // budget « moyen » (20 000) : jamais d'exclusion par les frais, malus de 18 (règle inchangée)
+  const m = avecReponses(p, { budget: "moyen" });
+  const refM = evaluer(m, f, { cout: cout(500, 500) });
+  const dessus = evaluer(m, f, { cout: cout(25000, 25000) });
+  assert.equal(dessus.exclu, null);
+  assert.ok(dessus.ajust.includes("frais au-dessus de ton budget"));
+  assert.equal(dessus.interet, Math.max(0, refM.interet - 18));
+  assert.equal(evaluer(m, f, { cout: cout(50000, 50000) }).exclu, null, "même au-delà de 2 × budget");
+  void ref;
+});
+
+test("« à partir de X € » (maximum non indiqué) : exclusion si X > budget serré, sinon règle « frais inconnus »", () => {
+  const ap = FP.a_partir_de;
+  assert.equal(Object.keys(ap).length, 30);
+  assert.deepEqual(Object.keys(ap).sort(), [...FP.meta.exclus.maximum_non_indique].sort());
+  // fragile ouvert à toute la France (sinon la règle « domicile » exclut ces formations lointaines)
+  const p = avecReponses(profil("fragile"), { mobilite: "partout" });   // 1 000 €
+  // 48177 (ICES) : à partir de 3 975 € → exclue pour 1 000 € et pour 5 000 € ? 3 975 ≤ 5 000 : frais inconnus
+  const f = fiche("48177");
+  assert.equal(f.cout.valeur_annuelle_eur, null, "toujours aucun montant");
+  assert.equal(f.cout.a_partir_de, 3975);
+  assert.match(f.cout.texte, /^À partir de 3.975 € par an/);
+  const gratuit = evaluer(p, f);
+  assert.equal(gratuit.exclu, "Frais (au moins 3\u202f975 €/an) au-delà de ton budget.");
+  const faible = evaluer(avecReponses(p, { budget: "faible" }), f);
+  assert.equal(faible.exclu, null);
+  assert.equal(faible.repere.priveFraisInconnus, true, "X ≤ budget : la règle « frais inconnus » reste");
+  assert.equal(faible.repere.alerteFrais, MESSAGE_INCONNUS);
+  // 15653 (5 925 €) : exclue avec le budget « faible »
+  assert.match(evaluer(avecReponses(p, { budget: "faible" }), fiche("15653")).exclu, /^Frais \(au moins 5.925 €\/an\) au-delà de ton budget\.$/);
+  // budget « moyen » : ni exclusion ni règle des frais inconnus
+  const moyen = evaluer(avecReponses(p, { budget: "moyen" }), fiche("15653"));
+  assert.equal(moyen.exclu, null);
+  assert.equal(moyen.repere.priveFraisInconnus, false);
 });
 
 test("droits d'inscription : IFSI et travail social, libellé affiché sur la fiche", async () => {

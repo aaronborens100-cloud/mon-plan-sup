@@ -385,6 +385,21 @@
    "exclu": "Frais (au moins 11 500 €/an) au-delà de ton budget."
   },
   {
+   "id": "ihecs-bruxelles-bachelier-en-communication-appliquee",
+   "interet": 65.02777777777777,
+   "faisabilite": 69.5,
+   "pertinence": 66.81666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "uva-amsterdam-bsc-communication-science",
    "interet": 65.02777777777777,
    "faisabilite": 69.5,
@@ -670,6 +685,36 @@
    "exclu": null
   },
   {
+   "id": "uclouvain-sciences-politiques",
+   "interet": 63.89444444444444,
+   "faisabilite": 64,
+   "pertinence": 63.93666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
+   "id": "ulb-sciences-politiques",
+   "interet": 63.89444444444444,
+   "faisabilite": 64,
+   "pertinence": 63.93666666666666,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Tu as indiqué vouloir rester en France."
+  },
+  {
    "id": "psup-49978",
    "interet": 65.36531224917752,
    "faisabilite": 61.25,
@@ -683,51 +728,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester chez tes parents : cette formation est à 49 km de ton lycée."
-  },
-  {
-   "id": "luiss-economics-management",
-   "interet": 66.68333333333334,
-   "faisabilite": 57,
-   "pertinence": 62.81,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "psup-49918",
-   "interet": 66.55560895362916,
-   "faisabilite": 55.6,
-   "pertinence": 62.1733653721775,
-   "repere": [
-    98,
-    0,
-    "en_dessous",
-    "tres_ouverte_en_dessous"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "warwick-politics-international-studies",
-   "interet": 62.22777777777778,
-   "faisabilite": 61.25,
-   "pertinence": 61.836666666666666,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Tu as indiqué vouloir rester en France."
   }
  ],
  "voeux": {
@@ -796,15 +796,6 @@
     ]
    },
    {
-    "id": "ps-12929",
-    "categorie": "ambitieux",
-    "pertinence": 52.156666666666666,
-    "repere": [
-     47,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-24813",
     "categorie": "ambitieux",
     "pertinence": 45.826579720778206,
@@ -819,6 +810,15 @@
     "pertinence": 44.9305797207782,
     "repere": [
      57,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "massena-nice-al",
+    "categorie": "ambitieux",
+    "pertinence": 40.919555419168674,
+    "repere": [
+     54,
      "en_dessous"
     ]
    }
@@ -840,7 +840,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec école de commerce post-bac et diplôme d'État santé ou social comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec diplôme d'État santé ou social et licence de langues comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "fab3585de2aa9c075d61b0d2abc0b0c2d7d8e0ef7e742d988093d65856e989f6",
-  "textes": "4f59698e8a613ca7d24afd9b2f17e6af425764322e555088e68d8dea884aa46d"
+  "calculs": "17bd805c371c86fdcaecb836b85682fd9d37103d5bf3b52ed88dbd30c4c73fdb",
+  "textes": "4f6b61ef498d34349d1b514dcb64b92e6aa3195a4acc6384a0c29377f1bed0ae"
  }
 }

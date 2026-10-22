@@ -389,6 +389,21 @@
    "exclu": null
   },
   {
+   "id": "psup-23122",
+   "interet": 80.35970727194203,
+   "faisabilite": 78.35,
+   "pertinence": 79.55582436316521,
+   "repere": [
+    41,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Frais (≈ 1 683 €/an) au-delà de ton budget."
+  },
+  {
    "id": "psup-23069",
    "interet": 81.88492810382462,
    "faisabilite": 75.95,
@@ -509,6 +524,21 @@
    "exclu": null
   },
   {
+   "id": "psup-23035",
+   "interet": 81.28421508702708,
+   "faisabilite": 74.75,
+   "pertinence": 78.67052905221625,
+   "repere": [
+    14,
+    0.28,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 1 283 €/an) au-delà de ton budget."
+  },
+  {
    "id": "psup-23117",
    "interet": 79.35961182658136,
    "faisabilite": 77.55,
@@ -582,6 +612,21 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-23119",
+   "interet": 79.80740711806465,
+   "faisabilite": 75.55,
+   "pertinence": 78.10444427083878,
+   "repere": [
+    41,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Frais (≈ 1 683 €/an) au-delà de ton budget."
   },
   {
    "id": "psup-23124",
@@ -670,51 +715,6 @@
     "en_dessous"
    ],
    "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-39250",
-   "interet": 72.40424431466174,
-   "faisabilite": 85.05,
-   "pertinence": 77.46254658879704,
-   "repere": [
-    84,
-    0.62,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-23123",
-   "interet": 80.21760435460163,
-   "faisabilite": 73.15,
-   "pertinence": 77.39056261276099,
-   "repere": [
-    29,
-    0.21,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-23231",
-   "interet": 77.58686970097556,
-   "faisabilite": 76.75,
-   "pertinence": 77.25212182058533,
-   "repere": [
-    45,
-    0.5,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "a41feb7bc8bb7f8e8e563e87998dfe31fe88a4e5bb58c99d54e8bbbef515d431",
-  "textes": "99233f761c8910a6c92ae757cbec9a9e7ad2f1f58693e2ad4e94509e225253de"
+  "calculs": "6d2ceffa05a25ad8f96fee9fb480b8ec50dfea373e0be42a630b589dc18bde30",
+  "textes": "5f5c9170d67d23ee385bc1b08319fc08f653886797c65e7d8a7634045e19d913"
  }
 }
