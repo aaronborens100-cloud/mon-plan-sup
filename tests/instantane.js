@@ -4,7 +4,7 @@
  * Pour chaque profil, on garde :
  *   - les 40 premières recommandations, en clair (id, intérêt, faisabilité, pertinence,
  *     repères d'admission, catégorie), pour voir facilement ce qui a changé ;
- *   - la liste de 10 vœux (wishlist), la section « Nouvelles à la rentrée 2026 » (nouvelles) et les
+ *   - la liste de 10 vœux (wishlist), la section « Nouvelle formation à la rentrée 2026 » (nouvelles, avec son avertissement) et les
  *     propositions à l'étranger (etranger), en clair ;
  *   - deux empreintes (sha256) de TOUTES les formations notées :
  *       « calculs » : chiffres, catégories, exclusions ;
@@ -51,7 +51,7 @@ function instantane(site, p) {
     interets: propre(A.interets),
     top: A.resultats.slice(0, NB_EN_CLAIR).map(chiffres),
     voeux: propre(W),
-    nouvelles: E.nouvelles(A.resultats, A.interets).map((x) => ({ id: x.f.id, interet: x.interet })),
+    nouvelles: E.nouvelles(A.resultats, A.interets).map((x) => ({ id: x.f.id, interet: x.interet, avertissement: E.alerteFiliereSelective(x.f, A.stats) })),
     etranger: propre(X),
     empreintes: {
       calculs: empreinte(A.resultats.map(chiffres)),

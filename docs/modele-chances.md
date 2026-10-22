@@ -554,3 +554,32 @@ cinquième fiche sans lien Parcoursup) sur 10 vœux.
   contrat ou consulaires, 1 311 privées), dont 1 241 peuvent entrer dans la liste de vœux (990 et 251).
 - **Limites** : le statut ne dit rien du montant (un établissement privé peut avoir des frais faibles) ; seul un
   relevé sourcé des frais lève la règle pour une formation.
+
+## 10. Section « Nouvelle formation à la rentrée 2026 » : une formation, avertissement de niveau
+
+Décisions du fondateur du 22/10/2026 (issue #8, points 1 et 2). Code : `js/moteur.js` (`MAX_NOUVELLES`,
+`nouvelles`, `alerteFiliereSelective`, `tauxFiliere`), taux par filière calculé par `construireCatalogue`
+(`js/app.js`), affichage par `blocNouvelles`. Tests : `tests/nouvelles.test.js`.
+
+- **Une seule formation** (`MAX_NOUVELLES` = 1) : la formation « nouvelle_2026 » la mieux classée par intérêt,
+  avec les mêmes garde-fous qu'avant (liste blanche `CATEGORIES_NOUVELLES`, filière à relire, section vide sans
+  réponse au questionnaire). Le titre et les textes de la section sont au singulier.
+- **Règle éditoriale `SEUIL_FILIERE_TRES_SELECTIVE` = 20 %** : une filière (code `nmc`) est « très sélective » si le
+  taux d'accès moyen 2025 de ses formations est inférieur à 20 %. Ce taux moyen est la moyenne simple (non pondérée
+  par le nombre de candidats) de `taux_acces_ens` (`data/stats.json`, Parcoursup 2025, open data MESR, jeu
+  `fr-esr-parcoursup`, consulté le 08/10/2026) sur les formations de la cartographie 2026 (`data/parcoursup.json`)
+  qui ont ce code `nmc` et des statistiques 2025. Le seuil de 20 % est un choix du fondateur, pas une donnée
+  officielle.
+- **Qui** : élève dont la moyenne générale (`statsProfil`) est inférieure à `SEUIL_MOYENNE_FILIERE_SELECTIVE` = 12.
+- **Effet** : la formation **reste** dans la section ; on affiche « Formation très sélective dans cette filière :
+  en 2025, X % des candidats en moyenne ont reçu une proposition dans les formations de la même filière. »
+  (X arrondi à l'entier), avec la source Parcoursup 2025. Ce taux n'est jamais présenté comme celui de la
+  formation, qui n'a pas de statistiques ; il ne change ni l'intérêt, ni le classement, ni la liste de 10 vœux.
+- **Sans effet** : filière sans aucune formation avec des statistiques 2025 (exemple : `DEUST-PTP-App`) ou élève
+  sans moyenne générale : on ne sait pas, pas d'avertissement. Moyenne de 12 ou plus : jamais d'avertissement.
+- **Exemples** : `ScPo-Lic` (Sciences Po – HKU, 52341) : 16 formations, 6,9 % → très sélective ; `L1-STAPS` :
+  125 formations, 36 % ; `FECM-B3` (bachelors d'écoles de commerce) : 133 formations, 68 %.
+- **Limites** : aucun nombre minimum de formations n'est exigé (une filière à 1 formation compte) ; certains codes
+  `nmc` sont larges (`FECM-B3`) et la moyenne de la filière peut être loin de la sélectivité réelle de la
+  formation. Sur les 14 profils types, aucun ne déclenche l'avertissement au 22/10/2026 (le profil « fragile »
+  reçoit le bachelor ISG Nice, `FECM-B3`).

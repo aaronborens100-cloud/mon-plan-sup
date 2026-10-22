@@ -830,15 +830,8 @@
  "nouvelles": [
   {
    "id": "psup-52050",
-   "interet": 87.83333333333334
-  },
-  {
-   "id": "psup-50774",
-   "interet": 83.83333333333334
-  },
-  {
-   "id": "psup-52043",
-   "interet": 83.83333333333334
+   "interet": 87.83333333333334,
+   "avertissement": null
   }
  ],
  "etranger": {

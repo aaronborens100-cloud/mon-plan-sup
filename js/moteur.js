@@ -906,7 +906,7 @@
   const CATEGORIES_BAC_PRO = ["Certificats de spécialisation et FCIL"];   // catégories Parcoursup (tf) visant les bacs pro
   // Nouvelles formations 2026 (sans statistiques) : jamais dans la liste de 10 vœux, proposées à part (nouvelles()),
   // et seulement si leur catégorie Parcoursup (tf) vise les bacheliers généraux (sans statistiques, pas de pct_bg).
-  const MAX_NOUVELLES = 3;
+  const MAX_NOUVELLES = 1;   // décision du fondateur du 22/10/2026 : une seule formation dans la section
   const CATEGORIES_NOUVELLES = ["Licence", "Licence sélective", "CPGE", "Formations des écoles d'ingénieurs",
     "Formations des écoles de commerce et de management", "Etudes de santé", "Sciences Po - Instituts d'études politiques",
     "C.M.I - Cursus Master en Ingénierie", "DEUST", "Formations d'art, de design et du spectacle vivant"];
@@ -914,7 +914,7 @@
     sans_stats: "Statistiques d'admission non publiées : aucun repère d'admission.",
     filiere_a_relire: "Description de la filière encore à vérifier.",
     bac_pro: "Formation qui accueille surtout des bacheliers professionnels.",
-    nouvelle_2026: "Nouvelle formation 2026 : proposée à part, dans « Nouvelles à la rentrée 2026 ».",
+    nouvelle_2026: "Nouvelle formation 2026 : proposée à part, dans « Nouvelle formation à la rentrée 2026 ».",
     nouvelle_hors_categories: "Nouvelle formation 2026 d'une catégorie qui ne vise pas d'abord les bacheliers généraux.",
   };
   // Règles qui écartent la formation des listes (tableau vide : la formation peut y entrer)
@@ -1061,7 +1061,7 @@
   }
 
   /* ---------------------------------------------------------------- nouvelles formations 2026 */
-  // Section « Nouvelles à la rentrée 2026 », sous la liste de 10 vœux : au plus n formations « nouvelle_2026 »,
+  // Section « Nouvelle formation à la rentrée 2026 », sous la liste de 10 vœux : au plus n formations (MAX_NOUVELLES = 1) « nouvelle_2026 »,
   // triées uniquement par intérêt (sans chiffres, leur faisabilité est artificiellement haute), sans catégorie ni
   // repère d'admission. Mêmes règles du garde-fou que la liste (filière à relire, liste blanche des catégories), sauf la
   // règle « nouvelle_2026 » elle-même. Sans réponse au questionnaire, l'intérêt ne distingue rien : section vide.
@@ -1071,6 +1071,27 @@
       && reglesHorsListe(x.f).every((r) => r === "nouvelle_2026"))
       .sort((a, b) => b.interet - a.interet)   // tri stable : à intérêt égal, l'ordre de recommander() est conservé
       .slice(0, n);
+  }
+  // Avertissement de niveau (décision du fondateur du 22/10/2026, docs/modele-chances.md, section 10) : la formation
+  // proposée reste dans la section, mais si la moyenne générale de l'élève est sous SEUIL_MOYENNE_FILIERE_SELECTIVE et
+  // que sa filière (code nmc) est très sélective, on l'avertit. Filière très sélective : taux d'accès moyen 2025
+  // (stats.json, taux_acces_ens) des formations de la même filière sous SEUIL_FILIERE_TRES_SELECTIVE (règle éditoriale).
+  // Ce taux moyen n'est jamais présenté comme celui de la formation. Filière sans aucune statistique 2025, ou élève
+  // sans moyenne : on ne sait pas, pas d'avertissement.
+  const SEUIL_FILIERE_TRES_SELECTIVE = 20;      // % (taux d'accès moyen 2025 de la filière)
+  const SEUIL_MOYENNE_FILIERE_SELECTIVE = 12;   // moyenne générale de l'élève (/20)
+  let TAUX_FILIERES = new Map();
+  // t : { nmc: { moyenne, nb } }, calculé par app.js (construireCatalogue) à partir de parcoursup.json et stats.json
+  function definirTauxFilieres(t) { TAUX_FILIERES = new Map(Object.entries(t || {})); }
+  const tauxFiliere = (f) => { const n = nmcDe(f); return (n && TAUX_FILIERES.get(n)) || null; };
+  function alerteFiliereSelective(f, s) {
+    const mg = s ? s.moyenneGenerale : null;
+    if (typeof mg !== "number" || mg >= SEUIL_MOYENNE_FILIERE_SELECTIVE) return null;
+    const t = tauxFiliere(f);
+    if (!t || !t.nb || typeof t.moyenne !== "number" || t.moyenne >= SEUIL_FILIERE_TRES_SELECTIVE) return null;
+    const x = Math.round(t.moyenne);
+    return { nmc: nmcDe(f), taux: x, nb: t.nb,
+      texte: `Formation très sélective dans cette filière : en 2025, ${x} % des candidats en moyenne ont reçu une proposition dans les formations de la même filière.` };
   }
 
   /* ---------------------------------------------------------------- étranger */
@@ -1184,5 +1205,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
