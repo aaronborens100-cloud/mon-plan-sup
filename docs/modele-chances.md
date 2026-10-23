@@ -833,3 +833,26 @@ Avec toutes les règles (garde-fous, diversité, même intitulé, même type de 
   proposés : sur Parcoursup, ce sont des vœux distincts.
 - La forme (double licence, LAS) est lue dans l'intitulé : une double licence dont l'intitulé ne le dit pas serait
   traitée comme une licence simple.
+
+## 12. Prépas scientifiques et spécialité maths (issue #57)
+
+Règle posée sur les spécialités de l'élève (`aMaths()`), pas sur les fiches : seules 10 fiches de CPGE scientifiques
+déclaraient les maths « obligatoires », le point bloquant ne se déclenchait donc presque jamais.
+
+- **Filières concernées** (`PREPAS_MATHS`, code `nmc`) : CPGE-MPSI, CPGE-PCSI, CPGE-PTSI, CPGE-MP2I. Le moteur range aussi
+  BCPST, TSI, TB et TPC dans `prepa_scientifique` : elles ne sont **pas** concernées (attendus à confirmer).
+- **Sans spécialité maths ni maths complémentaires** : formation exclue (`exclu`), donc jamais dans la liste, les
+  équivalents, les nouvelles formations, les découvertes ni les recommandations. Texte : « Les prépas scientifiques
+  demandent la spécialité mathématiques en terminale : tu ne la suis pas. »
+- **Maths complémentaires sans spécialité maths** : point bloquant (critère « spécialités ») : catégorie « ambitieux »,
+  jamais « réaliste » ni « sécurité », et jamais dans les listes (les listes écartent les points bloquants). Le point
+  bloquant, plutôt qu'une simple règle de catégorie, est nécessaire : `tests/categories.test.js` interdit « ambitieux »
+  à une formation de taux d'accès d'au moins 85 % sans point bloquant. Les maths complémentaires ne comptent pas comme
+  spécialité maths.
+- **Élève de première** : même logique sur les spécialités déclarées ; sans maths en première, il ne pourra pas la
+  prendre en terminale (les maths complémentaires s'adressent à ceux qui abandonnent la spécialité).
+- **Sans spécialité déclarée** : règle non appliquée (on ne sait pas).
+- **Source** : attendus Parcoursup de la MPSI (g_ta_cod 3177) : « Un excellent niveau de maîtrise en mathématiques et un
+  très bon niveau en physique-chimie sont nécessaires. » ; PCSI (3316) : « En classe de 1re : privilégier les spécialités
+  maths et physique ou SI » ; BCPST (5651) : « Il est très fortement conseillé de suivre les 3 spécialités Mathématiques ».
+  Consultées le 23/10/2026. Les attendus nationaux ne nomment pas la spécialité : la règle est une décision du fondateur.

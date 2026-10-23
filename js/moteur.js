@@ -222,6 +222,13 @@
   // niveau donné par la note de maths expertes (seuils éditoriaux SEUIL_EXPERTES_FAIBLE et SEUIL_EXPERTES_FORT)
   const niveauExpertes = (note) => (note === null || note === undefined ? null : note < SEUIL_EXPERTES_FAIBLE ? "renforcer" : note >= SEUIL_EXPERTES_FORT ? "fort" : "conforme");
   function worst(a, b) { const O = ["bloquant", "faible", "renforcer", "preparer", "inconnu", "conforme", "fort", "na"]; return O.indexOf(a) <= O.indexOf(b) ? a : b; }
+  // Prépas scientifiques qui attendent la spécialité maths en terminale (décision du fondateur, issue #57).
+  // Source : attendus Parcoursup de la MPSI (g_ta_cod 3177) et de la PCSI (3316), consultés le 23/10/2026 ; voir
+  // docs/modele-chances.md. BCPST, TSI, TB et TPC ne sont pas concernées (attendus à confirmer, question au fondateur).
+  const PREPAS_MATHS = ["CPGE-MPSI", "CPGE-PCSI", "CPGE-PTSI", "CPGE-MP2I"];
+  const estPrepaMaths = (f) => f.type === "prepa_scientifique" && (PREPAS_MATHS.includes(f.__nmc) || (!f.__nmc && /^CPGE (MPSI|PCSI|PTSI|MP2I)\b/.test(f.nom || "")));
+  const MESSAGE_PREPA_SANS_MATHS = "Les prépas scientifiques demandent la spécialité mathématiques en terminale : tu ne la suis pas.";
+  const MESSAGE_PREPA_COMPL = "Les prépas scientifiques demandent la spécialité mathématiques : tes maths complémentaires ne la remplacent pas. Point bloquant : au mieux « ambitieux ».";
   function critSpecialites(f, s) {
     const sp = f.specialites || {};
     if (!s.specialites.length) return { niveau: "inconnu", texte: "Indique tes spécialités dans ton profil.", manque: [], actions: [] };
@@ -682,6 +689,10 @@
     const crit = { notes: critNotes(f, s), specialites: critSpecialites(f, s), langues: critLangues(f, s), tests: critTests(f, s), extra: critExtra(f, s), appreciations: critAppreciations(f, s) };
     const scores = Object.entries(crit).map(([k, c]) => (k === "notes" && typeof c.ecart === "number" ? clamp(74 + c.ecart * 16, 0, 100) : NIVEAUX[c.niveau].score)).filter((x) => x !== null);
     let faisabilite = scores.reduce((a, b) => a + b, 0) / scores.length;   // sans arrondi (tri) ; l'affichage arrondit
+    // prépa scientifique sans la spécialité maths (issue #57) : point bloquant (catégorie « ambitieux », jamais proposée
+    // dans les listes) ; sans aucun cours de maths, la formation est en plus exclue plus bas
+    const prepaMaths = estPrepaMaths(f) && s.specialites.length ? aMaths(s) : null;
+    if (prepaMaths && prepaMaths !== "spe") crit.specialites = { niveau: "bloquant", texte: prepaMaths === "compl" ? MESSAGE_PREPA_COMPL : MESSAGE_PREPA_SANS_MATHS, manque: ["la spécialité mathématiques"], actions: [] };
     const bloque = Object.values(crit).some((c) => c.niveau === "bloquant");
     if (bloque) faisabilite = Math.min(faisabilite, 25);
 
@@ -770,6 +781,10 @@
     // une formation à plus de 45 km (on ne peut pas vérifier qu'elle est assez près) ; même chose pour « proche »
     // (250 km, MESSAGE_PROCHE_DISTANCE_INCONNUE). « partout » et l'élève sans lycée ne changent pas.
     if (mob === 0 && distanceInconnue) exclu = exclu || MESSAGE_DOMICILE_DISTANCE_INCONNUE;
+    // prépa scientifique sans spécialité maths ni maths complémentaires : jamais proposée (issue #57) ; les autres
+    // raisons d'exclusion (distance, budget, étranger) passent avant, pour garder leur message. Élève de première :
+    // spécialités déclarées.
+    if (prepaMaths === "non") exclu = exclu || MESSAGE_PREPA_SANS_MATHS;
     if (mob === 1 && distanceInconnue) exclu = exclu || MESSAGE_PROCHE_DISTANCE_INCONNUE;
     const horsDistance = !!s.geo && (mob === 0 || mob === 1)
       && (loinPays || traversee || distanceInconnue || dist > DISTANCE_ACCEPTEE_KM[mob]);
@@ -1365,5 +1380,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
