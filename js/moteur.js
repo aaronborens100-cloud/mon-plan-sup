@@ -602,6 +602,8 @@
   const DISTANCE_ACCEPTEE_KM = { 0: 45, 1: 250, 2: Infinity };
   // Exclusion « domicile » d'une formation sans coordonnées (issue #41) : texte affiché sur la fiche (« Hors de tes critères »)
   const MESSAGE_DOMICILE_DISTANCE_INCONNUE = `Tu as indiqué vouloir rester chez tes parents : on ne connaît pas l'adresse de cette formation, on ne peut donc pas vérifier qu'elle est à moins de ${DISTANCE_ACCEPTEE_KM[0]} km de ton lycée.`;
+  // Même exclusion pour « proche » (décision du fondateur, 23/10/2026).
+  const MESSAGE_PROCHE_DISTANCE_INCONNUE = `Tu as indiqué vouloir rester assez près de chez toi : on ne connaît pas l'adresse de cette formation, on ne peut donc pas vérifier qu'elle est à moins de ${DISTANCE_ACCEPTEE_KM[1]} km de ton lycée.`;
   // Pénalité d'intérêt (points sur 100) pour chaque tranche de 100 km : « avant » jusqu'à la distance acceptée, « apres »
   // au-delà, sans dépasser « plafond ». Choix éditoriaux (aucune donnée ne mesure l'effet de la distance) :
   // - domicile : très forte (−4,5 à 45 km, −27 à 120 km, −40 dès 165 km environ) ;
@@ -765,9 +767,10 @@
     // coordonnées) : on ne peut pas vérifier, donc jamais « sécurité » non plus. Sans lycée, la règle ne s'applique pas.
     const distanceInconnue = !!s.geo && !loinPays && dist === null;
     // règle « domicile », distance inconnue (issue #41) : avec un lycée, une formation sans coordonnées est exclue comme
-    // une formation à plus de 45 km (on ne peut pas vérifier qu'elle est assez près). « proche », « partout » et l'élève
-    // sans lycée ne changent pas (REGLE_DISTANCE_INCONNUE pour « proche »).
+    // une formation à plus de 45 km (on ne peut pas vérifier qu'elle est assez près) ; même chose pour « proche »
+    // (250 km, MESSAGE_PROCHE_DISTANCE_INCONNUE). « partout » et l'élève sans lycée ne changent pas.
     if (mob === 0 && distanceInconnue) exclu = exclu || MESSAGE_DOMICILE_DISTANCE_INCONNUE;
+    if (mob === 1 && distanceInconnue) exclu = exclu || MESSAGE_PROCHE_DISTANCE_INCONNUE;
     const horsDistance = !!s.geo && (mob === 0 || mob === 1)
       && (loinPays || traversee || distanceInconnue || dist > DISTANCE_ACCEPTEE_KM[mob]);
     if (dist !== null && mob !== undefined) {
@@ -1361,6 +1364,6 @@
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
+  window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
     SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
