@@ -36,8 +36,8 @@ const REGLES = {
   message_sans_notes: "Profil sans moyenne : protection « Renseigne tes bulletins », aucune formation « sécurité », message affiché",
   message_sans_lycee: "Profil sans lycée ⇔ message « Indique ton lycée… » sur Ma liste",
   pourcentage_personnel: "Aucun pourcentage personnel dans les pages (« tes chances : X % », « X % de chances », fourchette « X–Y % », « probabilité … X % »)",
-  prepa_scientifique_sans_maths: "Aucune prépa scientifique (liste de 10, équivalents, nouvelle formation) pour un élève sans la spécialité maths (maths complémentaires non comptées)",
-  prepa_scientifique_sans_maths_recommandees: "Aucune prépa scientifique dans les 10 recommandations affichées pour un élève sans la spécialité maths",
+  prepa_scientifique_sans_maths: "Aucune prépa scientifique MPSI, PCSI, PTSI ou MP2I (liste de 10, équivalents, nouvelle formation) pour un élève sans la spécialité maths (maths complémentaires non comptées)",
+  prepa_scientifique_sans_maths_recommandees: "Aucune prépa MPSI, PCSI, PTSI ou MP2I dans les 10 recommandations affichées pour un élève sans la spécialité maths",
   html_nan_undefined_null: "Aucun « NaN », « undefined », « null » ni « [object Object] » dans le texte visible des pages",
   html_element_vide: "Aucun élément de texte visible vide (p, li, h1-h6, dt, dd, td, th, a, button, strong, b, em, label, summary, option)",
 };
@@ -182,10 +182,10 @@ function controler(site, p) {
   // prépa scientifique sans spécialité maths
   if (!aSpecialiteMaths(p.profil) && (p.profil.specialites || []).length) {
     for (const [ou, x] of [...voeux, ...N.map((x) => ["nouvelle formation", x])])
-      if (x.f.type === "prepa_scientifique") ajoute("prepa_scientifique_sans_maths", nom(x), `${ou} ; spécialités ${p.profil.specialites.join(" + ")}${p.profil.optionMaths !== "aucune" ? `, maths ${p.profil.optionMaths}` : ""}`);
+      if (E.estPrepaMaths(x.f)) ajoute("prepa_scientifique_sans_maths", nom(x), `${ou} ; spécialités ${p.profil.specialites.join(" + ")}${p.profil.optionMaths !== "aucune" ? `, maths ${p.profil.optionMaths}` : ""}`);
     // les 10 recommandations affichées (prépas regroupées par famille sur la page : on lit les 10 premières non exclues)
     for (const x of A.resultats.filter((y) => !y.exclu).slice(0, 10))
-      if (x.f.type === "prepa_scientifique") ajoute("prepa_scientifique_sans_maths_recommandees", nom(x), `spécialités ${p.profil.specialites.join(" + ")}`);
+      if (E.estPrepaMaths(x.f)) ajoute("prepa_scientifique_sans_maths_recommandees", nom(x), `spécialités ${p.profil.specialites.join(" + ")}`);
   }
   return v;
 }
