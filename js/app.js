@@ -125,7 +125,7 @@
     else if (v === "donnees") m.innerHTML = vueDonnees();
     else {
       m.innerHTML = vueAccueil();
-      if (!DATA) chargerFormations().then(() => { const b = $(".bande-chiffres"); if (b) b.outerHTML = bandeChiffres(); }, () => {});   // chiffres de l'accueil
+      if (!DATA) chargerFormations().then(() => { const b = $(".bande-chiffres"); if (b) b.outerHTML = bandeChiffres(); const ex = $(".hv-exemple-anneau"); if (ex) ex.outerHTML = anneauExempleAccueil(); }, () => {});   // chiffres et exemple de l'accueil
     }
     if (!LIEUX && $("#lyceeq")) chargerLycees().then(() => { if (app.lyceeQ && $("#lyceeq")) rendreRechercheLycee(); }, () => {});
     const h1 = m.querySelector("h1");
@@ -255,9 +255,19 @@
   const ico = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ""}</svg>`;
   const CAT_TON = { ambitieux: "corail", realiste: "ambre", securite: "menthe" };
   // anneau du taux d'accès officiel de la formation (pas une probabilité personnelle), couleur de la catégorie
-  // Exemple de l'accueil (CPGE ECG maths approfondies + HGG, Lycée du Parc, Lyon) : vrai taux d'accès 2025 de l'open data
-  // Parcoursup (gta 31314, 40 %), au format de E.repere. L'ancien format { bas, haut, mid } affichait « NaN » et « undefined % ».
-  const EXEMPLE_ACCUEIL = { taux: 40, session: "2025" };
+  // Exemple de l'accueil : CPGE ECG maths approfondies + HGG du Lycée du Parc (Lyon), gta Parcoursup 31314. Son taux d'accès
+  // est lu dans les données chargées (data/stats.json, via construireCatalogue puis E.repere), jamais écrit dans le code :
+  // il suit la mise à jour des statistiques. Seul le taux officiel de stats.json est montré : si la formation n'y est plus,
+  // la fiche fusionnée retombe sur un chiffre de média (Thotis, 14 % pour deux vœux additionnés), qui n'est pas affiché ici.
+  // Formation absente, taux non publié ou données pas encore chargées : pas d'anneau (aucun chiffre de repli).
+  // L'ancien appel anneau({ bas, haut, mid }) affichait « NaN % » et « undefined % ».
+  const GTA_EXEMPLE_ACCUEIL = "31314";
+  function anneauExempleAccueil() {
+    const f = DATA && DATA.formations.find((x) => x.id === "psup-" + GTA_EXEMPLE_ACCUEIL);
+    const officiel = DATA ? statDe(GTA_EXEMPLE_ACCUEIL, "taux_acces_ens") : null;
+    const r = f && Number.isFinite(officiel) ? E.repere(f, { moyenneGenerale: null }) : null;
+    return `<span class="hv-exemple-anneau">${r && r.taux === officiel ? anneau(r, "realiste", 68) : ""}</span>`;
+  }
   function anneau(r, cat, taille = 84) {
     const ton = CAT_TON[cat] || "bleu", fond = '<circle class="anneau-fond" cx="32" cy="32" r="27"/>';
     // taux absent ou non numérique : anneau vide « ? », jamais « NaN » ni « undefined % »
@@ -324,7 +334,7 @@
           <div class="hv-carte hv-formation">
             <span class="hv-titre">Exemple de recommandation</span>
             <div class="row" style="gap:6px"><span class="pill ton-ambre">Réaliste</span><span class="pill ton-violet">Prépa ECG</span></div>
-            <div class="hv-ligne"><div><b>CPGE ECG, maths approfondies</b><span>${ico("pin")}Lyon</span></div>${anneau(EXEMPLE_ACCUEIL, "realiste", 68)}</div>
+            <div class="hv-ligne"><div><b>CPGE ECG, maths approfondies</b><span>${ico("pin")}Lyon</span></div>${anneauExempleAccueil()}</div>
             <div class="hv-crit"><span>Notes ${niveauBarre("fort")}</span><span>Spécialités ${niveauBarre("conforme")}</span><span>Appréciations ${niveauBarre("conforme")}</span></div>
           </div>
           <div class="hv-carte hv-plan">

@@ -112,9 +112,33 @@ test("une formation au taux d'accès officiel garde sa note et sa faisabilité s
   assert.doesNotMatch(fiche, /pas de chiffres officiels/);
 });
 
-test("accueil : l'exemple de recommandation affiche un vrai taux d'accès, pas « NaN »", async () => {
-  const { site } = await sitePour(PROFILS.find((p) => p.id === "vide"));
+// Exemple de l'accueil (CPGE ECG du Lycée du Parc, gta 31314) : taux lu dans data/stats.json, jamais écrit dans le code
+const STATS = require("../data/stats.json");
+const GTA_EXEMPLE = "31314";
+const exempleAccueil = (html) => (html.match(/<span class="hv-exemple-anneau">([^]*?)<\/span><\/div>\s*<div class="hv-crit">/) || [])[1];
+const statsAvec = (modif) => { const rows = Object.assign({}, STATS.rows); modif(rows); return { "data/stats.json": Object.assign({}, STATS, { rows }) }; };
+const iTaux = STATS.meta.cols.indexOf("taux_acces_ens");
+
+test("accueil : l'exemple affiche le taux d'accès de gta 31314 lu dans data/stats.json, pas « NaN »", async () => {
+  const taux = STATS.rows[GTA_EXEMPLE][iTaux];
+  assert.ok(Number.isFinite(taux), "gta 31314 sans taux dans data/stats.json : choisir un autre exemple");
+  const site = await chargerSite();
+  const ex = exempleAccueil(site.afficher("#accueil"));
+  assert.ok(ex !== undefined, "exemple de l'accueil introuvable");
+  assert.ok(ex.includes(`<b>${Math.round(taux)} %</b>`), `taux attendu ${Math.round(taux)} % : ${ex}`);
+  assert.doesNotMatch(ex, /NaN|undefined|null/);
+});
+
+test("accueil : l'exemple suit les données (taux modifié en mémoire)", async () => {
+  const site = await chargerSite(statsAvec((rows) => { const r = rows[GTA_EXEMPLE].slice(); r[iTaux] = 73; rows[GTA_EXEMPLE] = r; }));
+  const ex = exempleAccueil(site.afficher("#accueil"));
+  assert.ok(ex && ex.includes("<b>73 %</b>"), ex);
+});
+
+test("accueil : sans gta 31314 dans les stats, l'exemple n'affiche aucun chiffre", async () => {
+  const site = await chargerSite(statsAvec((rows) => { delete rows[GTA_EXEMPLE]; }));
   const html = site.afficher("#accueil");
-  assert.match(html, /<b>40 %<\/b>/);
+  const ex = exempleAccueil(html);
+  assert.equal(ex, "", `aucun anneau attendu : ${ex}`);
   assert.doesNotMatch(html, /NaN|undefined/);
 });
