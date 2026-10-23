@@ -436,7 +436,7 @@ formations proches de note), et qu'au-delà elle écarte vite la formation du ha
 - **Jamais « sécurité » au-delà de la distance acceptée** (`REGLE_HORS_DISTANCE`, après la table des
   catégories) : formation plus loin que 45 km (domicile) ou 250 km (proche), de l'autre côté de la mer, ou à
   l'étranger → « réaliste » au mieux. Même chose si la formation n'a pas de coordonnées (`REGLE_DISTANCE_INCONNUE`) :
-  on ne peut pas vérifier la distance (pour « domicile », elle est même exclue, voir plus bas). `protection()` ne
+  on ne peut pas vérifier la distance (pour « domicile » et « proche » avec lycée, elle est même exclue, voir plus bas). `protection()` ne
   compte donc que des vœux à distance acceptée.
 - **Règle « domicile »** (décision du fondateur, 20/10/2026) : pour un élève qui a indiqué son lycée et répondu
   « Non, je veux rester chez mes parents » (mobilite 0), une formation à plus de `DISTANCE_ACCEPTEE_KM[0]` = 45 km
@@ -456,12 +456,19 @@ formations proches de note), et qu'au-delà elle écarte vite la formation du ha
   (section 9.3), posé avant, reste prioritaire. Avant cette règle, la formation était seulement privée de la
   catégorie « sécurité » (`REGLE_DISTANCE_INCONNUE`) et pouvait entrer dans la liste : un élève de Mauriac (Cantal)
   recevait le Programme Grande École IÉSEG « Paris-La Défense » (ps-12929, ville alors non localisée, issue #48).
-  **Sans changement** : mobilité « proche » (pas d'exclusion, jamais « sécurité », `REGLE_DISTANCE_INCONNUE`),
-  « partout », élève sans lycée (voir l'issue #43). Formations concernées au 22/10/2026 : 4 fiches de
+  **Sans changement** : « partout » et élève sans lycée (voir l'issue #43). « Proche » : voir la règle suivante. Formations concernées au 22/10/2026 : 4 fiches de
   `data/formations.json` sans coordonnées (multi-campus : Arts et Métiers, SKEMA Global BBA, réseau Polytech ; DN MADE
   Arue, Polynésie), toutes déjà écartées des listes (`sans_stats`) : la règle ne change aucune liste des 14 profils
   types, seulement l'exclusion de ces 4 fiches pour le profil « fragile » (empreinte « calculs » de sa référence). Elle
   protège contre toute fiche qui perdrait ses coordonnées (commune non reconnue, nouvelle fiche).
+- **Règle « proche », distance inconnue** (décision du fondateur, 23/10/2026) : même exclusion pour un élève qui a
+  indiqué son lycée et répondu « proche » (mobilite 1) : une formation française sans coordonnées est **exclue**, car on
+  ne peut pas vérifier qu'elle est à moins de `DISTANCE_ACCEPTEE_KM[1]` = 250 km. Mêmes effets que pour « domicile »
+  (liste de 10 vœux, recommandations, équivalents, nouvelles 2026, découverte) et même priorité du message de frais.
+  Sa fiche affiche `MESSAGE_PROCHE_DISTANCE_INCONNUE` : « Tu as indiqué vouloir rester assez près de chez toi : on ne
+  connaît pas l'adresse de cette formation, on ne peut donc pas vérifier qu'elle est à moins de 250 km de ton lycée. »
+  `REGLE_DISTANCE_INCONNUE` ne sert plus que pour « partout » avec lycée (jamais « sécurité » sans exclusion).
+  Conséquence assumée : la liste d'un élève « proche » peut compter moins de 10 vœux.
 - **Sans lycée** : aucune distance, aucune pénalité, aucune académie, et la règle ci-dessus ne s'applique pas.
   Ma liste affiche `MESSAGE_SANS_LYCEE` : « Indique ton lycée : sans lui, on ne peut pas tenir compte de ton
   académie ni de la distance. »
@@ -734,13 +741,13 @@ Sous chaque vœu de la liste de 10 (`wishlist`), Ma liste affiche jusqu'à `MAX_
   peut différer.
 - **Même catégorie** que le vœu (sécurité, réaliste, ambitieux), calculée par `evaluer()` comme pour la liste.
 - **Mêmes garde-fous et interdictions que la liste** : jamais une formation exclue (`exclu` : frais au-delà d'un budget
-  ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km ou distance inconnue pour
-  « domicile » avec lycée ; étranger pour
+  ≤ 5 000 €, y compris un minimum « à partir de X € », section 9.3 ; plus de 45 km (domicile) ou distance inconnue
+  (domicile et proche) avec lycée ; étranger pour
   « rester en France » ou un pays non coché…), jamais avec un point bloquant, jamais hors Parcoursup, jamais écartée des
   listes (`reglesHorsListe` : sans statistiques, bac pro, nouvelle formation 2026, filière à relire).
 - **Équivalent « sécurité »** : exactement les interdictions de la liste, ni plus ni moins. La catégorie vient
   d'`evaluer()`, comme pour la liste : jamais au-delà de la distance acceptée (45 km domicile, 250 km proche, traversée
-  comprise), jamais à distance inconnue pour « domicile » et « proche » (`REGLE_DISTANCE_INCONNUE`), hors des
+  comprise), jamais à distance inconnue pour « domicile » et « proche » (exclue, section 8.3), hors des
   territoires choisis, sur un campus à l'étranger non voulu, dans un établissement privé aux frais inconnus avec un
   budget serré, ni dans une fourchette de frais qui dépasse le budget. Pour la mobilité « partout », une formation sans
   coordonnées est traitée comme par le moteur : elle peut rester « sécurité » (le départage la place après les

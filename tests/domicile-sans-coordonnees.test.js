@@ -142,23 +142,32 @@ test("fiche construite sans coordonnées : exclue pour « domicile » avec lycé
   assert.deepEqual(ids(W2.liste), ids(W.liste), "la liste ne change pas");
 });
 
-test("sans changement : « proche », « partout » et élève sans lycée", () => {
+test("sans changement : « partout » et élève sans lycée", () => {
   const { E, DATA, QUEST } = site;
   const ifsi = DATA.formations.find((f) => f.id === "psup-23106");
   const f = sansCoordonnees(ifsi);
-  // « proche » : pas d'exclusion, jamais « sécurité » (REGLE_DISTANCE_INCONNUE, inchangée)
-  for (const mobilite of ["proche", "partout"]) {
-    const it = E.interets(QUEST, Object.assign({}, MAURIAC_REPONSES, { mobilite }));
-    const x = E.evaluer(f, E.statsProfil(MAURIAC_PROFIL), it);
-    assert.equal(x.exclu, null, mobilite);
-    if (mobilite === "proche") assert.ok(x.horsDistance);
-  }
+  // « partout » : pas d'exclusion
+  const it = E.interets(QUEST, Object.assign({}, MAURIAC_REPONSES, { mobilite: "partout" }));
+  assert.equal(E.evaluer(f, E.statsProfil(MAURIAC_PROFIL), it).exclu, null, "partout");
   // sans lycée : aucune exclusion par la distance
   const sansLycee = Object.assign({}, MAURIAC_PROFIL, { lycee: null });
   const x = E.evaluer(f, E.statsProfil(sansLycee), E.interets(QUEST, MAURIAC_REPONSES));
   assert.equal(x.exclu, null);
-  // Mauriac, « proche » : liste complète (10 vœux), aucune exclusion pour distance inconnue
-  const { A, W } = analyser(site, MAURIAC_PROFIL, Object.assign({}, MAURIAC_REPONSES, { mobilite: "proche" }));
+});
+
+test("« proche » avec lycée : fiche sans coordonnées exclue (MESSAGE_PROCHE_DISTANCE_INCONNUE), jamais dans les 10 vœux", () => {
+  const { E, DATA, QUEST } = site;
+  const ifsi = DATA.formations.find((f) => f.id === "psup-23106");
+  const reponses = Object.assign({}, MAURIAC_REPONSES, { mobilite: "proche" });
+  const x = E.evaluer(sansCoordonnees(ifsi), E.statsProfil(MAURIAC_PROFIL), E.interets(QUEST, reponses));
+  assert.equal(x.dist, null);
+  assert.equal(x.exclu, E.MESSAGE_PROCHE_DISTANCE_INCONNUE);
+  assert.match(x.exclu, /250 km/);
+  assert.equal(E.evaluer(ifsi, E.statsProfil(MAURIAC_PROFIL), E.interets(QUEST, reponses)).exclu, null);
+  const { A, W } = analyser(site, MAURIAC_PROFIL, reponses);
   assert.equal(W.liste.length, 10);
-  assert.ok(!A.resultats.some((r) => r.exclu === MESSAGE));
+  for (const r of A.resultats) {
+    if (r.dist !== null || r.f.pays !== "France" || E.situer(r.f).etranger) continue;
+    assert.ok(r.exclu, `${r.f.id} sans coordonnées non exclue`);
+  }
 });
