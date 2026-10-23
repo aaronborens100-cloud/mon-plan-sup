@@ -240,6 +240,33 @@ reconstitution ni coefficient, maths et maths expertes séparées, seuils 10 et 
 bulletin PDF donne la même moyenne que la saisie manuelle. `tests/equivalents.test.js` vérifie les formations
 équivalentes (garde-fous, ordre, doublons) et leur remplacement dans Ma liste.
 
+## Contrôles permanents et comparaison de versions
+
+Deux outils plus longs, hors de `npm test` (méthode, règles et limites : `docs/methode-controles.md`). Ils utilisent
+300 élèves fictifs tirés au hasard à graine fixe (`tests/profils-aleatoires.js` : première et terminale, moyennes de
+6 à 19, spécialités variées, lycées de tous les départements dont la Corse et l'outre-mer, toutes les réponses du
+questionnaire, profils vides, partiels et contradictoires) et figent la date du jour.
+
+```
+npm run controles                                   # contrôles sur 300 profils (≈ 6 min)
+node scripts/controles.js --n 50 --json rapport.json  # moins de profils, détail complet en JSON
+```
+
+Pour chaque règle (aucun vœu sans statistiques ni bac pro, aucune « sécurité » sous 50 %, hors distance ou hors
+territoire, 10 vœux, alerte sous 3 vœux sûrs, messages « fragile » et « vide », aucun pourcentage personnel, aucune
+prépa scientifique sans maths, pages sans « NaN », « undefined », « null » ni élément vide) : nombre de violations et
+un exemple (profil, formation). Ils ne jugent pas la pertinence des vœux.
+
+```
+git worktree add --detach ../avant main
+npm run comparer -- ../avant . --n 300              # ≈ 17 min ; ou : node scripts/comparer-versions.js ../avant . --n 300
+```
+
+Compare deux copies du site sur les 14 profils types et N profils aléatoires : `recommander`, `wishlist`,
+`etranger`, `nouvelles`, `equivalentsListe`, `protection`, `statsProfil` et le HTML des pages, en égalité stricte.
+Affiche le nombre de différences et le détail des 20 premières (avant / après). À lancer avant une PR qui ne doit pas
+changer les résultats (règle 5 de `CLAUDE.md`).
+
 ## Avertissement
 
 Mon Plan Sup ne garantit aucune admission. Les chiffres sont indicatifs : vérifier toujours sur
