@@ -16,6 +16,10 @@ Pour chaque formation retenue (clé = code gta) :
                       ou « cout » ;
   correction          raison d'une correction de min ou de max tirée du texte du relevé (CORRECTIONS), si besoin ;
   boursiers_eur       texte relevé pour les boursiers, ou null (gardé pour information, jamais affiché) ;
+  annee_tarifs        année des tarifs indiquée sur la fiche (« 2025-2026 »), seulement quand elle est connue ;
+  selon_revenus       true pour un montant UNIQUE qui dépend des revenus (« 4500 €/an suivant revenus familiaux ») : c'est
+                      un plafond (« jusqu'à X € »), jamais un minimum d'exclusion pour le budget (décision du fondateur,
+                      issue #49, 22/10/2026) ;
   source, consulte_le fiche Parcoursup et date de consultation.
 
 On ne garde que les lignes « trouvé » avec un montant en euros PAR AN, minimum et maximum. Restent inconnues
@@ -30,6 +34,13 @@ meta.exclus :
   - maximum non indiqué (« à partir de… », part variable non chiffrée) : seul un minimum est connu. Il est gardé à
     part, dans « a_partir_de » (gta → { min, source, consulte_le }) : le moteur exclut la formation pour un budget
     serré inférieur à ce minimum (décision du fondateur du 22/10/2026) ; sinon les frais restent inconnus.
+
+Deux cas restent dans meta.exclus (le montant ANNUEL reste inconnu pour le moteur : « frais inconnus », ou exclusion
+pour la 1re année) mais ont leur montant relevé, affiché tel quel (issue #49, décisions du fondateur du 22/10/2026) :
+  - par_mois : « 110 €/mois sur 10 mois » (nombre de mois donné par la fiche) : affiché « 110 € par mois », jamais
+    multiplié ; pour le budget (annuel), règle « frais inconnus » ;
+  - premiere_annee : « 10 400 € la 1re année, 2e et 3e années gratuites (apprentissage) » : montant de la 1re année,
+    qui sert à exclure la formation d'un budget serré (GOBELINS 37012).
 
 Usage : python3 scripts/construire-frais-prives.py            (écrit data/frais-prives.json)
         python3 scripts/construire-frais-prives.py --verifier (vérifie que le fichier est à jour, sans l'écrire)
@@ -72,6 +83,36 @@ CORRECTIONS = {
     "43502": {"min": 7500,
               "raison": "4 450 € est le tarif d'une 2e année dont le 2e semestre est en apprentissage ; sous statut étudiant, le relevé ne donne que 7 500 € (DN MADE 1)"},
 }
+
+
+# Montant mensuel avec le nombre de mois donné par la fiche : « par an (110 €/mois sur 10 mois) ». Les autres montants
+# mensuels (fourchette, « à partir de », nombre de mois non précisé) et les montants par trimestre restent inconnus.
+PAR_MOIS = re.compile(r"^par an \((\d+) ?€ ?/ ?mois sur (\d+) mois\)$")
+# Montant unique qui dépend des revenus ou du quotient familial (« suivant revenus familiaux », « modulation des frais
+# selon le quotient familial », « réduction possible selon les revenus »). « ressources matérielles » (frais annexes
+# d'un établissement) et « réduction sur justificatifs » ne comptent pas : aucun lien écrit avec les revenus.
+SELON_REVENUS = re.compile(r"(selon|suivant|en fonction d[eu]s?|prise en compte d[eu]s?)\s[^;»]*?(revenus?|quotient familial|ressources)", re.I)
+ANNEE_TARIFS = re.compile(r"^(\d{4})[/-](\d{4})$")
+
+
+def annee_tarifs(texte):
+    """Année des tarifs sous la forme « 2025-2026 », ou None si la fiche ne la donne pas (« non précisée », « 2026 »)."""
+    m = ANNEE_TARIFS.match((texte or "").strip())
+    return f"{m.group(1)}-{m.group(2)}" if m and int(m.group(2)) == int(m.group(1)) + 1 else None
+
+
+def par_mois(l):
+    """{montant, mois} d'un montant mensuel avec nombre de mois, ou None."""
+    m = PAR_MOIS.match(l["par_an_ou_cursus"].strip())
+    return {"montant": int(m.group(1)), "mois": int(m.group(2))} if m else None
+
+
+def premiere_annee(l):
+    """Montant de la 1re année seule (« 1re année seulement », années suivantes gratuites en apprentissage), ou None."""
+    mini, maxi = montant(l["frais_min_eur"]), montant(l["frais_max_eur"])
+    if l["par_an_ou_cursus"].strip() == "1re année seulement" and mini is not None and mini == maxi and re.search(r"gratuit", l["apprentissage"], re.I):
+        return {"montant": mini}
+    return None
 
 
 def montant(texte):
@@ -195,7 +236,15 @@ def construire():
     gtas = [l["gta"] for l in lignes]
     if len(set(gtas)) != len(gtas):
         sys.exit("Erreur : code gta en double dans le relevé.")
-    formations, exclus, a_partir_de = {}, collections.defaultdict(list), {}
+    formations, exclus, a_partir_de, mensuels, premieres = {}, collections.defaultdict(list), {}, {}, {}
+
+    def piece(l, extra):
+        """Source, date de consultation et année des tarifs (si connue) d'une ligne."""
+        d = dict(extra, source=l["url_source"], consulte_le=l["consulte_le"])
+        if annee_tarifs(l["annee"]):
+            d["annee_tarifs"] = annee_tarifs(l["annee"])
+        return d
+
     for l in lignes:
         if not re.fullmatch(r"\d+", l["gta"]):
             sys.exit(f"Erreur : code gta illisible {l['gta']!r}.")
@@ -203,7 +252,11 @@ def construire():
         if m:
             exclus[m].append(l["gta"])
             if m == "maximum_non_indique" and montant(l["frais_min_eur"]) is not None:
-                a_partir_de[l["gta"]] = {"min": montant(l["frais_min_eur"]), "source": l["url_source"], "consulte_le": l["consulte_le"]}
+                a_partir_de[l["gta"]] = piece(l, {"min": montant(l["frais_min_eur"])})
+            if m == "par_mois_ou_trimestre" and par_mois(l):
+                mensuels[l["gta"]] = piece(l, dict(par_mois(l), apprentissage=texte_ou_null(l["apprentissage"])))
+            if m == "cursus" and premiere_annee(l):
+                premieres[l["gta"]] = piece(l, dict(premiere_annee(l), apprentissage=texte_ou_null(l["apprentissage"])))
             continue
         mini, maxi = montant(l["frais_min_eur"]), montant(l["frais_max_eur"])
         corr = CORRECTIONS.get(l["gta"], {})
@@ -217,6 +270,10 @@ def construire():
             "apprentissage": texte_ou_null(l["apprentissage"]), "libelle": libelle(l, maxi),
             "boursiers_eur": texte_ou_null(l["boursiers_eur"]), "source": l["url_source"], "consulte_le": l["consulte_le"],
         }
+        if annee_tarifs(l["annee"]):
+            formations[l["gta"]]["annee_tarifs"] = annee_tarifs(l["annee"])
+        if mini == maxi and SELON_REVENUS.search(l["precision"]):
+            formations[l["gta"]]["selon_revenus"] = True
         if corr:
             formations[l["gta"]]["correction"] = corr["raison"]
     dates = sorted({l["consulte_le"] for l in lignes})
@@ -233,9 +290,13 @@ def construire():
             "corrections": {g: c["raison"] for g, c in sorted(CORRECTIONS.items(), key=lambda kv: int(kv[0]))},
             "a_reverifier": A_REVERIFIER,
             "nb_droits_inscription": sum(1 for f in formations.values() if f["libelle"] == "droits_inscription"),
+            "selon_revenus": sorted((g for g, f in formations.items() if f.get("selon_revenus")), key=int),
+            "annees_tarifs": dict(sorted(collections.Counter(f["annee_tarifs"] for f in formations.values() if "annee_tarifs" in f).items())),
         },
         "formations": dict(sorted(formations.items(), key=lambda kv: int(kv[0]))),
         "a_partir_de": dict(sorted(a_partir_de.items(), key=lambda kv: int(kv[0]))),
+        "par_mois": dict(sorted(mensuels.items(), key=lambda kv: int(kv[0]))),
+        "premiere_annee": dict(sorted(premieres.items(), key=lambda kv: int(kv[0]))),
     }
 
 
@@ -257,6 +318,8 @@ def main():
         print(f"  inconnues, {k} : {len(v)}")
     for k, v in m["natures"].items():
         print(f"  fourchette « {k} » : {v}")
+    print(f"  montant unique selon les revenus : {len(m['selon_revenus'])} ; années des tarifs : {m['annees_tarifs']}")
+    print(f"  montants par mois affichés : {len(d['par_mois'])} ; montants de 1re année : {len(d['premiere_annee'])}")
 
 
 if __name__ == "__main__":
