@@ -1,14 +1,13 @@
 /*
- * tests/fiches-sans-lien.test.js : retrait des fiches maison françaises sans lien Parcoursup (règle 2).
+ * tests/fiches-sans-lien.test.js : retrait des fiches maison françaises (règle 2) et sort des vœux enregistrés.
  *
- * Décision du fondateur : les fiches de data/formations.json dont le pays est la France et dont la correspondance
- * Parcoursup n'est pas certaine (data/fusion.json, anciennes[id].m = "P" probable ou "N" aucune) ne sont plus proposées.
- * Restent : les fiches fusionnées avec certitude (m = "C"), les fiches à l'étranger, et les fiches « modèles » de
- * data/ajustements.json (remplacements), qui ne sont déjà plus affichées.
+ * Depuis la PR I, data/fusion.json est remplacé par data/anciennes-fiches.json : les fiches maison françaises (fusionnées avec
+ * Parcoursup ou non) ont toutes disparu de data/formations.json ; redirections = ancien identifiant -> psup-<code>,
+ * retirees = anciens identifiants sans formation Parcoursup de remplacement.
  *
  * Vœux enregistrés : un identifiant retiré reste valide.
- *   - m = "P" : redirigé vers la première candidate de anciennes[id].c présente dans le catalogue ;
- *   - m = "N" (ou aucune candidate affichée) : le vœu est retiré de la liste, avec un message à l'élève.
+ *   - ancien identifiant avec cible affichée : redirigé vers la formation Parcoursup ;
+ *   - ancien identifiant sans cible : le vœu est retiré de la liste, avec un message à l'élève.
  *
  * Lancer : npm test
  */
@@ -18,9 +17,7 @@ const assert = require("node:assert/strict");
 const { chargerSite } = require("./charger-site");
 const PROFILS = require("./profils");
 
-const ANCIENNES = require("../data/fusion.json").anciennes;
-const AJ = require("../data/ajustements.json");
-const MODELES = new Set(Object.keys(AJ.remplacements));
+const AN = require("../data/anciennes-fiches.json");
 const MESSAGE = "Une formation de ta liste n'est plus proposée par Mon Plan Sup (fiche sans correspondance Parcoursup). Elle a été retirée de ta liste.";
 const P = PROFILS[0];
 const ETAT = (retenus) => ({ profil: P.profil, reponses: P.reponses, retenus, profilTermine: true, qIndex: 999 });
@@ -28,30 +25,18 @@ const ETAT = (retenus) => ({ profil: P.profil, reponses: P.reponses, retenus, pr
 let site;
 test.before(async () => { site = await chargerSite(); });
 
-test("aucune fiche France hors fusion certaine (m = C) dans le catalogue, sauf les 15 modèles", () => {
-  assert.equal(MODELES.size, 15);
-  const intrus = site.DATA.formations.filter((f) => f.pays === "France" && ANCIENNES[f.id] && ANCIENNES[f.id].m !== "C" && !MODELES.has(f.id));
-  assert.deepEqual(intrus.map((f) => f.id), []);
-  // les 15 modèles sont remplacés par des fiches Parcoursup (non affichées sous leur ancien identifiant)
-  assert.deepEqual(site.DATA.formations.filter((f) => MODELES.has(f.id)).map((f) => f.id), []);
-  // les fiches fusionnées avec certitude sont toujours là
-  const fusionnees = site.DATA.formations.filter((f) => ANCIENNES[f.id] && ANCIENNES[f.id].m === "C");
-  assert.ok(fusionnees.length > 700, `fiches m = C : ${fusionnees.length}`);
-});
 
-test("un vœu sur une fiche P à candidate unique est redirigé vers psup-<code>", async () => {
+test("un vœu sur une ancienne fiche à correspondance probable (P) est redirigé vers psup-<code>", async () => {
   const ids = new Set(site.CAT.map((e) => e.id));
-  const retiree = Object.entries(ANCIENNES).find(([id, x]) => x.m === "P" && id.startsWith("ps-") && !MODELES.has(id) && (x.c || []).length === 1 && ids.has("psup-" + x.c[0]) && !site.CAT.some((e) => e.id === id));
-  assert.ok(retiree, "aucune fiche P à candidate unique trouvée");
-  const [id, x] = retiree;
+  const [id, cible] = Object.entries(AN.redirections).find(([i, c]) => i.startsWith("ps-") && ids.has(c) && !site.CAT.some((e) => e.id === i));
   const s = await chargerSite({}, { etat: ETAT([id]) });
-  assert.deepEqual(s.etatEnregistre().retenus, ["psup-" + x.c[0]]);
+  assert.deepEqual(s.etatEnregistre().retenus, [cible]);
   // le lien #formation-<ancien id> mène à la même fiche
-  assert.match(s.afficher("#formation-" + id), new RegExp(site.CAT.find((e) => e.id === "psup-" + x.c[0]).nom.slice(0, 20).replace(/[()[\].*+?^${}|\\]/g, "\\$&")));
+  assert.match(s.afficher("#formation-" + id), new RegExp(site.CAT.find((e) => e.id === cible).nom.slice(0, 20).replace(/[()[\].*+?^${}|\\]/g, "\\$&")));
 });
 
-test("un vœu sur une fiche N est retiré, avec un message affiché une seule fois", async () => {
-  const [id] = Object.entries(ANCIENNES).find(([i, x]) => x.m === "N" && i.startsWith("ps-") && !MODELES.has(i));
+test("un vœu sur une ancienne fiche sans formation Parcoursup de remplacement est retiré, avec un message affiché une seule fois", async () => {
+  const id = AN.retirees.find((i) => i.startsWith("ps-"));
   const s = await chargerSite({}, { etat: ETAT([id]) });
   assert.deepEqual(s.etatEnregistre().retenus, []);
   const page = s.afficher("#liste");
@@ -59,15 +44,16 @@ test("un vœu sur une fiche N est retiré, avec un message affiché une seule fo
   assert.ok(!s.afficher("#liste").includes(MESSAGE), "message répété");
 });
 
-test("un vœu sur une fiche conservée n'est pas touché, sans message", async () => {
-  const [id] = Object.entries(ANCIENNES).find(([, x]) => x.m === "C");
+test("un vœu sur une fiche à l'étranger conservée n'est pas touché, sans message", async () => {
+  const id = require("../data/formations.json").formations[0].id;
   const s = await chargerSite({}, { etat: ETAT([id]) });
   assert.ok(!s.afficher("#liste").includes(MESSAGE));
   assert.ok(!s.etatEnregistre() || s.etatEnregistre().retenus.join() === id);
 });
 
-test("à l'étranger : le même nombre de fiches qu'avant (519)", () => {
-  const etranger = require("../data/formations.json").formations.filter((f) => f.pays !== "France");
-  assert.equal(etranger.length, 519);
-  assert.equal(site.DATA.formations.filter((f) => etranger.some((g) => g.id === f.id)).length, 519);
+test("à l'étranger : le même nombre de fiches qu'avant (519), et ce sont les seules de data/formations.json", () => {
+  const toutes = require("../data/formations.json").formations;
+  assert.equal(toutes.length, 519);
+  assert.ok(toutes.every((f) => f.pays !== "France"));
+  assert.equal(site.DATA.formations.filter((f) => toutes.some((g) => g.id === f.id)).length, 519);
 });

@@ -21,7 +21,7 @@ const DATE_TEST = "2026-10-01";
 let site, masquees;
 test.before(async () => {
   site = await chargerSite();
-  masquees = require("../data/fusion.json").meta.perimetre.categories_masquees;
+  masquees = require("../data/anciennes-fiches.json").meta.perimetre.categories_masquees;
 });
 
 const TYPES_MASQUES = ["but", "bts"];

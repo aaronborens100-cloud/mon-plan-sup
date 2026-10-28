@@ -26,13 +26,13 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 
 ## État actuel à connaître
 
-- La règle 2 n'est pas encore appliquée : `js/app.js` (`construireCatalogue`) fusionne encore
-  `data/formations.json` (fiches éditoriales, dont 1 639 en France) avec Parcoursup via
-  `data/fusion.json`. Ne pas supprimer ces fichiers sans une tâche dédiée : le moteur s'en sert
-  pour les recommandations, et `fusion.json` définit aussi le périmètre affiché (BTS et BUT masqués).
-- Les autres formations Parcoursup du périmètre sont notées grâce à `data/filieres.json` (une entrée
-  par code `nmc`), construit par `scripts/construire-filieres.py`. `data/generees.json` n'est plus
-  chargé par le site mais reste la source des 87 familles reprises dans la table.
+- La règle 2 est appliquée pour les formations françaises : `data/formations.json` ne contient plus que les 519 fiches à
+  l'étranger. Toutes les formations françaises du périmètre viennent de Parcoursup et sont notées par `fichGeneree`
+  (`js/app.js`) à partir de `data/filieres.json`, table **figée** (« estimation par filière, tirée des anciennes fiches Mon Plan
+  Sup », `scripts/construire-filieres.py` refuse de tourner). `data/anciennes-fiches.json` remplace `data/fusion.json` : périmètre
+  (BTS et BUT masqués), `redirections` (ancien id de fiche maison vers `psup-<code>`, pour les vœux enregistrés et les liens),
+  `retirees` (anciens id sans remplacement) et provenance des blocs des fiches à l'étranger. `data/generees.json` n'est plus
+  chargé par le site.
 - La solution de secours de `js/bulletin.js` charge pdf.js 3.11.174 depuis cdnjs si `vendor/` est
   absent, alors que la version fournie est la 6.2.108.
 

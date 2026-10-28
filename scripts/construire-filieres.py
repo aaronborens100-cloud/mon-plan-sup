@@ -17,9 +17,14 @@ Les frais publics ne sont repris que des familles existantes (sourcés) ; pour l
 déduites, cout_public vaut null.
 
 Les corrections à la main sont dans scripts/filieres-corrections.json : le script les relit
-et les applique en dernier. Ne jamais modifier data/filieres.json à la main.
+et les applique en dernier.
 
-Usage : python3 scripts/construire-filieres.py
+SCRIPT FIGÉ (2026-10-28, règle 2) : data/filieres.json n'est plus reconstruit. La table vient des anciennes fiches Mon Plan
+Sup, retirées de data/formations.json et de data/fusion.json (remplacé par data/anciennes-fiches.json) ; ce script ne peut plus
+les relire. Le lancer directement est refusé (le module reste importable : scripts/mesurer-filieres.py s'en sert).
+Pour corriger une filière, modifier data/filieres.json en le disant dans la pull request.
+
+Usage : (refusé) python3 scripts/construire-filieres.py
 """
 import collections
 import json
@@ -27,6 +32,11 @@ import pathlib
 import re
 import sys
 import unicodedata
+
+if __name__ == "__main__":
+    sys.exit("Refusé : data/filieres.json est figé depuis le 2026-10-28 (estimation par filière, tirée des anciennes fiches "
+             "Mon Plan Sup, retirées de data/formations.json). Ce script lisait ces fiches (data/fusion.json, remplacé par "
+             "data/anciennes-fiches.json) : il ne peut plus reconstruire la table sans les recréer.")
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 DATA = RACINE / "data"
