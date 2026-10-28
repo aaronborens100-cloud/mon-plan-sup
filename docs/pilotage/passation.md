@@ -39,6 +39,9 @@ la chaîne #68 (C), #70 (D), #71 (E), #72 (F), #73 (G) (#74 « Chaîne complète
 `main` = 7ca7f2f : 452/452 tests. Contrôles (300 profils) : seule violation = `dix_voeux`
 (28 profils « domicile » à moins de 10 vœux : conséquence voulue de « jamais de vœu hors rayon »,
 désormais expliquée par le message de F ; contrôle à adapter, voir § 5).
+Le 28/10 (soir) : #76 (H), #77 (I1), #78 (K). Diagnostic de I2 : aucun écart de traitement dans le code
+(fiches complètes remises : 1 liste / 114 changée) ; les listes changent à cause du contenu éditorial
+(notes / admission / profil / spécialités : 85 ; coût, charge, dossier : 47 ; type : 41 ; intitulé, matières : 18).
 
 ## 4. Décisions d'Aaron à respecter (en plus du journal du 22/10)
 - Phrase tarifs (PR A, mot pour mot) : « Ces frais viennent de la fiche Parcoursup de la formation
@@ -74,10 +77,12 @@ désormais expliquée par le message de F ; contrôle à adapter, voir § 5).
 | E | LAS derrière la licence simple sans intérêt santé | #69 | moteur | **fusionnée (#71)** |
 | F | Message liste raccourcie par la distance | #58 | app, moteur | **fusionnée (#72)** ; phrase N = 0 à valider |
 | G | Textes obsolètes « % de chances » | #54 | app, index.html | **fusionnée (#73)** |
-| H | Retrait des ~813 fiches maison sans lien Parcoursup | — (§ 7.2) | data, app, moteur | à faire (#47 sautée) |
-| I | Retrait des ~811 fiches fusionnées | — | idem | après H |
+| H | Retrait des ~813 fiches maison sans lien Parcoursup | — (§ 7.2) | data, app | **fusionnée (#76)** ; 6 listes / 114 changées |
+| I1 | Préparation : `fusion.json` → `anciennes-fiches.json`, `filieres.json` figé | — | data, app, scripts | **fusionnée (#77)** ; 0 différence |
+| I2 | Retrait des 811 fiches fusionnées (+ 15 modèles ECG) | — | data, app | **décision d'Aaron attendue** : 88 listes / 114 changent ; branche `claude/magical-thompson-7gac3h-i2` |
 | J | Lieux et données diverses | #15 #24 #29 #31 #32 #33 #39 | data | à faire |
-| K | Séparation calcul / affichage, puis rangement du moteur | — | moteur, app | avant la refonte |
+| K | Séparation calcul / affichage (`js/catalogue.js`) | — | app | **fusionnée (#78)** ; 0 différence ; rangement du moteur non fait |
+| L | Réparer le manque de mémoire de `scripts/comparer-versions.js` (plante dès qu'il y a beaucoup de différences) | — | scripts | à faire |
 | — | Statistiques manquantes | #5 #6 | data | **bloquée** : CSV fr-esr-parcoursup à fournir par Aaron |
 
 À trier selon les testeurs : #19, #20, #23, #27, #35, #37, #44, #52, #55.
