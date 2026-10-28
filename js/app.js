@@ -680,6 +680,9 @@
   // son contexte (un contrat avec un employeur), pour qu'un « gratuit » du relevé ne se lise jamais comme « la formation
   // est gratuite ». Il ne change jamais le montant affiché.
   const PREFIXE_APPRENTISSAGE = "En contrat d'apprentissage (avec un employeur) : ";
+  // Phrase affichée sous les frais relevés sur une fiche Parcoursup (issue #49) ; l'année n'est ajoutée que si la fiche la donne
+  const phraseFrais = (c) => `Ces frais viennent de la fiche Parcoursup de la formation${FRAIS_PRIVES_META && FRAIS_PRIVES_META.releve_mois ? ` (relevée en ${FRAIS_PRIVES_META.releve_mois})` : ""}${c.annee_tarifs ? ` et datent de l'année ${c.annee_tarifs}` : ""}. Ils ne correspondent pas forcément à ta rentrée : les écoles privées les revoient souvent chaque année. Vérifie le montant sur le site de l'école avant de t'engager.`;
+  const phraseFraisHtml = (f) => (f.cout && f.cout.statut === "releve_parcoursup" ? `<p class="small muted phrase-frais">${esc(phraseFrais(f.cout))}</p>` : "");
   const texteApprentissage = (t) => `${PREFIXE_APPRENTISSAGE}${t.replace(/\.$/, "")}.`;
   function carteResultat(x, rang) {
     const f = x.f, retenu = etat.retenus.includes(f.id), cout = f.cout.valeur_annuelle_eur, a = f.admission || {};
@@ -687,7 +690,7 @@
     const faits = [
       a.places ? ["groupe", `${nbFr(a.places)} places`] : ["groupe", "Places n. c."],
       a.candidats ? ["bulle", `${nbFr(a.candidats)} vœux`] : null,
-      ["euro", cout != null ? `${f.cout.libelle === "droits_inscription" ? "Droits d'inscription " : ""}${f.cout.min != null && f.cout.min < cout ? montantFrais(f.cout) : "≈ " + E.fmtEur(cout)}/an` : "Coût n. c."],
+      ["euro", cout != null ? `${f.cout.libelle === "droits_inscription" ? "Droits d'inscription " : ""}${f.cout.selon_revenus || (f.cout.min != null && f.cout.min < cout) ? montantFrais(f.cout) : "≈ " + E.fmtEur(cout)}/an${suffixeRevenus(f.cout)}` : "Coût n. c."],
       x.dist != null ? ["pin", `≈ ${nbFr(Math.round(x.dist))} km de chez toi`] : null,
       f.classement && f.classement.texte ? ["trophee", f.classement.texte] : null,
     ].filter(Boolean);
@@ -1046,7 +1049,7 @@
     const tuiles = [
       ["horloge", "Durée", `${String(f.duree_ans).replace(".", ",")} an${f.duree_ans > 1 ? "s" : ""}`, f.langue ? `en ${f.langue}` : "", "bleu"],
       // frais relevés sur Parcoursup : fourchette en entier ; « Droits d'inscription » pour les IFSI et le travail social
-      ["euro", f.cout && f.cout.libelle === "droits_inscription" ? "Droits d'inscription" : "Coût annuel", cout != null ? montantFrais(f.cout) : "n. c.", cout === 0 ? "gratuit" : "", "ambre"],
+      ["euro", f.cout && f.cout.libelle === "droits_inscription" ? "Droits d'inscription" : "Coût annuel", cout != null ? montantFrais(f.cout) + suffixeRevenus(f.cout) : "n. c.", cout === 0 ? "gratuit" : "", "ambre"],
       ["cible", "Sélectivité", (!f.selectivite.estimee && E.SEL_LABEL[f.selectivite.niveau]) || "n. c.", tx ? `${tx} d'accès` : f.selectivite.estimee ? "taux non publié" : "", "violet"],
       ["groupe", "Places", a.places ? nbFr(a.places) : "n. c.", a.candidats ? `${nbFr(a.candidats)} vœux` : "", "ciel"],
       ["envoi", "Candidature", plat, "", "menthe"],
@@ -1058,10 +1061,10 @@
       ["dossier", "Tests et épreuves", f.tests.length ? f.tests.map((t) => `<div class="test"><span class="fw">${esc(t.nom)}</span> <span class="pill ${t.obligatoire ? "ton-corail" : "neutral"}">${t.obligatoire ? "obligatoire" : "facultatif"}</span> ${esc(t.texte)}${statutBadge(t.statut)}${srcLien(t)}</div>`).join("") : "Aucun test spécifique relevé.", "ambre"],
       ["crayon", "Dossier à fournir", `<div class="chips-info">${f.pieces.map((p) => `<span>${esc(p)}</span>`).join("")}</div>`, "menthe"],
       ...(f.classement && f.classement.texte ? [["trophee", "Classement", val(f.classement, esc(f.classement.texte)), "corail"]] : []),
-      ...(cout == null && texteFrais(f) ? [["euro", "Frais de scolarité", val(f.cout, esc(texteFrais(f))) + alerteFraisHtml(x), "ambre"]] : []),   // montant non chiffré : le texte de la fiche, sans réécriture
+      ...(cout == null && texteFrais(f) ? [["euro", "Frais de scolarité", val(f.cout, esc(texteFrais(f))) + phraseFraisHtml(f) + alerteFraisHtml(x), "ambre"]] : []),   // montant non chiffré : le texte de la fiche, sans réécriture
       // frais relevés sur la fiche Parcoursup : texte, badge, source et date ; apprentissage (jamais « gratuit » à cause de lui)
       ...(cout != null && f.cout.statut === "releve_parcoursup" ? [["euro", f.cout.libelle === "droits_inscription" ? "Droits d'inscription et participation" : "Frais de scolarité", val(f.cout, esc(f.cout.texte))
-        + (f.cout.apprentissage ? `<p class="small">${esc(texteApprentissage(f.cout.apprentissage))}</p>` : "") + alerteFraisHtml(x), "ambre"]] : []),
+        + (f.cout.apprentissage ? `<p class="small">${esc(texteApprentissage(f.cout.apprentissage))}</p>` : "") + phraseFraisHtml(f) + alerteFraisHtml(x), "ambre"]] : []),
     ];
     const typeCourt = f.type_label || "Formation";
     const nbP = (f.poursuites || []).length + (f.integrations || []).length;
@@ -1308,29 +1311,50 @@
     }
     // « à partir de X € » (maximum non indiqué sur la fiche) : montant toujours inconnu, minimum gardé pour la règle
     // d'exclusion du budget serré (moteur, décision du fondateur du 22/10/2026) et affiché dans le texte des frais
-    const ap = r.tc && r.tc !== "Publics" && !c ? FRAIS_A_PARTIR_DE[r.gta] : null;
+    const prive = r.tc && r.tc !== "Publics" && !c;
+    const ap = prive ? FRAIS_A_PARTIR_DE[r.gta] : null;
     if (ap && typeof ap.min === "number") {
       f.cout = Object.assign({}, f.cout || {}, { valeur_annuelle_eur: null, a_partir_de: ap.min, statut: "releve_parcoursup", source: ap.source, consulte_le: ap.consulte_le,
-        texte: `À partir de ${E.fmtEur(ap.min)} par an (la fiche Parcoursup n'indique pas de maximum).` });
+        annee_tarifs: ap.annee_tarifs || null, texte: `À partir de ${E.fmtEur(ap.min)} par an (la fiche Parcoursup n'indique pas de maximum).` });
+    }
+    // montant par mois avec son nombre de mois (issue #49, décision du fondateur du 22/10/2026) : affiché tel quel, jamais
+    // multiplié ; pour le budget (annuel), le montant annuel reste inconnu (règle « frais inconnus »), jamais d'exclusion
+    const pm = prive && !ap ? FRAIS_PAR_MOIS[r.gta] : null;
+    if (pm && typeof pm.montant === "number") {
+      f.cout = Object.assign({}, f.cout || {}, { valeur_annuelle_eur: null, statut: "releve_parcoursup", source: pm.source, consulte_le: pm.consulte_le,
+        annee_tarifs: pm.annee_tarifs || null, texte: `${E.fmtEur(pm.montant)} par mois (sur ${pm.mois} mois).` });
+    }
+    // montant de la 1re année seule, années suivantes gratuites en apprentissage (GOBELINS 37012) : sert de minimum
+    // d'exclusion du budget serré (le moteur le lit dans a_partir_de), sans prétendre être le coût de tout le cursus
+    const pa = prive && !ap && !pm ? FRAIS_PREMIERE_ANNEE[r.gta] : null;
+    if (pa && typeof pa.montant === "number") {
+      f.cout = Object.assign({}, f.cout || {}, { valeur_annuelle_eur: null, a_partir_de: pa.montant, statut: "releve_parcoursup", source: pa.source, consulte_le: pa.consulte_le,
+        annee_tarifs: pa.annee_tarifs || null, texte: `${E.fmtEur(pa.montant)} la 1re année.${pa.apprentissage ? " " + texteApprentissage(pa.apprentissage) : ""}` });
     }
   }
   // Frais des formations privées relevés sur leur fiche Parcoursup (data/frais-prives.json, construit par
   // scripts/construire-frais-prives.py). Seules les formations au montant annuel en euros sont dans le fichier : les
   // autres gardent des frais inconnus (règle « prive_frais_inconnus » du moteur). Une fourchette (min < max) est
   // affichée en entier ; valeur_annuelle_eur, le seul nombre lu par le moteur et les cartes, vaut le max.
-  let FRAIS_PRIVES = {}, FRAIS_PRIVES_META = null, FRAIS_A_PARTIR_DE = {};
+  let FRAIS_PRIVES = {}, FRAIS_PRIVES_META = null, FRAIS_A_PARTIR_DE = {}, FRAIS_PAR_MOIS = {}, FRAIS_PREMIERE_ANNEE = {};
   const SELON_FOURCHETTE = { revenus: " selon les revenus de ta famille", annee: " selon l'année d'études" };
-  const montantFrais = (c) => (typeof c.min === "number" && c.min < c.valeur_annuelle_eur ? `${E.fmtEur(c.min)} à ${E.fmtEur(c.valeur_annuelle_eur)}` : E.fmtEur(c.valeur_annuelle_eur));
+  // Montant unique qui dépend des revenus (c.selon_revenus, décision du fondateur du 22/10/2026, issue #49) : « jusqu'à X € »,
+  // jamais un minimum d'exclusion : NON GARANTI ici, le moteur lit encore c.min = X (voir la PR, hors périmètre).
+  const SUFFIXE_REVENUS = " (selon les revenus)";
+  const suffixeRevenus = (c) => (c.selon_revenus ? SUFFIXE_REVENUS : "");
+  const montantFrais = (c) => (c.selon_revenus ? `jusqu'à ${E.fmtEur(c.valeur_annuelle_eur)}` : typeof c.min === "number" && c.min < c.valeur_annuelle_eur ? `${E.fmtEur(c.min)} à ${E.fmtEur(c.valeur_annuelle_eur)}` : E.fmtEur(c.valeur_annuelle_eur));
   function coutReleve(g) {
     const x = FRAIS_PRIVES[g];
     if (!x || typeof x.min !== "number" || typeof x.max !== "number" || x.min > x.max) return null;
+    const revenus = x.selon_revenus === true;   // min = max dans le fichier : affiché « jusqu'à X € »
     const c = { valeur_annuelle_eur: x.max, min: x.min, max: x.max, nature_fourchette: x.nature_fourchette || null, par: x.par || "par an",
+      selon_revenus: revenus, annee_tarifs: x.annee_tarifs || null,
       libelle: x.libelle === "droits_inscription" ? "droits_inscription" : "cout", apprentissage: x.apprentissage || null,
       boursiers_eur: x.boursiers_eur || null, statut: "releve_parcoursup", source: x.source, consulte_le: x.consulte_le };
     const m = montantFrais(c), detail = (c.par.match(/\((.*)\)\s*$/) || [])[1];
     c.texte = c.libelle === "droits_inscription"
       ? `Droits d'inscription et participation annuelle : ${m}${detail ? ` (${detail})` : ""}.`
-      : `${c.min < c.max ? "De " : ""}${m} par an${c.min < c.max ? SELON_FOURCHETTE[c.nature_fourchette] || "" : ""}${detail ? ` (${detail})` : ""}.`;
+      : `${c.selon_revenus ? "Jusqu'à " + E.fmtEur(c.max) : (c.min < c.max ? "De " : "") + m} par an${c.selon_revenus ? SUFFIXE_REVENUS : c.min < c.max ? SELON_FOURCHETTE[c.nature_fourchette] || "" : ""}${detail ? ` (${detail})` : ""}.`;
     return c;
   }
   // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
@@ -1365,6 +1389,7 @@
   function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp) {
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
     FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null; FRAIS_A_PARTIR_DE = (fp && fp.a_partir_de) || {};
+    FRAIS_PAR_MOIS = (fp && fp.par_mois) || {}; FRAIS_PREMIERE_ANNEE = (fp && fp.premiere_annee) || {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
     // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
