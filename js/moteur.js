@@ -485,6 +485,9 @@
   function bornesFrais(f) {
     const c = f.cout || {}, v = c.valeur_annuelle_eur;
     if (v == null) return null;
+    // « selon les revenus » (décision du fondateur, PR A2 de l'issue #49) : X est un plafond, pas un minimum certain ;
+    // la fiche compte comme « frais inconnus » pour le budget (jamais d'exclusion ni de malus de budget)
+    if (c.selon_revenus === true) return null;
     // un min au-dessus du max (donnée incohérente) est ignoré et signalé : le max reste le seul montant
     if (typeof c.min === "number" && c.min > v && typeof console !== "undefined") console.warn(`Frais incohérents (min ${c.min} > max ${v}) : ${f.id}`);
     const min = typeof c.min === "number" && c.min <= v ? c.min : v;
