@@ -73,6 +73,7 @@ Contrôles sur main (avant #62) : seule violation restante connue = `dix_voeux` 
 | I | Retrait des ~811 fiches fusionnées | — | idem | après H |
 | J | Lieux et données diverses | #15 #24 #29 #31 #32 #33 #39 | data | à faire |
 | K | Séparation calcul / affichage, puis rangement du moteur | — | moteur, app | avant la refonte |
+| L | Refonte de l'affichage (3 lots) | — | css, index.html, app | après K ; cahier des charges : `docs/pilotage/refonte-affichage.md` |
 | — | Statistiques manquantes | #5 #6 | data | **bloquée** : CSV fr-esr-parcoursup à fournir par Aaron |
 
 À trier selon les testeurs : #19, #20, #23, #27, #35, #37, #44, #52, #55.
