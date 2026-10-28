@@ -115,6 +115,14 @@ def premiere_annee(l):
     return None
 
 
+MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+
+
+def mois_lisible(date):
+    """« 2026-10-22 » → « octobre 2026 » : date du relevé affichée à l'élève (lue dans la donnée, pas écrite dans app.js)."""
+    return f"{MOIS[int(date[5:7]) - 1]} {date[:4]}"
+
+
 def montant(texte):
     """Montant en euros (« 1586.40 » → 1586.4, « 3950 » → 3950), ou None si vide."""
     t = (texte or "").strip().replace(",", ".")
@@ -283,6 +291,7 @@ def construire():
             "source": SOURCE,
             "fichier": str(CSV_SOURCE.relative_to(RACINE)),
             "consulte_le": dates[-1], "consulte_du": dates[0],
+            "releve_mois": mois_lisible(dates[-1]),
             "construit_par": "scripts/construire-frais-prives.py",
             "nb_lignes": len(lignes), "nb_retenues": len(formations),
             "exclus": {k: sorted(v, key=int) for k, v in sorted(exclus.items())},

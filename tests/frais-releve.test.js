@@ -21,8 +21,9 @@ const PROFILS = require("./profils");
 
 const RACINE = path.join(__dirname, "..");
 const FP = JSON.parse(fs.readFileSync(path.join(RACINE, "data/frais-prives.json"), "utf8"));
-const AVANT = "Ces frais viennent de la fiche Parcoursup de la formation (relevée en octobre 2026)";
+const AVANT = `Ces frais viennent de la fiche Parcoursup de la formation (relevée en ${FP.meta.releve_mois})`;
 const APRES = ". Ils ne correspondent pas forcément à ta rentrée : les écoles privées les revoient souvent chaque année. Vérifie le montant sur le site de l'école avant de t'engager.";
+test("le mois du relevé vient de la donnée", () => assert.equal(FP.meta.releve_mois, "octobre 2026"));
 const phrase = (annee) => AVANT + (annee ? ` et datent de l'année ${annee}` : "") + APRES;
 // le HTML échappe l'apostrophe
 const brut = (html) => html.replace(/&#39;/g, "'").replace(/&#x27;/g, "'");

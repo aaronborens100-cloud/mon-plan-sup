@@ -681,7 +681,7 @@
   // est gratuite ». Il ne change jamais le montant affiché.
   const PREFIXE_APPRENTISSAGE = "En contrat d'apprentissage (avec un employeur) : ";
   // Phrase affichée sous les frais relevés sur une fiche Parcoursup (issue #49) ; l'année n'est ajoutée que si la fiche la donne
-  const phraseFrais = (c) => `Ces frais viennent de la fiche Parcoursup de la formation (relevée en octobre 2026)${c.annee_tarifs ? ` et datent de l'année ${c.annee_tarifs}` : ""}. Ils ne correspondent pas forcément à ta rentrée : les écoles privées les revoient souvent chaque année. Vérifie le montant sur le site de l'école avant de t'engager.`;
+  const phraseFrais = (c) => `Ces frais viennent de la fiche Parcoursup de la formation${FRAIS_PRIVES_META && FRAIS_PRIVES_META.releve_mois ? ` (relevée en ${FRAIS_PRIVES_META.releve_mois})` : ""}${c.annee_tarifs ? ` et datent de l'année ${c.annee_tarifs}` : ""}. Ils ne correspondent pas forcément à ta rentrée : les écoles privées les revoient souvent chaque année. Vérifie le montant sur le site de l'école avant de t'engager.`;
   const phraseFraisHtml = (f) => (f.cout && f.cout.statut === "releve_parcoursup" ? `<p class="small muted phrase-frais">${esc(phraseFrais(f.cout))}</p>` : "");
   const texteApprentissage = (t) => `${PREFIXE_APPRENTISSAGE}${t.replace(/\.$/, "")}.`;
   function carteResultat(x, rang) {
