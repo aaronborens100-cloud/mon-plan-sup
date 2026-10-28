@@ -172,7 +172,7 @@ def main():
 
     ps = decoder_parcoursup(lire(DATA / "parcoursup.json"))
     stats = lire(DATA / "stats.json")["rows"]
-    fu = lire(DATA / "fusion.json")
+    fu = lire(DATA / "anciennes-fiches.json")
     masquees = fu["meta"]["perimetre"]["categories_masquees"]
     # formations Parcoursup affichées avec une fiche de data/formations.json : hors des relevés manuels
     fusionnees = {x["g"] for x in fu["anciennes"].values() if x.get("m") == "C"}

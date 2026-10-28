@@ -77,7 +77,7 @@ test("lycée de Mauriac : lycée réel de data/lieux.json", () => {
 test("issue #41 : le PGE de Paris-La Défense sans coordonnées n'entre plus dans la liste de l'élève de Mauriac", () => {
   const { E } = siteAncien;
   const { A, W } = analyser(siteAncien, MAURIAC_PROFIL, MAURIAC_REPONSES);
-  // La fiche maison du PGE (ps-12929, sans correspondance Parcoursup : fusion.json m = "N") a été retirée du catalogue
+  // La fiche maison du PGE (ps-12929, sans correspondance Parcoursup : anciennes-fiches.json m = "N") a été retirée du catalogue
   // (règle 2, PR H) : le cas d'origine ne peut plus se produire. La règle « distance inconnue = exclu » reste vérifiée
   // ci-dessous : aucune fiche proposée sans distance, et par le test sur fiche construite sans coordonnées.
   assert.ok(!A.resultats.some((x) => x.f.id === PGE), "fiche PGE retirée du catalogue");
@@ -93,14 +93,13 @@ test("issue #41 : le PGE de Paris-La Défense sans coordonnées n'entre plus dan
 test("élève de Mauriac (données actuelles) : liste après correction, rien à distance inconnue ni à plus de 45 km", () => {
   const { E } = site;
   const { A, W } = analyser(site, MAURIAC_PROFIL, MAURIAC_REPONSES);
-  // la liste après correction (3 vœux, 0 « sécurité ») : le rayon de 45 km autour de Mauriac ne laisse pas plus.
+  // la liste après correction (4 vœux, 0 « sécurité ») : le rayon de 45 km autour de Mauriac ne laisse pas plus.
   // psup-47937 (frais « jusqu'à 1 750 € selon les revenus ») n'est plus exclu par le budget : décision du fondateur, PR A2 (issue #49)
-  // PR I (retrait des fiches maison fusionnées) : les DN MADE d'Aurillac sont maintenant les fiches Parcoursup notées par filière.
-  // Graphisme (ancienne fiche maison -> psup-21642) reste dans la liste, en dernier ; Matériaux (-> psup-21644) n'y est plus.
   assert.deepEqual(ids(W.liste), [
     "psup-47937",
+    "dnmade-materiaux-lycee-de-la-communication-saint-geraud-aurillac",
     "psup-23106",
-    "psup-21642",
+    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",
   ]);
   assert.equal(W.protection.nbSecurite, 0);
   for (const [nom, l] of Object.entries(proposees(site, A, W))) {

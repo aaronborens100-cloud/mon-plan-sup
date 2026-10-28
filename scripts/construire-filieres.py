@@ -19,10 +19,11 @@ déduites, cout_public vaut null.
 Les corrections à la main sont dans scripts/filieres-corrections.json : le script les relit
 et les applique en dernier.
 
-SCRIPT FIGÉ (2026-10-28, règle 2) : data/filieres.json n'est plus reconstruit. La table vient des anciennes fiches Mon Plan
-Sup, retirées de data/formations.json et de data/fusion.json (remplacé par data/anciennes-fiches.json) ; ce script ne peut plus
-les relire. Le lancer directement est refusé (le module reste importable : scripts/mesurer-filieres.py s'en sert).
-Pour corriger une filière, modifier data/filieres.json en le disant dans la pull request.
+SCRIPT FIGÉ (2026-10-28, règle 2) : data/filieres.json n'est plus reconstruit. La table est une estimation par filière, tirée
+des anciennes fiches Mon Plan Sup, qui vont être retirées de data/formations.json (data/fusion.json est devenu
+data/anciennes-fiches.json) : le script ne pourra plus les relire. Le lancer directement est refusé (le module reste
+importable : scripts/mesurer-filieres.py s'en sert). Pour corriger une filière, modifier data/filieres.json en le disant
+dans la pull request.
 
 Usage : (refusé) python3 scripts/construire-filieres.py
 """
@@ -35,8 +36,8 @@ import unicodedata
 
 if __name__ == "__main__":
     sys.exit("Refusé : data/filieres.json est figé depuis le 2026-10-28 (estimation par filière, tirée des anciennes fiches "
-             "Mon Plan Sup, retirées de data/formations.json). Ce script lisait ces fiches (data/fusion.json, remplacé par "
-             "data/anciennes-fiches.json) : il ne peut plus reconstruire la table sans les recréer.")
+             "Mon Plan Sup). Ces fiches vont être retirées de data/formations.json : le script ne pourrait plus "
+             "reconstruire la table. Pour corriger une filière, modifier data/filieres.json et le dire dans la pull request.")
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 DATA = RACINE / "data"
@@ -345,7 +346,7 @@ def duree_intitule(lib, defaut):
 # ---------------------------------------------------------------- construction
 def construire():
     ps = decoder_parcoursup(lire("parcoursup.json"))
-    fu = lire("fusion.json")
+    fu = lire("anciennes-fiches.json")
     gen = lire("generees.json")
     met_ok = {m["id"] for m in lire("metiers.json")["metiers"]}
     pou_ok = {p["id"] for p in lire("poursuites.json")["poursuites"]}

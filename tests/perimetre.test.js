@@ -1,5 +1,5 @@
 /*
- * tests/perimetre.test.js : périmètre du site, BTS et BUT non proposés (data/fusion.json, perimetre.categories_masquees).
+ * tests/perimetre.test.js : périmètre du site, BTS et BUT non proposés (data/anciennes-fiches.json, perimetre.categories_masquees).
  *
  *   - Aucune fiche BUT ou BTS dans le catalogue recommandable : ni fiche Parcoursup de ces catégories, ni fiche de
  *     data/formations.json de type BUT ou BTS, ni fiche fusionnée avec une formation Parcoursup BUT ou BTS.

@@ -549,7 +549,7 @@ def main():
         r["fiche"] = fiche_type.format(r["gta"]) if v == 0 else S[v - 1]
         v = L[K.index("commune")]
         r["commune"] = None if v is None else S[v]
-    masquees = lire("fusion.json")["meta"]["perimetre"]["categories_masquees"]
+    masquees = lire("anciennes-fiches.json")["meta"]["perimetre"]["categories_masquees"]
     lignes_ps = [r for r in lignes_ps if not any(t in masquees for t in r["tf"])]
     nb_formations = collections.Counter(r["nmc"] for r in lignes_ps)
 
