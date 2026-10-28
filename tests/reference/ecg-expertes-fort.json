@@ -123,21 +123,6 @@
  },
  "top": [
   {
-   "id": "psup-28381",
-   "interet": 80.51806034459848,
-   "faisabilite": 83.25,
-   "pertinence": 81.61083620675909,
-   "repere": [
-    9,
-    0.88,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-7621",
    "interet": 80.4173742141429,
    "faisabilite": 83.25,
@@ -314,6 +299,21 @@
     "tres_ouverte"
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28381",
+   "interet": 80.51806034459848,
+   "faisabilite": 83.25,
+   "pertinence": 81.61083620675909,
+   "repere": [
+    9,
+    0.88,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -807,11 +807,11 @@
     ]
    },
    {
-    "id": "psup-28130",
+    "id": "psup-47455",
     "categorie": "securite",
-    "pertinence": 76.88375448081324,
+    "pertinence": 76.79120883427584,
     "repere": [
-     73,
+     96,
      "au_dessus"
     ]
    }
@@ -845,7 +845,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "13eacff3e161357135b22d4b370417648930602af058a1feb46aff294fe26c66",
-  "textes": "fb3d01085cefe320cec6d3b68c6ee2de88884525c67b1c424eddb134af41754c"
+  "calculs": "bd3c536f2c4a74eccce88a399db4eccc7ccece4bd91fecf75ce26ce52960551c",
+  "textes": "1e946050393fc8d9b8ca3430a90c19765f8b71f31ab49d89a8c85205fc8088a9"
  }
 }

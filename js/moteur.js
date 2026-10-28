@@ -691,7 +691,26 @@
       || cmpIdentifiant(a.f, b.f);
   }
   // Ordre des recommandations : pertinence décroissante (NaN en dernier), puis départage
-  const comparer = (a, b) => cmpNombre(a.pertinence, b.pertinence, -1) || departage(a, b);
+  // Issue #69 : un élève sans intérêt santé voit la licence simple passer avant la LAS de la même discipline (même code de
+  // filière Parcoursup, donc même mention, quel que soit l'établissement). La LAS est classée comme si sa pertinence ne
+  // dépassait pas celle de la meilleure licence simple de sa discipline (pertinenceTri), et à égalité derrière elle
+  // (lasApres). La pertinence affichée ne change pas, la LAS n'est jamais retirée.
+  const sansInteretSante = (it) => !!it && !!it.repondues && !!it.domaines && (it.domaines.sante || 0) < 0.01;
+  function placerLasApresLicence(res, it) {
+    if (!sansInteretSante(it)) return res;
+    const meilleure = new Map();   // code de filière -> pertinence de la meilleure licence simple proposée
+    for (const x of res) {
+      const k = nmcDe(x.f);
+      if (k && !x.exclu && !x.bloque && formeDe(x.f) === "simple" && !(meilleure.get(k) >= x.pertinence)) meilleure.set(k, x.pertinence);
+    }
+    for (const x of res) {
+      const k = nmcDe(x.f);
+      if (k && formeDe(x.f) === "las" && meilleure.has(k) && meilleure.get(k) <= x.pertinence) { x.pertinenceTri = meilleure.get(k); x.lasApres = true; }
+    }
+    return res;
+  }
+  const pertTri = (x) => (x.pertinenceTri === undefined ? x.pertinence : x.pertinenceTri);
+  const comparer = (a, b) => cmpNombre(pertTri(a), pertTri(b), -1) || (a.lasApres === true) - (b.lasApres === true) || departage(a, b);
 
   /* ---------------------------------------------------------------- évaluation */
   // Valeur de la question « lieu » qui correspond à la formation (Corse et outre-mer comptent dans « regions »)
@@ -1082,7 +1101,7 @@
     // score de choix : pertinence, bonus « cœur de projet », malus pour chaque vœu déjà pris dans la même voie ;
     // un élève indécis reçoit en priorité les formations qui laissent des portes ouvertes (polyvalence)
     const poly = (x) => (cert.niveau === "indecis" ? 3 * Math.min(2, (x.f.profil || {}).poly || 0) + (/^prepa|double_licence/.test(x.f.type) ? 3 : 0) : 0);
-    const cle = (x) => x.pertinence + (coeur.has(V(x)) ? 6 : 0) - 6 * (parType[V(x)] || 0) + poly(x);
+    const cle = (x) => pertTri(x) - (x.lasApres ? 0.001 : 0) + (coeur.has(V(x)) ? 6 : 0) - 6 * (parType[V(x)] || 0) + poly(x);
     const meilleur = (liste) => { let b = null, bv = -Infinity; for (const x of liste) { if (x.pertinence < plancher || !peut(x)) continue; const v = cle(x); if (v > bv) { bv = v; b = x; } } return b; };
 
     // 1. vœux « découverte » : une voie que l'élève n'a pas cochée et qui n'est pas dans son cœur de projet,
@@ -1426,7 +1445,7 @@
   function recommander(formations, profil, questionnaire, reponses) {
     const s = statsProfil(profil), it = interets(questionnaire, reponses);
     // tri par pertinence (avec ses décimales), puis départage explicite : jamais l'ordre du catalogue
-    const res = formations.map((f) => evaluer(f, s, it)).sort(comparer);
+    const res = placerLasApresLicence(formations.map((f) => evaluer(f, s, it)), it).sort(comparer);
     return { stats: s, interets: it, resultats: res };
   }
 
@@ -1436,5 +1455,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, MIN_CANDIDATS_LICENCE_SECTEUR, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, projetSante, estPassLas, MESSAGE_SELECTION_SANTE, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,sansInteretSante, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, MIN_CANDIDATS_LICENCE_SECTEUR, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, projetSante, estPassLas, MESSAGE_SELECTION_SANTE, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
