@@ -1,7 +1,7 @@
 {
  "profil": "ecg-expertes-faible",
  "description": "Maths 15, maths expertes 8,5 (sous 10), vise une prépa ECG maths approfondies",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 14.25,
   "moyennePeriodes": [
@@ -301,21 +301,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": "Tu as indiqué vouloir rester en France."
-  },
-  {
-   "id": "u-de-toulon-economie-et-gestion",
-   "interet": 79.40407946857856,
-   "faisabilite": 83.25,
-   "pertinence": 80.94244768114714,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   },
   {
    "id": "psup-10367",
@@ -721,6 +706,21 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-35342",
+   "interet": 78.50717650047406,
+   "faisabilite": 83.25,
+   "pertinence": 80.40430590028444,
+   "repere": [
+    28,
+    0.78,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -845,7 +845,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "7f8df120120e307eac2766dacf71ce55adb40c703ae752a5c300f3702ae9fea8",
-  "textes": "251f55028a2b22c96e93120c27d7f3512bf67c05e9462ccac004a4780d36e999"
+  "calculs": "2425e52c57c8ca5e59c2dc39f0bf9481bf110f990a4c3df30957845a5c729132",
+  "textes": "1daed8e9a55b50b62b444683c0ee1a4af4e4d149eef79ec7f641cd8de8b41784"
  }
 }

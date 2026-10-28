@@ -1,7 +1,7 @@
 {
  "profil": "eco-excellent-decide",
  "description": "17 de moyenne, maths + SES, maths expertes, vise une prépa ECG, à l'aise en anglais",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 16.95,
   "moyennePeriodes": [
@@ -969,7 +969,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "69bf7aa1dbe376204e28b5e1ac39799c0cf124c5b387ab5d6c8e6d08f0e3bf11",
-  "textes": "1869527e6f879699c7ba30e7f4c7270baeb9e5b8d717d591b19ee7b795a6791e"
+  "calculs": "ec6b857ea564a5cf59441d1295ce975a5b239251b97bf358d87885675aec421b",
+  "textes": "02f2fe5f1434129cd2f3b3b979ffec601adda8040b2f940082ea4878416376fd"
  }
 }

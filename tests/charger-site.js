@@ -6,7 +6,7 @@
  * Le catalogue est donc construit exactement comme sur le site (construireCatalogue dans
  * app.js), sans recopier sa logique ici.
  *
- * Renvoie { E, B, DATA, QUEST, afficher, cliquer } : E = CapEngine, B = CapBulletin, DATA.formations = catalogue complet,
+ * Renvoie { E, B, DATA, CAT (catalogue affiché, y compris les fiches Parcoursup sans fiche notable), QUEST, afficher, cliquer } : E = CapEngine, B = CapBulletin, DATA.formations = catalogue complet,
  * QUEST = questionnaire. Pour lire les pages : passer l'état de l'élève (options.etat, même forme que
  * CapStore), puis afficher("#liste") renvoie le HTML de la page, et cliquer({ action, ... }) simule un
  * clic sur un bouton data-action (exemple : { action: "onglet-liste", o: "voeux" }) ; changer() simule une case cochée ;
@@ -95,7 +95,7 @@ async function chargerSite(remplacements = {}, options = {}) {
   };
   // état enregistré dans le faux localStorage (clé « capsup.v1 »), relu tel quel, ou null
   const etatEnregistre = () => (stockage.has("capsup.v1") ? JSON.parse(stockage.get("capsup.v1")) : null);
-  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, QUEST: fenetre.__QUEST, afficher, cliquer, changer, etatEnregistre };
+  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, CAT: fenetre.__CAT, QUEST: fenetre.__QUEST, afficher, cliquer, changer, etatEnregistre };
 }
 
 module.exports = { chargerSite };

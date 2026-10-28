@@ -1,7 +1,7 @@
 {
  "profil": "fragile",
  "description": "9,5 de moyenne, SES + AMC, appréciations négatives : la liste doit rester prudente",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 9.5,
   "moyennePeriodes": [
@@ -769,15 +769,6 @@
     ]
    },
    {
-    "id": "ps-12050",
-    "categorie": "ambitieux",
-    "pertinence": 59.4019916359561,
-    "repere": [
-     55,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-36460",
     "categorie": "ambitieux",
     "pertinence": 53.28091124063294,
@@ -821,6 +812,15 @@
      54,
      "en_dessous"
     ]
+   },
+   {
+    "id": "dna-villa-arson-nice",
+    "categorie": "ambitieux",
+    "pertinence": 40.87466803613526,
+    "repere": [
+     12,
+     "en_dessous"
+    ]
    }
   ],
   "protection": {
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "db8089a36e0af33178a5db2a7cb6dd7f9dffc4955b051f5316c7ffffc994aa03",
-  "textes": "5a4eeee35a354360acfc2135861404b45dc895af716186a173968a16e5656cf9"
+  "calculs": "a405f8e2a63321934053fe215a285f4c594d2f0bb8e1dd686255f2b3a12c0365",
+  "textes": "1c50ba96161b5b6274f74f2dc361fc535af333ed7592ae85b9fa3953bb801a2f"
  }
 }

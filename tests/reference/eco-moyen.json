@@ -1,7 +1,7 @@
 {
  "profil": "eco-moyen",
  "description": "11,5 de moyenne, SES + HGGSP, maths complémentaires, intéressé par le commerce, reste près de chez lui",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 11.4,
   "moyennePeriodes": [
@@ -136,55 +136,10 @@
    "exclu": null
   },
   {
-   "id": "bachelor-management-de-l-hotellerie-et-du-tourisme-vatel-nimes",
-   "interet": 83.9733999560076,
-   "faisabilite": 61.6,
-   "pertinence": 75.02403997360456,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-49034",
    "interet": 82.72895825543945,
    "faisabilite": 61.25,
    "pertinence": 74.13737495326367,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "kedge-business-school-bachelor",
-   "interet": 83.8464820710574,
-   "faisabilite": 57.6,
-   "pertinence": 73.34788924263444,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "grenoble-ecole-de-management-bachelor-in-international-business",
-   "interet": 82.88544305868527,
-   "faisabilite": 57.6,
-   "pertinence": 72.77126583521117,
    "repere": [
     null,
     null,
@@ -284,21 +239,6 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": "Frais (au moins 11 500 €/an) au-delà de ton budget."
-  },
-  {
-   "id": "montpellier-business-school-bachelor-in-international-business",
-   "interet": 79.60691446634921,
-   "faisabilite": 57.6,
-   "pertinence": 70.80414867980953,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   },
   {
    "id": "psup-26296",
@@ -691,21 +631,6 @@
    "exclu": null
   },
   {
-   "id": "aix-marseille-universite-aix-en-provence-aes",
-   "interet": 66.9471088021515,
-   "faisabilite": 65.85,
-   "pertinence": 66.5082652812909,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-12042",
    "interet": 71.82921246549147,
    "faisabilite": 58.48,
@@ -719,6 +644,81 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": "Frais (≈ 5 500 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-47831",
+   "interet": 69.20949483720014,
+   "faisabilite": 62.32000000000001,
+   "pertinence": 66.45369690232009,
+   "repere": [
+    81,
+    0.23,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": "Frais (≈ 7 100 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-26007",
+   "interet": 69.9955785671935,
+   "faisabilite": 60.720000000000006,
+   "pertinence": 66.2853471403161,
+   "repere": [
+    75,
+    0.13,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47830",
+   "interet": 68.65447492351032,
+   "faisabilite": 62.32000000000001,
+   "pertinence": 66.1206849541062,
+   "repere": [
+    86,
+    0.27,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": "Frais (≈ 7 100 €/an) au-delà de ton budget."
+  },
+  {
+   "id": "psup-21268",
+   "interet": 63.0862261695399,
+   "faisabilite": 70.65,
+   "pertinence": 66.11173570172394,
+   "repere": [
+    100,
+    0.25,
+    "en_dessous",
+    "tres_ouverte_en_dessous"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-53273",
+   "interet": 69.20149144913762,
+   "faisabilite": 61.25,
+   "pertinence": 66.02089486948256,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "4157879a81e47a18404859b5c013353bd2b1023aa7450abe22452321957a379e",
-  "textes": "e88723cb6e3f8358380d590bff092fe2e6ef83dd64f628b7afc0ca0d61699872"
+  "calculs": "12b12091b4b53f3768d64d9a2639fd8abd9f08b43c3bcbe0f888ffc317e59d2f",
+  "textes": "fb7fc3feaa6dfbc4d236dfd476f605528d62a72659c9cc159b7e6eeaa980f032"
  }
 }
