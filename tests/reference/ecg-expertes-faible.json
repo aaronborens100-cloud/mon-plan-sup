@@ -183,21 +183,6 @@
    "exclu": null
   },
   {
-   "id": "psup-28381",
-   "interet": 80.51806034459848,
-   "faisabilite": 83.25,
-   "pertinence": 81.61083620675909,
-   "repere": [
-    9,
-    0.96,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-26671",
    "interet": 80.4174113006418,
    "faisabilite": 83.25,
@@ -344,6 +329,21 @@
     "tres_ouverte"
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28381",
+   "interet": 80.51806034459848,
+   "faisabilite": 83.25,
+   "pertinence": 81.61083620675909,
+   "repere": [
+    9,
+    0.96,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -744,11 +744,11 @@
     ]
    },
    {
-    "id": "psup-28381",
+    "id": "psup-28724",
     "categorie": "ambitieux",
-    "pertinence": 81.61083620675909,
+    "pertinence": 81.4228149504188,
     "repere": [
-     9,
+     18,
      "au_dessus"
     ]
    },
@@ -789,11 +789,11 @@
     ]
    },
    {
-    "id": "psup-4138",
+    "id": "psup-35341",
     "categorie": "realiste",
-    "pertinence": 80.50871044804583,
+    "pertinence": 80.40430590028444,
     "repere": [
-     41,
+     39,
      "au_dessus"
     ]
    },
@@ -845,7 +845,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "853e66fbb71df9cadabe79ccef130b4503963fc46782c75a7e30c4bbe026c1b5",
-  "textes": "d931595c3a4172614370de84a0a3c92379bddfeea4b57856e575b0d6d7a74dbe"
+  "calculs": "7f8df120120e307eac2766dacf71ce55adb40c703ae752a5c300f3702ae9fea8",
+  "textes": "251f55028a2b22c96e93120c27d7f3512bf67c05e9462ccac004a4780d36e999"
  }
 }
