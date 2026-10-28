@@ -984,15 +984,19 @@
   }
   function vueListe() {
     const A = analyse(), manque = manquesProfil(A);
+    // sans lycée avec « domicile » ou « proche » (aucun vœu sûr, issue #43) : le message est mis en avant, en tête de la page
+    const sansSecurite = !A.stats.geo && [0, 1].includes(A.interets.prefs.mobilite);
+    const msgLycee = A.stats.geo ? "" : `<p class="notice info small sans-lycee">${sansSecurite ? `<strong>${esc(E.MESSAGE_SANS_LYCEE)}</strong>` : esc(E.MESSAGE_SANS_LYCEE)}</p>`;
     const nbVoeux = A.resultats.filter((x) => etat.retenus.includes(x.f.id)).length;
     const nbReco = A.resultats.filter((x) => !x.exclu).length;
     const o = app.ongletListe === "voeux" ? "voeux" : "reco";
     return `<div class="stack-lg">
       ${pageHero({ sur: "Ma liste", titre: etat.profil.prenom ? `Ta sélection, ${esc(etat.profil.prenom)}` : "Ma liste", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
         cote: `<div class="mini-stats">${miniStat(nbFr(nbReco), "formations analysées", "bleu")}${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
-      ${A.stats.geo ? "" : `<p class="notice info small sans-lycee"><strong>${esc(E.MESSAGE_SANS_LYCEE)}</strong></p>`}
+      ${msgLycee && sansSecurite ? msgLycee : ""}
       ${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
+      ${msgLycee && !sansSecurite ? msgLycee : ""}
       <div class="segments" role="tablist" aria-label="Contenu de ma liste">
         <button role="tab" aria-selected="${o === "reco"}" data-action="onglet-liste" data-o="reco">${ico("etoile")}Recommandées</button>
         <button role="tab" aria-selected="${o === "voeux"}" data-action="onglet-liste" data-o="voeux">${ico("check")}Mes vœux <span class="compteur">${nbVoeux}</span></button>

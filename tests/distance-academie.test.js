@@ -244,10 +244,9 @@ test("sans lycée : ni distance ni académie, message dans Ma liste", async () =
     assert.equal(x.dist, null); assert.equal(x.memeAcademie, false); assert.equal(x.horsDistance, false);
     assert.ok(!x.ajust.some((a) => /km de chez toi|autre côté de la mer/.test(a)), x.f.id);
   }
-  // la règle « au-delà de la distance acceptée » ne s'applique pas : des formations lointaines peuvent rester « sécurité »
-  const avec = analyser(base).A;
-  assert.ok(A.resultats.filter((x) => x.categorie === "securite").length > avec.resultats.filter((x) => x.categorie === "securite").length);
-  assert.equal(W.protection.nbSecurite, W.liste.filter((x) => x.categorie === "securite").length);
+  // décision d'Aaron du 22/10 (issue #43) : sans lycée + « domicile », aucun vœu « sécurité » (distance inconnue)
+  assert.equal(A.resultats.filter((x) => x.categorie === "securite").length, 0);
+  assert.equal(W.protection.nbSecurite, 0);
   const msg = E.MESSAGE_SANS_LYCEE.replace(/'/g, "&#39;");
   const page = async (p) => (await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } })).afficher("#liste");
   assert.ok((await page(sans)).includes(msg), "message absent sans lycée");
