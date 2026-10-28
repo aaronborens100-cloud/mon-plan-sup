@@ -26,10 +26,15 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 
 ## État actuel à connaître
 
-- La règle 2 n'est pas encore appliquée : `js/catalogue.js` (`construireCatalogue`, calcul sans affichage ; `js/app.js` ne fait que dessiner) fusionne encore
-  `data/formations.json` (fiches éditoriales, dont 1 639 en France) avec Parcoursup via
-  `data/anciennes-fiches.json` (ex-`fusion.json`). Ne pas supprimer ces fichiers sans une tâche dédiée : le moteur s'en sert
-  pour les recommandations, et `anciennes-fiches.json` définit aussi le périmètre affiché (BTS et BUT masqués).
+- Calcul et affichage sont séparés : `js/catalogue.js` construit le catalogue (`construireCatalogue`, sans HTML ni
+  `document`) ; `js/app.js` ne fait que dessiner.
+- La règle 2 n'est qu'en partie appliquée. Les fiches maison françaises sans lien certain avec Parcoursup ont été
+  retirées (PR H, #76) ; leurs identifiants restent valides (redirection vers la formation Parcoursup, sinon vœu
+  retiré avec un message). Il reste dans `data/formations.json` 1 345 fiches : 826 en France (811 fusionnées avec
+  Parcoursup + 15 prépas ECG « modèles » de `data/ajustements.json`) et 519 à l'étranger (non concernées).
+  Leur retrait (PR I2) attend une décision d'Aaron : il change 88 listes de 10 vœux sur 114 profils.
+- `data/anciennes-fiches.json` (ex-`fusion.json`, renommé dans I1, #77) relie ces fiches à Parcoursup et définit
+  le périmètre affiché (BTS et BUT masqués). Ne pas le supprimer sans une tâche dédiée.
 - Les autres formations Parcoursup du périmètre sont notées grâce à `data/filieres.json` (une entrée
   par code `nmc`), table **figée** (estimation par filière, tirée des anciennes fiches Mon Plan Sup) :
   `scripts/construire-filieres.py` refuse de tourner. `data/generees.json` n'est plus
