@@ -151,7 +151,12 @@ function controler(site, p) {
   const nbSecu = W.liste.filter((x) => x.categorie === "securite").length;
   if (W.liste.length !== 10) ajoute("dix_voeux", null, `${W.liste.length} vœux${mob === 0 && s.geo ? " (élève « domicile » : conséquence assumée, docs/modele-chances.md 8.3)" : ""}`);
   const sansNotes = s.moyenneGenerale === null;
-  const attenduNiveau = W.liste.length && W.liste.every((x) => x.repere && x.repere.sansNotes) ? "sans_notes" : MESSAGES_PROTECTION(nbSecu);
+  // Issue #43 : sans lycée + « domicile » ou « proche », des formations auraient été « sécurité » sans la règle « sans_lycee » :
+  // 0 vœu « sécurité », niveau « sans_lycee », message « Indique ton lycée » en tête de Ma liste, pas d'alerte « pas assez
+  // de vœux sûrs ». Tout autre profil garde les règles ordinaires.
+  const sansLyceeSansSecurite = !s.geo && (mob === 0 || mob === 1) && nbSecu === 0 && W.protection.niveau === "sans_lycee"
+    && A.resultats.some((x) => x.repere && x.repere.regle === "sans_lycee");
+  const attenduNiveau = W.liste.length && W.liste.every((x) => x.repere && x.repere.sansNotes) ? "sans_notes" : sansLyceeSansSecurite ? "sans_lycee" : MESSAGES_PROTECTION(nbSecu);
   if (W.protection.nbSecurite !== nbSecu || W.protection.niveau !== attenduNiveau)
     ajoute("protection_coherente", null, `${nbSecu} « sécurité », niveau ${W.protection.niveau} (attendu ${attenduNiveau})`);
   if (sansNotes && W.liste.length && W.protection.niveau !== "sans_notes") ajoute("message_sans_notes", null, `protection : ${W.protection.niveau}`);
@@ -160,7 +165,13 @@ function controler(site, p) {
   const { pages: P } = pages(site, p, { toutesLesFiches: true });
   const esc = (t) => String(t).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
   const prop = P["liste-proposition"] || "";
-  if (nbSecu < 3 && W.liste.length && !ALERTE_SURS.test(prop)) ajoute("alerte_moins_de_3_surs", null, `${nbSecu} vœu(x) « sécurité », alerte absente de la page`, "liste-proposition");
+  if (sansLyceeSansSecurite) {
+    // tête de Ma liste : le message « Indique ton lycée » est avant les onglets, et l'ancienne alerte est absente
+    const msgLycee = esc(E.MESSAGE_SANS_LYCEE);
+    if (prop.indexOf(msgLycee) < 0 || prop.indexOf(msgLycee) > prop.indexOf('data-action="onglet-liste"'))
+      ajoute("alerte_moins_de_3_surs", null, "sans lycée : message « Indique ton lycée » absent ou pas en tête de Ma liste", "liste-proposition");
+    if (ALERTE_SURS.test(prop)) ajoute("alerte_moins_de_3_surs", null, "sans lycée : ancienne alerte « pas assez de vœux sûrs » encore affichée (double alerte)", "liste-proposition");
+  } else if (nbSecu < 3 && W.liste.length && !ALERTE_SURS.test(prop)) ajoute("alerte_moins_de_3_surs", null, `${nbSecu} vœu(x) « sécurité », alerte absente de la page`, "liste-proposition");
   if (W.liste.length && !prop.includes(esc(W.protection.message).replace(/&quot;/g, '"')) && !prop.includes(esc(W.protection.message)))
     ajoute("protection_coherente", null, "message de protection absent de la page", "liste-proposition");
   const bac = esc(E.MESSAGE_BAC);

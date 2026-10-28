@@ -386,6 +386,11 @@
     texte: "Plus loin que la distance que tu acceptes (ou de l'autre côté de la mer) : jamais « sécurité », même si tes chiffres sont bons." };
   const REGLE_DISTANCE_INCONNUE = { cle: "distance_inconnue", categorie: "realiste",
     texte: "Adresse de la formation inconnue : on ne peut pas vérifier qu'elle est à la distance que tu acceptes, donc jamais « sécurité »." };
+  // Décision du fondateur (22/10/2026, issue #43) : un élève SANS lycée renseigné qui a répondu « domicile » ou « proche »
+  // n'a aucun vœu « sécurité » (la distance est inconnue, on ne peut pas vérifier qu'elle est acceptable). « partout »
+  // et l'élève avec lycée ne changent pas.
+  const REGLE_SANS_LYCEE = { cle: "sans_lycee", categorie: "realiste",
+    texte: "Sans ton lycée, on ne peut pas vérifier que cette formation est à la distance que tu acceptes : jamais « sécurité »." };
   // Règle du secteur de recrutement des licences non sélectives (consultée le 19/10/2026)
   // Même forme que les autres sources du site ({ source, consulte_le }), affichée par srcLien() dans app.js
   const SOURCE_SECTEUR = { source: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
@@ -791,6 +796,7 @@
     if (mob === 1 && distanceInconnue) exclu = exclu || MESSAGE_PROCHE_DISTANCE_INCONNUE;
     const horsDistance = !!s.geo && (mob === 0 || mob === 1)
       && (loinPays || traversee || distanceInconnue || dist > DISTANCE_ACCEPTEE_KM[mob]);
+    const sansLyceeProche = !s.geo && (mob === 0 || mob === 1);
     if (dist !== null && mob !== undefined) {
       interet -= penaliteDistance(dist, mob, traversee);
       if (horsDistance) ajust.push(traversee ? `de l'autre côté de la mer (≈ ${Math.round(dist)} km de chez toi)` : `à ${Math.round(dist)} km de chez toi`);
@@ -823,6 +829,8 @@
     let regle = regleCategorie(rep, bloque);
     // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
+    // élève sans lycée, « domicile » ou « proche » : jamais « sécurité » (distance inconnue)
+    if (regle.categorie === "securite" && sansLyceeProche) regle = REGLE_SANS_LYCEE;
     // campus à l'étranger, élève qui n'a pas dit vouloir étudier dans ce pays : jamais « sécurité »
     const raisonCampus = raisonCampusNonVoulu(f, p);
     if (regle.categorie === "securite" && raisonCampus) regle = regleCampusEtranger(raisonCampus);
@@ -1064,6 +1072,10 @@
     const quotas = Object.entries(QUOTAS).map(([c, q]) => [c, Math.max(0, q - nDec[c])]);
     const alertes = [];
     const alerteDe = {};   // une seule alerte par catégorie
+    // élève sans lycée (« domicile » ou « proche ») : aucun vœu « sécurité » possible, le message « Indique ton lycée » le
+    // dit déjà : pas d'alerte « pas assez de vœux sûrs » qui conseillerait des licences de son académie
+    const sansLycee = securiteImpossibleSansLycee(resultats);
+    if (sansLycee) alerteDe.securite = true;
     const alerter = (cat, texte) => { if (!alerteDe[cat]) { alerteDe[cat] = true; alertes.push(texte); } };
     // remplit q places de la catégorie cat (mêmes règles de diversité, même plancher) ; s'il manque des vœux
     // « sécurité », les places restantes vont aux meilleurs « réalistes » (plancher abaissé de 10) et l'alerte s'affiche
@@ -1117,7 +1129,7 @@
         ? `Tu n'avais pas coché ce type de formation (${t}), mais il correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`
         : `Un type de formation auquel tu n'as peut-être pas pensé (${t}), mais qui correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`;
     };
-    const W = { liste: choisis, protection: protection(choisis), alertes, certitude: cert, explication,
+    const W = { liste: choisis, protection: protection(choisis, sansLycee), alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
     // Règles de diversité pour les formations équivalentes (equivalentsListe) : la liste où x prend la place i respecte-t-elle
     // les mêmes règles que peut(), avec les valeurs finales des plafonds (celles que la liste elle-même respecte) ?
@@ -1227,11 +1239,16 @@
   // admis, ou taux d'au moins 85 % et moyenne dans celle des admis ; jamais de point bloquant) : on compte simplement
   // les vœux « sécurité ».
   const PROTECTION_REPERE = "Aucun site ne peut calculer tes chances exactes d'admission : ces repères viennent des résultats Parcoursup 2025.";
-  function protection(liste) {
+  // Vrai si au moins une formation aurait été « sécurité » sans REGLE_SANS_LYCEE : l'absence de vœu sûr vient alors du
+  // lycée non renseigné, pas du profil.
+  const securiteImpossibleSansLycee = (resultats) => resultats.some((x) => x.repere && x.repere.regle === REGLE_SANS_LYCEE.cle);
+  const MESSAGE_PROTECTION_SANS_LYCEE = "Aucun vœu n'est classé « sûr » tant que ton lycée n'est pas indiqué : sans lui, on ne peut pas vérifier la distance. Indique-le pour que ta liste puisse compter des vœux sûrs.";
+  function protection(liste, sansLycee = false) {
     const nbSecurite = liste.filter((x) => x.categorie === "securite").length;
     const r = (niveau, message) => ({ nbSecurite, niveau, message });
     if (liste.length && liste.every((x) => x.repere && x.repere.sansNotes))
       return r("sans_notes", "Renseigne tes bulletins : sans tes notes, on ne peut pas savoir quels vœux sont sûrs pour toi.");
+    if (nbSecurite === 0 && sansLycee) return r("sans_lycee", MESSAGE_PROTECTION_SANS_LYCEE);
     if (nbSecurite === 0) return r("aucun", "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition.");
     if (nbSecurite === 1) return r("insuffisant", "Ta liste n'a qu'un seul vœu vraiment sûr : ajoutes-en au moins un autre.");
     if (nbSecurite === 2) return r("minimum", "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage.");
@@ -1383,5 +1400,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
