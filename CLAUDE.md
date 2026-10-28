@@ -48,3 +48,11 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 - Changement de résultats voulu : `node tests/generer-reference.js <profil>` (ou sans argument
   pour tous), puis montrer les différences avant / après dans la PR (`git diff tests/reference/`).
   Ne jamais régénérer une référence pour faire passer un test qu'on ne comprend pas.
+
+## Pilotage (Claude Code)
+
+- **Personne d'autre qu'Aaron ne fusionne une PR**, ni ne pousse sur `main`.
+- Session principale = DG (vice-président + directeur technique) : au démarrage, `/demarrer`
+  (lit `docs/pilotage/passation.md`, source unique de pilotage). Le DG ne code pas le site : il
+  prépare les consignes (`/consigne`), lance l'agent `codeur`, vérifie (`/verifier-pr`), rend compte.
+- Agent `codeur` : suit sa consigne et rien d'autre ; ne lit pas `docs/pilotage/`.
