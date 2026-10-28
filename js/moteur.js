@@ -1200,6 +1200,12 @@
     Object.defineProperty(W, "peutRemplacer", { value: peutRemplacer, enumerable: false });
     // valeurs des règles de diversité en fin de construction (lecture seule, pour les tests et la documentation)
     Object.defineProperty(W, "diversite", { value: { maxFil, bonusType, plafonds: CAPS.slice(), principal }, enumerable: false });
+    // Liste courte à cause de la distance acceptée (question « mobilite », issue #58) : moins de n vœux alors que des
+    // formations, écartées uniquement pour leur distance (« domicile » : plus de 45 km, étranger, distance inconnue ;
+    // « proche » : distance inconnue), auraient pu y entrer. Propriété non énumérable : la liste ne change pas.
+    const ecarteeParDistance = (x) => x.horsDistance && x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f)
+      && (/chez tes parents/.test(x.exclu) || x.exclu === MESSAGE_PROCHE_DISTANCE_INCONNUE);
+    Object.defineProperty(W, "limiteeParDistance", { value: choisis.length < n && resultats.some(ecarteeParDistance), enumerable: false });
     return W;
   }
 
