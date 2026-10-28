@@ -733,6 +733,15 @@
     ]
    },
    {
+    "id": "psup-20790",
+    "categorie": "securite",
+    "pertinence": 57.75528779083116,
+    "repere": [
+     98,
+     "moyenne"
+    ]
+   },
+   {
     "id": "psup-20509",
     "categorie": "securite",
     "pertinence": 55.04155637560065,
@@ -751,20 +760,20 @@
     ]
    },
    {
+    "id": "psup-26007",
+    "categorie": "ambitieux",
+    "pertinence": 66.2853471403161,
+    "repere": [
+     75,
+     "en_dessous"
+    ]
+   },
+   {
     "id": "psup-8810",
     "categorie": "ambitieux",
     "pertinence": 66.77171570590734,
     "repere": [
      70,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-43011",
-    "categorie": "ambitieux",
-    "pertinence": 63.83975627889662,
-    "repere": [
-     43,
      "en_dessous"
     ]
    },
@@ -803,15 +812,6 @@
      100,
      "en_dessous"
     ]
-   },
-   {
-    "id": "psup-20790",
-    "categorie": "securite",
-    "pertinence": 57.75528779083116,
-    "repere": [
-     98,
-     "moyenne"
-    ]
    }
   ],
   "protection": {
@@ -826,7 +826,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence d'éco-gestion, avec licence de droit ou science po et licence de langues comme solutions de repli. Un vœu « découverte » t'ouvre à année préparatoire ou de mise à niveau.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence d'éco-gestion, avec licence de droit ou science po et année préparatoire ou de mise à niveau comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "bc2af372514a43a41ddaae7ecdcbecf72601023bec087f1a3802c2ef80e1d5d6",
+  "calculs": "f77d37b3899f1f97ffb46955d98153cf3163898e538f68a96e91324522223e05",
   "textes": "d2613024a25bd18cd241ca94268bac7d374b36280b63dd2d8ec121e7acac88c2"
  }
 }
