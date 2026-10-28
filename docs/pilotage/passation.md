@@ -55,7 +55,7 @@ Contrôles sur main (avant #62) : seule violation restante connue = `dix_voeux` 
 ## 5. Feuille de route (dans l'ordre)
 | | PR | Issue | Fichiers principaux | État |
 |---|---|---|---|---|
-| A | Corrections du relevé des frais + année + phrase tarifs | #49 | scripts/construire-frais-prives.py, data/frais-prives.json, js/app.js | **En cours** : agent lancé le 28/10 depuis claude.ai sur `claude/frais-releve-fraicheur` (rebase sur main). À vérifier avec `/verifier-pr claude/frais-releve-fraicheur`. Point d'attention : la date « octobre 2026 » ne doit pas être écrite en dur si elle peut venir des données. |
+| A | Corrections du relevé des frais + année + phrase tarifs | #49 | scripts/construire-frais-prives.py, data/frais-prives.json, js/app.js | **PR #63 ouverte, NON vérifiée par le DG** (418/418 selon l'agent). À vérifier : `/verifier-pr claude/frais-releve-fraicheur`. Points à creuser : 6 références changent par le hash « calculs » (cause non isolée) ; date « octobre 2026 » en dur ? ; 17 montants « selon les revenus » encore lus comme minimum par le moteur, contrairement à la décision du 22/10 (→ PR moteur à ajouter) ; points 5 et 7 de #49 non traités. |
 | B | Jamais « sécurité » sans lycée pour domicile / proche ; « Indique ton lycée » mis en avant | #43 | moteur, app | à faire |
 | C | Licence de secteur pour l'élève faible + règle 100 % + secteur francilien | #45 | moteur | à faire (mesure du plancher d'abord) |
 | D | PASS / LAS de l'académie pour un projet médecine | #42 | moteur | à faire |
