@@ -401,6 +401,16 @@
   // et l'élève avec lycée ne changent pas.
   const REGLE_SANS_LYCEE = { cle: "sans_lycee", categorie: "realiste",
     texte: "Sans ton lycée, on ne peut pas vérifier que cette formation est à la distance que tu acceptes : jamais « sécurité »." };
+  // Projet santé (issue #42, décision d'Aaron du 22/10/2026) : le PASS et les LAS ne sont jamais « sécurité » (l'entrée en
+  // 2e année de santé reste très sélective), et le PASS ou une LAS du secteur de l'élève figure toujours dans sa liste de
+  // 10 vœux (wishlist), sous réserve des règles existantes (exclusions, distance, territoire).
+  const MESSAGE_SELECTION_SANTE = "Le PASS et les LAS mènent à des études de santé : l'entrée en 2e année reste très sélective, quel que soit ton niveau. Garde-toi des solutions de repli.";
+  const REGLE_SANTE_SELECTIVE = { cle: "sante_selective", categorie: "realiste", texte: `Étude de santé : ce vœu ne compte jamais comme sûr. ${MESSAGE_SELECTION_SANTE}` };
+  const estPassLas = (f) => /^nmc:(PASS|LAS)$/.test(intitule(f));
+  // Vrai si la santé est le domaine dominant des réponses : au moins 0,75, strictement devant tous les domaines hors santé
+  // (« vivant » compte comme proche de la santé), et élève qui n'hésite pas entre des domaines (certitude « indecis »)
+  const projetSante = (it) => !!it && !!it.repondues && !!it.domaines && (it.domaines.sante || 0) >= 0.75 && certitude(it).niveau !== "indecis"
+    && Object.entries(it.domaines).every(([k, v]) => k === "international" || k === "sante" || (k === "vivant" ? v <= it.domaines.sante : v < it.domaines.sante));
   // Règle du secteur de recrutement des licences non sélectives (consultée le 19/10/2026)
   // Même forme que les autres sources du site ({ source, consulte_le }), affichée par srcLien() dans app.js
   const SOURCE_SECTEUR = { source: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
@@ -850,9 +860,13 @@
     if (regle.categorie === "securite" && priveFI) regle = REGLE_PRIVE_FRAIS_INCONNUS;
     // frais dans une fourchette qui dépasse le budget (min ≤ budget < max) : jamais « sécurité »
     if (regle.categorie === "securite" && fourchette && REGLE_BUDGET_FOURCHETTE.jamaisSecurite) regle = Object.assign({}, REGLE_FRAIS_FOURCHETTE, { texte: texteFourchette(f.cout) });
+    // projet santé : PASS et LAS jamais « sécurité », avec un message honnête sur la sélection
+    const selectionSante = projetSante(it) && estPassLas(f);
+    if (selectionSante && regle.categorie === "securite") regle = REGLE_SANTE_SELECTIVE;
     rep.regle = regle.cle;
     rep.pourquoi = regle.cle === "licence_secteur" || regle.cle === "licence_secteur_ouverte" ? texteLicenceSecteur(mob, regle.cle) : regle.texte;
     // le message est affiché même quand une autre règle donne la catégorie
+    if (selectionSante && regle !== REGLE_SANTE_SELECTIVE) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_SELECTION_SANTE}`;
     if (priveFI && regle !== REGLE_PRIVE_FRAIS_INCONNUS) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_PRIVE_FRAIS_INCONNUS}`;
     if (messageFourchette && regle.cle !== REGLE_FRAIS_FOURCHETTE.cle) rep.pourquoi = `${rep.pourquoi} ${messageFourchette}`;
     rep.priveFraisInconnus = priveFI;
@@ -864,10 +878,11 @@
     const categorie = regle.categorie;
     const pertinence = it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite;
     const memeAcademie = !!s.academie && lieu.academie === s.academie;
+    const memeSecteur = !!s.secteur && secteurDe(lieu.academie) === s.secteur;
     // distance pour le départage : la même distance équivalente que pour la pénalité (traversée + SURCOUT_TRAVERSEE_KM)
     const distTri = dist === null ? null : distanceEquivalente(dist, traversee);
     return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, traversee, horsDistance, horsTerritoire,
-      academie: lieu.academie, memeAcademie, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
+      academie: lieu.academie, memeAcademie, memeSecteur, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
   }
 
   function raisons(f, s, it, crit, cout) {
@@ -1031,7 +1046,16 @@
   /* ---------------------------------------------------------------- wishlist */
   // 10 vœux Parcoursup (formations en France et campus à l'étranger de formations françaises). Diversité adaptée au profil : un élève décidé concentre ses vœux
   // sur son projet, un élève indécis les répartit sur plus de types. Les formations à l'étranger sont proposées à part.
+  // Projet santé : le PASS ou une LAS du secteur de l'élève (le plus pertinent) figure toujours dans la liste ; si la
+  // construction normale n'en retient aucun, on la refait en l'imposant (la liste reste identique dans les autres cas).
   function wishlist(resultats, n = 10, it = null) {
+    const W = construireWishlist(resultats, n, it, null);
+    if (!projetSante(it) || W.liste.some((x) => estPassLas(x.f) && x.memeSecteur)) return W;
+    const imposee = resultats.filter((x) => estPassLas(x.f) && x.memeSecteur && !x.exclu && !x.bloque && !x.horsDistance && !x.horsTerritoire
+      && voeuParcoursup(x.f) && !horsListe(x.f)).sort(comparer)[0];
+    return imposee ? construireWishlist(resultats, n, it, imposee) : W;
+  }
+  function construireWishlist(resultats, n, it, imposee) {
     const ok = resultats.filter((x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f));
     const cert = certitude(it);
     const V = (x) => voie(x.f);
@@ -1076,7 +1100,9 @@
     }
 
     // 2. vœux principaux, catégorie par catégorie (3 sûrs, 3 ambitieux, 4 réalistes, moins les découvertes)
+    if (imposee) decouvertes.delete(imposee.f.id);
     const nDec = { securite: 0, realiste: 0, ambitieux: 0 };
+    if (imposee) { prend(imposee); nDec[imposee.categorie]++; }
     decouvertes.forEach((x) => { nDec[x.categorie]++; });
     const QUOTAS = { securite: 3, ambitieux: 3, realiste: 4 };
     const quotas = Object.entries(QUOTAS).map(([c, q]) => [c, Math.max(0, q - nDec[c])]);
@@ -1410,5 +1436,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, MIN_CANDIDATS_LICENCE_SECTEUR, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, MIN_CANDIDATS_LICENCE_SECTEUR, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, projetSante, estPassLas, MESSAGE_SELECTION_SANTE, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();
