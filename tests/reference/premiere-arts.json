@@ -1,7 +1,7 @@
 {
  "profil": "premiere-arts",
  "description": "Élève de première, 13 de moyenne, spécialité arts, veut un parcours créatif",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 13,
   "moyennePeriodes": [
@@ -148,36 +148,6 @@
    "exclu": null
   },
   {
-   "id": "sorbonne-universite-musicologie",
-   "interet": 87.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 84.2,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "sorbonne-universite-histoire-de-l-art-et-archeologie",
-   "interet": 86.05555555555556,
-   "faisabilite": 80.75,
-   "pertinence": 83.93333333333334,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-25320",
    "interet": 83.83333333333334,
    "faisabilite": 83.25,
@@ -294,36 +264,6 @@
     "en_dessous"
    ],
    "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-cite-sciences-de-l-education",
-   "interet": 83.83333333333334,
-   "faisabilite": 80.75,
-   "pertinence": 82.60000000000001,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-sorbonne-nouvelle-arts-du-spectacle",
-   "interet": 87.83333333333334,
-   "faisabilite": 74.75,
-   "pertinence": 82.60000000000001,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -457,21 +397,6 @@
     0.37,
     "moyenne",
     "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "sorbonne-universite-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -716,6 +641,81 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-9314",
+   "interet": 83.83333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 80.84,
+   "repere": [
+    76,
+    0.5,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47253",
+   "interet": 87.83333333333334,
+   "faisabilite": 70.35,
+   "pertinence": 80.84,
+   "repere": [
+    18,
+    0.1,
+    "en_dessous",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-24461",
+   "interet": 86.05555555555556,
+   "faisabilite": 72.35,
+   "pertinence": 80.57333333333332,
+   "repere": [
+    22,
+    0.27,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28447",
+   "interet": 83.83333333333334,
+   "faisabilite": 75.55,
+   "pertinence": 80.52000000000001,
+   "repere": [
+    37,
+    0.28,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47256",
+   "interet": 83.83333333333334,
+   "faisabilite": 75.55,
+   "pertinence": 80.52000000000001,
+   "repere": [
+    10,
+    0.44,
+    "moyenne",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "ad49775f60602213068335447fff90f8d88c298c57df29119d44b5a8fee47332",
-  "textes": "e973bc508a1a0055c3d3424214daa730ae3647cafc92fd1ac09aff17adc7293a"
+  "calculs": "f1b6fb2468a6cf8016e568960cb0f2e802f0cc3937af0ebe79ff117d5d56c425",
+  "textes": "26bfa250892489ba158ed1bccbac96e15125c022800b872b17a313f8f4435c65"
  }
 }

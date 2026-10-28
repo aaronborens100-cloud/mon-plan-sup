@@ -1,7 +1,7 @@
 {
  "profil": "international-langues",
  "description": "15,5 de moyenne, LLCER anglais + HGGSP, veut partir étudier à l'étranger",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 15.5,
   "moyennePeriodes": [
@@ -569,36 +569,6 @@
    "exclu": null
   },
   {
-   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-48169",
    "interet": 80.75,
    "faisabilite": 99.5,
@@ -720,6 +690,36 @@
   },
   {
    "id": "umontreal-science-politique",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uottawa-science-politique",
+   "interet": 94.08333333333334,
+   "faisabilite": 79,
+   "pertinence": 88.05000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "uqam-science-politique",
    "interet": 94.08333333333334,
    "faisabilite": 79,
    "pertinence": 88.05000000000001,
@@ -1021,7 +1021,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "7f901ef9fd2f643e436d34924f26059ca23bb20dc5fb17096b2a465a472140ee",
-  "textes": "a5125b2b532fefc39b3a3e06d1c9eaa855db72d3965ee4c07009fb102d29a7f4"
+  "calculs": "23ebcf31b42e9210f9ebe1bbfa70ddf4d0cfc9d9c7e40899c575f35cdbf10b27",
+  "textes": "860a59c331db4079b606d44c63d1031a38a25728a187341189849b8e633e9bb1"
  }
 }

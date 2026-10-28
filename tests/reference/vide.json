@@ -1,7 +1,7 @@
 {
  "profil": "vide",
  "description": "Profil vide : rien de renseigné, aucune réponse",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": null,
   "moyennePeriodes": [],
@@ -849,7 +849,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "b6ee93725fc5f6a4989f2768bfac2971fa2ff22d9953e0c7b9c1442225ae74bc",
-  "textes": "2a39d127564f2b56833f3d9f368e3a927ea3cc6e6efcd526de4ab8596d2267c1"
+  "calculs": "0cfc60bf38d7a3d7418a6f1d85523886adc04dcd951880205b13c0a9daa0ff80",
+  "textes": "6bd477b382f62e4f17b48a7e3238aeef694b8e733ac62beabaab54c512f12464"
  }
 }

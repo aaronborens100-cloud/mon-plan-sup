@@ -1,7 +1,7 @@
 {
  "profil": "baisse-dernier-trimestre",
  "description": "Autour de 15 en première, 11,5 au 1er trimestre de terminale : dernier bulletin nettement en baisse",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 14.13,
   "moyennePeriodes": [
@@ -130,51 +130,6 @@
  },
  "top": [
   {
-   "id": "ices-institut-catholique-de-vendee-la-roche-sur-yon-licence-science-politique",
-   "interet": 81.54948338091232,
-   "faisabilite": 80.65,
-   "pertinence": 81.1896900285474,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
-   "interet": 83.26504001714291,
-   "faisabilite": 76.65,
-   "pertinence": 80.61902401028576,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "iep-de-fontainebleau-upec-fontainebleau-licence-science-politique-parcours-preparatoire-au",
-   "interet": 82.17781531956184,
-   "faisabilite": 76.65,
-   "pertinence": 79.96668919173712,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
    "interet": 81.96145979582587,
    "faisabilite": 76.65,
@@ -295,21 +250,6 @@
    "exclu": null
   },
   {
-   "id": "u-de-toulon-antenne-de-draguignan-draguignan-licence-droit",
-   "interet": 77.626351706012,
-   "faisabilite": 80.65,
-   "pertinence": 78.8358110236072,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "aix-marseille-universite-marseille-licence-droit-parcours-droit-et-science-politique",
    "interet": 82.94530117509161,
    "faisabilite": 72.65,
@@ -364,36 +304,6 @@
     0.81,
     "au_dessus",
     "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-la-garde-licence-droit",
-   "interet": 77.36899174928031,
-   "faisabilite": 80.65,
-   "pertinence": 78.68139504956818,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-montpellier-licence-science-politique",
-   "interet": 87.9636790566508,
-   "faisabilite": 64.65,
-   "pertinence": 78.63820743399049,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -475,21 +385,6 @@
    "exclu": null
   },
   {
-   "id": "u-grenoble-alpes-saint-martin-d-heres-licence-droit",
-   "interet": 76.94246489207237,
-   "faisabilite": 80.65,
-   "pertinence": 78.42547893524343,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-39204",
    "interet": 81.16188819302351,
    "faisabilite": 74.25,
@@ -499,36 +394,6 @@
     0.37,
     "moyenne",
     "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rennes-rennes-licence-droit-et-science-politique-portail",
-   "interet": 79.49377240471433,
-   "faisabilite": 76.65,
-   "pertinence": 78.3562634428286,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-antenne-de-valence-valence-licence-droit",
-   "interet": 76.80473265688777,
-   "faisabilite": 80.65,
-   "pertinence": 78.34283959413267,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -728,6 +593,141 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-29668",
+   "interet": 75.90143424261522,
+   "faisabilite": 80.75,
+   "pertinence": 77.84086054556914,
+   "repere": [
+    94,
+    0.91,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-clermont-auvergne-clermont-ferrand-licence-droit",
+   "interet": 75.95257966539722,
+   "faisabilite": 80.65,
+   "pertinence": 77.83154779923834,
+   "repere": [
+    93,
+    0.62,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-marie-et-louis-pasteur-franche-comte-besancon-licence-droit",
+   "interet": 75.93622126561999,
+   "faisabilite": 80.65,
+   "pertinence": 77.821732759372,
+   "repere": [
+    64,
+    0.55,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31045",
+   "interet": 76.94409701612017,
+   "faisabilite": 79.05,
+   "pertinence": 77.7864582096721,
+   "repere": [
+    63,
+    0.7,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27636",
+   "interet": 75.77825228629374,
+   "faisabilite": 80.75,
+   "pertinence": 77.76695137177624,
+   "repere": [
+    76,
+    0.84,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-lille-lille-licence-science-politique",
+   "interet": 81.17176173550355,
+   "faisabilite": 72.65,
+   "pertinence": 77.76305704130213,
+   "repere": [
+    29,
+    0.13,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-bourgogne-europe-dijon-licence-droit",
+   "interet": 75.77822139142417,
+   "faisabilite": 80.65,
+   "pertinence": 77.7269328348545,
+   "repere": [
+    57,
+    0.62,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-marie-et-louis-pasteur-franche-comte-belfort-licence-droit",
+   "interet": 75.76798277650168,
+   "faisabilite": 80.65,
+   "pertinence": 77.72078966590101,
+   "repere": [
+    76,
+    0.7,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31040",
+   "interet": 76.79861640269722,
+   "faisabilite": 79.05,
+   "pertinence": 77.69916984161833,
+   "repere": [
+    71,
+    0.68,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -886,7 +886,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "d4e0454f35e162772bb606ae53b87fcf21182ea939dc50578db78cb8dc6f81ba",
-  "textes": "81944ad471d82f81c2f54b4bf5c47481713cfd9f56422852381cc19f8081ecf4"
+  "calculs": "c95d3b6766403d6ce7a0ff8bbeafffa182d11f5d02a498e8cf77f8d94aa5ad97",
+  "textes": "8716fe414838a8f93d369c76c75d13c0efff8874d3d0ae6cc2ecec430dd54860"
  }
 }

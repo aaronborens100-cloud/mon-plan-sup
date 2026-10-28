@@ -1,7 +1,7 @@
 {
  "profil": "droit-sciencespo",
  "description": "14 de moyenne, HGGSP + HLP, sans maths, veut faire du droit ou de la science politique",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 14.1,
   "moyennePeriodes": [
@@ -129,21 +129,6 @@
  },
  "top": [
   {
-   "id": "ucly-alpes-europe-annecy-licence-droit-du-droit-sciences-politiques-et-etude-du-bien-commu",
-   "interet": 87.77527393527156,
-   "faisabilite": 95.9,
-   "pertinence": 91.02516436116294,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31837",
    "interet": 82.07751979277313,
    "faisabilite": 100,
@@ -174,21 +159,6 @@
    "exclu": null
   },
   {
-   "id": "u-de-toulon-antenne-de-draguignan-draguignan-licence-droit",
-   "interet": 82.07810609197692,
-   "faisabilite": 99.9,
-   "pertinence": 89.20686365518617,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-30856",
    "interet": 81.78945207762592,
    "faisabilite": 100,
@@ -198,21 +168,6 @@
     0.8,
     "au_dessus",
     "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-la-garde-licence-droit",
-   "interet": 81.82074613524523,
-   "faisabilite": 99.9,
-   "pertinence": 89.05244768114714,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -290,36 +245,6 @@
     "securite"
    ],
    "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-saint-martin-d-heres-licence-droit",
-   "interet": 81.39421927803728,
-   "faisabilite": 99.9,
-   "pertinence": 88.79653156682238,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-grenoble-alpes-antenne-de-valence-valence-licence-droit",
-   "interet": 81.25648704285268,
-   "faisabilite": 99.9,
-   "pertinence": 88.71389222571162,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -669,21 +594,6 @@
    "exclu": null
   },
   {
-   "id": "u-de-limoges-antenne-de-brive-brive-la-gaillarde-licence-droit",
-   "interet": 79.99504653496732,
-   "faisabilite": 99.9,
-   "pertinence": 87.9570279209804,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "u-bourgogne-europe-site-de-nevers-nevers-licence-droit",
    "interet": 79.98205769093964,
    "faisabilite": 99.9,
@@ -725,6 +635,96 @@
     "realiste"
    ],
    "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35926",
+   "interet": 81.11597630093459,
+   "faisabilite": 97.9,
+   "pertinence": 87.82958578056076,
+   "repere": [
+    47,
+    0.68,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27099",
+   "interet": 79.68554514509249,
+   "faisabilite": 100,
+   "pertinence": 87.8113270870555,
+   "repere": [
+    68,
+    0.92,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26328",
+   "interet": 79.7421685505584,
+   "faisabilite": 99.9,
+   "pertinence": 87.80530113033504,
+   "repere": [
+    80,
+    0.73,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-bourges-bourges-licence-droit",
+   "interet": 79.74051618556106,
+   "faisabilite": 99.9,
+   "pertinence": 87.80430971133664,
+   "repere": [
+    99,
+    0.73,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-cote-d-azur-nice-licence-droit",
+   "interet": 82.40524846935435,
+   "faisabilite": 95.9,
+   "pertinence": 87.80314908161262,
+   "repere": [
+    35,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-d-orleans-chateauroux-chateauroux-licence-droit",
+   "interet": 79.63085851825062,
+   "faisabilite": 99.9,
+   "pertinence": 87.73851511095037,
+   "repere": [
+    100,
+    0.65,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   }
@@ -885,7 +885,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "ba06dd48e9081a09b0ef4dbacc1a3f3edece3e0467a48fe66d53c237e7500183",
-  "textes": "d902424b942249582697454b36a070d774a95e0d6356d0573079e7824bd6becd"
+  "calculs": "c51316f0c614ae668139b14b3fbfa760d9a4e9ae89930065c4c243b866c6c1c1",
+  "textes": "2b6a99e21adc0e9030e3f73fad1f422a19ea3d10732da1007235e2fbe0d9c365"
  }
 }

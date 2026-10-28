@@ -1,7 +1,7 @@
 {
  "profil": "indecis",
  "description": "12,5 de moyenne, SES + SVT, ne sait pas ce qu'il veut : réponses neutres",
- "nbFormationsNotees": 11527,
+ "nbFormationsNotees": 10715,
  "statsEleve": {
   "moyenneGenerale": 12.5,
   "moyennePeriodes": [
@@ -590,36 +590,6 @@
    "exclu": null
   },
   {
-   "id": "u-d-orleans-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "sans_taux"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-2178",
    "interet": 85.33333333333334,
    "faisabilite": 76.35,
@@ -704,6 +674,36 @@
     0.38,
     "moyenne",
     "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10704",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.35,
+   "pertinence": 81.74000000000001,
+   "repere": [
+    24,
+    0.37,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39970",
+   "interet": 85.33333333333334,
+   "faisabilite": 76.03999999999999,
+   "pertinence": 81.616,
+   "repere": [
+    92,
+    0.84,
+    "au_dessus",
+    "frais_fourchette"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -930,7 +930,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "f069c338136eee50687854f155f683cc0288fed1e82f6a063865739780657f5c",
-  "textes": "1d09080a46f98c7a9f1ba319a47fadb2914519665f6d660abbd78eac3b55341a"
+  "calculs": "7bbcfb2ddfe225531d0c7243f928d159ce64881b38c7be8199fa6d1fc09489c9",
+  "textes": "62e2735ddae4802619e2c76f7d7fe46fae94f2ec3cb5f5e4211b85812707e3fa"
  }
 }

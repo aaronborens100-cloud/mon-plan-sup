@@ -22,7 +22,7 @@ const PROFILS = require("./profils");
 let site;
 test.before(async () => { site = await chargerSite(); });
 
-const LONDRES = ["psup-25819", "ps-12025"];   // Dauphine, campus de Londres (fiche Parcoursup et fiche éditoriale)
+const LONDRES = ["psup-25819"];   // Dauphine, campus de Londres (fiche Parcoursup ; la fiche éditoriale ps-12025, sans lien Parcoursup, a été retirée)
 const NON_REPRIS = ["psup-34475", "psup-34465", "psup-34466"];   // intitulé en France, coordonnées à l'étranger : pays non sûr
 const avecReponses = (p, modif) => Object.assign({}, p, { reponses: Object.assign({}, p.reponses, modif) });
 const analyser = (p) => {
@@ -34,10 +34,10 @@ const trouver = (A, id) => A.resultats.find((x) => x.f.id === id);
 // élève qui accepte de partir partout, pour isoler les règles « étranger »
 const BASE = avecReponses(PROFILS.find((p) => p.id === "eco-excellent-decide"), { mobilite: "partout", lieu: ["partout"] });
 
-test("22 fiches corrigées : pays et ville réels, toujours sur Parcoursup", () => {
+test("21 fiches corrigées : pays et ville réels, toujours sur Parcoursup", () => {
   const { DATA } = site;
   const camp = DATA.formations.filter((f) => f.__campusEtranger);
-  assert.equal(camp.length, 22);
+  assert.equal(camp.length, 21);
   for (const f of camp) {
     assert.notEqual(f.pays, "France", f.id);
     assert.ok(f.ville && f.ville !== "Non renseigné", f.id);

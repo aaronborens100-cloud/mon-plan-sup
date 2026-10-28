@@ -80,16 +80,15 @@ test("académie du lycée de l'élève : saisie, code UAI ou coordonnées", () =
 test("formations : académie d'après le département Parcoursup ; campus à l'étranger enregistrés « France »", () => {
   const { E, DATA } = site;
   const F = (id) => DATA.formations.find((f) => f.id === id);
-  const londres = F("ps-12025");   // Dauphine, campus de Londres (fiche éditoriale, ville « Londres »)
-  assert.ok(londres && londres.pays === "Royaume-Uni" && londres.__campusEtranger, "pays réel (issue #16)");
-  assert.equal(E.situer(londres).etranger, true);
-  const londresPs = F("psup-25819");   // même campus, fiche Parcoursup (département vide, coordonnées à Londres)
+  // (la fiche éditoriale ps-12025 de Dauphine Londres, sans lien Parcoursup, a été retirée : règle 2, PR H)
+  const londresPs = F("psup-25819");   // Dauphine, campus de Londres, fiche Parcoursup (département vide, coordonnées à Londres)
+  assert.ok(londresPs && londresPs.pays === "Royaume-Uni" && londresPs.__campusEtranger, "pays réel (issue #16)");
   assert.equal(E.situer(londresPs).etranger, true);
   for (const id of ["psup-25818", "psup-28455", "psup-31816"]) assert.equal(E.situer(F(id)).etranger, true, id);   // Madrid, Singapour, Casablanca
   // un élève qui veut rester chez ses parents : Dauphine Londres est hors de ses critères, jamais à « x km »
   const fragile = PROFILS.find((p) => p.id === "fragile");
   const { A } = analyser(fragile);
-  for (const id of ["ps-12025", "psup-25819"]) {
+  for (const id of ["psup-25819"]) {
     const x = A.resultats.find((r) => r.f.id === id);
     assert.equal(x.dist, null, id);
     // « fragile » veut aussi rester en France : la règle « étranger » passe d'abord, comme pour une formation étrangère (issue #16)
@@ -99,7 +98,7 @@ test("formations : académie d'après le département Parcoursup ; campus à l'�
   // le même élève, ouvert à l'étranger mais qui veut rester chez ses parents : exclue par la règle « domicile »
   // (budget « moyen » : depuis le 22/10/2026, des frais connus au-dessus d'un budget serré excluent aussi, avant la distance)
   const ouvert = analyser(avecReponses(fragile, { etranger: "plutot", pays: [], budget: "moyen" })).A;
-  for (const id of ["ps-12025", "psup-25819"]) assert.equal(ouvert.resultats.find((r) => r.f.id === id).exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
+  for (const id of ["psup-25819"]) assert.equal(ouvert.resultats.find((r) => r.f.id === id).exclu, "Tu as indiqué vouloir rester chez tes parents.", id);
   // des formations de chaque académie d'Île-de-France sont bien reconnues
   const aca = new Set(DATA.formations.filter((f) => f.pays === "France").map((f) => E.situer(f).academie));
   for (const a of ["Paris", "Créteil", "Versailles", "Normandie", "Corse", "La Réunion"]) assert.ok(aca.has(a), a);
@@ -629,7 +628,7 @@ const HENRI_IV = { nom: "Lycée Henri-IV (Paris)", lat: 48.8463, lon: 2.3477 };
 
 test("Paris 8 (Saint-Denis, 93) : à moins de 20 km d'un lycée parisien, académie de Créteil, pas La Réunion", () => {
   const { E, DATA } = site;
-  const p8 = DATA.formations.filter((f) => /^u-paris-8-vincennes-saint-denis-/.test(f.id));
+  const p8 = DATA.formations.filter((f) => f.etablissement === "Université Paris 8");   // fiches Parcoursup (les fiches maison u-paris-8-… ont été retirées)
   assert.ok(p8.length >= 19, `${p8.length} fiches Paris 8`);
   for (const f of p8) {
     assert.ok(f.__gps, f.id);
@@ -641,9 +640,9 @@ test("Paris 8 (Saint-Denis, 93) : à moins de 20 km d'un lycée parisien, acadé
   }
   // Homonymes départagés par le département écrit dans la ville
   const F = (id) => DATA.formations.find((f) => f.id === id);
-  assert.equal(E.situer(F("dnmade-espace-lycee-victor-anicet-saint-pierre-martinique")).dep, "Martinique");
-  assert.equal(E.situer(F("dnmade-graphisme-lycee-ambroise-vollard-saint-pierre-la-reunion")).dep, "La Réunion");
-  assert.equal(E.situer(F("u-de-la-reunion-saint-denis-la-reunion-licence-droit")).dep, "La Réunion");
+  assert.equal(E.situer(F("psup-25296")).dep, "Martinique");
+  assert.equal(E.situer(F("psup-23128")).dep, "La Réunion");
+  assert.equal(E.situer(F("psup-11918")).dep, "La Réunion");
 });
 
 test("toute fiche liée à Parcoursup a ses coordonnées dans son département Parcoursup (et celles de l'établissement)", () => {

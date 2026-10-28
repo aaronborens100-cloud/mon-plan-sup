@@ -54,7 +54,13 @@
   const chargerFormations = () => une("formations", async () => {
     const [d, ps, fu, st, fil, aj, sts, man, , fpr] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null)]);
     construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr);
-    etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées
+    const avant = etat.retenus.join("|");
+    etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées ou redirigées
+    // fiches maison retirées sans correspondance Parcoursup affichée : vœu retiré de la liste, avec un message (une seule fois)
+    const retenusAvant = etat.retenus.length;
+    etat.retenus = etat.retenus.filter((id) => !RETIREES.has(id));
+    if (etat.retenus.length < retenusAvant) app.avisRetrait = true;
+    if (etat.retenus.join("|") !== avant) sauver(true);   // redirections et retraits enregistrés tout de suite
     const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
     DATA = d; window.__DATA = DATA;
   });
@@ -128,6 +134,7 @@
       if (!DATA) chargerFormations().then(() => { const b = $(".bande-chiffres"); if (b) b.outerHTML = bandeChiffres(); const ex = $(".hv-exemple-anneau"); if (ex) ex.outerHTML = anneauExempleAccueil(); }, () => {});   // chiffres et exemple de l'accueil
     }
     if (!LIEUX && $("#lyceeq")) chargerLycees().then(() => { if (app.lyceeQ && $("#lyceeq")) rendreRechercheLycee(); }, () => {});
+    if (app.avisRetrait && DATA) { app.avisRetrait = false; m.innerHTML = `<p class="notice info" role="status">${AVIS_RETRAIT}</p>` + m.innerHTML; }   // fiche retirée de la liste de l'élève
     const h1 = m.querySelector("h1");
     document.title = h1 && app.vue !== "accueil" ? `${h1.textContent} · Mon Plan Sup` : "Mon Plan Sup";
   }
@@ -1287,6 +1294,9 @@
     </div>`;
   }
   let REMPL = {};
+  // Fiches maison françaises retirées (sans lien certain avec Parcoursup) dont aucune formation Parcoursup affichée ne prend la suite
+  let RETIREES = new Set();
+  const AVIS_RETRAIT = "Une formation de ta liste n'est plus proposée par Mon Plan Sup (fiche sans correspondance Parcoursup). Elle a été retirée de ta liste.";
   function chargerLieux(li) {
     if (!li) return;
     LIEUX = { lycees: li.lycees.map(([uai, nom, commune, dep, lat, lon]) => ({ uai, nom, commune, dep, lat, lon, cle: sansAccents(nom + " " + commune + " " + dep) })),
@@ -1395,7 +1405,7 @@
     return communeGps(ville, [f.__dep, entreParentheses, depsProbables.length === 1 ? depsProbables[0] : null]);
   }
   function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp) {
-    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {};
+    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {}; RETIREES = new Set();
     FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null; FRAIS_A_PARTIR_DE = (fp && fp.a_partir_de) || {};
     FRAIS_PAR_MOIS = (fp && fp.par_mois) || {}; FRAIS_PREMIERE_ANNEE = (fp && fp.premiere_annee) || {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
@@ -1403,6 +1413,12 @@
     // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
     // une fiche de type BUT ou BTS, ou fusionnée avec une formation Parcoursup BUT ou BTS, n'est ni affichée ni
     // recommandée (données gardées dans le fichier). Sans cela, ces fiches entraient dans les listes de vœux.
+    // Règle 2 : les fiches maison françaises sans lien certain avec Parcoursup (fusion.json, m = "P" ou "N") ont été retirées de
+    // data/formations.json, sauf les fiches « modèles » d'ajustements.json (remplacements), traitées plus bas. Leur identifiant
+    // reste valide pour les vœux enregistrés et les liens (voir ALIAS / RETIREES en fin de fonction).
+    const modelesRempl = new Set(Object.keys((aj && aj.remplacements) || {}));
+    const presentes = new Set(d.formations.map((f) => f.id));
+    const sansLien = fu ? Object.entries(fu.anciennes).filter(([id, x]) => (x.m === "P" || x.m === "N") && !presentes.has(id) && !modelesRempl.has(id)) : [];
     d.formations = d.formations.filter((f) => !ficheHorsPerimetre(f));
     if (st) { STATS = st.rows; STCOLS = st.meta.cols; STCONS = st.meta.consulte_le; }
     STATUTS_ST = (sts && sts.formations) || {};
@@ -1484,6 +1500,11 @@
     E.lierFilieres(d.formations);
     CAT.sort((a, b) => a.nom.localeCompare(b.nom, "fr") || a.ville.localeCompare(b.ville, "fr"));
     for (const e of CAT) CATBY[e.id] = e;
+    // Fiches retirées : m = "P" → première candidate Parcoursup affichée (jamais un BTS ou un BUT masqué), sinon le vœu disparaît
+    for (const [id, x] of sansLien) {
+      const cible = x.m === "P" ? (x.c || []).map((g) => "psup-" + g).find((id) => CATBY[id] || (ALIAS[id] && CATBY[ALIAS[id]])) : null;
+      if (cible) ALIAS[id] = CATBY[cible] ? cible : ALIAS[cible]; else RETIREES.add(id);
+    }
     window.__CAT = CAT;
   }
   // Campus à l'étranger enregistrés « France » (Dauphine Londres, ESSEC Singapour…), décision du fondateur du 19/10/2026 :

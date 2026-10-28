@@ -5,7 +5,7 @@
  *   - Le statut (statut_etab) vient du seul champ tc de Parcoursup : une fiche non liée à Parcoursup a un statut
  *     null, jamais « public » par défaut ; une fiche liée a le statut que donne Parcoursup.
  *   - Une fiche dont le montant des frais n'est pas chiffré affiche son texte de frais tel quel
- *     (exemple : SKEMA, « Programme post-bac », ps-12050).
+ *     (exemple : Católica Lisbon, catolica-economics ; la fiche SKEMA ps-12050 a été retirée avec les fiches sans lien Parcoursup).
  *
  * Lancer : npm test
  */
@@ -32,14 +32,13 @@ test("fiche liée à Parcoursup : statut donné par le champ tc, jamais supposé
   for (const f of liees) assert.equal(f.statut_etab, TC_ETAB[f.__tc] || null, f.id);
 });
 
-test("ps-12050 (SKEMA, Programme post-bac) : statut inconnu, texte des frais affiché tel quel", async () => {
-  const f = site.DATA.formations.find((x) => x.id === "ps-12050");
+test("catolica-economics (Católica Lisbon) : statut inconnu, texte des frais affiché tel quel", async () => {
+  const f = site.DATA.formations.find((x) => x.id === "catolica-economics");
   assert.equal(f.statut_etab, null);
   assert.equal(f.cout.valeur_annuelle_eur, null);
   const p = PROFILS.find((x) => x.id === "fragile");
   const s = await chargerSite({}, { etat: { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 } });
-  const html = s.afficher("#formation-ps-12050");
+  const html = s.afficher("#formation-catolica-economics");
   assert.ok(html.includes("Frais de scolarité"), "rubrique des frais absente");
-  assert.ok(html.includes("École privée : frais de scolarité élevés, non relevés (voir le site de l&#39;école).")
-    || html.includes("École privée : frais de scolarité élevés, non relevés (voir le site de l'école)."), "texte des frais absent ou réécrit");
+  assert.ok(html.includes("École privée : frais propres au programme, non relevés."), "texte des frais absent ou réécrit");
 });
