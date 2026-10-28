@@ -993,8 +993,7 @@
     return `<div class="stack-lg">
       ${pageHero({ sur: "Ma liste", titre: etat.profil.prenom ? `Ta sélection, ${esc(etat.profil.prenom)}` : "Ma liste", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
         cote: `<div class="mini-stats">${miniStat(nbFr(nbReco), "formations analysées", "bleu")}${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
-      ${msgLycee && sansSecurite ? msgLycee : ""}
-      ${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
+      ${msgLycee && sansSecurite ? msgLycee : ""}${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
       ${msgLycee && !sansSecurite ? msgLycee : ""}
       <div class="segments" role="tablist" aria-label="Contenu de ma liste">
