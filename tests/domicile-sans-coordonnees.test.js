@@ -77,7 +77,7 @@ test("lycée de Mauriac : lycée réel de data/lieux.json", () => {
 test("issue #41 : le PGE de Paris-La Défense sans coordonnées n'entre plus dans la liste de l'élève de Mauriac", () => {
   const { E } = siteAncien;
   const { A, W } = analyser(siteAncien, MAURIAC_PROFIL, MAURIAC_REPONSES);
-  // La fiche maison du PGE (ps-12929, sans correspondance Parcoursup : fusion.json m = "N") a été retirée du catalogue
+  // La fiche maison du PGE (ps-12929, sans correspondance Parcoursup : anciennes-fiches.json m = "N") a été retirée du catalogue
   // (règle 2, PR H) : le cas d'origine ne peut plus se produire. La règle « distance inconnue = exclu » reste vérifiée
   // ci-dessous : aucune fiche proposée sans distance, et par le test sur fiche construite sans coordonnées.
   assert.ok(!A.resultats.some((x) => x.f.id === PGE), "fiche PGE retirée du catalogue");

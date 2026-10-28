@@ -52,7 +52,7 @@
   }
   const chargerLycees = () => une("lieux", async () => { if (!LIEUX) chargerLieux(await charger("data-lieux", "data/lieux.json")); });
   const chargerFormations = () => une("formations", async () => {
-    const [d, ps, fu, st, fil, aj, sts, man, , fpr] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-fusion", "data/fusion.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null)]);
+    const [d, ps, fu, st, fil, aj, sts, man, , fpr] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-anciennes-fiches", "data/anciennes-fiches.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null)]);
     construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr);
     const avant = etat.retenus.join("|");
     etat.retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées ou redirigées
@@ -1379,7 +1379,7 @@
   // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs
   // communes de ce nom sont éloignées (homonymes), le département départage : département Parcoursup de la fiche,
   // département écrit dans la ville (« Saint-Pierre (Martinique) »), ou département commun aux formations Parcoursup
-  // probables de cette ville (data/fusion.json). Sans département pour trancher : null (distance inconnue), jamais un
+  // probables de cette ville (data/anciennes-fiches.json). Sans département pour trancher : null (distance inconnue), jamais un
   // homonyme pris au hasard.
   const SEUIL_KM_HOMONYMES = 20;   // deux communes de même nom à moins de 20 km : le même lieu (Papeete, Borgo)
   function communeGps(ville, deps) {
@@ -1410,10 +1410,10 @@
     FRAIS_PAR_MOIS = (fp && fp.par_mois) || {}; FRAIS_PREMIERE_ANNEE = (fp && fp.premiere_annee) || {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
-    // Périmètre (fusion.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
+    // Périmètre (anciennes-fiches.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
     // une fiche de type BUT ou BTS, ou fusionnée avec une formation Parcoursup BUT ou BTS, n'est ni affichée ni
     // recommandée (données gardées dans le fichier). Sans cela, ces fiches entraient dans les listes de vœux.
-    // Règle 2 : les fiches maison françaises sans lien certain avec Parcoursup (fusion.json, m = "P" ou "N") ont été retirées de
+    // Règle 2 : les fiches maison françaises sans lien certain avec Parcoursup (anciennes-fiches.json, m = "P" ou "N") ont été retirées de
     // data/formations.json, sauf les fiches « modèles » d'ajustements.json (remplacements), traitées plus bas. Leur identifiant
     // reste valide pour les vœux enregistrés et les liens (voir ALIAS / RETIREES en fin de fonction).
     const modelesRempl = new Set(Object.keys((aj && aj.remplacements) || {}));

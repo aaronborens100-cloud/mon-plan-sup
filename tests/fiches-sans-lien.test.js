@@ -2,7 +2,7 @@
  * tests/fiches-sans-lien.test.js : retrait des fiches maison françaises sans lien Parcoursup (règle 2).
  *
  * Décision du fondateur : les fiches de data/formations.json dont le pays est la France et dont la correspondance
- * Parcoursup n'est pas certaine (data/fusion.json, anciennes[id].m = "P" probable ou "N" aucune) ne sont plus proposées.
+ * Parcoursup n'est pas certaine (data/anciennes-fiches.json, anciennes[id].m = "P" probable ou "N" aucune) ne sont plus proposées.
  * Restent : les fiches fusionnées avec certitude (m = "C"), les fiches à l'étranger, et les fiches « modèles » de
  * data/ajustements.json (remplacements), qui ne sont déjà plus affichées.
  *
@@ -18,7 +18,7 @@ const assert = require("node:assert/strict");
 const { chargerSite } = require("./charger-site");
 const PROFILS = require("./profils");
 
-const ANCIENNES = require("../data/fusion.json").anciennes;
+const ANCIENNES = require("../data/anciennes-fiches.json").anciennes;
 const AJ = require("../data/ajustements.json");
 const MODELES = new Set(Object.keys(AJ.remplacements));
 const MESSAGE = "Une formation de ta liste n'est plus proposée par Mon Plan Sup (fiche sans correspondance Parcoursup). Elle a été retirée de ta liste.";

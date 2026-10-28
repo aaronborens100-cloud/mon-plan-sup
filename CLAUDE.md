@@ -28,10 +28,11 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 
 - La règle 2 n'est pas encore appliquée : `js/app.js` (`construireCatalogue`) fusionne encore
   `data/formations.json` (fiches éditoriales, dont 1 639 en France) avec Parcoursup via
-  `data/fusion.json`. Ne pas supprimer ces fichiers sans une tâche dédiée : le moteur s'en sert
-  pour les recommandations, et `fusion.json` définit aussi le périmètre affiché (BTS et BUT masqués).
+  `data/anciennes-fiches.json` (ex-`fusion.json`). Ne pas supprimer ces fichiers sans une tâche dédiée : le moteur s'en sert
+  pour les recommandations, et `anciennes-fiches.json` définit aussi le périmètre affiché (BTS et BUT masqués).
 - Les autres formations Parcoursup du périmètre sont notées grâce à `data/filieres.json` (une entrée
-  par code `nmc`), construit par `scripts/construire-filieres.py`. `data/generees.json` n'est plus
+  par code `nmc`), table **figée** (estimation par filière, tirée des anciennes fiches Mon Plan Sup) :
+  `scripts/construire-filieres.py` refuse de tourner. `data/generees.json` n'est plus
   chargé par le site mais reste la source des 87 familles reprises dans la table.
 - La solution de secours de `js/bulletin.js` charge pdf.js 3.11.174 depuis cdnjs si `vendor/` est
   absent, alors que la version fournie est la 6.2.108.
