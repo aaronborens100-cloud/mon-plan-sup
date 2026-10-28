@@ -311,6 +311,9 @@
   // Formation très ouverte : presque tous les candidats reçoivent une proposition, la position parmi les admis
   // (qui ne décrit pas les refusés, très peu nombreux) ne suffit plus à la classer « ambitieux »
   const SEUIL_TAUX_TRES_OUVERT = 85;
+  // Licence de secteur à 100 % d'accès (décision du fondateur, issue #45) : sécurité même sous la moyenne des admis, si
+  // l'effectif est assez grand pour que le 100 % ait un sens (au moins 50 candidats en 2025).
+  const TAUX_LICENCE_SECTEUR_OUVERTE = 100, MIN_CANDIDATS_LICENCE_SECTEUR = 50;
   const POSITION_LABEL = { au_dessus: "au-dessus de la plupart des admis", moyenne: "dans la moyenne des admis", en_dessous: "en dessous de la plupart des admis", inconnue: "position inconnue" };
   const LIMITE_REPERE = "Ce n'est pas une probabilité : les jurys regardent aussi ton dossier complet.";
   function percentileAdmis(m, x) {
@@ -370,6 +373,13 @@
       texte: `Au moins ${SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition et ta moyenne est dans celle des admis. Licence de ton secteur : les candidats de ton académie y sont prioritaires (règle Parcoursup).` },
     { cle: "tres_ouverte", categorie: "securite", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && (r.position === "moyenne" || r.position === "au_dessus"),
       texte: `Formation très ouverte : au moins ${SEUIL_TAUX_TRES_OUVERT} % des candidats ont reçu une proposition en 2025.` },
+    // Décision du fondateur (issue #45) : une licence du secteur de l'élève où tous les candidats ont reçu une proposition
+    // en 2025 (et au moins 50 candidats) reste « sécurité » sous la moyenne des admis. Les règles de distance, de budget,
+    // de territoire et de lycée s'appliquent ensuite, comme pour toute « sécurité ».
+    { cle: "licence_secteur_ouverte", categorie: "securite",
+      si: (r, bloque, f) => r.secteur === true && r.taux === TAUX_LICENCE_SECTEUR_OUVERTE && r.position === "en_dessous"
+        && !!f && !!f.admission && f.admission.candidats >= MIN_CANDIDATS_LICENCE_SECTEUR,
+      texte: `Licence de ton secteur : en 2025, tous les candidats (${MIN_CANDIDATS_LICENCE_SECTEUR} ou plus) ont reçu une proposition, et les candidats de ton académie y sont prioritaires (règle Parcoursup). Ta moyenne est en dessous de celle des admis : candidate quand même et renforce tes notes.` },
     { cle: "tres_ouverte_en_dessous", categorie: "realiste", si: (r) => r.taux !== null && r.taux >= SEUIL_TAUX_TRES_OUVERT && r.position === "en_dessous",
       texte: "Formation très ouverte, mais ta moyenne est en dessous de celle des admis 2025 : candidate, et renforce tes notes." },
     { cle: "en_dessous", categorie: "ambitieux", si: (r) => r.position === "en_dessous", texte: "Ta moyenne est en dessous de celle de la plupart des admis 2025 : « ambitieux »." },
@@ -380,7 +390,7 @@
     { cle: "realiste", categorie: "realiste", si: () => true,
       texte: `Pour être « sécurité », il faut un taux d'accès d'au moins ${SEUIL_TAUX_SECURITE} % et une moyenne au-dessus de celle de la plupart des admis : « réaliste ».` },
   ];
-  const regleCategorie = (r, bloque) => REGLES_CATEGORIE.find((g) => g.si(r, bloque));
+  const regleCategorie = (r, bloque, f) => REGLES_CATEGORIE.find((g) => g.si(r, bloque, f));
   // Appliquée après la table : un vœu au-delà de la distance acceptée (question « mobilite ») n'est jamais « sécurité »
   const REGLE_HORS_DISTANCE = { cle: "hors_distance", categorie: "realiste",
     texte: "Plus loin que la distance que tu acceptes (ou de l'autre côté de la mer) : jamais « sécurité », même si tes chiffres sont bons." };
@@ -391,6 +401,16 @@
   // et l'élève avec lycée ne changent pas.
   const REGLE_SANS_LYCEE = { cle: "sans_lycee", categorie: "realiste",
     texte: "Sans ton lycée, on ne peut pas vérifier que cette formation est à la distance que tu acceptes : jamais « sécurité »." };
+  // Projet santé (issue #42, décision d'Aaron du 22/10/2026) : le PASS et les LAS ne sont jamais « sécurité » (l'entrée en
+  // 2e année de santé reste très sélective), et le PASS ou une LAS du secteur de l'élève figure toujours dans sa liste de
+  // 10 vœux (wishlist), sous réserve des règles existantes (exclusions, distance, territoire).
+  const MESSAGE_SELECTION_SANTE = "Le PASS et les LAS mènent à des études de santé : l'entrée en 2e année reste très sélective, quel que soit ton niveau. Garde-toi des solutions de repli.";
+  const REGLE_SANTE_SELECTIVE = { cle: "sante_selective", categorie: "realiste", texte: `Étude de santé : ce vœu ne compte jamais comme sûr. ${MESSAGE_SELECTION_SANTE}` };
+  const estPassLas = (f) => /^nmc:(PASS|LAS)$/.test(intitule(f));
+  // Vrai si la santé est le domaine dominant des réponses : au moins 0,75, strictement devant tous les domaines hors santé
+  // (« vivant » compte comme proche de la santé), et élève qui n'hésite pas entre des domaines (certitude « indecis »)
+  const projetSante = (it) => !!it && !!it.repondues && !!it.domaines && (it.domaines.sante || 0) >= 0.75 && certitude(it).niveau !== "indecis"
+    && Object.entries(it.domaines).every(([k, v]) => k === "international" || k === "sante" || (k === "vivant" ? v <= it.domaines.sante : v < it.domaines.sante));
   // Règle du secteur de recrutement des licences non sélectives (consultée le 19/10/2026)
   // Même forme que les autres sources du site ({ source, consulte_le }), affichée par srcLien() dans app.js
   const SOURCE_SECTEUR = { source: "https://www.parcoursup.gouv.fr/faq/thematiques/autres-sujets/prise-en-compte-du-secteur-geographique", consulte_le: "2026-10-19" };
@@ -398,8 +418,8 @@
   // géographique », consultée le 19/10/2026) : priorité aux candidats du secteur. On ne dit jamais que la licence est
   // « sûre » à cause du secteur : on explique la priorité. Pour un élève prêt à partir (mobilite 2), on ajoute pourquoi
   // garder ce vœu.
-  function texteLicenceSecteur(mobilite) {
-    const base = REGLES_CATEGORIE.find((g) => g.cle === "licence_secteur").texte;
+  function texteLicenceSecteur(mobilite, cle = "licence_secteur") {
+    const base = REGLES_CATEGORIE.find((g) => g.cle === cle).texte;
     return mobilite === 2 ? `${base} Même si tu veux partir, garder ce vœu te protège.` : base;
   }
   // Règle « territoires » (décision du fondateur du 20/10/2026), fondée sur la question « pays » (« Si tu partais,
@@ -671,7 +691,26 @@
       || cmpIdentifiant(a.f, b.f);
   }
   // Ordre des recommandations : pertinence décroissante (NaN en dernier), puis départage
-  const comparer = (a, b) => cmpNombre(a.pertinence, b.pertinence, -1) || departage(a, b);
+  // Issue #69 : un élève sans intérêt santé voit la licence simple passer avant la LAS de la même discipline (même code de
+  // filière Parcoursup, donc même mention, quel que soit l'établissement). La LAS est classée comme si sa pertinence ne
+  // dépassait pas celle de la meilleure licence simple de sa discipline (pertinenceTri), et à égalité derrière elle
+  // (lasApres). La pertinence affichée ne change pas, la LAS n'est jamais retirée.
+  const sansInteretSante = (it) => !!it && !!it.repondues && !!it.domaines && (it.domaines.sante || 0) < 0.01;
+  function placerLasApresLicence(res, it) {
+    if (!sansInteretSante(it)) return res;
+    const meilleure = new Map();   // code de filière -> pertinence de la meilleure licence simple proposée
+    for (const x of res) {
+      const k = nmcDe(x.f);
+      if (k && !x.exclu && !x.bloque && formeDe(x.f) === "simple" && !(meilleure.get(k) >= x.pertinence)) meilleure.set(k, x.pertinence);
+    }
+    for (const x of res) {
+      const k = nmcDe(x.f);
+      if (k && formeDe(x.f) === "las" && meilleure.has(k) && meilleure.get(k) <= x.pertinence) { x.pertinenceTri = meilleure.get(k); x.lasApres = true; }
+    }
+    return res;
+  }
+  const pertTri = (x) => (x.pertinenceTri === undefined ? x.pertinence : x.pertinenceTri);
+  const comparer = (a, b) => cmpNombre(pertTri(a), pertTri(b), -1) || (a.lasApres === true) - (b.lasApres === true) || departage(a, b);
 
   /* ---------------------------------------------------------------- évaluation */
   // Valeur de la question « lieu » qui correspond à la formation (Corse et outre-mer comptent dans « regions »)
@@ -826,7 +865,7 @@
     const rep = repere(f, s);
     // licence non sélective du secteur de recrutement de l'élève (son académie ; Paris, Créteil et Versailles : un seul secteur)
     rep.secteur = !!s.secteur && f.__selectForm === "formation non sélective" && (f.__tf || []).includes("Licence") && secteurDe(lieu.academie) === s.secteur;
-    let regle = regleCategorie(rep, bloque);
+    let regle = regleCategorie(rep, bloque, f);
     // au-delà de la distance acceptée, un vœu n'est jamais « sécurité »
     if (regle.categorie === "securite" && horsDistance) regle = distanceInconnue ? REGLE_DISTANCE_INCONNUE : REGLE_HORS_DISTANCE;
     // élève sans lycée, « domicile » ou « proche » : jamais « sécurité » (distance inconnue)
@@ -840,9 +879,13 @@
     if (regle.categorie === "securite" && priveFI) regle = REGLE_PRIVE_FRAIS_INCONNUS;
     // frais dans une fourchette qui dépasse le budget (min ≤ budget < max) : jamais « sécurité »
     if (regle.categorie === "securite" && fourchette && REGLE_BUDGET_FOURCHETTE.jamaisSecurite) regle = Object.assign({}, REGLE_FRAIS_FOURCHETTE, { texte: texteFourchette(f.cout) });
+    // projet santé : PASS et LAS jamais « sécurité », avec un message honnête sur la sélection
+    const selectionSante = projetSante(it) && estPassLas(f);
+    if (selectionSante && regle.categorie === "securite") regle = REGLE_SANTE_SELECTIVE;
     rep.regle = regle.cle;
-    rep.pourquoi = regle.cle === "licence_secteur" ? texteLicenceSecteur(mob) : regle.texte;
+    rep.pourquoi = regle.cle === "licence_secteur" || regle.cle === "licence_secteur_ouverte" ? texteLicenceSecteur(mob, regle.cle) : regle.texte;
     // le message est affiché même quand une autre règle donne la catégorie
+    if (selectionSante && regle !== REGLE_SANTE_SELECTIVE) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_SELECTION_SANTE}`;
     if (priveFI && regle !== REGLE_PRIVE_FRAIS_INCONNUS) rep.pourquoi = `${rep.pourquoi} ${MESSAGE_PRIVE_FRAIS_INCONNUS}`;
     if (messageFourchette && regle.cle !== REGLE_FRAIS_FOURCHETTE.cle) rep.pourquoi = `${rep.pourquoi} ${messageFourchette}`;
     rep.priveFraisInconnus = priveFI;
@@ -850,14 +893,15 @@
     // message sur les frais affiché sous le repère (Ma liste, cartes, section « Nouvelle formation », fiche) ou null
     rep.alerteFrais = priveFI ? MESSAGE_PRIVE_FRAIS_INCONNUS : messageFourchette;
     // source de la règle, distincte de rep.source (source du taux d'accès)
-    if (regle.cle === "licence_secteur") rep.sourceRegle = SOURCE_SECTEUR;
+    if (regle.cle === "licence_secteur" || regle.cle === "licence_secteur_ouverte") rep.sourceRegle = SOURCE_SECTEUR;
     const categorie = regle.categorie;
     const pertinence = it.repondues ? 0.6 * interet + 0.4 * faisabilite : faisabilite;
     const memeAcademie = !!s.academie && lieu.academie === s.academie;
+    const memeSecteur = !!s.secteur && secteurDe(lieu.academie) === s.secteur;
     // distance pour le départage : la même distance équivalente que pour la pénalité (traversée + SURCOUT_TRAVERSEE_KM)
     const distTri = dist === null ? null : distanceEquivalente(dist, traversee);
     return { f, crit, interet, faisabilite, pertinence, repere: rep, categorie, bloque, exclu, ajust, dist, traversee, horsDistance, horsTerritoire,
-      academie: lieu.academie, memeAcademie, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
+      academie: lieu.academie, memeAcademie, memeSecteur, distTri, raisons: raisons(f, s, it, crit, cout), actions: actions(f, s, crit) };
   }
 
   function raisons(f, s, it, crit, cout) {
@@ -1021,7 +1065,16 @@
   /* ---------------------------------------------------------------- wishlist */
   // 10 vœux Parcoursup (formations en France et campus à l'étranger de formations françaises). Diversité adaptée au profil : un élève décidé concentre ses vœux
   // sur son projet, un élève indécis les répartit sur plus de types. Les formations à l'étranger sont proposées à part.
+  // Projet santé : le PASS ou une LAS du secteur de l'élève (le plus pertinent) figure toujours dans la liste ; si la
+  // construction normale n'en retient aucun, on la refait en l'imposant (la liste reste identique dans les autres cas).
   function wishlist(resultats, n = 10, it = null) {
+    const W = construireWishlist(resultats, n, it, null);
+    if (!projetSante(it) || W.liste.some((x) => estPassLas(x.f) && x.memeSecteur)) return W;
+    const imposee = resultats.filter((x) => estPassLas(x.f) && x.memeSecteur && !x.exclu && !x.bloque && !x.horsDistance && !x.horsTerritoire
+      && voeuParcoursup(x.f) && !horsListe(x.f)).sort(comparer)[0];
+    return imposee ? construireWishlist(resultats, n, it, imposee) : W;
+  }
+  function construireWishlist(resultats, n, it, imposee) {
     const ok = resultats.filter((x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f));
     const cert = certitude(it);
     const V = (x) => voie(x.f);
@@ -1048,7 +1101,7 @@
     // score de choix : pertinence, bonus « cœur de projet », malus pour chaque vœu déjà pris dans la même voie ;
     // un élève indécis reçoit en priorité les formations qui laissent des portes ouvertes (polyvalence)
     const poly = (x) => (cert.niveau === "indecis" ? 3 * Math.min(2, (x.f.profil || {}).poly || 0) + (/^prepa|double_licence/.test(x.f.type) ? 3 : 0) : 0);
-    const cle = (x) => x.pertinence + (coeur.has(V(x)) ? 6 : 0) - 6 * (parType[V(x)] || 0) + poly(x);
+    const cle = (x) => pertTri(x) - (x.lasApres ? 0.001 : 0) + (coeur.has(V(x)) ? 6 : 0) - 6 * (parType[V(x)] || 0) + poly(x);
     const meilleur = (liste) => { let b = null, bv = -Infinity; for (const x of liste) { if (x.pertinence < plancher || !peut(x)) continue; const v = cle(x); if (v > bv) { bv = v; b = x; } } return b; };
 
     // 1. vœux « découverte » : une voie que l'élève n'a pas cochée et qui n'est pas dans son cœur de projet,
@@ -1066,7 +1119,9 @@
     }
 
     // 2. vœux principaux, catégorie par catégorie (3 sûrs, 3 ambitieux, 4 réalistes, moins les découvertes)
+    if (imposee) decouvertes.delete(imposee.f.id);
     const nDec = { securite: 0, realiste: 0, ambitieux: 0 };
+    if (imposee) { prend(imposee); nDec[imposee.categorie]++; }
     decouvertes.forEach((x) => { nDec[x.categorie]++; });
     const QUOTAS = { securite: 3, ambitieux: 3, realiste: 4 };
     const quotas = Object.entries(QUOTAS).map(([c, q]) => [c, Math.max(0, q - nDec[c])]);
@@ -1145,6 +1200,12 @@
     Object.defineProperty(W, "peutRemplacer", { value: peutRemplacer, enumerable: false });
     // valeurs des règles de diversité en fin de construction (lecture seule, pour les tests et la documentation)
     Object.defineProperty(W, "diversite", { value: { maxFil, bonusType, plafonds: CAPS.slice(), principal }, enumerable: false });
+    // Liste courte à cause de la distance acceptée (question « mobilite », issue #58) : moins de n vœux alors que des
+    // formations, écartées uniquement pour leur distance (« domicile » : plus de 45 km, étranger, distance inconnue ;
+    // « proche » : distance inconnue), auraient pu y entrer. Propriété non énumérable : la liste ne change pas.
+    const ecarteeParDistance = (x) => x.horsDistance && x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f)
+      && (/chez tes parents/.test(x.exclu) || x.exclu === MESSAGE_PROCHE_DISTANCE_INCONNUE);
+    Object.defineProperty(W, "limiteeParDistance", { value: choisis.length < n && resultats.some(ecarteeParDistance), enumerable: false });
     return W;
   }
 
@@ -1390,7 +1451,7 @@
   function recommander(formations, profil, questionnaire, reponses) {
     const s = statsProfil(profil), it = interets(questionnaire, reponses);
     // tri par pertinence (avec ses décimales), puis départage explicite : jamais l'ordre du catalogue
-    const res = formations.map((f) => evaluer(f, s, it)).sort(comparer);
+    const res = placerLasApresLicence(formations.map((f) => evaluer(f, s, it)), it).sort(comparer);
     return { stats: s, interets: it, resultats: res };
   }
 
@@ -1400,5 +1461,5 @@
     return 2 * R * Math.asin(Math.sqrt(h));
   }
   window.CapEngine = { voeuParcoursup, REGLE_CAMPUS_ETRANGER, RAISONS_CAMPUS, raisonCampusNonVoulu, PAYS_HORS_EUROPE, coutVie, ACADEMIES, academieDe, secteurDe, zoneDe, definirLieux, departementLycee, situer, DISTANCE_ACCEPTEE_KM, MESSAGE_DOMICILE_DISTANCE_INCONNUE, MESSAGE_PROCHE_DISTANCE_INCONNUE, PENALITE_DISTANCE, penaliteDistance,
-    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
+    SURCOUT_TRAVERSEE_KM, distanceEquivalente, SEUIL_KM_LIEU_FRANCAIS, MESSAGE_SANS_LYCEE, REGLE_SANS_LYCEE, MESSAGE_PROTECTION_SANS_LYCEE, securiteImpossibleSansLycee, REGLE_HORS_DISTANCE, REGLE_DISTANCE_INCONNUE, REGLE_HORS_TERRITOIRE, BUDGET_SERRE_MAX, EXCLUSION_FRAIS_AU_DELA_DU_BUDGET, MALUS_PRIVE_FRAIS_INCONNUS, MESSAGE_PRIVE_FRAIS_INCONNUS, REGLE_PRIVE_FRAIS_INCONNUS, priveFraisInconnus, REGLE_BUDGET_FOURCHETTE, REGLE_FRAIS_FOURCHETTE, texteFourchette, bornesFrais,sansInteretSante, TERRITOIRES, MESSAGE_AUCUN_AUTRE_PAYS, paysCoche, texteHorsTerritoire, SOURCE_SECTEUR, texteLicenceSecteur, MIN_CANDIDATS_LICENCE_SECTEUR, lieuDe, territoireDe, departage, comparer, reglesHorsListe, horsListe, HORS_LISTE, MAX_NOUVELLES, CATEGORIES_NOUVELLES, nouvelles, SEUIL_FILIERE_TRES_SELECTIVE, SEUIL_MOYENNE_FILIERE_SELECTIVE, definirTauxFilieres, tauxFiliere, alerteFiliereSelective, SEUIL_BAC_GENERAL, km, filiere, intitule, lierFilieres, voie, voieLabel, certitude, etranger, COUT_VIE, init, recommander, evaluer, statsProfil, POIDS_PERIODE, NIVEAUX_BULLETINS, MESSAGE_SANS_MOYENNE, MESSAGE_NOTE_IMPOSSIBLE, notesImpossibles, NOTE_MIN, NOTE_MAX, MESSAGE_MATHS_COMPL, libelleMaths, SEUIL_EXPERTES_FAIBLE, SEUIL_EXPERTES_FORT, interets, wishlist, projetSante, estPassLas, MESSAGE_SELECTION_SANTE, equivalents, equivalentsListe, MAX_EQUIVALENTS, nmcDe, formeDe, typeFormation, cleEquivalent, protection, PROTECTION_REPERE, repere, REGLES_CATEGORIE, estPrepaMaths, MESSAGE_PREPA_SANS_MATHS, MESSAGE_PREPA_COMPL, MARGE_BULLETIN, SEUIL_AU_DESSUS, SEUIL_EN_DESSOUS, SEUIL_TAUX_SECURITE, SEUIL_TAUX_AMBITIEUX, SEUIL_TAUX_TRES_OUVERT, MESSAGE_BAC, alerteBac, POSITION_LABEL, LIMITE_REPERE, METHODE_POSITION, niveauCertif, percentileAdmis, SPECIALITES, SPEC_NOM, SPEC_COURT, DOMAINES, NIVEAUX, SEL_LABEL, CAT_LABEL, CECRL, fmt, fmtEur, REF };
 })();

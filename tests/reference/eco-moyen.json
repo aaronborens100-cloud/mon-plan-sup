@@ -742,12 +742,12 @@
     ]
    },
    {
-    "id": "psup-20509",
+    "id": "psup-12819",
     "categorie": "securite",
-    "pertinence": 55.04155637560065,
+    "pertinence": 56.94700564563878,
     "repere": [
      100,
-     "moyenne"
+     "en_dessous"
     ]
    },
    {
@@ -805,12 +805,12 @@
     ]
    },
    {
-    "id": "psup-2290",
+    "id": "psup-30605",
     "categorie": "realiste",
-    "pertinence": 53.853596962195695,
+    "pertinence": 52.4758753531254,
     "repere": [
-     100,
-     "en_dessous"
+     72,
+     "moyenne"
     ]
    }
   ],
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "f77d37b3899f1f97ffb46955d98153cf3163898e538f68a96e91324522223e05",
-  "textes": "d2613024a25bd18cd241ca94268bac7d374b36280b63dd2d8ec121e7acac88c2"
+  "calculs": "4157879a81e47a18404859b5c013353bd2b1023aa7450abe22452321957a379e",
+  "textes": "e88723cb6e3f8358380d590bff092fe2e6ef83dd64f628b7afc0ca0d61699872"
  }
 }
