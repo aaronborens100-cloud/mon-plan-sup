@@ -734,7 +734,7 @@
   "liste": [
    {
     "id": "psup-12819",
-    "categorie": "realiste",
+    "categorie": "securite",
     "pertinence": 59.94502822819388,
     "repere": [
      100,
@@ -743,7 +743,7 @@
    },
    {
     "id": "u-cote-d-azur-philosophie",
-    "categorie": "realiste",
+    "categorie": "securite",
     "pertinence": 57.8675613898679,
     "repere": [
      100,
@@ -824,13 +824,13 @@
    }
   ],
   "protection": {
-   "nbSecurite": 0,
-   "niveau": "aucun",
-   "message": "Attention : ta liste n'a aucun vœu vraiment sûr. Ajoute au moins deux formations où ton profil est au-dessus de la plupart des admis, sinon tu risques de n'avoir aucune proposition."
+   "nbSecurite": 2,
+   "niveau": "minimum",
+   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [
-   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).",
-   "Moins de 3 vœux « réaliste » disponibles avec tes critères."
+   "Moins de 4 vœux « réaliste » disponibles avec tes critères.",
+   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
   ],
   "certitude": {
    "niveau": "decide",
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "6d16fe85c45dbe8dd1caa4f3247ce1d826c526e3302044fdde19605ef8a668c8",
-  "textes": "c93f5d2a48a096e0070639c0fd0cf1e24198d34db5819f5f56e3a17a69a4f866"
+  "calculs": "db8089a36e0af33178a5db2a7cb6dd7f9dffc4955b051f5316c7ffffc994aa03",
+  "textes": "5a4eeee35a354360acfc2135861404b45dc895af716186a173968a16e5656cf9"
  }
 }
