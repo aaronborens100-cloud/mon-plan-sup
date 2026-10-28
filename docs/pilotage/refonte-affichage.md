@@ -20,6 +20,7 @@ comparent le rendu des pages (conflits et références à régénérer).
   et à recompter avant la mise en ligne.
 
 **Lot 3 — contenu (à valider par Aaron, exactitude à vérifier)**
+- Principe (Aaron, 28/10) : en 10 secondes, l'élève voit **les prérequis**, **où il en est par rapport à eux** (ce qui lui manque, à combler) et **les débouchés**. Les trois blocs ci-dessous servent cette phrase ; « Ton profil » = écart personnalisé élève / prérequis (s'appuie sur les points bloquants déjà calculés par le moteur), pas une description générale.
 - Fiche formation en 3 blocs courts : 1 Prérequis · 2 Ton profil · 3 Poursuite d'études et métiers.
   Poursuite d'études sélective : ex. prépa ECG → quelques écoles représentatives, pas tous les PGE.
   Sources possibles déjà dans le dépôt : `data/poursuites.json`, `data/metiers.json` (à auditer :
