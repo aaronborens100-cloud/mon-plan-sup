@@ -890,7 +890,7 @@
   const voeuxAffiches = (W, M) => W.liste.map((v) => ({ v, x: choixDe(v, M) || v }));
   const distanceTxt = (x, s) => (x.dist != null ? `≈ ${nbFr(Math.round(x.dist))} km de chez toi` : s && s.geo ? "distance inconnue" : "");
   // messages de distance déjà affichés ailleurs (règle qui a retiré la catégorie « sécurité »)
-  const REGLES_DISTANCE = ["hors_distance", "distance_inconnue", "hors_territoire", "campus_etranger"];
+  const REGLES_DISTANCE = ["hors_distance", "distance_inconnue", "sans_lycee", "hors_territoire", "campus_etranger"];
   function infosEquivalent(x, s) {
     const r = x.repere, lieu = [x.f.etablissement, x.f.ville, distanceTxt(x, s)].filter(Boolean).map(esc).join(" · ");
     const taux = r.taux !== null ? `${libTauxAcces(r)} : ${tauxFr(r.taux)}` : "Taux d'accès non publié";
@@ -932,7 +932,7 @@
     </section>`;
   }
   // Protection de la liste (E.protection) : nombre de vœux sûrs et conseil, sans probabilité globale
-  const PROTECTION_TON = { sans_notes: "", securite_fragile: "bad", aucun: "bad", insuffisant: "", minimum: "", bon: "info" };
+  const PROTECTION_TON = { sans_notes: "", securite_fragile: "bad", aucun: "bad", sans_lycee: "info", insuffisant: "", minimum: "", bon: "info" };
   function blocProtection(P) {
     return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)} ${esc(E.LIMITE_REPERE)}</p></div>`;
   }
@@ -973,7 +973,7 @@
           ${miniStat(compte.securite, compte.securite > 1 ? "vœux « sécurité »" : "vœu « sécurité »", "menthe")}
         </div>
       </div>
-      ${blocProtection(E.protection(sel))}
+      ${blocProtection(E.protection(sel, E.securiteImpossibleSansLycee(A.resultats)))}
       ${alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
       <div class="card stack">
         <div class="table-wrap nu"><table class="wishtable"><thead><tr><th scope="col">Catégorie</th><th scope="col">Formation</th><th scope="col">Note</th><th scope="col">Places</th><th scope="col">Repères</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
@@ -990,9 +990,9 @@
     return `<div class="stack-lg">
       ${pageHero({ sur: "Ma liste", titre: etat.profil.prenom ? `Ta sélection, ${esc(etat.profil.prenom)}` : "Ma liste", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
         cote: `<div class="mini-stats">${miniStat(nbFr(nbReco), "formations analysées", "bleu")}${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
+      ${A.stats.geo ? "" : `<p class="notice info small sans-lycee"><strong>${esc(E.MESSAGE_SANS_LYCEE)}</strong></p>`}
       ${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
-      ${A.stats.geo ? "" : `<p class="notice info small sans-lycee">${esc(E.MESSAGE_SANS_LYCEE)}</p>`}
       <div class="segments" role="tablist" aria-label="Contenu de ma liste">
         <button role="tab" aria-selected="${o === "reco"}" data-action="onglet-liste" data-o="reco">${ico("etoile")}Recommandées</button>
         <button role="tab" aria-selected="${o === "voeux"}" data-action="onglet-liste" data-o="voeux">${ico("check")}Mes vœux <span class="compteur">${nbVoeux}</span></button>
