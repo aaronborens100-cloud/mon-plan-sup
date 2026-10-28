@@ -126,7 +126,9 @@ for (const p of PROFILS) {
       assert.ok(typeof t === "number", `${x.f.id} : taux non publié`);
       // licence non sélective du secteur de l'élève (règle licence_secteur, tests/distance-academie.test.js) : taux ≥ 50 % et position « moyenne »
       const secteur = x.repere.regle === "licence_secteur" && x.repere.secteur === true && t >= 50 && pos === "moyenne";
-      assert.ok(secteur || (t >= 50 && pos === "au_dessus") || (t >= 85 && (pos === "moyenne" || pos === "au_dessus")), `${x.f.id} : taux ${t}, position ${pos}`);
+      // licence de secteur à 100 % d'accès et au moins 50 candidats, sous la moyenne des admis (décision du fondateur, issue #45)
+      const secteurOuverte = x.repere.regle === "licence_secteur_ouverte" && x.repere.secteur === true && t === 100 && pos === "en_dessous" && x.f.admission.candidats >= 50;
+      assert.ok(secteur || secteurOuverte || (t >= 50 && pos === "au_dessus") || (t >= 85 && (pos === "moyenne" || pos === "au_dessus")), `${x.f.id} : taux ${t}, position ${pos}`);
       assert.ok(!x.bloque, `${x.f.id} : point bloquant`);
     }
     for (const x of A.resultats) {
