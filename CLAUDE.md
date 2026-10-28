@@ -26,7 +26,7 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 
 ## État actuel à connaître
 
-- La règle 2 n'est pas encore appliquée : `js/app.js` (`construireCatalogue`) fusionne encore
+- La règle 2 n'est pas encore appliquée : `js/catalogue.js` (`construireCatalogue`, calcul sans affichage ; `js/app.js` ne fait que dessiner) fusionne encore
   `data/formations.json` (fiches éditoriales, dont 1 639 en France) avec Parcoursup via
   `data/anciennes-fiches.json` (ex-`fusion.json`). Ne pas supprimer ces fichiers sans une tâche dédiée : le moteur s'en sert
   pour les recommandations, et `anciennes-fiches.json` définit aussi le périmètre affiché (BTS et BUT masqués).

@@ -15,6 +15,7 @@ css/styles.css        styles
 js/store.js           CapStore : enregistrement local (localStorage, clé « capsup.v1 »)
 js/bulletin.js        CapBulletin : lecture des bulletins PDF dans le navigateur
 js/moteur.js          CapEngine : repères d'admission et catégories, liste de vœux, étranger
+js/catalogue.js       CapCatalogue : construction du catalogue (calcul seulement, sans affichage)
 js/app.js             navigation et vues (accueil, profil, questionnaire, ma liste, fiche, catalogue, plan, données)
 data/                 jeux de données (JSON), chargés à la demande (voir « Chargement des données »)
 vendor/               pdf.js 6.2.108 (Mozilla, licence Apache-2.0, voir vendor/README.md), chargé au premier import de bulletin

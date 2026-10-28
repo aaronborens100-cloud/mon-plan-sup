@@ -15,7 +15,7 @@ RACINE = pathlib.Path(__file__).resolve().parent.parent
 # Ordre des blocs dans la page (identique à la version d'origine).
 DONNEES = ["formations", "questionnaire", "parcoursup", "anciennes-fiches", "stats", "statuts-stats", "stats-manuelles", "frais-prives", "generees", "filieres",
            "ajustements", "lieux", "metiers", "poursuites", "extrascolaire"]
-SCRIPTS = ["store", "bulletin", "moteur", "app"]
+SCRIPTS = ["store", "bulletin", "moteur", "catalogue", "app"]
 
 LIEN_CSS = '<link rel="stylesheet" href="css/styles.css">\n'
 

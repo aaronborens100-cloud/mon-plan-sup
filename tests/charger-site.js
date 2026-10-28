@@ -1,7 +1,7 @@
 /*
  * tests/charger-site.js : charge le vrai code du site dans Node, sans navigateur.
  *
- * Les quatre scripts de js/ sont exécutés tels quels, dans l'ordre de index.html, avec une
+ * Les cinq scripts de js/ sont exécutés tels quels, dans l'ordre de index.html, avec une
  * fausse page minimale (document, localStorage, fetch qui lit data/ sur le disque).
  * Le catalogue est donc construit exactement comme sur le site (construireCatalogue dans
  * app.js), sans recopier sa logique ici.
@@ -74,7 +74,7 @@ async function chargerSite(remplacements = {}, options = {}) {
   };
   fenetre.window = fenetre; fenetre.self = fenetre; fenetre.top = fenetre; fenetre.globalThis = fenetre;
   const ctx = vm.createContext(fenetre);
-  for (const s of ["store", "bulletin", "moteur", "app"]) {
+  for (const s of ["store", "bulletin", "moteur", "catalogue", "app"]) {
     const code = fs.readFileSync(path.join(RACINE, "js", s + ".js"), "utf8");
     vm.runInContext(code, ctx, { filename: `js/${s}.js` });
   }
