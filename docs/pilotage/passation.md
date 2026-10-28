@@ -33,10 +33,13 @@ uniquement. »
 Fusionnées : #59 (outil de comparaison + `npm run controles` sur 300 profils fictifs, graine fixe),
 #56 (« Faisabilité : pas de chiffres officiels » au taux inconnu ; « NaN % » corrigé), #53 + #61
 (formation sans coordonnées exclue pour « domicile » et « proche » avec lycée), #62
-(MPSI/PCSI/PTSI/MP2I : exclues sans maths ; point bloquant avec maths complémentaires seules).
-`main` = 11ccd83 : 411/411 tests (vérifié le 28/10).
-Contrôles sur main (avant #62) : seule violation restante connue = `dix_voeux` (28 profils
-« domicile » à moins de 10 vœux, #58).
+(MPSI/PCSI/PTSI/MP2I : exclues sans maths ; point bloquant avec maths complémentaires seules),
+#63 (A, relevé des frais), #66 (A2, « selon les revenus »), #67 (B, sans lycée).
+`main` = 6467962 : 430/430 tests (vérifié le 28/10).
+Ouvertes, vérifiées par le DG le 28/10, empilées dans cet ordre : #68 (C) → #70 (D) → #71 (E) →
+#72 (F) → #73 (G) ; #74 « Chaîne complète » = même tête que #73 (452/452). Contrôles sur cette
+tête : seule violation = `dix_voeux` (28 profils « domicile » à moins de 10 vœux, désormais
+expliquée par le message de F).
 
 ## 4. Décisions d'Aaron à respecter (en plus du journal du 22/10)
 - Phrase tarifs (PR A, mot pour mot) : « Ces frais viennent de la fiche Parcoursup de la formation
@@ -51,18 +54,28 @@ Contrôles sur main (avant #62) : seule violation restante connue = `dix_voeux` 
 - #57 : PCSI bloquée aussi avec maths complémentaires (malgré l'attendu officiel : choix de
   prudence). BCPST, TSI, TB, TPC inchangées.
 - #60 (faisabilité sur repère estimé) : décision à la refonte, ne rien faire avant.
+- A2 : les 17 fiches « selon les revenus » restent proposées, affichées « jusqu'à X € (selon les
+  revenus) » ; pour le budget, frais inconnus, jamais minimum d'exclusion.
+- B (#43) : jamais « sécurité » sans lycée pour domicile / proche ; « Indique ton lycée » mis en avant.
+- C (#45) : licence de secteur pour l'élève faible + règle 100 % ci-dessus + secteur francilien ;
+  plancher de 50 candidats maintenu (il élimine 68 des 1 028 licences à 100 %).
+- D (#42) : PASS / LAS de l'académie pour un projet médecine, jamais « sécurité ».
+- E (#69) : sans intérêt santé, licence simple avant la LAS de la même discipline ; LAS jamais supprimée.
+- F (#58), mot pour mot : « Dans ta zone de mobilité, seules N formations correspondent à ton
+  profil. Pour avoir 10 vœux, élargis ta zone. »
+- #47 (SKEMA, IÉSEG non liés à Parcoursup) : sautée. #5 #6 : bloquées (CSV du ministère).
 
 ## 5. Feuille de route (dans l'ordre)
 | | PR | Issue | Fichiers principaux | État |
 |---|---|---|---|---|
-| A | Corrections du relevé des frais + année + phrase tarifs | #49 | scripts/construire-frais-prives.py, data/frais-prives.json, js/app.js | **PR #63 ouverte, NON vérifiée par le DG** (418/418 selon l'agent). À vérifier : `/verifier-pr claude/frais-releve-fraicheur`. Points à creuser : 6 références changent par le hash « calculs » (cause non isolée) ; date « octobre 2026 » en dur ? ; 17 montants « selon les revenus » encore lus comme minimum par le moteur, contrairement à la décision du 22/10 (→ PR moteur à ajouter) ; points 5 et 7 de #49 non traités. |
-| B | Jamais « sécurité » sans lycée pour domicile / proche ; « Indique ton lycée » mis en avant | #43 | moteur, app | à faire |
-| C | Licence de secteur pour l'élève faible + règle 100 % + secteur francilien | #45 | moteur | à faire (mesure du plancher d'abord) |
-| D | PASS / LAS de l'académie pour un projet médecine | #42 | moteur | à faire |
-| E | LAS derrière la licence simple sans intérêt santé | (créer l'issue) | moteur | à faire |
-| F | Message liste raccourcie par la distance | #58 | app (+ moteur si besoin) | à faire, texte à valider par Aaron |
-| G | Textes obsolètes « % de chances » | #54 | app, index.html | à faire (petite) |
-| H | Retrait des ~813 fiches maison sans lien Parcoursup | — (§ 7.2) | data, app, moteur | à faire ; **règle probablement #47 (SKEMA, IÉSEG non liés) : proposer à Aaron de sauter #47** |
+| A | Corrections du relevé des frais + année + phrase tarifs | #49 | scripts/construire-frais-prives.py, data/frais-prives.json, js/app.js | **fusionnée (#63, puis A2 #66)** |
+| B | Jamais « sécurité » sans lycée pour domicile / proche ; « Indique ton lycée » mis en avant | #43 | moteur, app | **fusionnée (#67)** |
+| C | Licence de secteur pour l'élève faible + règle 100 % + secteur francilien | #45 | moteur | **PR #68 vérifiée** ; secteur IDF non relu à la source |
+| D | PASS / LAS de l'académie pour un projet médecine | #42 | moteur | **PR #70 vérifiée** |
+| E | LAS derrière la licence simple sans intérêt santé | #69 | moteur | **PR #71 vérifiée** |
+| F | Message liste raccourcie par la distance | #58 | app, moteur | **PR #72 vérifiée** ; phrase N = 0 à valider |
+| G | Textes obsolètes « % de chances » | #54 | app, index.html | **PR #73 vérifiée** ; #74 = chaîne complète |
+| H | Retrait des ~813 fiches maison sans lien Parcoursup | — (§ 7.2) | data, app, moteur | à faire (#47 sautée) |
 | I | Retrait des ~811 fiches fusionnées | — | idem | après H |
 | J | Lieux et données diverses | #15 #24 #29 #31 #32 #33 #39 | data | à faire |
 | K | Séparation calcul / affichage, puis rangement du moteur | — | moteur, app | avant la refonte |
