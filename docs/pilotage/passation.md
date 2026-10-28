@@ -50,6 +50,13 @@ Contrôles sur main (avant #62) : seule violation restante connue = `dix_voeux` 
   liste vide ≠ « Complète ton profil ».
 - #57 : PCSI bloquée aussi avec maths complémentaires (malgré l'attendu officiel : choix de
   prudence). BCPST, TSI, TB, TPC inchangées.
+- Décisions du 28/10 (mode nuit) :
+  - A2 : les 17 montants « selon les revenus » sont traités par le moteur comme des frais inconnus, pas comme un minimum (application de la décision du 22/10).
+  - C : plancher de 50 candidats maintenu quoi que donne la mesure ; la mesure est rapportée dans la PR.
+  - E : sans intérêt santé, la licence simple est toujours classée avant la LAS de la même discipline ; la LAS n'est pas supprimée.
+  - F (#58), texte mot pour mot : « Dans ta zone de mobilité, seules N formations correspondent à ton profil. Pour avoir 10 vœux, élargis ta zone. » (N rempli automatiquement).
+  - H : #47 sautée ; H la ferme si elle est bien réglée, sinon le signaler.
+  - Nuit du 28/10 : A2, B, C, D, E, F, G en PR **empilées** (chacune part de la précédente), à fusionner dans l'ordre. H à K attendent les fusions.
 - #60 (faisabilité sur repère estimé) : décision à la refonte, ne rien faire avant.
 
 ## 5. Feuille de route (dans l'ordre)

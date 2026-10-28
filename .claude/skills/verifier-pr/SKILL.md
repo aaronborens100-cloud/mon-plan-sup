@@ -2,7 +2,6 @@
 name: verifier-pr
 description: Vérification d'une PR du codeur par le DG, par scripts et résumés, puis compte rendu de 10 lignes à Aaron. Argument : la branche de la PR.
 argument-hint: <branche> [--controles] [--sans-tests]
-disable-model-invocation: true
 ---
 
 Branche à vérifier : $ARGUMENTS

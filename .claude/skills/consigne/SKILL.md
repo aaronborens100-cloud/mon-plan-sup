@@ -2,7 +2,6 @@
 name: consigne
 description: Prépare la consigne (25 lignes max) de l'agent codeur pour une PR de la feuille de route, puis lance l'agent. Argument : la lettre de la PR (A, B, C…).
 argument-hint: <lettre de la PR>
-disable-model-invocation: true
 ---
 
 PR visée : $ARGUMENTS (ligne correspondante du § 5 de `docs/pilotage/passation.md`).
