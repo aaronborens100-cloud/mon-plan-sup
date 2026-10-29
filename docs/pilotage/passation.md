@@ -103,6 +103,9 @@ professeur / psy-EN fin novembre, mise en ligne début janvier 2027 si les crit�
 (feuille de route : https://claude.ai/artifact/VQGZFt7b5t6mshczTLovnN, critères inchangés).
 
 ## 6. Ce qui dépend d'Aaron
+Vercel (29/10/2026) : le projet était relié à l'ancien dépôt `aaronborens100-cloud` et aucun déploiement n'avait eu lieu
+depuis le 19/10 (site en ligne = PR #4 du 18/10). Il a été reconnecté à `monplansup/mon-plan-sup` (branche de
+production `main`) : chaque fusion dans `main` publie désormais le site. Les agents Claude ne touchent pas à Vercel.
 Fusionner ; décisions ci-dessus ; CSV du ministère ; professeur principal ou psy-EN à contacter ;
 mode de test des camarades sans mise en ligne ; ce qu'il veut changer dans l'affichage ;
 protection de la branche `main` sur GitHub (voir `docs/pilotage/claude-code.md`).
