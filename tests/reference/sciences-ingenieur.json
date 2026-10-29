@@ -862,30 +862,30 @@
    },
    {
     "x": {
-     "id": "psup-11488",
-     "categorie": "realiste",
-     "pertinence": 57.39438706970364,
+     "id": "psup-41045",
+     "categorie": "ambitieux",
+     "pertinence": 76.25416870649194,
      "repere": [
-      43,
-      "au_dessus"
+      27,
+      "en_dessous"
      ]
     }
    },
    {
     "x": {
-     "id": "psup-36050",
-     "categorie": "realiste",
-     "pertinence": 57.39438706970364,
+     "id": "psup-28874",
+     "categorie": "ambitieux",
+     "pertinence": 74.84852661871065,
      "repere": [
-      42,
-      "au_dessus"
+      23,
+      "en_dessous"
      ]
     }
    }
   ]
  },
  "empreintes": {
-  "calculs": "fdf0bf3d3a28dd917275ef5ebb45910ac2f1eb065a66917340652b33e0005b26",
-  "textes": "69aa6023b6219cce8563d3dd0590c51ba440d8bfeaf65fd70a760d2d99285b5f"
+  "calculs": "ea560227a3beb017d2404355a9055018cf01648e33379785baec53eed4879b34",
+  "textes": "9d9f58630ce305b35e245153f4e1023778bebcae9bc11785c6c41e248c3e68c4"
  }
 }

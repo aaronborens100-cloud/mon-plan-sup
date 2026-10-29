@@ -5,7 +5,7 @@
  *   - une MPSI générée est une prépa scientifique ;
  *   - une école d'ingénieurs post-bac est une ecole_ingenieur ;
  *   - une ECG « approfondies » a option = "appro", une ECG « appliquées » option = "appli" ;
- *   - une « Double licence » Parcoursup est une double_licence ;
+ *   - une « Double licence » garde le type de la filière (reclassement reporté) ;
  *   - toute prépa ECG générée issue d'un intitulé approfondies / appliquées a une option.
  *
  * Lancer : npm test
@@ -50,16 +50,9 @@ test("une prépa ECG générée a une option dès que l'intitulé la précise", 
   }
 });
 
-test("une double licence Parcoursup est une double_licence, une licence simple reste une licence", () => {
+test("doubles licences : reclassement reporté, le type de la filière est gardé (décision d'Aaron du 29/10/2026)", () => {
   const dbl = generees.filter((f) => /^Double licence/i.test(intitule(f)) && ps(f).tf.includes("Licence"));
   assert.ok(dbl.length > 0);
-  for (const f of dbl) assert.equal(f.type, "double_licence", f.id);
-  const simples = generees.filter((f) => /^L1 - Droit$/.test(ps(f).fl.join("/")) && /^Licence - Droit$|^Licence$/.test(intitule(f)));
-  for (const f of simples) assert.equal(f.type, "licence", f.id);
-});
-
-test("le libellé du type suit le type lu dans Parcoursup", () => {
-  const f = generees.find((x) => x.type === "double_licence" && /^Double licence/i.test(intitule(x)));
-  assert.ok(f);
-  assert.match(f.type_label, /[Dd]ouble licence/);
+  for (const f of dbl) assert.equal(f.type, f.__gen.fam.type, f.id);
+  assert.ok(dbl.every((f) => f.__gen.typeSansRegle));
 });

@@ -290,8 +290,9 @@
     ["DCG", /./, "dcg"],
     ["Sciences Po - Instituts d'études politiques", /Grade Licence/, "college_universitaire"],
     ["Sciences Po - Instituts d'études politiques", /./, "iep"],
-    ["Licence", /^Double licence/i, "double_licence"],
-    ["Licence sélective", /^Double licence/i, "double_licence"],
+    // doubles licences : reclassement reporté, décision d'Aaron du 29/10/2026 (type de filieres.json gardé)
+    ["Licence", /^Double licence/i, null],
+    ["Licence sélective", /^Double licence/i, null],
     ["Licence", /./, "licence"],
     ["Licence sélective", /Formation valant grade de licence/, null],
     ["Licence sélective", /./, "licence"],
