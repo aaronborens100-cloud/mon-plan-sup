@@ -175,7 +175,9 @@ const verifierPage = (nom, html) => {
 };
 for (const id of ["eco-moyen", "fragile", "eco-excellent-decide", "vide"]) {
   test(`profil « ${id} » : aucun pourcentage personnel dans les pages`, async () => {
-    const p = PROFILS.find((x) => x.id === id);
+    const p0 = PROFILS.find((x) => x.id === id);
+    // profil « vide » : une spécialité cochée pour débloquer Ma liste et Mon plan (page verrouillée sinon, profilPret)
+    const p = id === "vide" ? Object.assign({}, p0, { profil: Object.assign({}, p0.profil, { specialites: ["maths"] }) }) : p0;
     const { W } = analyser(p);
     const etat = { profil: p.profil, reponses: p.reponses, retenus: [], profilTermine: true, qIndex: 999 };
     const s = await chargerSite({}, { etat });
