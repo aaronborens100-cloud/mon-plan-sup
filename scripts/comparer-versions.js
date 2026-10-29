@@ -40,13 +40,18 @@ function options(argv) {
   return o;
 }
 
+// Copie indépendante d'une chaîne. Un « slice » d'une longue chaîne garde la chaîne entière en mémoire (V8 ne copie pas) :
+// sans cette copie, chaque différence retenue empêchait de libérer les pages HTML et les JSON de recommander complets,
+// et le script manquait de mémoire dès que beaucoup de résultats changeaient.
+function detacher(s) { return JSON.parse(JSON.stringify(s)); }
+
 // Extrait lisible autour du premier caractère qui diffère
 function premierEcart(a, b) {
   let i = 0;
   const n = Math.min(a.length, b.length);
   while (i < n && a[i] === b[i]) i++;
   const debut = Math.max(0, i - 120);
-  const extrait = (s) => (debut > 0 ? "…" : "") + s.slice(debut, i + 180) + (s.length > i + 180 ? "…" : "");
+  const extrait = (s) => (debut > 0 ? "…" : "") + detacher(s.slice(debut, i + 180)) + (s.length > i + 180 ? "…" : "");
   return { position: i, avant: extrait(a), apres: extrait(b), longueurs: [a.length, b.length] };
 }
 
@@ -58,7 +63,7 @@ function ecartRecommander(a, b) {
   let nb = 0, premier = null;
   for (let i = 0; i < A.resultats.length; i++) {
     const x = JSON.stringify(A.resultats[i]), y = JSON.stringify(B.resultats[i]);
-    if (x !== y) { nb++; if (!premier) premier = { rang: i + 1, id: A.resultats[i].f, idApres: B.resultats[i].f, ...premierEcart(x, y) }; }
+    if (x !== y) { nb++; if (!premier) premier = { rang: i + 1, id: detacher(String(A.resultats[i].f)), idApres: detacher(String(B.resultats[i].f)), ...premierEcart(x, y) }; }
   }
   return { quoi: `${nb} formation(s) notée(s) différente(s), première au rang ${premier.rang} (${premier.id}${premier.idApres !== premier.id ? ` → ${premier.idApres}` : ""})`, ...premier };
 }
