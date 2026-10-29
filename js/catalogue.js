@@ -15,7 +15,7 @@
   "use strict";
   const E = window.CapEngine;
   // Base fusionnée : CAT = toutes les fiches affichées (ancienne base + Parcoursup), sans doublon certain
-  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, STATUTS_ST = {}, MANUELLES = {}, FIL = null, LIEUX = null, VILLES_GPS = {};
+  let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, STATUTS_ST = {}, MANUELLES = {}, FIL = null, ATT = {}, LIEUX = null, VILLES_GPS = {};
 
   const sansAccents = (x) => String(x || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
   const etabCourt = (n) => String(n || "").replace(/\s*\([^()]*\)\s*$/, "").trim();
@@ -135,7 +135,8 @@
     const depsProbables = [...new Set(((x && x.c) || []).map((g) => PSBY[g]).filter((r) => r && r.departement && sansAccents(r.commune) === nomVille).map((r) => r.departement))];
     return communeGps(ville, [f.__dep, entreParentheses, depsProbables.length === 1 ? depsProbables[0] : null]);
   }
-  function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp) {
+  function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp, att) {
+    ATT = tableAttendus(att);
     FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {}; RETIREES = new Set();
     FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null; FRAIS_A_PARTIR_DE = (fp && fp.a_partir_de) || {};
     FRAIS_PAR_MOIS = (fp && fp.par_mois) || {}; FRAIS_PREMIERE_ANNEE = (fp && fp.premiere_annee) || {};
@@ -315,6 +316,40 @@
     for (const [cat, motif, type] of TYPES_PS) if ((r.tf || []).includes(cat) && motif.test(texte)) return type;
     return null;
   }
+  // Attendus nationaux (data/attendus-filieres.json, texte de l'État pris tel quel, décision d'Aaron du 29/10/2026) :
+  // pour chaque code nmc couvert par une entrée « applique », spécialités conseillées = spécialités déduites du texte
+  // (table discipline → spécialité sûre de meta.table_disciplines_specialites), jamais obligatoires. maths_expertes,
+  // profil, domaines et métiers ne viennent pas du texte : ils ne sont pas touchés.
+  function tableAttendus(att) {
+    const t = {};
+    if (!att || !att.filieres) return t;
+    const sources = {};
+    for (const s of (att.meta && att.meta.sources) || []) sources[s.fichier] = s;
+    const acces = (att.meta && att.meta.regles_acces_ecg && att.meta.regles_acces_ecg.codes) || {};   // règle d'accès ECG (hors texte des attendus)
+    for (const e of Object.values(att.filieres)) {
+      if (e.applique !== true) continue;
+      const s = sources[e.fichier];
+      for (const nmc of e.nmc || []) {
+        t[nmc] = { acces: acces[nmc] || null, recommandees: (e.specialites_deduites.recommandees || []).slice(), citations: e.citations, libelle: e.libelle_document, rattachement: e.rattachement || null,
+          source: s ? `${s.titre}${s.date_document ? " (" + s.date_document + ")" : ""}` : "Cadrage national des attendus" };
+      }
+    }
+    return t;
+  }
+  // Applique les attendus à une fiche Parcoursup du code nmc donné (fiche de la filière de base, pas d'une variante d'intitulé)
+  function appliquerAttendus(f, nmc) {
+    const a = ATT[nmc];
+    if (!a) return false;
+    const sp = f.specialites;
+    sp.obligatoires = a.acces && a.acces.maths_obligatoire ? ["maths"] : [];   // prépas ECG : maths obligatoires (meta.regles_acces_ecg)
+    if (a.acces) sp.maths_complementaires_ok = !!a.acces.maths_complementaires_ok;
+    sp.recommandees = a.recommandees.slice();
+    const lib = a.recommandees.map((x) => E.SPEC_COURT[x] || x).join(", ");
+    sp.texte = a.recommandees.length ? `Disciplines attendues d'après le cadrage national des attendus (ministère de l'Enseignement supérieur) : ${lib}.` : "Le cadrage national ne cite pas de discipline du lycée pour cette filière.";
+    sp.statut = "officiel"; sp.source = a.source;
+    f.attendus = { libelle: a.libelle, citations: a.citations, source: a.source, rattachement: a.rattachement };
+    return true;
+  }
   // Option d'une prépa ECG, lue dans l'intitulé Parcoursup (« Mathématiques approfondies » ou « appliquées »)
   function optionEcg(r) {
     const t = (r.nm || []).join(" ");
@@ -352,7 +387,7 @@
     const epreuves = (r.aut || []).some((a) => /épreuves de sélection/.test(a));
     const pub = r.tc === "Publics" && fam.cout_public;
     const chiffres = [places != null ? `${places} places` : null, voeux != null ? `${voeux} vœux reçus` : null, admis != null ? `${admis} admis` : null].filter(Boolean).join(" · ");
-    return {
+    const fiche = {
       id: "psup-" + g, type, type_label: (type === fam.type && fam.type_label) || fil.meta.types_label[type] || type, ...(opt ? { option: opt } : {}), nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
       ville: r.commune || r.departement || "Non renseigné", pays: "France", duree_ans: fam.duree_ans, langue: fam.langue, charge: fam.charge,
       dossier_poids: fam.dossier_poids, profil: fam.profil, plateforme: hors ? "propre" : "parcoursup",
@@ -380,6 +415,8 @@
       metiers: fam.metiers, poursuites: fam.poursuites,
       __gen: { gta: g, fam, typeSansRegle: !typePs },
     };
+    if (!va) appliquerAttendus(fiche, r.nmc);
+    return fiche;
   }
   function fichDepuisModele(o, g) {
     const r = PSBY[g]; if (!r) return null;
@@ -402,6 +439,7 @@
     f.incertitudes = [`Fiche reprise de « ${o.nom} » (${o.etablissement}), qui ne précisait pas l'option HGG ou ESH : contenu éditorial commun aux options, chiffres d'admission propres à cette option.`, ...(o.incertitudes || [])];
     f.__gen = { gta: g, modele: o.id, modeleNom: o.nom };
     f.statut_etab = TC_ETAB[r.tc] || null;   // statut de cet établissement d'après Parcoursup, pas celui du modèle
+    appliquerAttendus(f, r.nmc);
     return f;
   }
   function decodePs(c) {

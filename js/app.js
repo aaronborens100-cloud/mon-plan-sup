@@ -55,8 +55,8 @@
   }
   const chargerLycees = () => une("lieux", async () => { if (!LIEUX) { C.chargerLieux(await charger("data-lieux", "data/lieux.json")); synchroCatalogue(); } });
   const chargerFormations = () => une("formations", async () => {
-    const [d, ps, fu, st, fil, aj, sts, man, , fpr] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-anciennes-fiches", "data/anciennes-fiches.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null)]);
-    C.construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr);
+    const [d, ps, fu, st, fil, aj, sts, man, , fpr, att] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-anciennes-fiches", "data/anciennes-fiches.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null), charger("data-attendus-filieres", "data/attendus-filieres.json").catch(() => null)]);
+    C.construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr, att);
     synchroCatalogue();
     const redir = C.redirigerVoeux(etat);   // fiches remplacées ou redirigées, fiches maison retirées
     etat.retenus = redir.etat.retenus;
@@ -156,6 +156,13 @@
     if (!o || !o.source) return "";
     let host = o.source; try { host = new URL(o.source).hostname.replace(/^www\./, ""); } catch (e) { /* */ }
     return `<span class="src">Source : <a href="${esc(o.source)}" target="_blank" rel="noopener">${esc(host)}</a> · consulté le ${esc(fmtDate(o.consulte_le))}</span>`;
+  }
+  // Bloc « Attendus nationaux » d'une fiche : citations du cadrage national des attendus (texte de l'État, recopié mot pour mot)
+  function blocAttendus(a) {
+    return `<div class="card stack"><div class="carte-tete"><span class="info-ico ton-bleu">${ico("livre")}</span><h3>Attendus nationaux</h3></div>
+      ${a.rattachement ? `<p class="small muted">${esc(a.rattachement)}</p>` : ""}
+      <ul class="why small">${a.citations.map((c) => `<li>« ${esc(c.texte)} »${(c.sous_puces || []).length ? `<ul>${c.sous_puces.map((sp) => `<li>${esc(sp.texte)}</li>`).join("")}</ul>` : ""}</li>`).join("")}</ul>
+      <span class="src">Source : ${esc(a.source)}, cadrage national des attendus (ministère de l'Enseignement supérieur), page ${a.citations.map((c) => c.page).filter((v, i, t) => t.indexOf(v) === i).join(", ")}.</span></div>`;
   }
   function fmtDate(iso) { if (!iso) return ""; const d = new Date(iso + "T12:00:00"); return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }); }
   function lvl(niv) { const N = E.NIVEAUX[niv]; return `<span class="lvl lvl-${niv}"><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>${N.label}</span>`; }
@@ -1066,7 +1073,7 @@
       ["envoi", "Candidature", plat, "", "menthe"],
     ];
     const infos = [
-      ["livre", "Spécialités", val(f.specialites, esc(f.specialites.texte)), "bleu"],
+      ["livre", "Spécialités", f.attendus ? esc(f.specialites.texte) + statutBadge(f.specialites.statut) : val(f.specialites, esc(f.specialites.texte)), "bleu"],   // attendus nationaux : la source est citée dans le bloc « Attendus nationaux »
       ["courbe", "Niveau scolaire", val(f.notes, esc(f.notes.texte)) + (f.notes.moyenne_cible != null ? `<span class="repere">${ico("cible")}Repère retenu : <b>${E.fmt(f.notes.moyenne_cible)}/20</b>${f.notes.maths_cible != null ? ` · maths <b>${E.fmt(f.notes.maths_cible)}</b>` : ""}</span>` : ""), "violet"],
       ["globe", "Langues", val(f.langue_requise, esc(f.langue_requise.texte)), "ciel"],
       ["dossier", "Tests et épreuves", f.tests.length ? f.tests.map((t) => `<div class="test"><span class="fw">${esc(t.nom)}</span> <span class="pill ${t.obligatoire ? "ton-corail" : "neutral"}">${t.obligatoire ? "obligatoire" : "facultatif"}</span> ${esc(t.texte)}${statutBadge(t.statut)}${srcLien(t)}</div>`).join("") : "Aucun test spécifique relevé.", "ambre"],
@@ -1102,6 +1109,7 @@
       <section class="partie stack" id="sec-formation" aria-labelledby="t-formation">
         <h2 class="partie-titre" id="t-formation"><span class="partie-n">1</span>Formation</h2>
         <div class="infos-grille">${infos.map(([i, t, c, ton]) => `<div class="info-carte ton-${ton}"><div class="info-tete"><span class="info-ico">${ico(i)}</span><h3>${t}</h3></div><div class="info-corps small">${c}</div></div>`).join("")}</div>
+        ${f.attendus ? blocAttendus(f.attendus) : ""}
         ${f.calendrier.length ? `<div class="card stack"><div class="carte-tete"><span class="info-ico ton-bleu">${ico("agenda")}</span><h3>Calendrier</h3></div>
           <ol class="frise">${f.calendrier.map((c) => `<li><span class="frise-date">${esc(fmtDate(c.date))}</span><span class="frise-txt">${esc(c.etape)}${statutBadge(c.statut)}</span></li>`).join("")}</ol>${srcLien(f.calendrier[0])}</div>` : ""}
         ${f.incertitudes.length ? `<div class="bloc-verif">${ico("alerte")}<div><span class="fw">À vérifier</span><ul class="why small">${f.incertitudes.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div></div>` : ""}
