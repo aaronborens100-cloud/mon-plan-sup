@@ -325,11 +325,12 @@
     if (!att || !att.filieres) return t;
     const sources = {};
     for (const s of (att.meta && att.meta.sources) || []) sources[s.fichier] = s;
+    const acces = (att.meta && att.meta.regles_acces_ecg && att.meta.regles_acces_ecg.codes) || {};   // règle d'accès ECG (hors texte des attendus)
     for (const e of Object.values(att.filieres)) {
       if (e.applique !== true) continue;
       const s = sources[e.fichier];
       for (const nmc of e.nmc || []) {
-        t[nmc] = { recommandees: (e.specialites_deduites.recommandees || []).slice(), citations: e.citations, libelle: e.libelle_document, rattachement: e.rattachement || null,
+        t[nmc] = { acces: acces[nmc] || null, recommandees: (e.specialites_deduites.recommandees || []).slice(), citations: e.citations, libelle: e.libelle_document, rattachement: e.rattachement || null,
           source: s ? `${s.titre}${s.date_document ? " (" + s.date_document + ")" : ""}` : "Cadrage national des attendus" };
       }
     }
@@ -340,7 +341,8 @@
     const a = ATT[nmc];
     if (!a) return false;
     const sp = f.specialites;
-    sp.obligatoires = [];
+    sp.obligatoires = a.acces && a.acces.maths_obligatoire ? ["maths"] : [];   // prépas ECG : maths obligatoires (meta.regles_acces_ecg)
+    if (a.acces) sp.maths_complementaires_ok = !!a.acces.maths_complementaires_ok;
     sp.recommandees = a.recommandees.slice();
     const lib = a.recommandees.map((x) => E.SPEC_COURT[x] || x).join(", ");
     sp.texte = a.recommandees.length ? `Disciplines attendues d'après le cadrage national des attendus (ministère de l'Enseignement supérieur) : ${lib}.` : "Le cadrage national ne cite pas de discipline du lycée pour cette filière.";

@@ -84,7 +84,14 @@ test("texte de l'État appliqué tel quel : règle de la table et liste des entr
   assert.deepEqual(T.meta.table_disciplines_specialites.correspondances, {
     "mathématiques": "maths", "physique-chimie": "physique_chimie", "sciences de la vie et de la Terre": "SVT",
     "sciences économiques et sociales": "SES", "sciences de l’ingénieur": "SI", "informatique": "NSI",
+    "langue étrangère": ["LLCER_anglais", "LLCER_autre"], "langues vivantes": ["LLCER_anglais", "LLCER_autre"],
   });
+  assert.match(T.meta.table_disciplines_specialites.correspondances_approchees["langue étrangère"], /correspondance approchée acceptée par Aaron le 29\/10\/2026/);
+  for (const x of ["histoire-géographie", "lettres", "philosophie"]) assert.ok(T.meta.table_disciplines_specialites.disciplines_sans_specialite.includes(x), x);
+  const r = T.meta.regles_acces_ecg;
+  assert.equal(r.a_confirmer, true);
+  assert.match(r.source, /^https:\/\/www\.onisep\.fr\/.*classe-preparatoire-economique-et-commerciale-generale-1re-annee$/);
+  assert.deepEqual(Object.keys(r.codes).sort(), ["ECG-MA-ESH", "ECG-MA-HGG", "ECG-Mapp-ESH", "ECG-Mapp-HGG"]);
   assert.deepEqual(T.meta.non_appliquees.slice().sort(), entrees.filter(([, e]) => !e.applique).map(([c]) => c).sort());
   assert.ok(T.meta.non_appliquees.includes("Licence mention Sciences de l'éducation"));
 });
@@ -99,7 +106,7 @@ test("chaque spécialité déduite est recalculée avec la table de correspondan
     assert.equal(d.statut, "table_discipline_specialite", cle);
     const TAB = T.meta.table_disciplines_specialites.correspondances;
     assert.deepEqual(d.obligatoires, [], cle + " : aucune spécialité obligatoire");
-    assert.deepEqual(d.recommandees, [...new Set(e.disciplines.filter((x) => TAB[x]).map((x) => TAB[x]))], cle + " : spécialités mal recalculées");
+    assert.deepEqual(d.recommandees, [...new Set(e.disciplines.filter((x) => TAB[x]).flatMap((x) => [].concat(TAB[x])))], cle + " : spécialités mal recalculées");
     for (const x of e.disciplines) assert.ok(TAB[x] || T.meta.table_disciplines_specialites.disciplines_sans_specialite.includes(x), cle + " : discipline non classée « " + x + " »");
     assert.ok(typeof d.justification === "string" && d.justification.length > 10, cle + " : justification manquante");
     for (const s of [...d.obligatoires, ...d.recommandees]) assert.ok(connues.has(s), `${cle} : spécialité inconnue « ${s} »`);

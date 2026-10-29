@@ -796,15 +796,6 @@
     ]
    },
    {
-    "id": "psup-31343",
-    "categorie": "ambitieux",
-    "pertinence": 42.51251162041441,
-    "repere": [
-     28,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-24814",
     "categorie": "ambitieux",
     "pertinence": 44.9305797207782,
@@ -814,11 +805,20 @@
     ]
    },
    {
-    "id": "psup-31650",
+    "id": "massena-nice-al",
     "categorie": "ambitieux",
-    "pertinence": 41.53669827631153,
+    "pertinence": 40.919555419168674,
     "repere": [
-     39,
+     54,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "dna-villa-arson-nice",
+    "categorie": "ambitieux",
+    "pertinence": 40.87466803613526,
+    "repere": [
+     12,
      "en_dessous"
     ]
    }
@@ -840,7 +840,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec diplôme d'État santé ou social et prépa ECG comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec diplôme d'État santé ou social et licence de langues comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "1032734b1889a9488b93a272588b920cd435ed6301916ca593b0f2f5470f693b",
-  "textes": "021e2d1bd55d3ddd8429898ac4f35609b480507f898a21df9e0412b6a35a47c7"
+  "calculs": "d47efe4f4ecc337f3c3bb085cfc6241b1723bd7dad1876121e66d6b35d70dade",
+  "textes": "1eb3eaac9e03aedba4a7a4e9325af5801a1bc43a329c491d5b2d96ce853888d9"
  }
 }

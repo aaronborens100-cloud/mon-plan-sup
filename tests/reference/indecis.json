@@ -794,11 +794,11 @@
     ]
    },
    {
-    "id": "psup-42996",
+    "id": "psup-47195",
     "categorie": "realiste",
-    "pertinence": 65.76333333333332,
+    "pertinence": 69.41555555555556,
     "repere": [
-     36,
+     33,
      "au_dessus"
     ]
    }
@@ -930,7 +930,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "69d87a7f5f65b9182bcaa3eba2894bf6726ed4897c3b96d815eaddc5571ed6d4",
-  "textes": "b54fddc6f197fa26876aba69a326eaf8a6b03bda940a97fa4c138b9e5ae23a48"
+  "calculs": "7e4b3427bb5f51dcde4129a3dbbae5030b5e723a9201dbd388d9259ad159c33f",
+  "textes": "ea18cfa240a32ea11bd93fc1063364a806169b7dc83dd78d200808ca51c0e7f1"
  }
 }

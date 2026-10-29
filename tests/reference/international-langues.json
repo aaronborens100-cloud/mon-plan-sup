@@ -746,11 +746,11 @@
     ]
    },
    {
-    "id": "psup-7645",
+    "id": "psup-18038",
     "categorie": "securite",
-    "pertinence": 82.8626984126984,
+    "pertinence": 83.37857142857143,
     "repere": [
-     92,
+     100,
      "au_dessus"
     ]
    },
@@ -764,12 +764,12 @@
     ]
    },
    {
-    "id": "psup-15968",
+    "id": "psup-14403",
     "categorie": "ambitieux",
-    "pertinence": 82.7357142857143,
+    "pertinence": 79.9426984126984,
     "repere": [
-     18,
-     "au_dessus"
+     31,
+     "en_dessous"
     ]
    },
    {
@@ -800,11 +800,11 @@
     ]
    },
    {
-    "id": "psup-35314",
+    "id": "psup-20896",
     "categorie": "realiste",
     "pertinence": 82.7357142857143,
     "repere": [
-     48,
+     49,
      "au_dessus"
     ]
    },
@@ -818,11 +818,11 @@
     ]
    },
    {
-    "id": "ps-6292",
+    "id": "psup-7645",
     "categorie": "securite",
-    "pertinence": 79.87857142857143,
+    "pertinence": 82.8626984126984,
     "repere": [
-     59,
+     92,
      "au_dessus"
     ]
    }
@@ -1021,7 +1021,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "95ddd5d7f0ed1558327eb6b0ff88e0993346f4dc1ea5a00bdd6df749cdf8a1ee",
-  "textes": "0dcffcc2431600bd85edf93334d5eec5a3e2e429482a1d5d6828fd195ab32d78"
+  "calculs": "ff3308f0dc6128fdbb7869dee6cd61448d7e0282645fdbc50995c3ce1635b56d",
+  "textes": "8e7cedb4ffe3e691103115ee3113e85cc61276214ced5af53be878bd7c0eea50"
  }
 }

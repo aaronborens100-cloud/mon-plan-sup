@@ -49,7 +49,7 @@ test("licence de droit : aucune spécialité, texte « ne cite pas »", async ()
   assert.equal(f.specialites.statut, "officiel");
 });
 
-test("prépa ECG + ESH : reçoit les spécialités de l'ancien texte ECE (maths, SES), jamais obligatoires", async () => {
+test("prépa ECG + ESH : reçoit les spécialités conseillées de l'ancien texte ECE (maths, SES)", async () => {
   const site = await chargerSite();
   const ece = entree("CPGE ECE ").specialites_deduites.recommandees;
   assert.deepEqual(ece, ["maths", "SES"]);
@@ -57,13 +57,13 @@ test("prépa ECG + ESH : reçoit les spécialités de l'ancien texte ECE (maths,
     const f = generee(site, nmc);
     assert.ok(f, nmc + " : fiche générée introuvable");
     eq(f.specialites.recommandees, ece, nmc);
-    eq(f.specialites.obligatoires, [], nmc);
+    eq(f.specialites.obligatoires, ["maths"], nmc);   // règle d'accès ECG, hors texte
     assert.equal(f.specialites.maths_expertes, FIL[nmc].specialites.maths_expertes, nmc + " : maths_expertes non touchée");
   }
   const ecs = entree("CPGE ECS ").specialites_deduites.recommandees;
   for (const nmc of ["ECG-Mapp-HGG", "ECG-MA-HGG"]) eq(generee(site, nmc).specialites.recommandees, ecs, nmc);
   eq(generee(site, "CPGE-ECT").specialites.recommandees, []);
-  eq(generee(site, "PASS").specialites.recommandees, ["maths", "physique_chimie", "SVT"]);
+  eq(generee(site, "PASS").specialites.recommandees, ["maths", "physique_chimie", "SVT", "LLCER_anglais", "LLCER_autre"]);
 });
 
 test("MP2I inchangée : pas de texte, spécialités de data/filieres.json, aucun bloc d'attendus", async () => {
@@ -93,3 +93,41 @@ test("fiche formation : bloc « Attendus nationaux » avec les citations et la s
   assert.ok(html.includes("Source : Éléments de cadrage national des attendus"));
   assert.ok(html.includes("sciences de l’ingénieur") || html.includes("sciences de l&#39;ingénieur") || html.includes("ingénieur"));
 });
+
+// Liste de 10 vœux d'un profil type (même calcul que le site)
+const PROFILS = require("./profils");
+function voeux(site, id) {
+  const p = PROFILS.find((x) => x.id === id);
+  const A = site.E.recommander(site.DATA.formations, p.profil, site.QUEST, p.reponses);
+  return { A, W: site.E.wishlist(A.resultats, 10, A.interets) };
+}
+
+test("prépas ECG : maths obligatoires, maths complémentaires acceptées seulement pour les maths appliquées", async () => {
+  const site = await chargerSite();
+  for (const nmc of ["ECG-Mapp-ESH", "ECG-Mapp-HGG", "ECG-MA-ESH", "ECG-MA-HGG"]) {
+    const f = generee(site, nmc);
+    eq(f.specialites.obligatoires, ["maths"], nmc);
+    assert.equal(!!f.specialites.maths_complementaires_ok, nmc.startsWith("ECG-Mapp"), nmc);
+  }
+});
+
+test("profil « fragile » (ni spécialité maths ni maths complémentaires) : aucune prépa ECG dans ses vœux", async () => {
+  const { A, W } = voeux(await chargerSite(), "fragile");
+  assert.equal(W.liste.length, 10);
+  eq(W.liste.filter((x) => x.f.type === "prepa_ecg").map((x) => x.f.id), []);
+  // l'ECG reste notée, mais bloquée sur les maths
+  const ecg = A.resultats.find((x) => x.f.type === "prepa_ecg" && x.f.specialites && x.f.specialites.obligatoires.includes("maths"));
+  assert.ok(ecg && ecg.crit.specialites.niveau === "bloquant");
+});
+
+test("profil « international-langues » : les filières à langues (LLCER) citent LLCER anglais et autre, atout pour ce profil", async () => {
+  const site = await chargerSite();
+  const f = generee(site, "L1-LLCER");
+  eq(f.specialites.recommandees, ["LLCER_anglais", "LLCER_autre"]);
+  assert.match(f.specialites.texte, /LLCER anglais, LLCER/);
+  const { A } = voeux(site, "international-langues");
+  const r = A.resultats.find((x) => x.f.id === f.id);
+  assert.ok(r, "fiche LLCER notée");
+  assert.equal(r.crit.specialites.niveau, "fort");
+}
+);
