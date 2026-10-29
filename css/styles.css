@@ -794,7 +794,7 @@ body.route-accueil .faq-zone { display: none; }
 .mps-home details.mps-q summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding: 14px 20px; font-size: 16px; font-weight: 700; cursor: pointer; }
 .mps-home details.mps-q summary::-webkit-details-marker { display: none; }
 .mps-home details.mps-q summary::after { content: "+"; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; line-height: 1; }
-.mps-home details.mps-q[open] summary::after { content: "\\2212"; }
+.mps-home details.mps-q[open] summary::after { content: "\2212"; }
 .mps-home details.mps-q p { margin: 0; padding: 0 20px 16px; font-size: 14px; line-height: 1.5; color: var(--gris-texte); }
 .mps-home .mps-faq-grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; align-items: start; }
 @media (max-width: 760px) { .mps-home .mps-faq-grille { grid-template-columns: 1fr; } .topbar-in { padding: 12px 16px; } }
@@ -843,3 +843,50 @@ body.route-accueil .faq-zone { display: none; }
 .verrou-schema { width: 100%; max-width: 520px; height: auto; }
 .verrou-carte h2 { font-size: 28px; }
 .verrou-carte p { color: var(--gris); max-width: 52ch; }
+
+/* ---------- retouches design v9 : Qui sommes-nous, pastilles, scolarité, menu téléphone */
+.qsn { position: relative; overflow: hidden; background: var(--marque-pale); border-top: 1px solid var(--gris-trait); border-bottom: 1px solid var(--gris-trait); }
+.qsn::before, .qsn::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+.qsn::before { width: 360px; height: 360px; right: -120px; top: -150px; background: var(--marque-clair); opacity: .45; }
+.qsn::after { width: 220px; height: 220px; left: -80px; bottom: -110px; border: 36px solid var(--marque-clair); opacity: .5; }
+.qsn-in { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 80px 32px; box-sizing: border-box; }
+.qsn-titre { margin: 0 0 32px; padding-bottom: 14px; position: relative; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+.qsn-titre::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 5px; border-radius: 3px; background: var(--marque); }
+.qsn-grille { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: stretch; }
+.qsn-texte { background: var(--blanc); border-radius: 20px; border-left: 8px solid var(--marque); padding: 28px 32px; box-shadow: 0 8px 24px rgba(31, 107, 69, .12); }
+.qsn-texte p { margin: 0 0 14px; font-size: 16px; line-height: 1.65; color: var(--gris-texte); }
+.qsn-texte p:first-child { font-size: 18px; color: var(--encre); font-weight: 500; }
+.qsn-texte p:last-child { margin: 0; }
+.qsn-col { display: flex; flex-direction: column; gap: 20px; }
+.qsn-carte { flex: 1 1 0; display: flex; align-items: center; gap: 18px; background: var(--blanc); border-radius: 20px; padding: 20px; box-sizing: border-box; box-shadow: 0 8px 24px rgba(31, 107, 69, .12); border-top: 6px solid var(--marque); }
+.qsn-aaron { border-top-color: var(--encre); }
+.qsn-avatar { width: 88px; height: 88px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--marque); color: var(--sur-marque); }
+.qsn-aaron .qsn-avatar { background: var(--encre); }
+.qsn-role { margin-top: 6px; display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--marque-pale); color: var(--marque); font-size: 13px; font-weight: 700; }
+@media (max-width: 860px) { .qsn-grille { grid-template-columns: 1fr; } .qsn-in { padding: 56px 20px; } .qsn-texte { padding: 22px 20px; } }
+
+.mps-pastilles { display: flex; flex-wrap: wrap; gap: 8px; }
+.mps-pastille { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border: 2px solid var(--gris-trait); border-radius: 999px; font-size: 14px; font-weight: 600; background: var(--blanc); }
+.mps-pastille.on { background: var(--encre); border-color: var(--encre); color: var(--blanc); }
+
+.chips-petits .chip span { min-height: 34px; padding: 5px 12px; font-size: .82rem; }
+.fields-scol { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); align-items: start; }
+.fields-scol .field > label { min-height: 1.4em; }
+.fields-scol .field .hint { display: block; font-size: .78rem; line-height: 1.35; }
+
+@media (max-width: 900px) {
+  .topbar-in { align-items: center; }
+  .menu-btn { min-height: 44px; padding: 0 16px 0 14px; border: 2px solid var(--gris-trait); border-radius: 999px; font-weight: 700; -webkit-tap-highlight-color: transparent; }
+  .menu-ouvert .menu-btn { background: var(--marque); border-color: var(--marque); color: var(--sur-marque); }
+  .topbar .nav { display: none; flex-direction: column; align-items: stretch; gap: 8px; width: 100%; margin: 6px 0 8px; padding: 12px; border: 0; background: var(--creme); border-radius: 20px; box-sizing: border-box; }
+  .menu-ouvert .topbar .nav { display: flex; animation: menu-entree .22s ease-out; }
+  .topbar .nav a { display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 0 18px; border-radius: 14px; background: var(--blanc); box-shadow: 0 1px 2px rgba(0, 0, 0, .06); font-size: 17px; font-weight: 600; color: var(--encre); text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, background .2s ease; }
+  .topbar .nav a::after { content: "\203A"; order: 3; margin-left: 12px; font-size: 26px; line-height: 1; color: var(--gris-2); }
+  .topbar .nav a svg.cadenas { display: block; order: 2; margin: 0 0 0 auto; width: 18px; height: 18px; opacity: .6; }
+  .topbar .nav a:active { transform: scale(.97); background: var(--marque-pale); }
+  .topbar .nav a[aria-current="page"] { background: var(--marque); color: var(--sur-marque); font-weight: 700; text-decoration: none; }
+  .topbar .nav a[aria-current="page"]::after { color: var(--sur-marque); }
+  .topbar .nav a.verrou:not([aria-current="page"]) { color: var(--gris); }
+}
+@keyframes menu-entree { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .menu-ouvert .topbar .nav { animation: none; } }
