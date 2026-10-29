@@ -42,6 +42,13 @@ désormais expliquée par le message de F ; contrôle à adapter, voir § 5).
 Le 28/10 (soir) : #76 (H), #77 (I1), #78 (K). Diagnostic de I2 : aucun écart de traitement dans le code
 (fiches complètes remises : 1 liste / 114 changée) ; les listes changent à cause du contenu éditorial
 (notes / admission / profil / spécialités : 85 ; coût, charge, dossier : 47 ; type : 41 ; intitulé, matières : 18).
+Le 29/10 : #79 (doc), #80 (I2a : type et option ECG lus dans Parcoursup, sans les doubles licences), #81 + #83
+(attendus nationaux de l'État appliqués tel quel), #82 (L, mémoire de comparer-versions.js). `main` = 031cb99 : 481/481.
+I2 abandonnée : #84 (100 % Parcoursup) + R (profil ajusté par les statistiques, branche
+`claude/magical-thompson-7gac3h-r`, sans PR) ne rétablissent pas la qualité (cohérence spécialités 56,2 % → 54,2 % ;
+INSA Toulouse, MPSI Jean-Perrin, INSA CVL toujours hors de la liste de sciences-ingenieur). #84 fermée.
+Ouvertes le 29/10 : #86 (règle 2 reformulée dans CLAUDE.md), #87 (détection des fiches maison suspectes :
+809 fiches ; signaux type 4, spécialités 487, moyenne 116 ; rapport `docs/fiches-suspectes.md`).
 
 ## 4. Décisions d'Aaron à respecter (en plus du journal du 22/10)
 - Phrase tarifs (PR A, mot pour mot) : « Ces frais viennent de la fiche Parcoursup de la formation
@@ -65,6 +72,8 @@ Le 28/10 (soir) : #76 (H), #77 (I1), #78 (K). Diagnostic de I2 : aucun écart de
 - E (#69) : sans intérêt santé, licence simple avant la LAS de la même discipline ; LAS jamais supprimée.
 - F (#58), mot pour mot : « Dans ta zone de mobilité, seules N formations correspondent à ton
   profil. Pour avoir 10 vœux, élargis ta zone. »
+- I2 (29/10) : on garde les 811 fiches fusionnées ; règle 2 = « chiffres officiels uniquement ; profil, métiers,
+  charge = estimations Mon Plan Sup affichées comme telles ». Attendus de l'État appliqués tel quel.
 - #47 (SKEMA, IÉSEG non liés à Parcoursup) : sautée. #5 #6 : bloquées (CSV du ministère).
 
 ## 5. Feuille de route (dans l'ordre)
@@ -79,10 +88,12 @@ Le 28/10 (soir) : #76 (H), #77 (I1), #78 (K). Diagnostic de I2 : aucun écart de
 | G | Textes obsolètes « % de chances » | #54 | app, index.html | **fusionnée (#73)** |
 | H | Retrait des ~813 fiches maison sans lien Parcoursup | — (§ 7.2) | data, app | **fusionnée (#76)** ; 6 listes / 114 changées |
 | I1 | Préparation : `fusion.json` → `anciennes-fiches.json`, `filieres.json` figé | — | data, app, scripts | **fusionnée (#77)** ; 0 différence |
-| I2 | Retrait des 811 fiches fusionnées (+ 15 modèles ECG) | — | data, app | **décision d'Aaron attendue** : 88 listes / 114 changent ; branche `claude/magical-thompson-7gac3h-i2` |
+| I2 | Retrait des 811 fiches fusionnées (+ 15 modèles ECG) | — | data, app | **abandonnée** (#84 fermée, R sans effet suffisant) ; remplacée par #86 + #87 |
 | J | Lieux et données diverses | #15 #24 #29 #31 #32 #33 #39 | data | à faire |
 | K | Séparation calcul / affichage (`js/catalogue.js`) | — | app | **fusionnée (#78)** ; 0 différence ; rangement du moteur non fait |
-| L | Réparer le manque de mémoire de `scripts/comparer-versions.js` (plante dès qu'il y a beaucoup de différences) | — | scripts | à faire |
+| L | Réparer le manque de mémoire de `scripts/comparer-versions.js` (plante dès qu'il y a beaucoup de différences) | — | scripts | **fusionnée (#82)** |
+| M | Corriger les fiches suspectes de `docs/fiches-suspectes.md` (type, moyenne d'abord) | — | data | après #87 |
+| — | En attente d'accord : doubles licences (177), ECT / MP2I dans filieres.json, « langue anglaise » → LLCER, liste trop peu ambitieuse (eco-excellent-decide), URL des 2 PDF d'attendus, attendus CPGE récents | — | — | à décider |
 | — | Statistiques manquantes | #5 #6 | data | **bloquée** : CSV fr-esr-parcoursup à fournir par Aaron |
 
 À trier selon les testeurs : #19, #20, #23, #27, #35, #37, #44, #52, #55.
