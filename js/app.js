@@ -13,6 +13,9 @@
 /* Mon Plan Sup — application (routeur + vues), version 2. */
 (function () {
   "use strict";
+
+  // Section « Qui sommes-nous » de l'accueil (photos : pictogramme). Mettre false pour la masquer.
+  const AFFICHER_QUI_SOMMES_NOUS = true;
   const E = window.CapEngine, S = window.CapStore, B = window.CapBulletin, C = window.CapCatalogue;
   const { statDe, sansAccents, etabCourt, montantFrais, suffixeRevenus, texteApprentissage, MENTION_STATS, AVIS_RETRAIT } = C;
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -91,11 +94,11 @@
   };
   // Navigation principale : cinq rubriques. Le questionnaire est une étape du profil ; les résultats sont dans Ma liste ;
   // les métiers et débouchés sont présentés dans chaque fiche formation. Mes données reste accessible depuis le pied de page.
-  const NAV = [["accueil", "Accueil"], ["liste", "Ma liste"], ["plan", "Mon plan"], ["explorer", "Catalogue"], ["profil", "Profil"]];
+  const NAV = [["accueil", "Accueil"], ["profil", "Mon profil"], ["liste", "Ma liste de vœux"], ["plan", "Mon plan"], ["explorer", "Catalogue"]];
   function rendreNav() {
     const cur = app.vue.startsWith("formation") ? "liste" : app.vue;
     document.body.classList.remove("menu-ouvert"); const mb = $("#menu-btn"); if (mb) mb.setAttribute("aria-expanded", "false");
-    $("#nav").innerHTML = NAV.map(([id, l]) => `<a href="#${id}" ${cur === id ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONES[id]}</svg><span>${l}</span></a>`).join("");
+    $("#nav").innerHTML = NAV.map(([id, l]) => `<a href="#${id}" class="${(id === "liste" || id === "plan") && !profilPret() ? "verrou" : ""}" ${cur === id ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONES[id]}</svg><span>${l}</span>${(id === "liste" || id === "plan") && !profilPret() ? `<svg class="cadenas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="verrouillé">${ICONES.cadenas}</svg>` : ""}</a>`).join("");
   }
   function remplaceHash(h) { try { history.replaceState(null, "", h); } catch (e) { /* bac à sable */ } }
   function route() {
@@ -112,6 +115,7 @@
   function rendre() {
     rendreNav();
     const m = $("#main"), v = app.vue;
+    document.body.classList.toggle("route-accueil", !(["profil","explorer","liste","plan","donnees"].includes(v) || v.startsWith("formation-")));
     if (!DATA && besoinFormations(v)) {
       // le message déjà affiché (celui de index.html) est complété plutôt que remplacé : son délai d'une seconde continue
       const c = m.querySelector(".chargement");
@@ -127,12 +131,12 @@
       m.innerHTML = e && e.src === "parcoursup" && !e.f ? vueFichePs(e) : vueFiche(id);
     }
     else if (v === "explorer") m.innerHTML = vueExplorer();
-    else if (v === "liste") m.innerHTML = vueListe();
-    else if (v === "plan") m.innerHTML = vuePlan();
+    else if (v === "liste") m.innerHTML = profilPret() ? vueListe() : vueVerrou("liste");
+    else if (v === "plan") m.innerHTML = profilPret() ? vuePlan() : vueVerrou("plan");
     else if (v === "donnees") m.innerHTML = vueDonnees();
     else {
       m.innerHTML = vueAccueil();
-      if (!DATA) chargerFormations().then(() => { const b = $(".bande-chiffres"); if (b) b.outerHTML = bandeChiffres(); const ex = $(".hv-exemple-anneau"); if (ex) ex.outerHTML = anneauExempleAccueil(); }, () => {});   // chiffres et exemple de l'accueil
+      if (!DATA) chargerFormations().then(() => { const n = $("#nb-formations"); if (n) n.textContent = nbRond(); }, () => {});   // le nombre de formations attend le chargement
     }
     if (!LIEUX && $("#lyceeq")) chargerLycees().then(() => { if (app.lyceeQ && $("#lyceeq")) rendreRechercheLycee(); }, () => {});
     if (app.avisRetrait && DATA) { app.avisRetrait = false; m.innerHTML = `<p class="notice info" role="status">${AVIS_RETRAIT}</p>` + m.innerHTML; }   // fiche retirée de la liste de l'élève
@@ -270,19 +274,6 @@
   const ico = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ""}</svg>`;
   const CAT_TON = { ambitieux: "corail", realiste: "ambre", securite: "menthe" };
   // anneau du taux d'accès officiel de la formation (pas une probabilité personnelle), couleur de la catégorie
-  // Exemple de l'accueil : CPGE ECG maths approfondies + HGG du Lycée du Parc (Lyon), gta Parcoursup 31314. Son taux d'accès
-  // est lu dans les données chargées (data/stats.json, via construireCatalogue puis E.repere), jamais écrit dans le code :
-  // il suit la mise à jour des statistiques. Seul le taux officiel de stats.json est montré : si la formation n'y est plus,
-  // la fiche fusionnée retombe sur un chiffre de média (Thotis, 14 % pour deux vœux additionnés), qui n'est pas affiché ici.
-  // Formation absente, taux non publié ou données pas encore chargées : pas d'anneau (aucun chiffre de repli).
-  // L'ancien appel anneau({ bas, haut, mid }) affichait « NaN % » et « undefined % ».
-  const GTA_EXEMPLE_ACCUEIL = "31314";
-  function anneauExempleAccueil() {
-    const f = DATA && DATA.formations.find((x) => x.id === "psup-" + GTA_EXEMPLE_ACCUEIL);
-    const officiel = DATA ? statDe(GTA_EXEMPLE_ACCUEIL, "taux_acces_ens") : null;
-    const r = f && Number.isFinite(officiel) ? E.repere(f, { moyenneGenerale: null }) : null;
-    return `<span class="hv-exemple-anneau">${r && r.taux === officiel ? anneau(r, "realiste", 68) : ""}</span>`;
-  }
   function anneau(r, cat, taille = 84) {
     const ton = CAT_TON[cat] || "bleu", fond = '<circle class="anneau-fond" cx="32" cy="32" r="27"/>';
     // taux absent ou non numérique : anneau vide « ? », jamais « NaN » ni « undefined % »
@@ -320,61 +311,194 @@
   const miniStat = (val, lib, ton) => `<div class="mini-stat ton-${ton || "bleu"}"><b>${val}</b><span>${lib}</span></div>`;
 
   /* ================================================================ ACCUEIL */
-  // Chiffres de l'accueil : « … » tant que les formations ne sont pas chargées.
-  function bandeChiffres() {
-    const n = (f) => (DATA ? f().toLocaleString("fr-FR") : "…");
-    return `<section class="bande-chiffres" aria-label="Mon Plan Sup en chiffres">
-        <div><b>${n(() => CAT.length)}</b><span>formations dans le catalogue</span></div>
-        <div><b>${n(() => CAT.filter((e) => e.ps).length)}</b><span>avec leur fiche officielle Parcoursup</span></div>
-        <div><b>${n(() => DATA.formations.length)}</b><span>fiches détaillées pour les recommandations</span></div>
-        <div><b>10</b><span>vœux équilibrés proposés</span></div>
-      </section>`;
-  }
+  // Nombre rond de formations (« plus de 11 000 »), calculé depuis le catalogue, jamais écrit en dur.
+  const nbRond = () => (Math.floor(CAT.length / 1000) * 1000).toLocaleString("fr-FR").replace(/\u202f/g, " ");
   function vueAccueil() {
-    const pp = progressionProfil(), nr = nbReponses(), demarre = pp || nr;
-    return `<div class="accueil">
-      <section class="hero">
-        <div class="hero-txt">
-          <span class="hero-badge">${ico("boussole")}Orientation post-bac, de la seconde à la terminale</span>
-          <h1>Trouve en quelques clics les formations <span class="souligne">faites pour toi</span></h1>
-          <p class="hero-sous">Parle-nous de ton parcours et de tes envies. Mon Plan Sup te propose les formations qui te correspondent, avec des repères sur l'admission et les étapes à suivre.</p>
-          <div class="row hero-actions">
-            <a class="btn primary lg" href="#profil">${demarre ? "Reprendre mon profil" : "Commencer"}${ico("fleche")}</a>
-            ${demarre ? `<a class="btn lg" href="#liste">Voir ma liste</a>` : `<a class="btn lg" href="#explorer">Explorer le catalogue</a>`}
-          </div>
-          <ul class="hero-confiance"><li>${ico("check")}Gratuit</li><li>${ico("check")}Données gardées sur ton appareil</li><li>${ico("check")}Chiffres officiels Parcoursup</li></ul>
-        </div>
-        <div class="hero-visuel" aria-hidden="true">
-          <div class="hv-forme hv-forme-1"></div><div class="hv-forme hv-forme-2"></div><div class="hv-forme hv-forme-3"></div>
-          <div class="hv-carte hv-formation">
-            <span class="hv-titre">Exemple de recommandation</span>
-            <div class="row" style="gap:6px"><span class="pill ton-ambre">Réaliste</span><span class="pill ton-violet">Prépa ECG</span></div>
-            <div class="hv-ligne"><div><b>CPGE ECG, maths approfondies</b><span>${ico("pin")}Lyon</span></div>${anneauExempleAccueil()}</div>
-            <div class="hv-crit"><span>Notes ${niveauBarre("fort")}</span><span>Spécialités ${niveauBarre("conforme")}</span><span>Appréciations ${niveauBarre("conforme")}</span></div>
-          </div>
-          <div class="hv-carte hv-plan">
-            <span class="hv-titre">${ico("agenda")}Ton plan</span>
-            <ol><li class="fait">Profil complété</li><li class="cours">Choisir 10 vœux</li><li>Projets motivés</li></ol>
-          </div>
-          <div class="hv-pastille">${ico("etoile")}3 ambitieux · 4 réalistes · 3 sûrs</div>
-        </div>
-      </section>
-      <section class="bloc-etapes" aria-labelledby="etapes-titre">
-        <div class="titre-section"><span class="eyebrow">En trois étapes</span><h2 id="etapes-titre">Comment ça marche</h2></div>
-        <ol class="etapes-accueil">
-          <li class="ton-bleu"><span class="etape-ico">${ico("personne")}</span><span class="etape-num">1</span><h3>Ton profil</h3><p>Tes notes (tu peux importer tes bulletins PDF), tes spécialités, puis un questionnaire sur tes envies.</p></li>
-          <li class="ton-violet"><span class="etape-ico">${ico("etoile")}</span><span class="etape-num">2</span><h3>Ta liste</h3><p>Tes 10 formations les plus adaptées, avec pour chacune le taux d'accès et ta position parmi les admis.</p></li>
-          <li class="ton-ambre"><span class="etape-ico">${ico("agenda")}</span><span class="etape-num">3</span><h3>Ton plan</h3><p>Les étapes et les dates à ne pas manquer, mois par mois, jusqu'aux résultats.</p></li>
-        </ol>
-      </section>
-      ${bandeChiffres()}
-      <section class="cta-bande">
-        <div><h2>Prêt à construire ta liste ?</h2><p>Tu peux t'arrêter et reprendre quand tu veux : tout est enregistré sur ton appareil.</p></div>
-        <a class="btn blanc lg" href="#profil">${demarre ? "Reprendre" : "Créer mon profil"}${ico("fleche")}</a>
-      </section>
-    </div>`;
-  }
+    return `<div class="mps-home"><section style="background: var(--marque-pale)">
+<div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 88px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="flex: 1 1 480px; min-width: 0">
+<div style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 16px; margin: 0 0 24px; background: var(--marque); color: var(--sur-marque); border-radius: 999px; font-size: 14px; font-weight: 700">100 % gratuit</div>
+<h1 style="margin: 0 0 24px; font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 700">Vise la formation de tes rêves, avec un plan sur mesure.</h1>
+<p style="margin: 0 0 32px; font-size: 20px; line-height: 1.5; color: var(--gris-texte)">Ton profil, 10 vœux Parcoursup 2027 classés par niveau de chances, et un plan d'activités à faire en plus des cours pour augmenter tes chances d'y entrer.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 0 0 32px">
+<a href="#profil" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 32px; background: var(--encre); color: var(--blanc); border-radius: 999px; font-weight: 700; font-size: 16px">Créer mon profil</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 10px; background: var(--marque); color: #FFFFFF; border-radius: 999px; font-size: 14px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Ta liste en 5 min</span></div>
+<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 8px; background: var(--blanc); border-radius: 999px; font-size: 14px; font-weight: 700">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: var(--marque); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+<span>100 % gratuit</span>
+</div>
+<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 8px; background: var(--blanc); border-radius: 999px; font-size: 14px; font-weight: 700">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: var(--marque); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+<span>Rien à installer</span>
+</div>
+<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 8px; background: var(--blanc); border-radius: 999px; font-size: 14px; font-weight: 700">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: var(--marque); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+<span>Sans traceurs</span>
+</div>
+</div>
+</div>
 
+<div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 12px; color: var(--gris-texte)">Exemple de liste, pas une vraie recommandation</p>
+
+<div style="margin-right: 80px; border: 2px solid var(--contour-ambitieux); border-radius: 16px; padding: 20px; background: var(--blanc)">
+<div style="font-weight: 700; font-size: 20px; line-height: 1.3">Classe prépa ECG</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Lycée exemple · Ville exemple</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14px; font-weight: 700">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+<span>Ambitieux</span>
+</div>
+</div>
+
+<div style="margin-left: 40px; margin-right: 40px; border: 2px solid var(--contour-realiste); border-radius: 16px; padding: 20px; background: var(--blanc)">
+<div style="font-weight: 700; font-size: 20px; line-height: 1.3">Licence d'économie</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Université exemple · Ville exemple</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14px; font-weight: 700">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+<span>Réaliste</span>
+</div>
+</div>
+
+<div style="margin-left: 80px; border: 2px solid var(--contour-surete); border-radius: 16px; padding: 20px; background: var(--blanc)">
+<div style="font-weight: 700; font-size: 20px; line-height: 1.3">BUT Gestion</div>
+<div style="font-size: 14px; color: var(--gris-texte)">IUT exemple · Ville exemple</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14px; font-weight: 700">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+<span>Sécurité</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="border-bottom: 1px solid var(--gris-trait)">
+<p style="max-width: 1120px; margin: 0 auto; padding: 32px; box-sizing: border-box; text-align: center; font-size: 20px; line-height: 1.5; color: var(--encre)">Mon Plan Sup choisit <strong>10 formations pour toi</strong> parmi plus de <strong id="nb-formations">${nbRond()}</strong> formations, en France et à l'étranger.</p>
+</section>
+
+<section style="background: var(--creme); border-top: 1px solid var(--gris-trait); border-bottom: 1px solid var(--gris-trait)">
+<div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px; box-sizing: border-box">
+<h2 style="margin: 0 0 48px; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700">Comment ça marche</h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px 56px; padding: 32px 0; border-top: 1px solid var(--gris-trait)">
+<div style="flex: 1 1 320px; min-width: 0">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700">1</div>
+<h3 style="margin: 16px 0 8px; font-size: 28px; line-height: 1.2; font-weight: 700">Débute ton orientation dès maintenant</h3>
+<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Dis-nous ta classe et tes options. Ça prend un seul écran.</p>
+</div>
+<div style="flex: 1 1 440px; min-width: 0; background: var(--blanc); border: 1px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 14px; font-weight: 700">Terminale</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px; background: var(--encre); display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+<span>Maths expertes</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
+<span>Maths complémentaires</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
+<span>Droit et grands enjeux du monde contemporain</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
+<span>DNL</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px 56px; padding: 32px 0; border-top: 1px solid var(--gris-trait)">
+<div style="flex: 1 1 320px; min-width: 0">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700">2</div>
+<h3 style="margin: 16px 0 8px; font-size: 20px; line-height: 1.3; font-weight: 700">Obtiens ta liste de vœux</h3>
+<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">10 formations classées en trois niveaux, adaptées à ton profil.</p>
+</div>
+<div style="flex: 1 1 440px; min-width: 0; display: flex; flex-wrap: wrap; gap: 12px; align-content: center">
+<div style="display: flex; align-items: center; gap: 8px; background: var(--pale-ambitieux); border: 2px solid var(--contour-ambitieux); border-radius: 999px; padding: 12px 20px; font-size: 16px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+<span>Ambitieux</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; background: var(--pale-realiste); border: 2px solid var(--contour-realiste); border-radius: 999px; padding: 12px 20px; font-size: 16px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+<span>Réaliste</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; background: var(--pale-surete); border: 2px solid var(--contour-surete); border-radius: 999px; padding: 12px 20px; font-size: 16px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+<span>Sécurité</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px 56px; padding: 32px 0 0; border-top: 1px solid var(--gris-trait)">
+<div style="flex: 1 1 320px; min-width: 0">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700">3</div>
+<h3 style="margin: 16px 0 8px; font-size: 20px; line-height: 1.3; font-weight: 700">Obtiens ton plan sur mesure</h3>
+<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Des activités et des choses à faire en plus des cours, pour montrer ta motivation et augmenter tes chances.</p>
+</div>
+<div style="flex: 1 1 440px; min-width: 0; background: var(--blanc); border: 1px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 14px; font-weight: 700">À faire en plus des cours <span style="font-weight: 400; color: var(--gris-texte)">· exemples</span></div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px"><span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span><span>Aller à une journée portes ouvertes</span></div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px"><span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span><span>Faire un stage d’observation ou une immersion</span></div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px"><span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span><span>Passer une certification de langue</span></div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px"><span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span><span>Préparer le test ou le concours d’entrée</span></div>
+<div style="font-size: 12px; color: var(--gris-texte)">Les activités proposées dépendent de tes vœux.</div>
+</div>
+</div>
+</div>
+</section>
+
+${AFFICHER_QUI_SOMMES_NOUS ? `<section style="max-width: 1120px; margin: 0 auto; padding: 88px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 1 1 480px; min-width: 0">
+<h2 style="margin: 0 0 24px; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700">Qui sommes-nous ?</h2>
+<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box">
+<p style="margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Mon Plan Sup est né d’une inquiétude que nous partageons, Jules Ramin et Aaron Borens, deux lycéens en terminale. Au moment de préparer notre orientation, nous nous sommes rendu compte d’une chose : nous ne savions pas quelles formations nous étaient réellement accessibles avec notre niveau.</p>
+<p style="margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Nous avions peur de passer à côté de la bonne formation simplement parce que nous ne la connaissions pas, ou de viser à côté. Cette inquiétude, nous savons que beaucoup d’élèves de première et de terminale la ressentent aussi.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Alors nous avons décidé de construire l’outil que nous aurions voulu avoir. Mon Plan Sup réunit des formations en France et à l’étranger, avec des conditions d’admission sourcées, pour t’aider à repérer celles qui correspondent à ton niveau et à tes envies. Il ne remplace ni Parcoursup ni les conseils de tes professeurs, et il ne garantit aucune admission : il t’aide à y voir clair.</p>
+</div>
+</div>
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding-top: 4px">
+<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; box-sizing: border-box">
+<div style="width: 88px; height: 88px; flex: none; border-radius: 12px; background: var(--creme); display: flex; align-items: center; justify-content: center">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+</div>
+<div style="min-width: 0">
+<div style="font-size: 16px; font-weight: 700">Jules Ramin</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Cofondateur de Mon Plan Sup</div>
+</div>
+</div>
+<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; box-sizing: border-box">
+<div style="width: 88px; height: 88px; flex: none; border-radius: 12px; background: var(--creme); display: flex; align-items: center; justify-content: center">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+</div>
+<div style="min-width: 0">
+<div style="font-size: 16px; font-weight: 700">Aaron Borens</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
+<div style="font-size: 14px; color: var(--gris-texte)">Cofondateur de Mon Plan Sup</div>
+</div>
+</div>
+</div>
+</section>` : ""}
+
+<section style="background: var(--encre); color: var(--blanc)">
+<div style="max-width: 1120px; margin: 0 auto; padding: 88px 32px; box-sizing: border-box; text-align: center">
+<h2 style="margin: 0 0 16px; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; color: var(--blanc)">Ta liste de vœux commence par ton profil.</h2>
+<p style="margin: 0 0 32px; font-size: 20px; line-height: 1.5; color: #DDDDDD">100 % gratuit, directement dans ton navigateur.</p>
+<a href="#profil" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 32px; background: var(--marque); color: var(--sur-marque); border-radius: 999px; font-weight: 700; font-size: 16px">Débute ton orientation dès maintenant</a>
+</div>
+</section>
+
+<section style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 64px; box-sizing: border-box">
+<h2 style="margin: 0 0 24px; font-size: 28px; line-height: 1.2; font-weight: 700">Questions fréquentes</h2>
+<div class="mps-faq-grille">
+<details class="mps-q"><summary>Mon Plan Sup est-il vraiment gratuit ?</summary><p>Oui, 100 % gratuit : pas d'abonnement, pas d'application à installer. Tu peux tout utiliser depuis ton navigateur.</p></details><details class="mps-q"><summary>Comment est construite ma liste de vœux ?</summary><p>Tu remplis ton profil. Le site le compare aux formations du catalogue et te propose 10 vœux classés en trois niveaux : ambitieux, réaliste et sécurité.</p></details><details class="mps-q"><summary>Que veulent dire ambitieux, réaliste et sécurité ?</summary><p>Ambitieux : tu es en dessous des admis habituels. Réaliste : tu es proche. Sécurité : l'accès est large ou tu es au-dessus. C'est une aide, pas une prédiction.</p></details><details class="mps-q"><summary>D'où viennent les informations sur les formations ?</summary><p>Des fiches Parcoursup des formations, relevées en octobre 2026. Quand un chiffre officiel manque, le site l'indique au lieu d'en inventer un.</p></details><details class="mps-q"><summary>Le site remplace-t-il Parcoursup ?</summary><p>Non. Tu fais toujours tes vœux et ton dossier sur Parcoursup. Mon Plan Sup t'aide à choisir tes vœux et à ne rien oublier.</p></details><details class="mps-q"><summary>Le site garantit-il mon admission ?</summary><p>Non, aucun outil ne peut le faire : chaque formation décide. Mon Plan Sup t'aide à mieux choisir, il ne promet aucune admission.</p></details><details class="mps-q"><summary>À quoi sert le plan ?</summary><p>Il liste les étapes à suivre jusqu'à la rentrée, avec les dates de Parcoursup, et ce qu'il te reste à faire pour chacun de tes vœux.</p></details><details class="mps-q"><summary>Mes données sont-elles conservées ?</summary><p>Ton profil reste dans ton navigateur, sur ton appareil. Aucune donnée personnelle n'est envoyée sur un serveur. Tu peux tout effacer à tout moment.</p></details><details class="mps-q"><summary>Les formations à l'étranger sont-elles incluses ?</summary><p>Oui, le catalogue en inclut. Leur candidature se fait souvent hors Parcoursup : vérifie la procédure sur le site de l'établissement.</p></details><details class="mps-q"><summary>Je suis en première, le site est-il pour moi ?</summary><p>Oui, tu peux construire ton profil dès maintenant. Les dates du plan sont alors celles de la campagne 2026-2027 décalées d'un an, à confirmer.</p></details>
+</div>
+</section>
+
+</div>`;
+  }
+  
   /* ================================================================ PROFIL */
   const ETAPES = ["Scolarité", "Bulletins", "Épreuves de première", "Certifications", "Expériences", "Questionnaire"];
   const ETAPE_Q = ETAPES.length - 1;   // le questionnaire est la dernière étape du profil
@@ -443,6 +567,30 @@
   const avisSansMoyenne = (s, p) => s.periodesSansMoyenne.map((l) => `<p class="notice small">${esc(E.MESSAGE_SANS_MOYENNE(perCourt(l)))}</p>`)
     .concat(E.notesImpossibles(p).map((x) => `<p class="notice bad small">${esc(E.MESSAGE_NOTE_IMPOSSIBLE(perCourt(x.periode), x.valeur, x.matiere ? NOMS_MAT()[x.matiere] || x.matiere : null))}</p>`)).join("");
   const horsBornes = (v) => isNaN(v) || v < E.NOTE_MIN || v > E.NOTE_MAX;
+  const profilPret = () => etat.profil.specialites.length > 0;
+  // « Ma liste de vœux » et « Mon plan » se débloquent dès que le profil est commencé (au moins une spécialité)
+  function vueVerrou(page) {
+    const lib = page === "plan" ? "Mon plan" : "Ma liste de vœux";
+    return `<div class="stack-lg">
+      ${pageHero({ sur: lib, titre: lib, sous: "Cette page se débloque dès que ton profil est commencé.", ton: "bleu", ico: "cadenas" })}
+      <section class="verrou-carte" aria-label="Commence par ton profil">
+        <svg class="verrou-schema" viewBox="0 0 520 120" role="img" aria-label="Trois étapes : 1 Mon profil, 2 Ma liste de vœux, 3 Mon plan. Les étapes 2 et 3 sont verrouillées.">
+          <path d="M96 40H234M286 40H424" stroke="#CCCCCC" stroke-width="2" stroke-dasharray="6 6" fill="none"/>
+          <circle cx="70" cy="40" r="26" fill="#1F6B45"/><text x="70" y="48" text-anchor="middle" font-size="22" font-weight="700" fill="#FFFFFF" font-family="system-ui, sans-serif">1</text>
+          <circle cx="260" cy="40" r="26" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+          <g transform="translate(248 28)" fill="none" stroke="#555555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></g>
+          <circle cx="450" cy="40" r="26" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"/>
+          <g transform="translate(438 28)" fill="none" stroke="#555555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></g>
+          <text x="70" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#111111" font-family="system-ui, sans-serif">Mon profil</text>
+          <text x="260" y="100" text-anchor="middle" font-size="15" fill="#555555" font-family="system-ui, sans-serif">Ma liste de vœux</text>
+          <text x="450" y="100" text-anchor="middle" font-size="15" fill="#555555" font-family="system-ui, sans-serif">Mon plan</text>
+        </svg>
+        <h2>Commence par ton profil</h2>
+        <p>Ta liste de vœux et ton plan se construisent à partir de tes réponses : ta classe, tes spécialités et tes options.</p>
+        <a class="btn primary lg" href="#profil">Faire mon profil</a>
+      </section>
+    </div>`;
+  }
   const profilComplet = () => etat.profil.specialites.length > 0 && etat.profil.periodes.length > 0;
   function vueResumeProfil() {
     const p = etat.profil, s = E.statsProfil(p), noms = NOMS_MAT();
@@ -520,22 +668,28 @@
     if (e === 0) {
       const nbSpe = p.niveau === "terminale" ? 2 : 3;
       corps = `<div class="stack">
-        <div class="fields">
-          <div class="field"><label for="prenom">Prénom ou pseudo <span class="hint">(facultatif, reste sur ton appareil)</span></label><input id="prenom" type="text" data-bind="prenom" value="${esc(p.prenom)}" autocomplete="off"></div>
-          <div class="field"><label for="niveau">Classe actuelle</label><select id="niveau" data-bind="niveau"><option value="seconde" ${p.niveau === "seconde" ? "selected" : ""}>Seconde</option><option value="premiere" ${p.niveau === "premiere" ? "selected" : ""}>Première</option><option value="terminale" ${p.niveau === "terminale" ? "selected" : ""}>Terminale</option></select></div>
-        </div>
+        <div class="fields"><div class="field"><label for="prenom">Prénom ou pseudo <span class="hint">(facultatif, reste sur ton appareil)</span></label><input id="prenom" type="text" data-bind="prenom" value="${esc(p.prenom)}" autocomplete="off"></div></div>
+        <fieldset class="bloc-classe"><legend>Ta classe actuelle</legend>
+          <div class="chips" role="radiogroup" aria-label="Classe actuelle">${[["seconde", "Seconde"], ["premiere", "Première"], ["terminale", "Terminale"]].map(([v, l]) => `<label class="chip"><input type="radio" name="niveau" data-bind="niveau" value="${v}" ${p.niveau === v ? "checked" : ""}><span>${l}</span></label>`).join("")}</div>
+        </fieldset>
         <fieldset class="stack" style="border:0;padding:0;margin:0;gap:10px"><legend><label>${p.niveau === "seconde" ? "Spécialités envisagées en première" : "Spécialités suivies cette année"} <span class="hint">(${nbSpe} en ${p.niveau === "terminale" ? "terminale" : "première"})</span></label></legend>
           <div class="chips">${E.SPECIALITES.map(([v, l]) => `<label class="chip"><input type="checkbox" data-spe="${v}" ${p.specialites.includes(v) ? "checked" : ""}><span>${esc(l)}</span></label>`).join("")}</div>
           ${p.specialites.length > nbSpe ? `<p class="notice small">Tu as coché ${p.specialites.length} spécialités : normalement ${nbSpe}.</p>` : ""}
         </fieldset>
         <div class="fields">
           ${p.niveau === "terminale" ? `<div class="field"><label for="abandon">Spécialité abandonnée en fin de première</label><select id="abandon" data-bind="specialiteAbandonnee"><option value="">—</option>${E.SPECIALITES.map(([v, l]) => `<option value="${v}" ${p.specialiteAbandonnee === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select></div>` : ""}
-          <div class="field"><label for="optmaths">${p.niveau !== "terminale" ? "Option maths envisagée en terminale" : "Option de mathématiques"}</label><select id="optmaths" data-bind="optionMaths">
-            <option value="aucune" ${p.optionMaths === "aucune" ? "selected" : ""}>Aucune</option><option value="expertes" ${p.optionMaths === "expertes" ? "selected" : ""}>Maths expertes</option><option value="complementaires" ${p.optionMaths === "complementaires" ? "selected" : ""}>Maths complémentaires</option></select></div>
-          <div class="field"><label for="autresopt">Autres options <span class="hint">(section euro, LCA, DNL…)</span></label><input id="autresopt" type="text" data-bind="autresOptions" value="${esc(p.autresOptions)}"></div>
           ${champLycee(p)}
           <div class="field"><label for="anglaisauto">Ton niveau d'anglais estimé</label><select id="anglaisauto" data-bind="anglaisAuto"><option value="">Je ne sais pas</option>${E.CECRL.map((c) => `<option ${p.anglaisAuto === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
-        </div></div>`;
+        </div>
+        <fieldset class="bloc-options"><legend>Tes options</legend>
+          <div class="opts">
+            <label class="opt-ligne"><input type="checkbox" data-maths="expertes" ${p.optionMaths === "expertes" ? "checked" : ""}><span>Maths expertes</span></label>
+            <label class="opt-ligne"><input type="checkbox" data-maths="complementaires" ${p.optionMaths === "complementaires" ? "checked" : ""}><span>Maths complémentaires</span></label>
+            <label class="opt-ligne"><input type="checkbox" data-opt="dgemc" ${p.dgemc ? "checked" : ""}><span>Droit et grands enjeux du monde contemporain</span></label>
+            <label class="opt-ligne"><input type="checkbox" data-opt="dnl" ${p.dnl ? "checked" : ""}><span>DNL (discipline non linguistique)</span></label>
+          </div>
+        </fieldset>
+      </div>`;
     } else if (e === 1) {
       const dispo = PERIODES.filter((l) => !p.periodes.some((x) => x.label === l) && (p.niveau === "terminale" || l.startsWith("Seconde") || (p.niveau === "premiere" && l.startsWith("Première"))));
       corps = `<div class="stack">
@@ -599,7 +753,7 @@
       ? `<button class="btn primary" data-action="etape" data-i="${e + 1}">${e === ETAPE_Q - 1 ? "Passer au questionnaire" : "Suivant"}</button>`
       : profilComplet() ? `<button class="btn primary" data-action="profil-resume">Terminer</button>` : `<a class="btn primary" href="#liste">Voir ma liste</a>`;
     return `<div class="stack-lg profil-edition">
-      ${pageHero({ sur: "Profil", titre: "Ton profil", sous: `Étape ${e + 1} sur ${ETAPES.length} : ${estQ ? "tes envies" : ETAPES[e].toLowerCase()}. Tout est enregistré automatiquement sur ton appareil.`, ton: "bleu", ico: "personne", actions: etat.profilTermine === true ? `<button class="btn blanc sm" data-action="profil-resume">Voir le résumé</button>` : "" })}
+      ${pageHero({ sur: "Mon profil", titre: "Mon profil", sous: `Étape ${e + 1} sur ${ETAPES.length} : ${estQ ? "tes envies" : ETAPES[e].toLowerCase()}. Tout est enregistré automatiquement sur ton appareil.`, ton: "bleu", ico: "personne", actions: etat.profilTermine === true ? `<button class="btn blanc sm" data-action="profil-resume">Voir le résumé</button>` : "" })}
       ${stepper}
       <div class="card stack"><h2>${estQ ? "Tes envies" : ETAPES[e]}</h2>${corps}</div>
       <div class="row pied-etapes">
@@ -1006,8 +1160,8 @@
     const nbReco = A.resultats.filter((x) => !x.exclu).length;
     const o = app.ongletListe === "voeux" ? "voeux" : "reco";
     return `<div class="stack-lg">
-      ${pageHero({ sur: "Ma liste", titre: etat.profil.prenom ? `Ta sélection, ${esc(etat.profil.prenom)}` : "Ma liste", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
-        cote: `<div class="mini-stats">${miniStat(nbFr(nbReco), "formations analysées", "bleu")}${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
+      ${pageHero({ sur: "Ma liste de vœux", titre: "Ma liste de vœux", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
+        cote: `<div class="mini-stats">${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
       ${msgLycee && sansSecurite ? msgLycee : ""}${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
       ${msgLycee && !sansSecurite ? msgLycee : ""}
@@ -1085,10 +1239,24 @@
         + (f.cout.apprentissage ? `<p class="small">${esc(texteApprentissage(f.cout.apprentissage))}</p>` : "") + phraseFraisHtml(f) + alerteFraisHtml(x), "ambre"]] : []),
     ];
     const typeCourt = f.type_label || "Formation";
+    const cut = (t, n) => { t = String(t || "").replace(/\s+/g, " ").trim(); return t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, "") + "…" : t; };
+    const nomsP = (f.poursuites || []).map((i2) => (POURS.find((q) => q.id === i2) || {}).nom).filter(Boolean).slice(0, 3);
+    const nomsM = (f.metiers || []).map((i2) => (METIERS.find((q) => q.id === i2) || {}).nom).filter(Boolean).slice(0, 3);
+    const troisBlocs = `<section class="trois-blocs" aria-label="L'essentiel de la fiche">
+      <div class="bloc3"><span class="bloc3-n">1</span><h2>Prérequis</h2><ul>
+        <li><b>Spécialités</b>${esc(cut(f.specialites && f.specialites.texte, 110)) || "Non précisé"}</li>
+        <li><b>Niveau scolaire</b>${f.notes && f.notes.moyenne_cible != null ? `Repère : ${E.fmt(f.notes.moyenne_cible)}/20` : esc(cut(f.notes && f.notes.texte, 90)) || "Non précisé"}</li>
+        <li><b>Langues et tests</b>${esc(cut(f.langue_requise && f.langue_requise.texte, 70))}${f.tests && f.tests.length ? ` · ${f.tests.map((t) => esc(t.nom)).slice(0, 2).join(", ")}` : ""}</li></ul></div>
+      <div class="bloc3"><span class="bloc3-n">2</span><h2>Où j'en suis</h2><ul>
+        ${C.slice(0, 4).map(([l, c]) => `<li class="ligne-niv"><span>${l}</span><span class="lvl lvl-${c.niveau}">${niveauBarre(c.niveau)}${E.NIVEAUX[c.niveau].label}</span></li>`).join("")}</ul></div>
+      <div class="bloc3"><span class="bloc3-n">3</span><h2>Poursuite d'études et débouchés</h2><ul>
+        <li><b>Après la formation</b>${nomsP.length ? nomsP.map(esc).join(" · ") : "Non renseigné"}</li>
+        <li><b>Métiers</b>${nomsM.length ? nomsM.map(esc).join(" · ") : "Non renseigné"}</li></ul></div>
+    </section>`;
     const nbP = (f.poursuites || []).length + (f.integrations || []).length;
     return `<div class="stack-lg fiche">
       <header class="fiche-hero ton-${tonType(f.type, f.type_label)}">
-        <a href="#liste" class="lien-retour">${ico("retour")}Ma liste</a>
+        <a href="#liste" class="lien-retour">${ico("retour")}Ma liste de vœux</a>
         <div class="fiche-hero-grille">
           <div class="fiche-hero-txt">
             <div class="row badges">${x.repere.nouvelle || x.repere.sansStats ? "" : catPill(x.categorie)}${typePill(f.type, f.type_label)}${f.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : ""}${x.bloque ? '<span class="pill bad">Point bloquant</span>' : ""}${CATBY[f.id] && CATBY[f.id].av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
@@ -1104,6 +1272,7 @@
       ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelle formation à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
       ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
       ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${E.CAT_LABEL[r.categorie].toLowerCase()} · ${repereTxt(r.repere)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
+      ${troisBlocs}
       <nav class="sommaire" aria-label="Sur cette fiche"><button data-action="ancre" data-cible="sec-formation"><span>1</span>Formation</button><button data-action="ancre" data-cible="sec-poursuites"><span>2</span>Poursuite d'études</button><button data-action="ancre" data-cible="sec-metiers"><span>3</span>Métiers et débouchés</button></nav>
 
       <section class="partie stack" id="sec-formation" aria-labelledby="t-formation">
@@ -1172,8 +1341,7 @@
     const libCat = (k) => String(k).replace(/^psup:/, "");
     const nbEtr = CAT.filter((e) => e.pays !== "France").length;
     return `<div class="stack-lg">
-      ${pageHero({ sur: "Catalogue", titre: "Catalogue des formations", sous: `${nbFr(CAT.length)} formations en France et à l'étranger, avec les fiches officielles Parcoursup 2026. Les BTS et BUT ne sont pas proposés.`, ton: "violet",
-        cote: `<div class="mini-stats">${miniStat(nbFr(CAT.filter((e) => e.ps).length), "fiches Parcoursup", "violet")}${miniStat(nbFr(nbEtr), "à l'étranger", "ciel")}</div>` })}
+      ${pageHero({ sur: "Catalogue", titre: "Catalogue des formations", sous: `<strong>${nbFr(CAT.filter((e) => e.ps).length)} formations</strong> dont <strong>${nbFr(nbEtr)} à l'étranger</strong>. Les BTS et BUT ne sont pas proposés.`, ton: "violet", ico: "loupe" })}
       <div class="filtres-cat card">
         <div class="recherche"><label for="cq" class="sr-only">Rechercher une formation</label>${ico("loupe")}<input id="cq" type="text" data-cfiltre="q" value="${esc(c.q)}" placeholder="Formation, établissement, ville…"></div>
         <div class="filters">
@@ -1527,7 +1695,7 @@
 
   document.addEventListener("input", (ev) => {
     const t = ev.target, p = etat.profil;
-    if (t.dataset.bind) { setChemin(p, t.dataset.bind, t.value); sauver(); if (t.tagName === "SELECT") rendre(); return; }
+    if (t.dataset.bind) { setChemin(p, t.dataset.bind, t.value); sauver(); if (t.tagName === "SELECT" || t.type === "radio") rendre(); return; }
     if (t.dataset.per !== undefined) {
       const per = p.periodes[+t.dataset.per];
       if (t.dataset.mat) { per.notes = per.notes || {}; per.notes[t.dataset.mat] = per.notes[t.dataset.mat] || {}; per.notes[t.dataset.mat][t.dataset.k] = t.value; }
@@ -1556,6 +1724,8 @@
 
   document.addEventListener("change", async (ev) => {
     const t = ev.target, p = etat.profil;
+    if (t.dataset.maths) { p.optionMaths = t.checked ? t.dataset.maths : "aucune"; sauver(); rendre(); return; }
+    if (t.dataset.opt) { p[t.dataset.opt] = t.checked; sauver(); return; }
     if (t.dataset.spe) { p.specialitesAuto = false; const v = t.dataset.spe; p.specialites = t.checked ? [...new Set(p.specialites.concat(v))] : p.specialites.filter((x) => x !== v); sauver(); rendre(); return; }
     if (t.dataset.q) {
       const q = QUEST.questions.find((x) => x.id === t.dataset.q);

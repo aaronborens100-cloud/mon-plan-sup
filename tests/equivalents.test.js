@@ -326,7 +326,9 @@ test("même intitulé Parcoursup et même type de formation (décision du fondat
 });
 
 test("texte d'aide des équivalents : académie et distance seulement si le lycée est connu", async () => {
-  const avec = PROFILS.find((x) => x.id === "ecg-expertes-faible"), sans = PROFILS.find((x) => x.id === "vide");
+  const avec = PROFILS.find((x) => x.id === "ecg-expertes-faible"), sans0 = PROFILS.find((x) => x.id === "vide");
+  // une spécialité cochée : sinon Ma liste est verrouillée (profilPret)
+  const sans = Object.assign({}, sans0, { profil: Object.assign({}, sans0.profil, { specialites: ["maths"] }) });
   const page = async (p) => { const s = await chargerSite({}, { etat: etatDe(p) }); s.afficher("#liste"); return s.cliquer({ action: "onglet-liste", o: "voeux" }); };
   const h1 = await page(avec), h2 = await page(sans);
   assert.ok(h1.includes("Celles de ton académie et les plus proches de chez toi d'abord."));

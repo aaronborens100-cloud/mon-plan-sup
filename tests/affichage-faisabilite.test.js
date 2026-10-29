@@ -39,6 +39,7 @@ function verifierPropre(page, html, id) {
 // Le site de base (sans état) est chargé une seule fois ; chaque test charge ensuite son propre site, libéré à la fin.
 let base;
 test.before(async () => { base = await chargerSite(); });
+const profilDebute = (p) => Object.assign({}, p, { profil: Object.assign({}, p.profil, { specialites: ["maths"] }) });
 async function sitePour(p) {
   const A = base.E.recommander(base.DATA.formations, p.profil, base.QUEST, p.reponses);
   const W = base.E.wishlist(A.resultats, 10, A.interets);
@@ -86,8 +87,10 @@ for (const p of PROFILS) {
     }
   });
 
+  // « Ma liste » et « Mon plan » affichent la page verrouillée tant qu'aucune spécialité n'est cochée (profilPret) :
+  // le profil « vide » est donc rendu avec une seule spécialité, le minimum pour débloquer ces pages.
   test(`profil « ${p.id} » : ni NaN, ni undefined, ni null dans les pages`, async () => {
-    const { site, W, X } = await sitePour(p);
+    const { site, W, X } = await sitePour(p.id === "vide" ? profilDebute(p) : p);
     verifierPropre("accueil", site.afficher("#accueil"), p.id);
     verifierPropre("profil", site.afficher("#profil"), p.id);
     site.afficher("#liste");
@@ -112,33 +115,37 @@ test("une formation au taux d'accès officiel garde sa note et sa faisabilité s
   assert.doesNotMatch(fiche, /pas de chiffres officiels/);
 });
 
-// Exemple de l'accueil (CPGE ECG du Lycée du Parc, gta 31314) : taux lu dans data/stats.json, jamais écrit dans le code
-const STATS = require("../data/stats.json");
-const GTA_EXEMPLE = "31314";
-const exempleAccueil = (html) => (html.match(/<span class="hv-exemple-anneau">([^]*?)<\/span><\/div>\s*<div class="hv-crit">/) || [])[1];
-const statsAvec = (modif) => { const rows = Object.assign({}, STATS.rows); modif(rows); return { "data/stats.json": Object.assign({}, STATS, { rows }) }; };
-const iTaux = STATS.meta.cols.indexOf("taux_acces_ens");
+// Accueil (design v9) : texte statique, seul le nombre de formations vient des données (calculé depuis le catalogue)
+const nbAccueil = (html) => (html.match(/<strong id="nb-formations">([^<]*)<\/strong>/) || [])[1];
+const nbCatalogue = (html) => Number(((html.match(/<strong>([^<]*) formations<\/strong> dont/) || [])[1] || "").replace(/\D/g, ""));
 
-test("accueil : l'exemple affiche le taux d'accès de gta 31314 lu dans data/stats.json, pas « NaN »", async () => {
-  const taux = STATS.rows[GTA_EXEMPLE][iTaux];
-  assert.ok(Number.isFinite(taux), "gta 31314 sans taux dans data/stats.json : choisir un autre exemple");
+test("accueil : « plus de N formations » est calculé depuis le catalogue, arrondi au millier, pas « NaN » ni « 0 »", async () => {
   const site = await chargerSite();
-  const ex = exempleAccueil(site.afficher("#accueil"));
-  assert.ok(ex !== undefined, "exemple de l'accueil introuvable");
-  assert.ok(ex.includes(`<b>${Math.round(taux)} %</b>`), `taux attendu ${Math.round(taux)} % : ${ex}`);
-  assert.doesNotMatch(ex, /NaN|undefined|null/);
-});
-
-test("accueil : l'exemple suit les données (taux modifié en mémoire)", async () => {
-  const site = await chargerSite(statsAvec((rows) => { const r = rows[GTA_EXEMPLE].slice(); r[iTaux] = 73; rows[GTA_EXEMPLE] = r; }));
-  const ex = exempleAccueil(site.afficher("#accueil"));
-  assert.ok(ex && ex.includes("<b>73 %</b>"), ex);
-});
-
-test("accueil : sans gta 31314 dans les stats, l'exemple n'affiche aucun chiffre", async () => {
-  const site = await chargerSite(statsAvec((rows) => { delete rows[GTA_EXEMPLE]; }));
   const html = site.afficher("#accueil");
-  const ex = exempleAccueil(html);
-  assert.equal(ex, "", `aucun anneau attendu : ${ex}`);
-  assert.doesNotMatch(html, /NaN|undefined/);
+  const n = nbAccueil(html);
+  assert.ok(n !== undefined, "nombre de formations de l'accueil introuvable");
+  const chiffre = Number(n.replace(/\D/g, ""));
+  const catalogue = nbCatalogue(site.afficher("#explorer"));   // compteur du catalogue (Parcoursup)
+  assert.ok(chiffre >= 1000 && chiffre % 1000 === 0, `arrondi au millier attendu : ${n}`);
+  assert.ok(catalogue > 0 && chiffre <= catalogue + 1000, `nombre de l'accueil (${chiffre}) incohérent avec le catalogue (${catalogue})`);
+  assert.doesNotMatch(html, /NaN|undefined|null/);
+});
+
+test("accueil : contenu statique présent (menu, FAQ, qui sommes-nous), sans ancien exemple de recommandation", async () => {
+  const site = await chargerSite();
+  const html = site.afficher("#accueil");
+  assert.match(html, /Qui sommes-nous \?/);
+  assert.match(html, /Questions fréquentes/);
+  assert.doesNotMatch(html, /hv-exemple-anneau|bande-chiffres/);
+});
+
+test("lien direct #formation-… sans profil : ni NaN, ni undefined, ni null (fiches Parcoursup, anciennes fiches, étranger)", async () => {
+  const ids = ["psup-7917", ...base.DATA.formations.filter((f) => f.pays && f.pays !== "France").slice(0, 3).map((f) => f.id),
+    ...base.DATA.formations.filter((f) => !f.pays || f.pays === "France").slice(0, 3).map((f) => f.id)];
+  const site = await chargerSite();   // état vierge : aucun profil
+  for (const id of ids) {
+    const fiche = site.afficher("#formation-" + id);
+    verifierPropre(`fiche ${id} sans profil`, fiche, "sans profil");
+    assert.match(fiche, /Prérequis/, `fiche ${id} : bloc Prérequis absent`);
+  }
 });
