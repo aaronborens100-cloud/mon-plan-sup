@@ -270,6 +270,56 @@
     nouvelle_2026: "Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission.",
     sans_stats: "Statistiques d'admission non publiées.",
   };
+  // Type du site (clés de d.meta.types) d'une formation Parcoursup, lu dans la cartographie Parcoursup 2026 :
+  // r.tf = catégorie(s) de formation, r.fl = filière détaillée, r.nm = intitulé de la formation. Aucune fiche maison
+  // n'intervient (règle 2). Les règles sont essayées dans l'ordre, la première qui s'applique l'emporte : l'ordre
+  // compte quand une formation a plusieurs catégories (exemple : « Etudes de santé » + « Licence » est une licence).
+  // Sans règle : null, et fichGeneree garde le type de la filière (data/filieres.json) en le notant (__gen.typeSansRegle).
+  const TYPES_PS = [
+    // CPGE : le type se lit dans l'intitulé (ECG et ECT : prepa_ecg ; ENS D1 et D2 : pas de règle)
+    ["CPGE", /\bEC[GT]\b/, "prepa_ecg"],
+    ["CPGE", /\b(MPSI|PCSI|PTSI|MP2I|BCPST|TSI|TB|TPC|ATS)\b/, "prepa_scientifique"],
+    ["CPGE", /B\/L/, "prepa_bl"],
+    ["CPGE", /Lettres|Chartes|St Cyr|Saint-Cyr|arts et design/, "prepa_litteraire"],
+    ["CPGE", /./, null],
+    ["Formations des écoles d'ingénieurs", /./, "ecole_ingenieur"],
+    ["Formations des écoles de commerce et de management", /Bac ?\+ ?3\b/, "bachelor_france"],
+    ["Formations des écoles de commerce et de management", /./, "ecole_commerce"],
+    ["Diplômes d'université ou d'établissement", /./, "diplome_etablissement"],
+    ["DEUST", /./, "deust"],
+    ["DCG", /./, "dcg"],
+    ["Sciences Po - Instituts d'études politiques", /Grade Licence/, "college_universitaire"],
+    ["Sciences Po - Instituts d'études politiques", /./, "iep"],
+    // doubles licences : reclassement reporté, décision d'Aaron du 29/10/2026 (type de filieres.json gardé)
+    ["Licence", /^Double licence/i, null],
+    ["Licence sélective", /^Double licence/i, null],
+    ["Licence", /./, "licence"],
+    ["Licence sélective", /Formation valant grade de licence/, null],
+    ["Licence sélective", /./, "licence"],
+    ["Licence professionnelle", /./, "licence"],
+    ["C.M.I - Cursus Master en Ingénierie", /./, "licence"],
+    ["Formations aux métiers du sport", /./, "jeunesse_sport"],
+    ["Formations d'architecture, du paysage et du patrimoine", /./, "architecture"],
+    ["Formations d'art, de design et du spectacle vivant", /DN MADE/, "dn_made"],
+    ["Formations d'art, de design et du spectacle vivant", /./, "ecole_art"],
+    ["Etudes de santé", /./, "sante_social"],
+    ["Formations diplômantes du travail social", /./, "sante_social"],
+    ["Formations des écoles vétérinaires", /./, "ecole_veterinaire"],
+    ["Formations préparatoires à l'enseignement supérieur", /./, "annee_preparatoire"],
+    ["Formations aux métiers de l'hôtellerie restauration", /./, "ecole_specialisee"],
+    ["Certificats de spécialisation et FCIL", /./, "certificat_specialisation"],
+    ["Formations professionnelles", /./, "formation_pro"],
+  ];
+  function typeParcoursup(r) {
+    const texte = (r.nm || []).concat(r.fl || []).join(" ");
+    for (const [cat, motif, type] of TYPES_PS) if ((r.tf || []).includes(cat) && motif.test(texte)) return type;
+    return null;
+  }
+  // Option d'une prépa ECG, lue dans l'intitulé Parcoursup (« Mathématiques approfondies » ou « appliquées »)
+  function optionEcg(r) {
+    const t = (r.nm || []).join(" ");
+    return /approfondies/i.test(t) ? "appro" : /appliqu/i.test(t) ? "appli" : null;
+  }
   // Fiche d'une formation Parcoursup : attributs éditoriaux de sa filière (data/filieres.json, code nmc),
   // chiffres officiels de la formation (stats.json, session 2025) ou, à défaut, relevé manuel sourcé
   // (stats-manuelles.json). Sans chiffres, la fiche est quand même créée (taux et mentions à null), avec le statut
@@ -281,6 +331,8 @@
     if (!fam) return null;
     const va = fam.variantes && (r.fl || []).find((x) => fam.variantes[x]);   // code nmc partagé : intitulé de la formation
     if (va) fam = fam.variantes[va];
+    const typePs = typeParcoursup(r), type = typePs || fam.type;   // type lu dans Parcoursup ; sinon celui de la filière
+    const opt = type === "prepa_ecg" ? optionEcg(r) : null;
     const st = STATUTS_ST[g] || null;
     // statistiques d'une session antérieure : seules celles de 2024 (statut « avec_stats » du script) comptent
     const anc = !STATS[g] && !MANUELLES[g] && st && st.stats === "avec_stats" && st.anciennes && typeof st.anciennes.taux === "number" ? st.anciennes : null;
@@ -301,7 +353,7 @@
     const pub = r.tc === "Publics" && fam.cout_public;
     const chiffres = [places != null ? `${places} places` : null, voeux != null ? `${voeux} vœux reçus` : null, admis != null ? `${admis} admis` : null].filter(Boolean).join(" · ");
     return {
-      id: "psup-" + g, type: fam.type, type_label: fam.type_label || fil.meta.types_label[fam.type] || fam.type, nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
+      id: "psup-" + g, type, type_label: (type === fam.type && fam.type_label) || fil.meta.types_label[type] || type, ...(opt ? { option: opt } : {}), nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
       ville: r.commune || r.departement || "Non renseigné", pays: "France", duree_ans: fam.duree_ans, langue: fam.langue, charge: fam.charge,
       dossier_poids: fam.dossier_poids, profil: fam.profil, plateforme: hors ? "propre" : "parcoursup",
       tests: epreuves ? [{ nom: "Épreuves de sélection", obligatoire: true, texte: "Des épreuves de sélection sont mises en place pour candidater (fiche Parcoursup).", source: r.fiche, consulte_le: cons, statut: "officiel" }] : [],
@@ -326,7 +378,7 @@
       statut_etab: TC_ETAB[r.tc] || null, selectivite: taux != null ? { niveau: NIV_TAUX(taux) } : { niveau: "moyenne", estimee: true },   // niveau par défaut pour le calcul, non affiché
       notes: { moyenne_cible: moy, maths_cible: null, texte: moy != null ? `Moyenne au bac estimée des admis 2025 : ${String(moy).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions (Parcoursup 2025).` : "Pas de repère chiffré.", statut: "estimation", source: src, consulte_le: cons },
       metiers: fam.metiers, poursuites: fam.poursuites,
-      __gen: { gta: g, fam },
+      __gen: { gta: g, fam, typeSansRegle: !typePs },
     };
   }
   function fichDepuisModele(o, g) {

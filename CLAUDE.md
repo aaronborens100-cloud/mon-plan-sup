@@ -39,6 +39,9 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
   par code `nmc`), table **figée** (estimation par filière, tirée des anciennes fiches Mon Plan Sup) :
   `scripts/construire-filieres.py` refuse de tourner. `data/generees.json` n'est plus
   chargé par le site mais reste la source des 87 familles reprises dans la table.
+- Pour les fiches générées (`psup-*`), le type de formation et l'option ECG (appro / appli) sont lus dans Parcoursup
+  (table `TYPES_PS` de `js/catalogue.js`, catégorie + intitulé) ; sans règle, le type de `data/filieres.json` est gardé
+  (`__gen.typeSansRegle`).
 - La solution de secours de `js/bulletin.js` charge pdf.js 3.11.174 depuis cdnjs si `vendor/` est
   absent, alors que la version fournie est la 6.2.108.
 
