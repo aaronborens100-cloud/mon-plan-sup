@@ -385,26 +385,11 @@
 <div style="flex: 1 1 320px; min-width: 0">
 <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700">1</div>
 <h3 style="margin: 16px 0 8px; font-size: 28px; line-height: 1.2; font-weight: 700">Débute ton orientation dès maintenant</h3>
-<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Dis-nous ta classe et tes options. Ça prend un seul écran.</p>
+<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Dis-nous ta classe et tes spécialités. Ça prend un seul écran.</p>
 </div>
 <div style="flex: 1 1 440px; min-width: 0; background: var(--blanc); border: 1px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
-<div style="font-size: 14px; font-weight: 700">Terminale</div>
-<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
-<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px; background: var(--encre); display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
-<span>Maths expertes</span>
-</div>
-<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
-<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
-<span>Maths complémentaires</span>
-</div>
-<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
-<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
-<span>Droit et grands enjeux du monde contemporain</span>
-</div>
-<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
-<span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border: 2px solid var(--encre); border-radius: 6px"></span>
-<span>DNL</span>
-</div>
+<div style="font-size: 14px; font-weight: 700">Tes spécialités</div>
+<div class="mps-pastilles"><span class="mps-pastille on">Mathématiques</span><span class="mps-pastille">Physique-chimie</span><span class="mps-pastille">SVT</span><span class="mps-pastille on">SES</span><span class="mps-pastille">HGGSP</span><span class="mps-pastille">HLP</span><span class="mps-pastille">NSI</span><span class="mps-pastille">LLCER anglais</span></div>
 </div>
 </div>
 
@@ -448,34 +433,32 @@
 </div>
 </section>
 
-${AFFICHER_QUI_SOMMES_NOUS ? `<section style="max-width: 1120px; margin: 0 auto; padding: 88px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 48px">
-<div style="flex: 1 1 480px; min-width: 0">
-<h2 style="margin: 0 0 24px; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700">Qui sommes-nous ?</h2>
-<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box">
-<p style="margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Mon Plan Sup est né d’une inquiétude que nous partageons, Jules Ramin et Aaron Borens, deux lycéens en terminale. Au moment de préparer notre orientation, nous nous sommes rendu compte d’une chose : nous ne savions pas quelles formations nous étaient réellement accessibles avec notre niveau.</p>
-<p style="margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Nous avions peur de passer à côté de la bonne formation simplement parce que nous ne la connaissions pas, ou de viser à côté. Cette inquiétude, nous savons que beaucoup d’élèves de première et de terminale la ressentent aussi.</p>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--gris-texte)">Alors nous avons décidé de construire l’outil que nous aurions voulu avoir. Mon Plan Sup réunit des formations en France et à l’étranger, avec des conditions d’admission sourcées, pour t’aider à repérer celles qui correspondent à ton niveau et à tes envies. Il ne remplace ni Parcoursup ni les conseils de tes professeurs, et il ne garantit aucune admission : il t’aide à y voir clair.</p>
+${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
+<div class="qsn-in">
+<h2 class="qsn-titre">Qui sommes-nous ?</h2>
+<div class="qsn-grille">
+<div class="qsn-texte">
+<p>Mon Plan Sup est né d’une inquiétude que nous partageons, Jules Ramin et Aaron Borens, deux lycéens en terminale. Au moment de préparer notre orientation, nous nous sommes rendu compte d’une chose : nous ne savions pas quelles formations nous étaient réellement accessibles avec notre niveau.</p>
+<p>Nous avions peur de passer à côté de la bonne formation simplement parce que nous ne la connaissions pas, ou de viser à côté. Cette inquiétude, nous savons que beaucoup d’élèves de première et de terminale la ressentent aussi.</p>
+<p>Alors nous avons décidé de construire l’outil que nous aurions voulu avoir. Mon Plan Sup réunit des formations en France et à l’étranger, avec des conditions d’admission sourcées, pour t’aider à repérer celles qui correspondent à ton niveau et à tes envies. Il ne remplace ni Parcoursup ni les conseils de tes professeurs, et il ne garantit aucune admission : il t’aide à y voir clair.</p>
 </div>
-</div>
-<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding-top: 4px">
-<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; box-sizing: border-box">
-<div style="width: 88px; height: 88px; flex: none; border-radius: 12px; background: var(--creme); display: flex; align-items: center; justify-content: center">
-<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-</div>
+<div class="qsn-col">
+<div class="qsn-carte qsn-jules">
+<div class="qsn-avatar"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
 <div style="min-width: 0">
-<div style="font-size: 16px; font-weight: 700">Jules Ramin</div>
+<div style="font-size: 18px; font-weight: 700">Jules Ramin</div>
 <div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
-<div style="font-size: 14px; color: var(--gris-texte)">Cofondateur de Mon Plan Sup</div>
+<div class="qsn-role">Cofondateur de Mon Plan Sup</div>
 </div>
 </div>
-<div style="border: 2px solid var(--gris-trait); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; box-sizing: border-box">
-<div style="width: 88px; height: 88px; flex: none; border-radius: 12px; background: var(--creme); display: flex; align-items: center; justify-content: center">
-<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-</div>
+<div class="qsn-carte qsn-aaron">
+<div class="qsn-avatar"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
 <div style="min-width: 0">
-<div style="font-size: 16px; font-weight: 700">Aaron Borens</div>
+<div style="font-size: 18px; font-weight: 700">Aaron Borens</div>
 <div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
-<div style="font-size: 14px; color: var(--gris-texte)">Cofondateur de Mon Plan Sup</div>
+<div class="qsn-role">Cofondateur de Mon Plan Sup</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -545,8 +528,9 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section style="max-width: 1120px; margin: 0 auto;
       res = LIEUX.lycees.filter((x) => ok(x.cle)).slice(0, 8).map((x) => ({ k: "l", x }))
         .concat(LIEUX.communes.filter((x) => ok(x.cle)).slice(0, 4).map((x) => ({ k: "c", x })));
     }
-    return `<div class="field" style="flex-basis:100%"><label for="lyceeq">Ton lycée <span class="hint">(nom ou ville ; sert à calculer les distances, reste sur ton appareil)</span></label>
+    return `<div class="field"><label for="lyceeq">Ton lycée</label>
       <input id="lyceeq" type="text" data-lycee-q value="${esc(app.lyceeQ || "")}" placeholder="Ex. : Lycée Carnot Dijon, ou ta ville" autocomplete="off">
+      <span class="hint">Nom ou ville ; sert à calculer les distances, reste sur ton appareil.</span>
       ${res.length ? `<div class="stack" style="gap:4px;margin-top:6px">${res.map((r) => `<button type="button" class="btn sm" style="justify-content:flex-start;text-align:left" data-action="lycee-choisir" data-k="${r.k}" data-id="${esc(r.k === "l" ? r.x.uai : r.x.cle)}">${r.k === "l" ? `${esc(r.x.nom)} <span class="muted">· ${esc(r.x.commune)}</span>` : `Ville : ${esc(r.x.commune)} <span class="muted">(${esc(r.x.dep)})</span>`}</button>`).join("")}</div>` : q.length >= 2 ? `<p class="small muted">Aucun résultat. Lycée introuvable : tape plutôt ta ville ou la ville la plus proche.</p>` : ""}
     </div>`;
   }
@@ -676,17 +660,17 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section style="max-width: 1120px; margin: 0 auto;
           <div class="chips">${E.SPECIALITES.map(([v, l]) => `<label class="chip"><input type="checkbox" data-spe="${v}" ${p.specialites.includes(v) ? "checked" : ""}><span>${esc(l)}</span></label>`).join("")}</div>
           ${p.specialites.length > nbSpe ? `<p class="notice small">Tu as coché ${p.specialites.length} spécialités : normalement ${nbSpe}.</p>` : ""}
         </fieldset>
-        <div class="fields">
+        <div class="fields fields-scol">
           ${p.niveau === "terminale" ? `<div class="field"><label for="abandon">Spécialité abandonnée en fin de première</label><select id="abandon" data-bind="specialiteAbandonnee"><option value="">—</option>${E.SPECIALITES.map(([v, l]) => `<option value="${v}" ${p.specialiteAbandonnee === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select></div>` : ""}
           ${champLycee(p)}
           <div class="field"><label for="anglaisauto">Ton niveau d'anglais estimé</label><select id="anglaisauto" data-bind="anglaisAuto"><option value="">Je ne sais pas</option>${E.CECRL.map((c) => `<option ${p.anglaisAuto === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
         </div>
-        <fieldset class="bloc-options"><legend>Tes options</legend>
-          <div class="opts">
-            <label class="opt-ligne"><input type="checkbox" data-maths="expertes" ${p.optionMaths === "expertes" ? "checked" : ""}><span>Maths expertes</span></label>
-            <label class="opt-ligne"><input type="checkbox" data-maths="complementaires" ${p.optionMaths === "complementaires" ? "checked" : ""}><span>Maths complémentaires</span></label>
-            <label class="opt-ligne"><input type="checkbox" data-opt="dgemc" ${p.dgemc ? "checked" : ""}><span>Droit et grands enjeux du monde contemporain</span></label>
-            <label class="opt-ligne"><input type="checkbox" data-opt="dnl" ${p.dnl ? "checked" : ""}><span>DNL (discipline non linguistique)</span></label>
+        <fieldset class="stack" style="border:0;padding:0;margin:0;gap:10px"><legend><label>Tes options <span class="hint">(coche celles que tu suis)</span></label></legend>
+          <div class="chips chips-petits">
+            <label class="chip"><input type="checkbox" data-maths="expertes" ${p.optionMaths === "expertes" ? "checked" : ""}><span>Maths expertes</span></label>
+            <label class="chip"><input type="checkbox" data-maths="complementaires" ${p.optionMaths === "complementaires" ? "checked" : ""}><span>Maths complémentaires</span></label>
+            <label class="chip"><input type="checkbox" data-opt="dgemc" ${p.dgemc ? "checked" : ""}><span>Droit et grands enjeux du monde contemporain (DGEMC)</span></label>
+            <label class="chip"><input type="checkbox" data-opt="dnl" ${p.dnl ? "checked" : ""}><span>DNL (discipline non linguistique)</span></label>
           </div>
         </fieldset>
       </div>`;
