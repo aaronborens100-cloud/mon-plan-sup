@@ -93,9 +93,15 @@ async function chargerSite(remplacements = {}, options = {}) {
     (ecouteurs.change || []).forEach((f) => f({ target: cible }));
     return html;
   };
+  // saisir({ cfiltre: "region" }, "etranger") : simule une saisie ou un choix dans une liste (événement input)
+  const saisir = (dataset, value, type = "select-one") => {
+    const cible = { dataset: { ...dataset }, value, type, tagName: "SELECT", closest: () => null };
+    (ecouteurs.input || []).forEach((f) => f({ target: cible }));
+    return html;
+  };
   // état enregistré dans le faux localStorage (clé « capsup.v1 »), relu tel quel, ou null
   const etatEnregistre = () => (stockage.has("capsup.v1") ? JSON.parse(stockage.get("capsup.v1")) : null);
-  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, CAT: fenetre.__CAT, QUEST: fenetre.__QUEST, afficher, cliquer, changer, etatEnregistre };
+  return { E: fenetre.CapEngine, B: fenetre.CapBulletin, DATA: fenetre.__DATA, CAT: fenetre.__CAT, QUEST: fenetre.__QUEST, afficher, cliquer, changer, saisir, etatEnregistre };
 }
 
 module.exports = { chargerSite };
