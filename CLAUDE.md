@@ -35,6 +35,8 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
   Leur retrait (PR I2) attend une décision d'Aaron : il change 88 listes de 10 vœux sur 114 profils.
 - `data/anciennes-fiches.json` (ex-`fusion.json`, renommé dans I1, #77) relie ces fiches à Parcoursup et définit
   le périmètre affiché (BTS et BUT masqués). Ne pas le supprimer sans une tâche dédiée.
+- `data/attendus-filieres.json` : attendus nationaux officiels (45 mentions de licence, PACES, 18 CPGE), recopiés mot
+  pour mot depuis `docs/releves/`. Table à valider par Aaron (`valide: false` partout), non lue par le moteur : aucun résultat ne change.
 - Les autres formations Parcoursup du périmètre sont notées grâce à `data/filieres.json` (une entrée
   par code `nmc`), table **figée** (estimation par filière, tirée des anciennes fiches Mon Plan Sup) :
   `scripts/construire-filieres.py` refuse de tourner. `data/generees.json` n'est plus
