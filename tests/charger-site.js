@@ -88,8 +88,8 @@ async function chargerSite(remplacements = {}, options = {}) {
     return html;
   };
   // changer({ q: "pays" }, { value: "aucun", checked: true }) : simule un clic sur une case à cocher (événement change)
-  const changer = (dataset, { value, checked, type = "checkbox" }) => {
-    const cible = { dataset: { ...dataset }, value, checked, type, closest: () => null };
+  const changer = (dataset, { value, checked, type = "checkbox", ...extra }) => {
+    const cible = { dataset: { ...dataset }, value, checked, type, closest: () => null, ...extra };
     (ecouteurs.change || []).forEach((f) => f({ target: cible }));
     return html;
   };

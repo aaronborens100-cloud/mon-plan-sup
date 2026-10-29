@@ -27,7 +27,7 @@
   // (le calcul est dans js/catalogue.js ; ces variables en reprennent l'état après chaque construction, voir synchroCatalogue)
   let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCONS = null, LIEUX = null, FRAIS_PRIVES_META = null, CAMPUS = {};
   function synchroCatalogue() { ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS } = C.etat()); }
-  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "", puce: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
+  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "", puce: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, importBloque: false, profilEdition: false };
   migrer();
 
   function migrer() {
@@ -660,6 +660,8 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     } else if (e === 1) {
       const dispo = PERIODES.filter((l) => !p.periodes.some((x) => x.label === l) && (p.niveau === "terminale" || l.startsWith("Seconde") || (p.niveau === "premiere" && l.startsWith("Première"))));
       corps = `<div class="stack">
+        ${app.importBloque && importsEnAttente().length ? `<p class="notice bad small import-bloque" role="alert"><strong>Ton bulletin n'est pas encore ajouté : choisis sa période puis clique sur « Ajouter à mon profil ».</strong></p>` : ""}
+        ${app.imports.map((imp, k) => carteImport(imp, k)).join("")}
         <div class="dropzone stack" style="gap:8px">
           <h3>Importer mes bulletins (PDF)</h3>
           <p class="small muted">Bulletins numériques Pronote, EcoleDirecte, etc. Mon Plan Sup lit les matières, les moyennes, les moyennes de classe, le rang, les appréciations et la mention du conseil. Le fichier est analysé dans ton navigateur : il n'est envoyé nulle part. Les bulletins scannés (photos) ne sont pas lisibles.</p>
@@ -679,7 +681,6 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
           </dl>
           <p class="tiny muted">Mon Plan Sup repère automatiquement ces colonnes grâce à leurs titres, même si elles sont dans un ordre différent, écrites sur plusieurs lignes ou fusionnées (bulletins Pronote). Vérifie toujours le résultat.</p>
         </details>
-        ${app.imports.map((imp, k) => carteImport(imp, k)).join("")}
         <h3>Périodes enregistrées</h3>
         ${p.periodes.length ? "" : `<p class="notice info small">Aucune période pour l'instant : importe un PDF ou ajoute une période à la main.</p>`}
         ${p.periodes.map((per, i) => cartePeriode(per, i)).join("")}
@@ -731,14 +732,46 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     </div>`;
   }
 
+  // Enregistre un bulletin importé dans le profil (période, spécialités déduites, options de maths).
+  // Utilisée à la lecture du PDF (période reconnue) et par le bouton « Ajouter à mon profil ».
+  function enregistrerImport(imp) {
+    const p = etat.profil;
+    const per = { id: imp.label, label: imp.label, moyenneGenerale: imp.moyenneGenerale, moyenneClasse: imp.moyenneClasse, rang: imp.rang, effectif: imp.effectif, notes: imp.notes, appreciationGenerale: imp.appreciationGenerale, mention: imp.mention, source: "pdf" };
+    const i = p.periodes.findIndex((x) => x.label === imp.label);
+    if (i >= 0) p.periodes[i] = per; else p.periodes.push(per);
+    p.periodes.sort((x, y) => PERIODES.indexOf(x.label) - PERIODES.indexOf(y.label));
+    if (!p.specialites.length || p.specialitesAuto) {
+      const specsDe = (pre) => [...new Set(p.periodes.filter((x) => x.label.startsWith(pre)).flatMap((x) => Object.keys(x.notes || {})).filter((k) => E.SPEC_COURT[k]))];
+      const sT = specsDe("Terminale"), sP = specsDe("Première");
+      if (sT.length) { p.niveau = "terminale"; p.specialites = sT.slice(0, 2); p.specialiteAbandonnee = sP.find((k) => !sT.includes(k)) || p.specialiteAbandonnee; }
+      else if (sP.length) p.specialites = sP.slice(0, 3);
+      p.specialitesAuto = true;
+      toast("Spécialités déduites du bulletin : vérifie-les dans l'étape Scolarité");
+    }
+    if (imp.notes.maths_expertes && p.optionMaths === "aucune") p.optionMaths = "expertes";
+    if (imp.notes.maths_complementaires && p.optionMaths === "aucune") p.optionMaths = "complementaires";
+    sauver(true);
+    return per;
+  }
+  // imports lus mais pas encore ajoutés au profil (période à choisir)
+  const importsEnAttente = () => app.imports.filter((x) => Object.keys(x.notes || {}).length);
+  // l'élève quitte l'étape Bulletins avec un import non validé : on bloque et on le dit dans la page
+  function importBloqueNavigation() {
+    if (!importsEnAttente().length) { app.importBloque = false; return false; }
+    app.importBloque = true; rendre(); window.scrollTo(0, 0); return true;
+  }
+
   function carteImport(imp, k) {
     const noms = NOMS_MAT(), lignes = Object.entries(imp.notes || {});
     return `<div class="card stack import" style="gap:10px">
       <div class="row" style="justify-content:space-between"><strong>${esc(imp.fichier)}</strong><span class="pill neutral">${lignes.length} matière(s) lue(s)</span></div>
       ${imp.colonnes ? `<p class="small"><strong>Colonnes reconnues :</strong> ${imp.colonnes.map((c) => `<span class="pill neutral">${esc(B.TYPES_COL[c] || c)}</span>`).join(" → ")}</p>` : ""}
       ${(imp.alertes || []).length ? `<ul class="why small alerte">${imp.alertes.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}
-      ${lignes.length ? `<div class="fields fields-sm">
+      ${lignes.length ? `<p class="small"><strong>Période non reconnue sur ce bulletin :</strong> choisis-la ci-dessous, puis ajoute le bulletin à ton profil.</p><div class="fields fields-sm">
         <div class="field"><label for="ip${k}">Période</label><select id="ip${k}" data-imp="${k}" data-k="label"><option value="">— choisir —</option>${PERIODES.map((l) => `<option ${imp.label === l ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+      </div>
+      <div class="row"><button class="btn primary sm" data-action="valider-import" data-k="${k}">Ajouter à mon profil</button><button class="btn sm ghost" data-action="ignorer-import" data-k="${k}">Ignorer</button></div>
+      <div class="fields fields-sm">
         <div class="field"><label for="ig${k}">Moyenne générale</label><input id="ig${k}" type="text" inputmode="decimal" data-imp="${k}" data-k="moyenneGenerale" value="${esc(imp.moyenneGenerale)}"></div>
         <div class="field"><label for="ic${k}">Moy. de classe</label><input id="ic${k}" type="text" inputmode="decimal" data-imp="${k}" data-k="moyenneClasse" value="${esc(imp.moyenneClasse)}"></div>
         <div class="field"><label for="ir${k}">Rang</label><input id="ir${k}" type="text" inputmode="numeric" data-imp="${k}" data-k="rang" value="${esc(imp.rang)}"></div>
@@ -750,7 +783,6 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
       ${imp.moyenneAnnuelle ? `<p class="small"><strong>Moyenne annuelle (colonne « An. ») :</strong> ${esc(imp.moyenneAnnuelle)}</p>` : ""}
       ${imp.appreciationGenerale ? `<p class="small"><strong>Appréciation générale :</strong> ${esc(imp.appreciationGenerale)}</p>` : ""}
       ${imp.mention ? `<p class="small"><strong>Mention du conseil :</strong> ${esc(imp.mention)}</p>` : ""}
-      <div class="row"><button class="btn primary sm" data-action="valider-import" data-k="${k}">Ajouter à mon profil</button><button class="btn sm ghost" data-action="ignorer-import" data-k="${k}">Ignorer</button></div>
       <p class="tiny muted">Vérifie les valeurs : la lecture automatique peut se tromper selon la mise en page du bulletin. Tu pourras tout corriger ensuite.</p>` : `<div><button class="btn sm ghost" data-action="ignorer-import" data-k="${k}">Fermer</button></div>`}
     </div>`;
   }
@@ -1129,7 +1161,7 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     return `<div class="stack-lg">
       ${pageHero({ sur: "Ma liste de vœux", titre: "Ma liste de vœux", sous: "Les formations recommandées pour toi et celles que tu gardes pour tes vœux.", ton: "bleu",
         cote: `<div class="mini-stats">${miniStat(nbVoeux, nbVoeux > 1 ? "vœux retenus" : "vœu retenu", "violet")}</div>` })}
-      ${msgLycee && sansSecurite ? msgLycee : ""}${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
+      ${A.stats.moyenneGenerale === null ? `<p class="notice bad alerte-notes" role="alert"><strong>Tes notes ne sont pas encore enregistrées : toutes tes formations sont classées « ambitieux ».</strong> <a href="#profil" data-action="profil-edition" data-i="1">Ajoute tes bulletins dans ton profil.</a></p>` : ""}${msgLycee && sansSecurite ? msgLycee : ""}${E.alerteBac(A.stats) ? `<p class="notice bad small alerte-bac"><strong>${esc(E.alerteBac(A.stats))}</strong></p>` : ""}
       ${manque.length ? `<p class="notice info small">Recommandations encore approximatives : complète ${manque.join(", ")}.</p>` : ""}
       ${msgLycee && !sansSecurite ? msgLycee : ""}
       <div class="segments" role="tablist" aria-label="Contenu de ma liste">
@@ -1760,10 +1792,21 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
       const fichiers = [...t.files];
       app.importEnCours = true; rendre();
       for (const file of fichiers) {
-        try { app.imports.push(await B.lireFichier(file)); }
-        catch (e) { app.imports.push({ fichier: file.name, notes: {}, alertes: ["Lecture impossible : " + (e && e.message ? e.message : "erreur inconnue") + ". Saisis les notes à la main."] }); }
+        let imp;
+        try { imp = await B.lireFichier(file); }
+        catch (e) { imp = { fichier: file.name, notes: {}, alertes: ["Lecture impossible : " + (e && e.message ? e.message : "erreur inconnue") + ". Saisis les notes à la main."] }; }
+        // période reconnue : le bulletin est enregistré tout de suite, l'élève vérifie ensuite dans « Périodes enregistrées »
+        if (imp.label && Object.keys(imp.notes || {}).length) {
+          const per = enregistrerImport(imp);
+          app.ouverte = etat.profil.periodes.findIndex((x) => x.label === per.label);
+          toast(`Bulletin ${per.label} ajouté à ton profil : vérifie les valeurs ci-dessous.`);
+        } else app.imports.push(imp);
       }
-      app.importEnCours = false; rendre(); return;
+      if (!importsEnAttente().length) app.importBloque = false;
+      app.importEnCours = false; rendre();
+      // import à valider : on amène son bloc (période + bouton « Ajouter à mon profil ») en haut de l'écran
+      const aValider = $(".import"); if (importsEnAttente().length && aValider && aValider.scrollIntoView) aValider.scrollIntoView({ block: "start" });
+      return;
     }
     if (t.id === "importfile" && t.files[0]) { const r = new FileReader(); r.onload = () => importer(r.result); r.readAsText(t.files[0]); }
     if (t.dataset.list && t.tagName === "SELECT") rendre();
@@ -1795,31 +1838,18 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
   document.addEventListener("click", (ev) => {
     const b = ev.target.closest("[data-action]"); if (!b) return;
     const a = b.dataset.action, p = etat.profil;
-    if (a === "etape") { app.etapeProfil = +b.dataset.i; rendre(); window.scrollTo(0, 0); }
+    if (a === "etape") { if (+b.dataset.i !== app.etapeProfil && importBloqueNavigation()) return; app.etapeProfil = +b.dataset.i; rendre(); window.scrollTo(0, 0); }
     else if (a === "profil-edition") { app.profilEdition = true; app.etapeProfil = +b.dataset.i || 0; rendre(); window.scrollTo(0, 0); }
-    else if (a === "profil-resume") { etat.profilTermine = true; sauver(true); app.profilEdition = false; rendre(); window.scrollTo(0, 0); }
+    else if (a === "profil-resume") { if (importBloqueNavigation()) return; etat.profilTermine = true; sauver(true); app.profilEdition = false; rendre(); window.scrollTo(0, 0); }
     else if (a === "ajout-periode") { const l = $("#nouvper").value; p.periodes.push({ id: l, label: l, moyenneGenerale: "", moyenneClasse: "", rang: "", effectif: "", notes: {}, appreciationGenerale: "", mention: "" }); p.periodes.sort((x, y) => PERIODES.indexOf(x.label) - PERIODES.indexOf(y.label)); app.ouverte = p.periodes.findIndex((x) => x.label === l); sauver(true); rendre(); }
     else if (a === "suppr-periode") { p.periodes.splice(+b.dataset.i, 1); sauver(true); rendre(); }
     else if (a === "valider-import") {
       const imp = app.imports[+b.dataset.k];
       if (!imp.label) { toast("Choisis d'abord la période du bulletin"); return; }
-      const per = { id: imp.label, label: imp.label, moyenneGenerale: imp.moyenneGenerale, moyenneClasse: imp.moyenneClasse, rang: imp.rang, effectif: imp.effectif, notes: imp.notes, appreciationGenerale: imp.appreciationGenerale, mention: imp.mention, source: "pdf" };
-      const i = p.periodes.findIndex((x) => x.label === imp.label);
-      if (i >= 0) p.periodes[i] = per; else p.periodes.push(per);
-      p.periodes.sort((x, y) => PERIODES.indexOf(x.label) - PERIODES.indexOf(y.label));
-      if (!p.specialites.length || p.specialitesAuto) {
-        const specsDe = (pre) => [...new Set(p.periodes.filter((x) => x.label.startsWith(pre)).flatMap((x) => Object.keys(x.notes || {})).filter((k) => E.SPEC_COURT[k]))];
-        const sT = specsDe("Terminale"), sP = specsDe("Première");
-        if (sT.length) { p.niveau = "terminale"; p.specialites = sT.slice(0, 2); p.specialiteAbandonnee = sP.find((k) => !sT.includes(k)) || p.specialiteAbandonnee; }
-        else if (sP.length) p.specialites = sP.slice(0, 3);
-        p.specialitesAuto = true;
-        toast("Spécialités déduites du bulletin : vérifie-les dans l'étape Scolarité");
-      }
-      if (imp.notes.maths_expertes && p.optionMaths === "aucune") p.optionMaths = "expertes";
-      if (imp.notes.maths_complementaires && p.optionMaths === "aucune") p.optionMaths = "complementaires";
-      app.imports.splice(+b.dataset.k, 1); sauver(true); toast(`${per.label} ajouté à ton profil`); rendre();
+      const per = enregistrerImport(imp);
+      app.imports.splice(+b.dataset.k, 1); app.importBloque = false; toast(`${per.label} ajouté à ton profil`); rendre();
     }
-    else if (a === "ignorer-import") { app.imports.splice(+b.dataset.k, 1); rendre(); }
+    else if (a === "ignorer-import") { app.imports.splice(+b.dataset.k, 1); if (!importsEnAttente().length) app.importBloque = false; rendre(); }
     else if (a === "ajout") { p[b.dataset.list].push(b.dataset.list === "certifications" ? { type: "Cambridge English", score: "", niveau: "", langue: "", date: "" } : { type: "association", titre: "", duree: "" }); sauver(true); rendre(); }
     else if (a === "suppr") { p[b.dataset.list].splice(+b.dataset.i, 1); sauver(true); rendre(); }
     else if (a === "q-aller") { etat.qIndex = Math.max(0, +b.dataset.i); finQuestionnaire(); sauver(true); rendre(); versQuestion(); }
