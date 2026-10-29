@@ -539,21 +539,6 @@
    "exclu": null
   },
   {
-   "id": "psup-13022",
-   "interet": 80.75,
-   "faisabilite": 100,
-   "pertinence": 88.44999999999999,
-   "repere": [
-    92,
-    0.8,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "uco-facultes-libres-de-l-ouest-angers-angers-licence-science-politique",
    "interet": 80.75,
    "faisabilite": 100,
@@ -565,36 +550,6 @@
     "realiste"
    ],
    "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-48169",
-   "interet": 80.75,
-   "faisabilite": 99.5,
-   "pertinence": 88.25,
-   "repere": [
-    100,
-    0.67,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-39204",
-   "interet": 80.75,
-   "faisabilite": 99.1,
-   "pertinence": 88.09,
-   "repere": [
-    84,
-    0.68,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -732,6 +687,51 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "lse-history-politics",
+   "interet": 86.51719576719577,
+   "faisabilite": 90,
+   "pertinence": 87.91031746031746,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "sans_taux"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "avignon-universite-avignon-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 97.5,
+   "pertinence": 87.44999999999999,
+   "repere": [
+    35,
+    0.4,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-de-haute-alsace-mulhouse-licence-science-politique",
+   "interet": 80.75,
+   "faisabilite": 97.5,
+   "pertinence": 87.44999999999999,
+   "repere": [
+    33,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -746,11 +746,11 @@
     ]
    },
    {
-    "id": "psup-18038",
+    "id": "psup-7645",
     "categorie": "securite",
-    "pertinence": 83.37857142857143,
+    "pertinence": 82.8626984126984,
     "repere": [
-     100,
+     92,
      "au_dessus"
     ]
    },
@@ -764,12 +764,12 @@
     ]
    },
    {
-    "id": "psup-14403",
+    "id": "psup-15968",
     "categorie": "ambitieux",
-    "pertinence": 79.9426984126984,
+    "pertinence": 82.7357142857143,
     "repere": [
-     31,
-     "en_dessous"
+     18,
+     "au_dessus"
     ]
    },
    {
@@ -800,11 +800,11 @@
     ]
    },
    {
-    "id": "psup-20896",
+    "id": "psup-35314",
     "categorie": "realiste",
     "pertinence": 82.7357142857143,
     "repere": [
-     49,
+     48,
      "au_dessus"
     ]
    },
@@ -818,11 +818,11 @@
     ]
    },
    {
-    "id": "psup-7645",
+    "id": "ps-6292",
     "categorie": "securite",
-    "pertinence": 82.8626984126984,
+    "pertinence": 79.87857142857143,
     "repere": [
-     92,
+     59,
      "au_dessus"
     ]
    }
@@ -1021,7 +1021,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "7a3fbf5cf533ed0d180cefbf120afb9dd287cb3ec29245014387200317a8df69",
-  "textes": "a9bfac5a9ee2c6677333c926da110c40c3428ea8ad3799e1df2c47ff389884ed"
+  "calculs": "95ddd5d7f0ed1558327eb6b0ff88e0993346f4dc1ea5a00bdd6df749cdf8a1ee",
+  "textes": "0dcffcc2431600bd85edf93334d5eec5a3e2e429482a1d5d6828fd195ab32d78"
  }
 }

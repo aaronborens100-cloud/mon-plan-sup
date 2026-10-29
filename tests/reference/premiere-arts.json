@@ -118,21 +118,6 @@
  },
  "top": [
   {
-   "id": "psup-10954",
-   "interet": 87.83333333333334,
-   "faisabilite": 80.75,
-   "pertinence": 85,
-   "repere": [
-    100,
-    0.7,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "u-paris-nanterre-arts-du-spectacle",
    "interet": 87.83333333333334,
    "faisabilite": 78.75,
@@ -163,89 +148,14 @@
    "exclu": null
   },
   {
-   "id": "psup-9450",
-   "interet": 86.05555555555556,
-   "faisabilite": 79.55,
-   "pertinence": 83.45333333333333,
-   "repere": [
-    100,
-    0.62,
-    "au_dessus",
-    "frais_fourchette"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-11083",
-   "interet": 86.05555555555556,
-   "faisabilite": 79.55,
-   "pertinence": 83.45333333333333,
-   "repere": [
-    61,
-    0.58,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-20972",
+   "id": "psup-10954",
    "interet": 87.83333333333334,
-   "faisabilite": 76.35,
-   "pertinence": 83.24000000000001,
-   "repere": [
-    47,
-    0.39,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9448",
-   "interet": 86.05555555555556,
-   "faisabilite": 77.95,
-   "pertinence": 82.81333333333333,
+   "faisabilite": 75.25,
+   "pertinence": 82.80000000000001,
    "repere": [
     100,
-    0.54,
-    "moyenne",
-    "frais_fourchette"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35451",
-   "interet": 86.05555555555556,
-   "faisabilite": 77.95,
-   "pertinence": 82.81333333333333,
-   "repere": [
-    99,
-    0.51,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35335",
-   "interet": 86.05555555555556,
-   "faisabilite": 77.55,
-   "pertinence": 82.65333333333334,
-   "repere": [
-    99,
-    0.51,
-    "moyenne",
+    0.7,
+    "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
@@ -276,66 +186,6 @@
     100,
     0.6,
     "au_dessus",
-    "frais_fourchette"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-47565",
-   "interet": 87.83333333333334,
-   "faisabilite": 73.55,
-   "pertinence": 82.12,
-   "repere": [
-    49,
-    0.26,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35250",
-   "interet": 87.83333333333334,
-   "faisabilite": 73.15,
-   "pertinence": 81.96000000000001,
-   "repere": [
-    72,
-    0.24,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-35336",
-   "interet": 86.05555555555556,
-   "faisabilite": 75.55,
-   "pertinence": 81.85333333333332,
-   "repere": [
-    99,
-    0.36,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9449",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
-   "repere": [
-    100,
-    0.56,
-    "moyenne",
     "frais_fourchette"
    ],
    "categorie": "realiste",
@@ -433,36 +283,6 @@
    "exclu": null
   },
   {
-   "id": "psup-19362",
-   "interet": 80.5,
-   "faisabilite": 83.25,
-   "pertinence": 81.6,
-   "repere": [
-    100,
-    1,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-19346",
-   "interet": 80.5,
-   "faisabilite": 83.25,
-   "pertinence": 81.6,
-   "repere": [
-    94,
-    1,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "u-paris-1-histoire-de-l-art-et-archeologie",
    "interet": 86.05555555555556,
    "faisabilite": 74.75,
@@ -474,36 +294,6 @@
     "en_dessous"
    ],
    "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-52050",
-   "interet": 87.83333333333334,
-   "faisabilite": 72,
-   "pertinence": 81.5,
-   "repere": [
-    null,
-    null,
-    "inconnue",
-    "nouvelle"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9307",
-   "interet": 83.83333333333334,
-   "faisabilite": 77.55,
-   "pertinence": 81.32000000000001,
-   "repere": [
-    86,
-    0.48,
-    "moyenne",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -523,32 +313,32 @@
    "exclu": null
   },
   {
-   "id": "psup-9266",
-   "interet": 87.83333333333334,
-   "faisabilite": 71.55,
-   "pertinence": 81.32000000000001,
+   "id": "psup-9450",
+   "interet": 86.05555555555556,
+   "faisabilite": 74.05,
+   "pertinence": 81.25333333333333,
    "repere": [
-    41,
-    0.16,
-    "en_dessous",
-    "en_dessous"
+    100,
+    0.62,
+    "au_dessus",
+    "frais_fourchette"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "psup-35333",
+   "id": "psup-11083",
    "interet": 86.05555555555556,
-   "faisabilite": 73.95,
-   "pertinence": 81.21333333333334,
+   "faisabilite": 74.05,
+   "pertinence": 81.25333333333333,
    "repere": [
-    57,
-    0.28,
-    "en_dessous",
-    "en_dessous"
+    61,
+    0.58,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -568,137 +358,47 @@
    "exclu": null
   },
   {
-   "id": "psup-35334",
-   "interet": 86.05555555555556,
-   "faisabilite": 73.55,
-   "pertinence": 81.05333333333334,
+   "id": "psup-20972",
+   "interet": 87.83333333333334,
+   "faisabilite": 70.85,
+   "pertinence": 81.04,
    "repere": [
-    65,
-    0.26,
-    "en_dessous",
-    "en_dessous"
+    47,
+    0.39,
+    "moyenne",
+    "realiste"
    ],
-   "categorie": "ambitieux",
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
   {
-   "id": "psup-9213",
-   "interet": 83.83333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81,
+   "id": "psup-9448",
+   "interet": 86.05555555555556,
+   "faisabilite": 72.45,
+   "pertinence": 80.61333333333334,
    "repere": [
     100,
     0.54,
     "moyenne",
+    "frais_fourchette"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35451",
+   "interet": 86.05555555555556,
+   "faisabilite": 72.45,
+   "pertinence": 80.61333333333334,
+   "repere": [
+    99,
+    0.51,
+    "moyenne",
     "tres_ouverte"
    ],
    "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-20896",
-   "interet": 83.83333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81,
-   "repere": [
-    49,
-    0.33,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32335",
-   "interet": 83.83333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81,
-   "repere": [
-    33,
-    0.43,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9270",
-   "interet": 86.05555555555556,
-   "faisabilite": 73.15,
-   "pertinence": 80.89333333333335,
-   "repere": [
-    57,
-    0.22,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-9314",
-   "interet": 83.83333333333334,
-   "faisabilite": 76.35,
-   "pertinence": 80.84,
-   "repere": [
-    76,
-    0.5,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-47253",
-   "interet": 87.83333333333334,
-   "faisabilite": 70.35,
-   "pertinence": 80.84,
-   "repere": [
-    18,
-    0.1,
-    "en_dessous",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-24461",
-   "interet": 86.05555555555556,
-   "faisabilite": 72.35,
-   "pertinence": 80.57333333333332,
-   "repere": [
-    22,
-    0.27,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-28447",
-   "interet": 83.83333333333334,
-   "faisabilite": 75.55,
-   "pertinence": 80.52000000000001,
-   "repere": [
-    37,
-    0.28,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -716,19 +416,310 @@
    "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-35335",
+   "interet": 86.05555555555556,
+   "faisabilite": 72.05,
+   "pertinence": 80.45333333333333,
+   "repere": [
+    99,
+    0.51,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-48377",
+   "interet": 83.83333333333334,
+   "faisabilite": 75.15,
+   "pertinence": 80.36000000000001,
+   "repere": [
+    50,
+    0.35,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-jean-moulin-lyon-3-histoire",
+   "interet": 83.83333333333334,
+   "faisabilite": 74.75,
+   "pertinence": 80.2,
+   "repere": [
+    87,
+    0.37,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-cite-histoire",
+   "interet": 83.83333333333334,
+   "faisabilite": 74.75,
+   "pertinence": 80.2,
+   "repere": [
+    67,
+    0.47,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47565",
+   "interet": 87.83333333333334,
+   "faisabilite": 68.05,
+   "pertinence": 79.92,
+   "repere": [
+    49,
+    0.26,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "u-paris-1-philosophie",
+   "interet": 80.5,
+   "faisabilite": 78.75,
+   "pertinence": 79.8,
+   "repere": [
+    80,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35250",
+   "interet": 87.83333333333334,
+   "faisabilite": 67.65,
+   "pertinence": 79.76,
+   "repere": [
+    72,
+    0.24,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35336",
+   "interet": 86.05555555555556,
+   "faisabilite": 70.05,
+   "pertinence": 79.65333333333334,
+   "repere": [
+    99,
+    0.36,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9449",
+   "interet": 83.83333333333334,
+   "faisabilite": 73.25,
+   "pertinence": 79.60000000000001,
+   "repere": [
+    100,
+    0.56,
+    "moyenne",
+    "frais_fourchette"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19362",
+   "interet": 80.5,
+   "faisabilite": 77.75,
+   "pertinence": 79.4,
+   "repere": [
+    100,
+    1,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19346",
+   "interet": 80.5,
+   "faisabilite": 77.75,
+   "pertinence": 79.4,
+   "repere": [
+    94,
+    1,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52050",
+   "interet": 87.83333333333334,
+   "faisabilite": 66.5,
+   "pertinence": 79.30000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9307",
+   "interet": 83.83333333333334,
+   "faisabilite": 72.05,
+   "pertinence": 79.12,
+   "repere": [
+    86,
+    0.48,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9266",
+   "interet": 87.83333333333334,
+   "faisabilite": 66.05,
+   "pertinence": 79.12,
+   "repere": [
+    41,
+    0.16,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-50774",
+   "interet": 83.83333333333334,
+   "faisabilite": 72,
+   "pertinence": 79.10000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-52043",
+   "interet": 83.83333333333334,
+   "faisabilite": 72,
+   "pertinence": 79.10000000000001,
+   "repere": [
+    null,
+    null,
+    "inconnue",
+    "nouvelle"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35333",
+   "interet": 86.05555555555556,
+   "faisabilite": 68.45,
+   "pertinence": 79.01333333333334,
+   "repere": [
+    57,
+    0.28,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35334",
+   "interet": 86.05555555555556,
+   "faisabilite": 68.05,
+   "pertinence": 78.85333333333332,
+   "repere": [
+    65,
+    0.26,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9213",
+   "interet": 83.83333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 78.80000000000001,
+   "repere": [
+    100,
+    0.54,
+    "moyenne",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20896",
+   "interet": 83.83333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 78.80000000000001,
+   "repere": [
+    49,
+    0.33,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
-   {
-    "id": "psup-10954",
-    "categorie": "securite",
-    "pertinence": 85,
-    "repere": [
-     100,
-     "au_dessus"
-    ]
-   },
    {
     "id": "psup-25320",
     "categorie": "securite",
@@ -739,11 +730,20 @@
     ]
    },
    {
-    "id": "psup-35451",
+    "id": "psup-10954",
     "categorie": "securite",
-    "pertinence": 82.81333333333333,
+    "pertinence": 82.80000000000001,
     "repere": [
-     99,
+     100,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "u-rennes-2-arts-plastiques",
+    "categorie": "securite",
+    "pertinence": 77,
+    "repere": [
+     91,
      "moyenne"
     ]
    },
@@ -757,21 +757,21 @@
     ]
    },
    {
-    "id": "psup-47565",
+    "id": "u-paris-1-histoire-de-l-art-et-archeologie",
     "categorie": "ambitieux",
-    "pertinence": 82.12,
+    "pertinence": 81.53333333333333,
     "repere": [
-     49,
+     43,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-43530",
+    "id": "psup-47565",
     "categorie": "ambitieux",
-    "pertinence": 76.9,
+    "pertinence": 79.92,
     "repere": [
-     16,
-     "moyenne"
+     49,
+     "en_dessous"
     ]
    },
    {
@@ -784,29 +784,29 @@
     ]
    },
    {
-    "id": "psup-9450",
+    "id": "psup-17273",
     "categorie": "realiste",
-    "pertinence": 83.45333333333333,
+    "pertinence": 82.12,
     "repere": [
      100,
      "au_dessus"
     ]
    },
    {
-    "id": "psup-47195",
+    "id": "psup-36486",
     "categorie": "realiste",
-    "pertinence": 74.75999999999999,
+    "pertinence": 74.292,
     "repere": [
-     33,
-     "au_dessus"
+     34,
+     "moyenne"
     ]
    },
    {
-    "id": "psup-20972",
+    "id": "psup-21789",
     "categorie": "realiste",
-    "pertinence": 83.24000000000001,
+    "pertinence": 75.46,
     "repere": [
-     47,
+     43,
      "moyenne"
     ]
    }
@@ -824,7 +824,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence d'arts, licence de lettres ou sciences humaines et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de droit ou science po.",
+  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence de lettres ou sciences humaines, licence d'arts et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à DN MADE (métiers d'art et design).",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -850,7 +850,7 @@
     "ancre": {
      "id": "psup-10954",
      "categorie": "securite",
-     "pertinence": 85,
+     "pertinence": 82.80000000000001,
      "repere": [
       100,
       "au_dessus"
@@ -881,7 +881,7 @@
     "ancre": {
      "id": "psup-10954",
      "categorie": "securite",
-     "pertinence": 85,
+     "pertinence": 82.80000000000001,
      "repere": [
       100,
       "au_dessus"
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "f1b6fb2468a6cf8016e568960cb0f2e802f0cc3937af0ebe79ff117d5d56c425",
-  "textes": "26bfa250892489ba158ed1bccbac96e15125c022800b872b17a313f8f4435c65"
+  "calculs": "cd8bced2e7021bf62f118a9e54ecb0052f7886cc1c277f62eaf55a5d11ed002b",
+  "textes": "62103b026375b2cfd137e9cad1d59d6da7868073d3edf96035201d0af2385b69"
  }
 }

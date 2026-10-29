@@ -25,7 +25,7 @@
         "note": "Le document ne porte pas de date ; la date indiquée est celle des métadonnées du PDF. MP2I et ECG n'y figurent pas."
       }
     ],
-    "regle": "Attendus nationaux officiels du ministère de l'Enseignement supérieur, recopiés mot pour mot (citations) avec la page du PDF. Table de référence : aucun fichier de js/ ne la lit et elle ne change aucun résultat. Les champs nmc / correspondance, disciplines et specialites_deduites sont un rapprochement de Mon Plan Sup, pas une donnée officielle : « disciplines » ne contient que ce que le texte cite ; « specialites_deduites » est une interprétation (statut interpretation_mon_plan_sup). Chaque entrée reste valide = false tant qu'Aaron ne l'a pas validée ligne par ligne.",
+    "regle": "Texte de l'État appliqué tel quel (décision d'Aaron du 29/10/2026) ; seules les correspondances discipline → spécialité sûres sont utilisées",
     "mentions_sans_attendus": [
       {
         "libelle": "Licence mention Théologie",
@@ -33,6 +33,45 @@
         "page": 19,
         "texte": "Cette mention ne comprend pas d’éléments de cadrage national car la formation n’est dispensée que par une seule université."
       }
+    ],
+    "table_disciplines_specialites": {
+      "regle": "Une discipline citée par le texte devient une spécialité « recommandée » seulement si elle figure dans cette table ; jamais « obligatoire ». Toute autre discipline (liste « disciplines_sans_specialite », par exemple histoire-géographie, lettres, philosophie, langues) ne donne aucune spécialité : correspondance approchée écartée (décision d'Aaron du 29/10/2026).",
+      "correspondances": {
+        "mathématiques": "maths",
+        "physique-chimie": "physique_chimie",
+        "sciences de la vie et de la Terre": "SVT",
+        "sciences économiques et sociales": "SES",
+        "sciences de l’ingénieur": "SI",
+        "informatique": "NSI"
+      },
+      "variantes_acceptees": {
+        "biologie et géologie": "SVT",
+        "SVT": "SVT"
+      },
+      "disciplines_sans_specialite": [
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français",
+        "langue étrangère",
+        "langues vivantes",
+        "langue anglaise",
+        "langues anciennes",
+        "arts",
+        "biologie",
+        "biotechnologies",
+        "enseignements technologiques",
+        "économie-droit",
+        "management",
+        "sciences de gestion"
+      ]
+    },
+    "non_appliquees": [
+      "Licence mention Administration publique",
+      "Licence mention Sciences de l'éducation",
+      "Licence mention Sciences sociales",
+      "Licence mention Sciences et technologies",
+      "CPGE St Cyr – Option économique"
     ]
   },
   "filieres": {
@@ -43,6 +82,7 @@
       "nmc": [],
       "correspondance": "aucune",
       "note": "Aucun code « Administration publique » dans data/filieres.json.",
+      "non_applique_raison": "Aucun code nmc correspondant dans data/filieres.json : rien à appliquer.",
       "citations": [
         {
           "texte": "Savoir mobiliser des compétences d’expression écrite et orale qui témoignent de qualités rédactionnelles",
@@ -69,10 +109,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": false,
       "page_debut": 2
     },
     "Licence mention Droit": {
@@ -117,10 +157,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 3
     },
     "Licence mention Economie": {
@@ -162,10 +202,10 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, langue anglaise) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 5
     },
     "Licence mention Gestion": {
@@ -208,10 +248,10 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 6
     },
     "Licence mention Économie et gestion": {
@@ -253,10 +293,10 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, langue anglaise) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 7
     },
     "Licence mention Administration économique et sociale": {
@@ -293,10 +333,10 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 8
     },
     "Licence mention Science politique": {
@@ -329,10 +369,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 9
     },
     "Licence mention Sciences sanitaires et sociales": {
@@ -371,10 +411,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 10
     },
     "Licence mention Humanités": {
@@ -413,10 +453,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 11
     },
     "Licence mention Histoire": {
@@ -463,10 +503,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 12
     },
     "Licence mention Histoire de l'art et archéologie": {
@@ -510,10 +550,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 13
     },
     "Licence mention Géographie et aménagement": {
@@ -560,10 +600,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 14
     },
     "Licence mention Sociologie": {
@@ -610,10 +650,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 15
     },
     "Licence mention Psychologie": {
@@ -654,16 +694,6 @@
           "page": 16
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Cette mention requiert en effet un bon niveau dans au moins une des disciplines suivantes : mathématiques, physique-chimie et sciences de la vie et de la terre.",
-          "page": 16
-        },
-        {
-          "texte": "Cette mention requiert en effet un bon niveau dans au moins deux des disciplines suivantes : français, philosophie, histoire-géographie et sciences économiques et sociales.",
-          "page": 16
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "physique-chimie",
@@ -680,14 +710,22 @@
           "maths",
           "physique_chimie",
           "SVT",
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences économiques et sociales, histoire-géographie, philosophie, français, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Cette mention requiert en effet un bon niveau dans au moins une des disciplines suivantes : mathématiques, physique-chimie et sciences de la vie et de la terre.",
+          "page": 16
+        },
+        {
+          "texte": "Cette mention requiert en effet un bon niveau dans au moins deux des disciplines suivantes : français, philosophie, histoire-géographie et sciences économiques et sociales.",
+          "page": 16
+        }
+      ],
       "page_debut": 16
     },
     "Licence mention Sciences de l'éducation": {
@@ -699,6 +737,7 @@
       ],
       "correspondance": "a_verifier",
       "note": "L1-SEF s'intitule « Sciences de l'éducation et de la formation » : intitulé voisin, pas identique.",
+      "non_applique_raison": "Le code L1-SEF s'intitule « Sciences de l'éducation et de la formation » : intitulé voisin, pas identique ; rattachement ambigu, donc non appliqué (décision d'Aaron du 29/10/2026).",
       "citations": [
         {
           "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
@@ -727,10 +766,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": false,
       "page_debut": 17
     },
     "Licence mention Philosophie": {
@@ -773,10 +812,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 18
     },
     "Licence mention Sciences sociales": {
@@ -786,6 +825,7 @@
       "nmc": [],
       "correspondance": "aucune",
       "note": "Aucun code « Sciences sociales » (licence) dans data/filieres.json ; L1-SS est « Sciences pour la santé ».",
+      "non_applique_raison": "Aucun code nmc correspondant dans data/filieres.json : rien à appliquer.",
       "citations": [
         {
           "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
@@ -822,10 +862,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": false,
       "page_debut": 20
     },
     "Licence mention Sciences de l'homme, anthropologie, ethnologie": {
@@ -872,10 +912,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 21
     },
     "Licence mention Sciences du langage": {
@@ -914,10 +954,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 22
     },
     "Licence mention Information-communication": {
@@ -960,10 +1000,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 23
     },
     "Licence mention Arts": {
@@ -998,10 +1038,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 24
     },
     "Licence mention Arts plastiques": {
@@ -1036,10 +1076,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 25
     },
     "Licence mention Arts du spectacle": {
@@ -1074,10 +1114,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 26
     },
     "Licence mention Musicologie": {
@@ -1112,10 +1152,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 27
     },
     "Licence mention Lettres": {
@@ -1158,10 +1198,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 28
     },
     "Licence mention Langues, littératures et civilisations étrangères et régionales (LLCER)": {
@@ -1204,10 +1244,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 29
     },
     "Licence mention Langues étrangères appliquées (LEA)": {
@@ -1250,10 +1290,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 30
     },
     "Licence mention Lettres, langues": {
@@ -1292,10 +1332,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 31
     },
     "Licence mention Informatique": {
@@ -1320,12 +1360,6 @@
           "page": 32
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
-          "page": 32
-        }
-      ],
       "disciplines": [
         "mathématiques"
       ],
@@ -1334,10 +1368,16 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 32
+        }
+      ],
       "page_debut": 32
     },
     "Licence mention Mathématiques et informatique appliquées aux sciences humaines et sociales": {
@@ -1362,12 +1402,6 @@
           "page": 33
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
-          "page": 33
-        }
-      ],
       "disciplines": [
         "mathématiques"
       ],
@@ -1376,10 +1410,16 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 33
+        }
+      ],
       "page_debut": 33
     },
     "Licence mention Mathématiques": {
@@ -1404,12 +1444,6 @@
           "page": 34
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
-          "page": 34
-        }
-      ],
       "disciplines": [
         "mathématiques"
       ],
@@ -1418,10 +1452,16 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 34
+        }
+      ],
       "page_debut": 34
     },
     "Licence mention Physique": {
@@ -1446,12 +1486,6 @@
           "page": 35
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 35
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "physique-chimie"
@@ -1462,10 +1496,16 @@
           "maths",
           "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 35
+        }
+      ],
       "page_debut": 35
     },
     "Licence mention Chimie": {
@@ -1490,12 +1530,6 @@
           "page": 36
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 36
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "physique-chimie"
@@ -1506,10 +1540,16 @@
           "maths",
           "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 36
+        }
+      ],
       "page_debut": 36
     },
     "Licence mention Physique, chimie": {
@@ -1534,12 +1574,6 @@
           "page": 37
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 37
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "physique-chimie"
@@ -1550,10 +1584,16 @@
           "maths",
           "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 37
+        }
+      ],
       "page_debut": 37
     },
     "Licence mention Sciences de la vie": {
@@ -1578,12 +1618,6 @@
           "page": 38
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 38
-        }
-      ],
       "disciplines": [
         "physique-chimie",
         "sciences de la vie et de la Terre"
@@ -1594,10 +1628,16 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 38
+        }
+      ],
       "page_debut": 38
     },
     "Licence mention Sciences de la Terre": {
@@ -1622,12 +1662,6 @@
           "page": 39
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 39
-        }
-      ],
       "disciplines": [
         "physique-chimie",
         "sciences de la vie et de la Terre"
@@ -1638,10 +1672,16 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 39
+        }
+      ],
       "page_debut": 39
     },
     "Licence mention Sciences de la vie et de la Terre": {
@@ -1666,12 +1706,6 @@
           "page": 40
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 40
-        }
-      ],
       "disciplines": [
         "physique-chimie",
         "sciences de la vie et de la Terre"
@@ -1682,10 +1716,16 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 40
+        }
+      ],
       "page_debut": 40
     },
     "Licence mention Sciences et techniques des activités physiques et sportives": {
@@ -1718,10 +1758,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 41
     },
     "Licence mention Electronique, énergie électrique, automatique": {
@@ -1746,12 +1786,6 @@
           "page": 42
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 42
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "sciences de l’ingénieur"
@@ -1762,10 +1796,16 @@
           "maths",
           "SI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences de l’ingénieur. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 42
+        }
+      ],
       "page_debut": 42
     },
     "Licence mention Mécanique": {
@@ -1790,12 +1830,6 @@
           "page": 43
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
-          "page": 43
-        }
-      ],
       "disciplines": [
         "mathématiques"
       ],
@@ -1804,10 +1838,16 @@
         "recommandees": [
           "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 43
+        }
+      ],
       "page_debut": 43
     },
     "Licence mention Génie civil": {
@@ -1832,12 +1872,6 @@
           "page": 44
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 44
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "sciences de l’ingénieur"
@@ -1848,10 +1882,16 @@
           "maths",
           "SI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences de l’ingénieur. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 44
+        }
+      ],
       "page_debut": 44
     },
     "Licence mention Sciences pour la santé": {
@@ -1927,10 +1967,10 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 45
     },
     "Licence mention Sciences et technologies": {
@@ -1940,6 +1980,7 @@
       "nmc": [],
       "correspondance": "aucune",
       "note": "Aucun code « Sciences et technologies » (licence) dans data/filieres.json.",
+      "non_applique_raison": "Aucun code nmc correspondant dans data/filieres.json : rien à appliquer.",
       "citations": [
         {
           "texte": "Disposer de compétences scientifiques",
@@ -1951,12 +1992,6 @@
         },
         {
           "texte": "Disposer de compétences méthodologiques et comportementales",
-          "page": 46
-        }
-      ],
-      "precisions_disciplines": [
-        {
-          "texte": "Est préconisée à la fin de la classe de terminale une bonne maîtrise des compétences attendues dans l’une au moins des disciplines suivantes : Mathématiques, Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur. Est préconisée à la fin de la classe de terminale une maîtrise correcte des compétences expérimentales attendues dans l’une au moins des disciplines suivantes : Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur.",
           "page": 46
         }
       ],
@@ -1974,10 +2009,16 @@
           "SVT",
           "SI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences de l’ingénieur. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": false,
+      "precisions_disciplines": [
+        {
+          "texte": "Est préconisée à la fin de la classe de terminale une bonne maîtrise des compétences attendues dans l’une au moins des disciplines suivantes : Mathématiques, Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur. Est préconisée à la fin de la classe de terminale une maîtrise correcte des compétences expérimentales attendues dans l’une au moins des disciplines suivantes : Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur.",
+          "page": 46
+        }
+      ],
       "page_debut": 46
     },
     "Licence mention Sciences pour l'ingénieur": {
@@ -2002,12 +2043,6 @@
           "page": 47
         }
       ],
-      "precisions_disciplines": [
-        {
-          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
-          "page": 47
-        }
-      ],
       "disciplines": [
         "mathématiques",
         "sciences de l’ingénieur"
@@ -2018,10 +2053,16 @@
           "maths",
           "SI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences de l’ingénieur. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 47
+        }
+      ],
       "page_debut": 47
     },
     "PACES": {
@@ -2031,8 +2072,8 @@
       "nmc": [
         "PASS"
       ],
-      "correspondance": "a_verifier",
-      "note": "La PACES a été remplacée par le PASS (rentrée 2020) : le texte de 2017 vise la PACES, pas le PASS.",
+      "correspondance": "certaine",
+      "rattachement": "La PACES a été remplacée par le PASS (parcours d'accès spécifique santé) : le texte de la PACES est rattaché au code PASS (décision d'Aaron du 29/10/2026).",
       "citations": [
         {
           "texte": "Disposer de très bonnes connaissances et compétences scientifiques",
@@ -2102,10 +2143,10 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 48
     },
     "CPGE BCPST (biologie, chimie, physique et sciences de la Terre)": {
@@ -2147,10 +2188,10 @@
           "physique_chimie",
           "SVT"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, biologie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de la vie et de la Terre. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 2,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2194,10 +2235,10 @@
           "SI",
           "NSI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de l’ingénieur, informatique. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 2,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2241,10 +2282,10 @@
           "SI",
           "NSI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de l’ingénieur, informatique. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 2,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2288,10 +2329,10 @@
           "SI",
           "NSI"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie, sciences de l’ingénieur, informatique. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 3,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2338,14 +2379,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "physique_chimie",
-          "SVT",
-          "HLP"
+          "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes, biologie, biotechnologies) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 3,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2390,13 +2429,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "physique_chimie",
-          "HLP"
+          "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 3,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2442,13 +2480,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "physique_chimie",
-          "HLP"
+          "physique_chimie"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes, enseignements technologiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, physique-chimie. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 4,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2459,8 +2496,8 @@
       "nmc": [
         "CPGE-PS-AD"
       ],
-      "correspondance": "a_verifier",
-      "note": "ENS Cachan est devenue ENS Paris-Saclay ; CPGE-PS-AD (« arts et design ») semble être la filière C, à confirmer.",
+      "correspondance": "certaine",
+      "rattachement": "L'ENS Cachan est devenue l'ENS Paris-Saclay : la filière C correspond au code CPGE-PS-AD (décision d'Aaron du 29/10/2026).",
       "citations": [
         {
           "texte": "S’intéresser aux domaines de la création passée et contemporaine dans leur diversité et complémentarité.",
@@ -2489,10 +2526,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 4,
       "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
     },
@@ -2500,9 +2537,12 @@
       "type": "cpge",
       "libelle_document": "ECE – Option économique",
       "fichier": "docs/releves/attendus-cpge.pdf",
-      "nmc": [],
-      "correspondance": "aucune",
-      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur",
+      "nmc": [
+        "ECG-Mapp-ESH",
+        "ECG-MA-ESH"
+      ],
+      "correspondance": "certaine",
+      "rattachement": "La filière ECE (option économique) a été renommée ECG (voie économique et commerciale générale) : ses attendus s'appliquent aux prépas ECG à option ESH (codes ECG-Mapp-ESH et ECG-MA-ESH), décision d'Aaron du 29/10/2026.",
       "citations": [
         {
           "texte": "S’intéresser à l’économie, la sociologie et à l’histoire du monde contemporain.",
@@ -2533,14 +2573,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 5,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2548,9 +2586,12 @@
       "type": "cpge",
       "libelle_document": "ECS – Option scientifique",
       "fichier": "docs/releves/attendus-cpge.pdf",
-      "nmc": [],
-      "correspondance": "aucune",
-      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur",
+      "nmc": [
+        "ECG-Mapp-HGG",
+        "ECG-MA-HGG"
+      ],
+      "correspondance": "certaine",
+      "rattachement": "La filière ECS (option scientifique) a été renommée ECG (voie économique et commerciale générale) : ses attendus s'appliquent aux prépas ECG à option HGG (codes ECG-Mapp-HGG et ECG-MA-HGG), décision d'Aaron du 29/10/2026.",
       "citations": [
         {
           "texte": "S’intéresser à l’histoire, la géographie et la géopolitique du monde contemporain.",
@@ -2579,14 +2620,12 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [
-          "maths",
-          "HGGSP",
-          "HLP"
+          "maths"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 5,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2594,9 +2633,11 @@
       "type": "cpge",
       "libelle_document": "ECT – Option technologique",
       "fichier": "docs/releves/attendus-cpge.pdf",
-      "nmc": [],
-      "correspondance": "aucune",
-      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur (CPGE-ECT existe pourtant dans data/filieres.json : à traiter dans la version en vigueur).",
+      "nmc": [
+        "CPGE-ECT"
+      ],
+      "correspondance": "certaine",
+      "rattachement": "La filière ECT existe toujours sous le code CPGE-ECT dans data/filieres.json : le texte lui est rattaché (décision d'Aaron du 29/10/2026).",
       "citations": [
         {
           "texte": "S’intéresser à la vie de l’entreprise et aux métiers du management (stratégie, finance, marketing, gestion des ressources humaines, gestion des systèmes d’information, entrepreneuriat).",
@@ -2623,10 +2664,10 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 5,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2666,14 +2707,12 @@
       "specialites_deduites": {
         "obligatoires": [],
         "recommandees": [
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (sciences économiques et sociales, histoire-géographie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 6,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2684,8 +2723,8 @@
       "nmc": [
         "CPGE-Cachan-D2"
       ],
-      "correspondance": "a_verifier",
-      "note": "ENS Cachan est devenue ENS Paris-Saclay ; CPGE-Cachan-D2 (« ENS Cachan D2 ») est probablement la même filière D2, à confirmer.",
+      "correspondance": "certaine",
+      "rattachement": "L'ENS Cachan est devenue l'ENS Paris-Saclay : la filière D2 correspond au code CPGE-Cachan-D2 (décision d'Aaron du 29/10/2026).",
       "citations": [
         {
           "texte": "S’intéresser à l’économie.",
@@ -2716,14 +2755,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 6,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2734,6 +2771,7 @@
       "nmc": [],
       "correspondance": "aucune",
       "note": "Aucun code « St Cyr option économique » dans data/filieres.json.",
+      "non_applique_raison": "Aucun code nmc correspondant dans data/filieres.json : rien à appliquer.",
       "citations": [
         {
           "texte": "Être intéressé par une carrière militaire et avoir une bonne aptitude physique.",
@@ -2764,14 +2802,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": false,
       "page_debut": 6,
       "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
     },
@@ -2813,14 +2849,12 @@
         "obligatoires": [],
         "recommandees": [
           "maths",
-          "SES",
-          "HGGSP",
-          "HLP"
+          "SES"
         ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "statut": "table_discipline_specialite",
+        "justification": "Disciplines citées par le texte et présentes dans la table meta.table_disciplines_specialites : mathématiques, sciences économiques et sociales. Spécialités toujours « recommandées », jamais « obligatoires »."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 7,
       "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
     },
@@ -2860,15 +2894,11 @@
       ],
       "specialites_deduites": {
         "obligatoires": [],
-        "recommandees": [
-          "HGGSP",
-          "HLP",
-          "arts"
-        ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues anciennes, arts) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "recommandees": [],
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 7,
       "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
     },
@@ -2908,15 +2938,11 @@
       ],
       "specialites_deduites": {
         "obligatoires": [],
-        "recommandees": [
-          "HGGSP",
-          "HLP",
-          "arts"
-        ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues anciennes, arts) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "recommandees": [],
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 7,
       "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
     },
@@ -2955,14 +2981,11 @@
       ],
       "specialites_deduites": {
         "obligatoires": [],
-        "recommandees": [
-          "HGGSP",
-          "HLP"
-        ],
-        "statut": "interpretation_mon_plan_sup",
-        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+        "recommandees": [],
+        "statut": "table_discipline_specialite",
+        "justification": "Le texte ne cite aucune discipline du lycée qui ait une spécialité dans meta.table_disciplines_specialites : aucune spécialité."
       },
-      "valide": false,
+      "applique": true,
       "page_debut": 8,
       "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
     }

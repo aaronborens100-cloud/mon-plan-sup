@@ -785,20 +785,20 @@
     ]
    },
    {
-    "id": "psup-39258",
-    "categorie": "realiste",
-    "pertinence": 76.9922439969624,
-    "repere": [
-     69,
-     "moyenne"
-    ]
-   },
-   {
     "id": "psup-39243",
     "categorie": "realiste",
     "pertinence": 76.68931584101952,
     "repere": [
      77,
+     "moyenne"
+    ]
+   },
+   {
+    "id": "psup-11707",
+    "categorie": "realiste",
+    "pertinence": 70.25629641368283,
+    "repere": [
+     83,
      "moyenne"
     ]
    },
@@ -841,7 +841,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "ff9743caeee54c690b722cd10ba1c8b908dc4e9fe4a0535377867f9cfe32770d",
-  "textes": "6670902784933bfdd706854ae87ec477604b19d7135087cbdb8346027c48a215"
+  "calculs": "70c784685b173bc45469fd1650846a6dd71072ac8d7745c6e888519c5c8c8912",
+  "textes": "b720e6243c002677d171279f623c078b957208c09d05d9ca07090a35a6f04d8b"
  }
 }
