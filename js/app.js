@@ -438,25 +438,15 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
 <h2 class="qsn-titre">Qui sommes-nous ?</h2>
 <div class="qsn-grille">
 <div class="qsn-texte">
-<p>Mon Plan Sup est né d’une inquiétude que nous partageons, Aaron Borens et Jules Ramin, deux lycéens en terminale. Au moment de préparer notre orientation, nous nous sommes rendu compte d’une chose : nous ne savions pas quelles formations nous étaient réellement accessibles avec notre niveau.</p>
+<p>Mon Plan Sup est né d’une inquiétude que nous, lycéens en terminale, partageons. Au moment de préparer notre orientation, nous nous sommes rendu compte d’une chose : nous ne savions pas quelles formations nous étaient réellement accessibles avec notre niveau.</p>
 <p>Nous avions peur de passer à côté de la bonne formation simplement parce que nous ne la connaissions pas, ou de viser à côté. Cette inquiétude, nous savons que beaucoup d’élèves de première et de terminale la ressentent aussi.</p>
 <p>Alors nous avons décidé de construire l’outil que nous aurions voulu avoir. Mon Plan Sup réunit des formations en France et à l’étranger, avec des conditions d’admission sourcées, pour t’aider à repérer celles qui correspondent à ton niveau et à tes envies. Il ne remplace ni Parcoursup ni les conseils de tes professeurs, et il ne garantit aucune admission : il t’aide à y voir clair.</p>
 </div>
 <div class="qsn-col">
-<div class="qsn-carte qsn-aaron">
-<div class="qsn-avatar"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
-<div style="min-width: 0">
-<div style="font-size: 18px; font-weight: 700">Aaron Borens</div>
-<div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
-<div class="qsn-role">Cofondateur de Mon Plan Sup</div>
-</div>
-</div>
 <div class="qsn-carte qsn-jules">
-<div class="qsn-avatar"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+<div class="qsn-avatar"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5"/><circle cx="17.5" cy="9" r="2.8"/><path d="M17.5 14.2c2.4 0 4 1.5 4 4.3"/></svg></div>
 <div style="min-width: 0">
-<div style="font-size: 18px; font-weight: 700">Jules Ramin</div>
-<div style="font-size: 14px; color: var(--gris-texte)">Élève en Terminale Générale · Sasserno</div>
-<div class="qsn-role">Cofondateur de Mon Plan Sup</div>
+<div style="font-size: 20px; font-weight: 700; line-height: 1.3">Fait par des élèves de Terminale à Sasserno</div>
 </div>
 </div>
 </div>
