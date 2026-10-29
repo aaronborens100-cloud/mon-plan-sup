@@ -198,6 +198,21 @@
    "exclu": null
   },
   {
+   "id": "psup-31287",
+   "interet": 80.59064070541176,
+   "faisabilite": 81.95,
+   "pertinence": 81.13438442324706,
+   "repere": [
+    63,
+    0.71,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-17165",
    "interet": 81.0715222964324,
    "faisabilite": 81.15,
@@ -269,6 +284,21 @@
     "realiste"
    ],
    "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35072",
+   "interet": 79.38527973582846,
+   "faisabilite": 83.25,
+   "pertinence": 80.93116784149709,
+   "repere": [
+    74,
+    0.79,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -468,6 +498,21 @@
    "exclu": null
   },
   {
+   "id": "psup-2258",
+   "interet": 79.99109151192906,
+   "faisabilite": 81.55,
+   "pertinence": 80.61465490715743,
+   "repere": [
+    51,
+    0.68,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-31051",
    "interet": 78.83365910815665,
    "faisabilite": 83.25,
@@ -513,6 +558,21 @@
    "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
+   "id": "psup-31403",
+   "interet": 79.12146774290694,
+   "faisabilite": 82.35,
+   "pertinence": 80.41288064574417,
+   "repere": [
+    32,
+    0.72,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-39468",
    "interet": 78.45626139472947,
    "faisabilite": 83.25,
@@ -550,6 +610,21 @@
    "repere": [
     82,
     0.75,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31294",
+   "interet": 79.19780826262625,
+   "faisabilite": 81.95,
+   "pertinence": 80.29868495757574,
+   "repere": [
+    54,
+    0.72,
     "au_dessus",
     "securite"
    ],
@@ -646,81 +721,6 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-31371",
-   "interet": 79.19308199043053,
-   "faisabilite": 81.55,
-   "pertinence": 80.13584919425831,
-   "repere": [
-    52,
-    0.67,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31473",
-   "interet": 79.41027402502453,
-   "faisabilite": 81.15,
-   "pertinence": 80.10616441501472,
-   "repere": [
-    77,
-    0.65,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-43259",
-   "interet": 79.10607169698218,
-   "faisabilite": 81.55,
-   "pertinence": 80.0836430181893,
-   "repere": [
-    92,
-    0.68,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31049",
-   "interet": 78.83374583460646,
-   "faisabilite": 81.95,
-   "pertinence": 80.08024750076387,
-   "repere": [
-    70,
-    0.74,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-23801",
-   "interet": 78.77867309996007,
-   "faisabilite": 81.95,
-   "pertinence": 80.04720385997604,
-   "repere": [
-    100,
-    0.74,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -762,20 +762,11 @@
     ]
    },
    {
-    "id": "paris1-dl-histoire-scpo",
+    "id": "psup-11217",
     "categorie": "ambitieux",
-    "pertinence": 76.16720899717485,
+    "pertinence": 75.24841625612342,
     "repere": [
-     10,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-8854",
-    "categorie": "realiste",
-    "pertinence": 76.69049477182227,
-    "repere": [
-     48,
+     16,
      "au_dessus"
     ]
    },
@@ -807,11 +798,20 @@
     ]
    },
    {
-    "id": "psup-47455",
-    "categorie": "securite",
-    "pertinence": 76.79120883427584,
+    "id": "psup-39297",
+    "categorie": "realiste",
+    "pertinence": 73.06491519014686,
     "repere": [
-     96,
+     26,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-10372",
+    "categorie": "securite",
+    "pertinence": 76.80245593599528,
+    "repere": [
+     100,
      "au_dessus"
     ]
    }
@@ -830,7 +830,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre licence d'éco-gestion, prépa ECG et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre licence d'éco-gestion, prépa ECG et DCG (comptabilité et gestion), plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -845,7 +845,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "e008f16327047e3d19b80efa055a3b7f28e171852986fa852e163478924dc29f",
-  "textes": "2273976b7828aee3c90d8722f76cd23afdfb2e240874170164e9e04bda9daa3f"
+  "calculs": "1c289e651bda5f30a9807e41828c8afcf7d4b583a9c7b1b68914608cef4aea6b",
+  "textes": "c985e67289a31a6e86bd1b06d151a5feb3432a71076729c53ec1d955375d9d89"
  }
 }

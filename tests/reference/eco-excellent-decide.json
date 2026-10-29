@@ -220,21 +220,6 @@
    "exclu": null
   },
   {
-   "id": "thiers-marseille-ecg",
-   "interet": 81.87196653926549,
-   "faisabilite": 100,
-   "pertinence": 89.12317992355929,
-   "repere": [
-    75,
-    0.85,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31273",
    "interet": 81.86309893019165,
    "faisabilite": 100,
@@ -250,6 +235,21 @@
    "exclu": null
   },
   {
+   "id": "psup-31270",
+   "interet": 81.81641098370994,
+   "faisabilite": 100,
+   "pertinence": 89.08984659022596,
+   "repere": [
+    75,
+    0.85,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-33241",
    "interet": 82.47700338406612,
    "faisabilite": 98.7,
@@ -257,6 +257,21 @@
    "repere": [
     54,
     0.64,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31299",
+   "interet": 81.5802476014943,
+   "faisabilite": 100,
+   "pertinence": 88.94814856089658,
+   "repere": [
+    61,
+    0.91,
     "au_dessus",
     "securite"
    ],
@@ -400,6 +415,21 @@
    "exclu": null
   },
   {
+   "id": "psup-31313",
+   "interet": 81.11255153947867,
+   "faisabilite": 99.9,
+   "pertinence": 88.6275309236872,
+   "repere": [
+    58,
+    0.76,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-31593",
    "interet": 85.11016526142821,
    "faisabilite": 93.9,
@@ -411,21 +441,6 @@
     "taux_bas"
    ],
    "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-31299",
-   "interet": 81.5802476014943,
-   "faisabilite": 99.1,
-   "pertinence": 88.58814856089658,
-   "repere": [
-    61,
-    0.91,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -610,36 +625,6 @@
    "exclu": null
   },
   {
-   "id": "ps-1051",
-   "interet": 80.35891754579744,
-   "faisabilite": 100,
-   "pertinence": 88.21535052747846,
-   "repere": [
-    53,
-    1,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "double-licence-mathematiques-economie-universite-claude-bernard-lyon-1-villeurbanne",
-   "interet": 80.89104633751063,
-   "faisabilite": 99.1,
-   "pertinence": 88.17462780250638,
-   "repere": [
-    46,
-    0.87,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31878",
    "interet": 80.28626166784228,
    "faisabilite": 100,
@@ -743,6 +728,21 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-30776",
+   "interet": 80.08097328053502,
+   "faisabilite": 100,
+   "pertinence": 88.04858396832101,
+   "repere": [
+    38,
+    0.9,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -784,12 +784,21 @@
     ]
    },
    {
-    "id": "paris1-dl-histoire-scpo",
+    "id": "psup-31598",
     "categorie": "ambitieux",
-    "pertinence": 87.82720899717485,
+    "pertinence": 89.6951733957811,
     "repere": [
-     10,
-     "en_dessous"
+     8,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-25819",
+    "categorie": "realiste",
+    "pertinence": 84.28105263157894,
+    "repere": [
+     20,
+     "moyenne"
     ]
    },
    {
@@ -802,29 +811,20 @@
     ]
    },
    {
-    "id": "ps-5824",
-    "categorie": "realiste",
-    "pertinence": 82.81527193453914,
-    "repere": [
-     30,
-     "au_dessus"
-    ]
-   },
-   {
-    "id": "psup-31591",
-    "categorie": "realiste",
-    "pertinence": 88.66712420493516,
-    "repere": [
-     45,
-     "au_dessus"
-    ]
-   },
-   {
     "id": "psup-35612",
     "categorie": "realiste",
     "pertinence": 88.5620535138556,
     "repere": [
      33,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-8650",
+    "categorie": "realiste",
+    "pertinence": 82.56148032981741,
+    "repere": [
+     42,
      "au_dessus"
     ]
    },
@@ -969,7 +969,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "7515a2f370a312432481a75aa7ba8a07a06bdc45f22883921ac7b42c8c527239",
-  "textes": "4a5f773ee6f6e1d61e5a5d01fad1a003a84156ab3c365b6569cba92ec0891fec"
+  "calculs": "c546a3b26b0d436732a67ac4db6fd625fb238bb90025d5fdb9157dbf375dc571",
+  "textes": "74ef8558cb6ca62cc2a241cc4a1548024b9b1fa9a4022e453ed40f05e3a8dd40"
  }
 }

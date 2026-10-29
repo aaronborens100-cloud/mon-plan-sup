@@ -28,13 +28,14 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 
 - Calcul et affichage sont séparés : `js/catalogue.js` construit le catalogue (`construireCatalogue`, sans HTML ni
   `document`) ; `js/app.js` ne fait que dessiner.
-- La règle 2 n'est qu'en partie appliquée. Les fiches maison françaises sans lien certain avec Parcoursup ont été
-  retirées (PR H, #76) ; leurs identifiants restent valides (redirection vers la formation Parcoursup, sinon vœu
-  retiré avec un message). Il reste dans `data/formations.json` 1 345 fiches : 826 en France (811 fusionnées avec
-  Parcoursup + 15 prépas ECG « modèles » de `data/ajustements.json`) et 519 à l'étranger (non concernées).
-  Leur retrait (PR I2) attend une décision d'Aaron : il change 88 listes de 10 vœux sur 114 profils.
-- `data/anciennes-fiches.json` (ex-`fusion.json`, renommé dans I1, #77) relie ces fiches à Parcoursup et définit
-  le périmètre affiché (BTS et BUT masqués). Ne pas le supprimer sans une tâche dédiée.
+- La règle 2 est appliquée pour la France : toutes les formations françaises sont des formations Parcoursup
+  (`psup-<code>`). Les fiches maison françaises ont été retirées (PR H, #76, puis PR I2 : les 811 fusionnées avec
+  Parcoursup et les 15 prépas ECG « modèles »). `data/formations.json` ne contient plus que les 519 fiches à
+  l'étranger (non concernées). Les anciens identifiants restent valides : `redirections` de
+  `data/anciennes-fiches.json` (ancien id → `psup-<code>` affichés ; liste vide = vœu retiré avec un message).
+- `data/anciennes-fiches.json` (ex-`fusion.json`, renommé dans I1, #77) garde les anciennes fiches (`anciennes`, lues
+  par `scripts/construire-statuts-stats.py`), leurs `redirections` et le périmètre affiché (BTS et BUT masqués).
+  Ne pas le supprimer sans une tâche dédiée.
 - `data/attendus-filieres.json` : attendus nationaux officiels (45 mentions de licence, PACES, 18 CPGE), recopiés mot
   pour mot depuis `docs/releves/`. Texte de l'État appliqué tel quel (décision d'Aaron du 29/10/2026) : au chargement,
   `js/catalogue.js` en tire les spécialités conseillées (jamais obligatoires) des fiches Parcoursup générées des codes nmc couverts (`applique: true`), par la table discipline → spécialité de `meta`.

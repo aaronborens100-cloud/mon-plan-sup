@@ -267,15 +267,15 @@ test("interface : choix obsolète, vœu et équivalent tous deux retenus", async
 
 test("diversité : jamais un équivalent qui enfreindrait les règles de la liste (exemples)", () => {
   const { E } = site;
-  // sciences-ingenieur : 2 vœux à l'Université Claude Bernard Lyon 1 ; aucun équivalent n'en ajoute un 3e
-  const p = PROFILS.find((x) => x.id === "sciences-ingenieur");
+  // sante-svt : 2 vœux à l'Université Côte d'Azur ; aucun équivalent n'en ajoute un 3e (avant I2, l'exemple était sciences-ingenieur et Lyon 1 : plus de cas de ce genre dans sa liste)
+  const p = PROFILS.find((x) => x.id === "sante-svt");
   const { A, W } = analyser(p);
   const M = E.equivalentsListe(A.resultats, W);
-  const LYON1 = "Université Claude Bernard Lyon 1";
+  const LYON1 = "Université Côte d'Azur";
   assert.equal(W.liste.filter((x) => x.f.etablissement === LYON1).length, 2);
   W.liste.forEach((v) => {
     if (v.f.etablissement === LYON1) return;
-    for (const x of M.get(v.f.id)) assert.notEqual(x.f.etablissement, LYON1, `${v.f.id} → ${x.f.id} : 3e vœu Lyon 1`);
+    for (const x of M.get(v.f.id)) assert.notEqual(x.f.etablissement, LYON1, `${v.f.id} → ${x.f.id} : 3e vœu Côte d'Azur`);
   });
   // sans les règles de diversité (tableau de vœux), ces candidats existent : le filtre a bien un effet
   const sans = E.equivalentsListe(A.resultats, W.liste, 1000);

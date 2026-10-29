@@ -118,21 +118,6 @@
  },
  "top": [
   {
-   "id": "u-paris-nanterre-arts-du-spectacle",
-   "interet": 87.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 84.2,
-   "repere": [
-    74,
-    0.53,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-25320",
    "interet": 83.83333333333334,
    "faisabilite": 83.25,
@@ -163,21 +148,6 @@
    "exclu": null
   },
   {
-   "id": "u-paris-1-arts-plastiques",
-   "interet": 87.83333333333334,
-   "faisabilite": 74.75,
-   "pertinence": 82.60000000000001,
-   "repere": [
-    37,
-    0.23,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-17273",
    "interet": 83.83333333333334,
    "faisabilite": 79.55,
@@ -193,58 +163,13 @@
    "exclu": null
   },
   {
-   "id": "u-sorbonne-paris-nord-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
+   "id": "psup-11095",
+   "interet": 87.83333333333334,
+   "faisabilite": 72.85,
+   "pertinence": 81.84,
    "repere": [
-    100,
-    0.83,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "cy-cergy-paris-universite-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
-   "repere": [
-    100,
-    0.61,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-evry-paris-saclay-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
-   "repere": [
-    100,
-    0.7,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-1-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 78.75,
-   "pertinence": 81.80000000000001,
-   "repere": [
-    66,
-    0.37,
+    74,
+    0.53,
     "moyenne",
     "realiste"
    ],
@@ -283,21 +208,6 @@
    "exclu": null
   },
   {
-   "id": "u-paris-1-histoire-de-l-art-et-archeologie",
-   "interet": 86.05555555555556,
-   "faisabilite": 74.75,
-   "pertinence": 81.53333333333333,
-   "repere": [
-    43,
-    0.14,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-43314",
    "interet": 83.83333333333334,
    "faisabilite": 77.55,
@@ -305,6 +215,21 @@
    "repere": [
     80,
     0.46,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-19088",
+   "interet": 83.83333333333334,
+   "faisabilite": 77.55,
+   "pertinence": 81.32000000000001,
+   "repere": [
+    24,
+    0.44,
     "moyenne",
     "realiste"
    ],
@@ -350,6 +275,21 @@
    "repere": [
     100,
     1,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-15086",
+   "interet": 83.83333333333334,
+   "faisabilite": 76.85,
+   "pertinence": 81.04,
+   "repere": [
+    100,
+    0.83,
     "au_dessus",
     "tres_ouverte"
    ],
@@ -448,14 +388,14 @@
    "exclu": null
   },
   {
-   "id": "u-jean-moulin-lyon-3-histoire",
+   "id": "psup-39120",
    "interet": 83.83333333333334,
-   "faisabilite": 74.75,
-   "pertinence": 80.2,
+   "faisabilite": 74.85,
+   "pertinence": 80.24000000000001,
    "repere": [
-    87,
-    0.37,
-    "moyenne",
+    100,
+    0.7,
+    "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
@@ -463,17 +403,32 @@
    "exclu": null
   },
   {
-   "id": "u-paris-cite-histoire",
-   "interet": 83.83333333333334,
-   "faisabilite": 74.75,
-   "pertinence": 80.2,
+   "id": "psup-9197",
+   "interet": 87.83333333333334,
+   "faisabilite": 68.45,
+   "pertinence": 80.08000000000001,
    "repere": [
-    67,
-    0.47,
-    "moyenne",
-    "realiste"
+    37,
+    0.23,
+    "en_dessous",
+    "en_dessous"
    ],
-   "categorie": "realiste",
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11649",
+   "interet": 83.83333333333334,
+   "faisabilite": 74.05,
+   "pertinence": 79.92,
+   "repere": [
+    100,
+    0.61,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
    "bloque": false,
    "exclu": null
   },
@@ -489,21 +444,6 @@
     "en_dessous"
    ],
    "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-paris-1-philosophie",
-   "interet": 80.5,
-   "faisabilite": 78.75,
-   "pertinence": 79.8,
-   "repere": [
-    80,
-    0.52,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -547,6 +487,21 @@
     0.56,
     "moyenne",
     "frais_fourchette"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11084",
+   "interet": 83.83333333333334,
+   "faisabilite": 72.85,
+   "pertinence": 79.44,
+   "repere": [
+    63,
+    0.53,
+    "moyenne",
+    "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
@@ -609,6 +564,21 @@
     "tres_ouverte"
    ],
    "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9351",
+   "interet": 83.83333333333334,
+   "faisabilite": 72.05,
+   "pertinence": 79.12,
+   "repere": [
+    67,
+    0.47,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   },
@@ -716,6 +686,36 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-32335",
+   "interet": 83.83333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 78.80000000000001,
+   "repere": [
+    33,
+    0.43,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9270",
+   "interet": 86.05555555555556,
+   "faisabilite": 67.65,
+   "pertinence": 78.69333333333333,
+   "repere": [
+    57,
+    0.22,
+    "en_dessous",
+    "en_dessous"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
@@ -739,29 +739,20 @@
     ]
    },
    {
-    "id": "u-rennes-2-arts-plastiques",
+    "id": "psup-15086",
     "categorie": "securite",
-    "pertinence": 77,
+    "pertinence": 81.04,
     "repere": [
-     91,
-     "moyenne"
+     100,
+     "au_dessus"
     ]
    },
    {
-    "id": "u-paris-1-arts-plastiques",
+    "id": "psup-9197",
     "categorie": "ambitieux",
-    "pertinence": 82.60000000000001,
+    "pertinence": 80.08000000000001,
     "repere": [
      37,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "u-paris-1-histoire-de-l-art-et-archeologie",
-    "categorie": "ambitieux",
-    "pertinence": 81.53333333333333,
-    "repere": [
-     43,
      "en_dessous"
     ]
    },
@@ -775,11 +766,11 @@
     ]
    },
    {
-    "id": "u-paris-nanterre-arts-du-spectacle",
-    "categorie": "realiste",
-    "pertinence": 84.2,
+    "id": "psup-43530",
+    "categorie": "ambitieux",
+    "pertinence": 76.9,
     "repere": [
-     74,
+     16,
      "moyenne"
     ]
    },
@@ -793,6 +784,15 @@
     ]
    },
    {
+    "id": "psup-11095",
+    "categorie": "realiste",
+    "pertinence": 81.84,
+    "repere": [
+     74,
+     "moyenne"
+    ]
+   },
+   {
     "id": "psup-36486",
     "categorie": "realiste",
     "pertinence": 74.292,
@@ -802,11 +802,11 @@
     ]
    },
    {
-    "id": "psup-21789",
+    "id": "psup-20972",
     "categorie": "realiste",
-    "pertinence": 75.46,
+    "pertinence": 81.04,
     "repere": [
-     43,
+     47,
      "moyenne"
     ]
    }
@@ -824,7 +824,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence de lettres ou sciences humaines, licence d'arts et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à DN MADE (métiers d'art et design).",
+  "explication": "Tu t'intéresses surtout aux arts et le design et les sciences humaines : tes vœux se partagent entre licence de lettres ou sciences humaines, licence d'arts et licence de droit ou science po, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de droit ou science po.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -912,9 +912,9 @@
      ]
     },
     "ancre": {
-     "id": "u-paris-nanterre-arts-du-spectacle",
+     "id": "psup-11095",
      "categorie": "realiste",
-     "pertinence": 84.2,
+     "pertinence": 81.84,
      "repere": [
       74,
       "moyenne"
@@ -937,7 +937,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "d554069c8d5d471715888061c5e42dbc90abc95365200ccf8c993a22d51c5465",
-  "textes": "4d11917e16722f923cc792f4e23abeefd8da0a5f148f981441204ce5f6046a73"
+  "calculs": "56fd17ddc53b5a2dd58eb1474950f8342502c127d06b839e784b5acd33fa3027",
+  "textes": "3cfbb1767ac29c6bd26763b9fe1e6c77a36cbc6a9b035a5d2f1cbe932d1089f6"
  }
 }

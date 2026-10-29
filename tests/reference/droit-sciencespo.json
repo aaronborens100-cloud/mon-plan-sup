@@ -129,411 +129,6 @@
  },
  "top": [
   {
-   "id": "aix-marseille-universite-marseille-licence-droit",
-   "interet": 81.62220175988693,
-   "faisabilite": 99.9,
-   "pertinence": 88.93332105593217,
-   "repere": [
-    86,
-    0.76,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-nimes-nimes-licence-droit",
-   "interet": 81.24279168750621,
-   "faisabilite": 99.9,
-   "pertinence": 88.70567501250373,
-   "repere": [
-    99,
-    0.74,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-jean-monnet-saint-etienne-licence-droit",
-   "interet": 80.92493842645968,
-   "faisabilite": 99.9,
-   "pertinence": 88.51496305587581,
-   "repere": [
-    88,
-    0.69,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-perpignan-antenne-de-narbonne-narbonne-licence-droit",
-   "interet": 80.6770650407753,
-   "faisabilite": 99.9,
-   "pertinence": 88.36623902446519,
-   "repere": [
-    98,
-    0.77,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-clermont-auvergne-clermont-ferrand-licence-droit",
-   "interet": 80.40433405136214,
-   "faisabilite": 99.9,
-   "pertinence": 88.20260043081728,
-   "repere": [
-    93,
-    0.61,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-marie-et-louis-pasteur-franche-comte-besancon-licence-droit",
-   "interet": 80.38797565158491,
-   "faisabilite": 99.9,
-   "pertinence": 88.19278539095095,
-   "repere": [
-    64,
-    0.54,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-bourgogne-europe-dijon-licence-droit",
-   "interet": 80.22997577738909,
-   "faisabilite": 99.9,
-   "pertinence": 88.09798546643346,
-   "repere": [
-    57,
-    0.62,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-marie-et-louis-pasteur-franche-comte-belfort-licence-droit",
-   "interet": 80.2197371624666,
-   "faisabilite": 99.9,
-   "pertinence": 88.09184229747996,
-   "repere": [
-    76,
-    0.7,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "institut-catholique-de-toulouse-toulouse-licence-droit-parcours-culture-juridique",
-   "interet": 80.07072323318462,
-   "faisabilite": 99.9,
-   "pertinence": 88.00243393991079,
-   "repere": [
-    71,
-    0.66,
-    "au_dessus",
-    "frais_fourchette"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-bourgogne-europe-site-de-nevers-nevers-licence-droit",
-   "interet": 79.98205769093964,
-   "faisabilite": 99.9,
-   "pertinence": 87.94923461456379,
-   "repere": [
-    100,
-    0.72,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-orleans-bourges-bourges-licence-droit",
-   "interet": 79.74051618556106,
-   "faisabilite": 99.9,
-   "pertinence": 87.80430971133664,
-   "repere": [
-    99,
-    0.73,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-nice-licence-droit",
-   "interet": 82.40524846935435,
-   "faisabilite": 95.9,
-   "pertinence": 87.80314908161262,
-   "repere": [
-    35,
-    0.48,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-orleans-chateauroux-chateauroux-licence-droit",
-   "interet": 79.63085851825062,
-   "faisabilite": 99.9,
-   "pertinence": 87.73851511095037,
-   "repere": [
-    100,
-    0.65,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-poitiers-site-d-angouleme-la-couronne-licence-droit",
-   "interet": 79.39356926348832,
-   "faisabilite": 99.9,
-   "pertinence": 87.596141558093,
-   "repere": [
-    100,
-    0.75,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-poitiers-poitiers-licence-droit",
-   "interet": 79.27826503957266,
-   "faisabilite": 99.9,
-   "pertinence": 87.5269590237436,
-   "repere": [
-    52,
-    0.5,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-tours-tours-licence-droit",
-   "interet": 79.14081286946447,
-   "faisabilite": 99.9,
-   "pertinence": 87.44448772167868,
-   "repere": [
-    56,
-    0.57,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-evry-paris-saclay-evry-courcouronnes-licence-droit",
-   "interet": 79.1035893796636,
-   "faisabilite": 99.9,
-   "pertinence": 87.42215362779817,
-   "repere": [
-    54,
-    0.86,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-reims-champagne-ardenne-reims-licence-droit",
-   "interet": 79.09291380224535,
-   "faisabilite": 99.9,
-   "pertinence": 87.41574828134722,
-   "repere": [
-    76,
-    0.63,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-aix-en-provence-licence-droit",
-   "interet": 81.67497553429244,
-   "faisabilite": 95.9,
-   "pertinence": 87.36498532057547,
-   "repere": [
-    41,
-    0.41,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "cy-cergy-paris-universite-cergy-licence-droit",
-   "interet": 78.84175719074689,
-   "faisabilite": 99.9,
-   "pertinence": 87.26505431444815,
-   "repere": [
-    52,
-    0.69,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-universite-marseille-licence-droit-parcours-droit-et-science-politique",
-   "interet": 84.12220175988693,
-   "faisabilite": 91.9,
-   "pertinence": 87.23332105593217,
-   "repere": [
-    33,
-    0.13,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "le-mans-universite-le-mans-licence-droit",
-   "interet": 78.76551520522324,
-   "faisabilite": 99.9,
-   "pertinence": 87.21930912313394,
-   "repere": [
-    75,
-    0.71,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "avignon-universite-avignon-licence-droit",
-   "interet": 81.42166231810965,
-   "faisabilite": 95.9,
-   "pertinence": 87.2129973908658,
-   "repere": [
-    91,
-    0.78,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-angers-campus-de-cholet-cholet-licence-droit",
-   "interet": 78.73503669894878,
-   "faisabilite": 99.9,
-   "pertinence": 87.20102201936928,
-   "repere": [
-    99,
-    0.7,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "aix-marseille-u-site-d-arles-arles-licence-droit",
-   "interet": 81.35201353603183,
-   "faisabilite": 95.9,
-   "pertinence": 87.1712081216191,
-   "repere": [
-    57,
-    0.62,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-savoie-mont-blanc-jacob-bellecombette-licence-droit",
-   "interet": 81.25071487746139,
-   "faisabilite": 95.9,
-   "pertinence": 87.11042892647684,
-   "repere": [
-    67,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-picardie-jules-verne-amiens-licence-droit",
-   "interet": 78.4875761217528,
-   "faisabilite": 99.9,
-   "pertinence": 87.05254567305168,
-   "repere": [
-    52,
-    0.59,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-31837",
    "interet": 82.07751979277313,
    "faisabilite": 94.5,
@@ -564,111 +159,6 @@
    "exclu": null
   },
   {
-   "id": "u-polytechnique-hauts-de-france-valenciennes-licence-droit",
-   "interet": 78.44954539466318,
-   "faisabilite": 99.9,
-   "pertinence": 87.02972723679791,
-   "repere": [
-    99,
-    0.7,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ucly-alpes-europe-annecy-licence-droit",
-   "interet": 81.11597630093459,
-   "faisabilite": 95.9,
-   "pertinence": 87.02958578056075,
-   "repere": [
-    58,
-    0.7,
-    "au_dessus",
-    "frais_fourchette"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rouen-normandie-rouen-licence-droit",
-   "interet": 78.44310349999263,
-   "faisabilite": 99.9,
-   "pertinence": 87.02586209999558,
-   "repere": [
-    78,
-    0.64,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-d-artois-douai-douai-licence-droit-classique",
-   "interet": 78.3824515873275,
-   "faisabilite": 99.9,
-   "pertinence": 86.9894709523965,
-   "repere": [
-    83,
-    0.6,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-catholique-de-lille-faculte-libre-de-droit-lille-licence-droit-parcours-droit-et-culture",
-   "interet": 78.24522152635684,
-   "faisabilite": 99.9,
-   "pertinence": 86.90713291581412,
-   "repere": [
-    75,
-    0.53,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": "Frais (au moins 5 775 €/an) au-delà de ton budget."
-  },
-  {
-   "id": "u-le-havre-normandie-le-havre-licence-droit-parcours-classique",
-   "interet": 78.19696402736726,
-   "faisabilite": 99.9,
-   "pertinence": 86.87817841642035,
-   "repere": [
-    99,
-    0.78,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-caen-normandie-caen-licence-droit",
-   "interet": 78.19241210820584,
-   "faisabilite": 99.9,
-   "pertinence": 86.87544726492351,
-   "repere": [
-    81,
-    0.56,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-30856",
    "interet": 81.78945207762592,
    "faisabilite": 94.5,
@@ -684,40 +174,505 @@
    "exclu": null
   },
   {
-   "id": "institut-catholique-de-rennes-bruz-licence-droit",
-   "interet": 78.17407660035742,
-   "faisabilite": 99.9,
-   "pertinence": 86.86444596021445,
+   "id": "psup-12531",
+   "interet": 81.62220175988693,
+   "faisabilite": 94.4,
+   "pertinence": 86.73332105593217,
    "repere": [
-    92,
-    0.62,
+    86,
+    0.76,
     "au_dessus",
     "tres_ouverte"
    ],
    "categorie": "securite",
    "bloque": false,
-   "exclu": "Frais (≈ 5 200 €/an) au-delà de ton budget."
+   "exclu": null
   },
   {
-   "id": "institut-catholique-de-rennes-bruz-licence-droit-parcours-anglophone",
-   "interet": 78.17407660035742,
-   "faisabilite": 99.9,
-   "pertinence": 86.86444596021445,
+   "id": "psup-10398",
+   "interet": 82.07751979277313,
+   "faisabilite": 93.6,
+   "pertinence": 86.68651187566388,
    "repere": [
-    80,
-    0.42,
-    "moyenne",
+    89,
+    0.68,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10366",
+   "interet": 81.78943786520867,
+   "faisabilite": 94,
+   "pertinence": 86.6736627191252,
+   "repere": [
+    88,
+    0.72,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10450",
+   "interet": 81.42166231810965,
+   "faisabilite": 94.5,
+   "pertinence": 86.65299739086579,
+   "repere": [
+    91,
+    0.78,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31971",
+   "interet": 81.42166231810965,
+   "faisabilite": 94.5,
+   "pertinence": 86.65299739086579,
+   "repere": [
+    70,
+    0.78,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27945",
+   "interet": 81.35201353603183,
+   "faisabilite": 94.5,
+   "pertinence": 86.6112081216191,
+   "repere": [
+    66,
+    0.86,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31042",
+   "interet": 81.25033228996391,
+   "faisabilite": 94.4,
+   "pertinence": 86.51019937397834,
+   "repere": [
+    65,
+    0.68,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-4017",
+   "interet": 81.24279168750621,
+   "faisabilite": 94.4,
+   "pertinence": 86.50567501250373,
+   "repere": [
+    99,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27892",
+   "interet": 80.92492327490105,
+   "faisabilite": 94.5,
+   "pertinence": 86.35495396494063,
+   "repere": [
+    76,
+    0.88,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28559",
+   "interet": 80.80432788661734,
+   "faisabilite": 94.5,
+   "pertinence": 86.28259673197041,
+   "repere": [
+    41,
+    0.78,
+    "au_dessus",
     "realiste"
    ],
    "categorie": "realiste",
    "bloque": false,
-   "exclu": "Frais (≈ 5 200 €/an) au-delà de ton budget."
+   "exclu": null
   },
   {
-   "id": "u-de-perpignan-via-domitia-perpignan-licence-droit",
+   "id": "psup-28488",
+   "interet": 81.62220175988693,
+   "faisabilite": 93.2,
+   "pertinence": 86.25332105593216,
+   "repere": [
+    49,
+    0.69,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-2473",
+   "interet": 80.6770650407753,
+   "faisabilite": 94.5,
+   "pertinence": 86.20623902446519,
+   "repere": [
+    98,
+    0.77,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28125",
+   "interet": 80.6770650407753,
+   "faisabilite": 94.5,
+   "pertinence": 86.20623902446519,
+   "repere": [
+    59,
+    0.91,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32744",
+   "interet": 80.49913432101368,
+   "faisabilite": 94.4,
+   "pertinence": 86.05948059260822,
+   "repere": [
+    100,
+    0.75,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26660",
+   "interet": 80.40429696648171,
+   "faisabilite": 94.5,
+   "pertinence": 86.04257817988903,
+   "repere": [
+    86,
+    0.81,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27301",
+   "interet": 80.38797565158491,
+   "faisabilite": 94.5,
+   "pertinence": 86.03278539095095,
+   "repere": [
+    85,
+    0.9,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-29668",
+   "interet": 80.35318862858014,
+   "faisabilite": 94.5,
+   "pertinence": 86.01191317714809,
+   "repere": [
+    94,
+    0.9,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31045",
+   "interet": 81.39585140208509,
+   "faisabilite": 92.8,
+   "pertinence": 85.95751084125105,
+   "repere": [
+    63,
+    0.69,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27636",
+   "interet": 80.23000667225864,
+   "faisabilite": 94.5,
+   "pertinence": 85.93800400335519,
+   "repere": [
+    76,
+    0.83,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31040",
+   "interet": 81.25037078866214,
+   "faisabilite": 92.8,
+   "pertinence": 85.87022247319729,
+   "repere": [
+    71,
+    0.68,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-5346",
+   "interet": 80.92493842645968,
+   "faisabilite": 93.2,
+   "pertinence": 85.8349630558758,
+   "repere": [
+    88,
+    0.69,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39644",
+   "interet": 80.04023103169679,
+   "faisabilite": 94.5,
+   "pertinence": 85.82413861901807,
+   "repere": [
+    30,
+    0.92,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10303",
+   "interet": 80.35318862858014,
+   "faisabilite": 94,
+   "pertinence": 85.81191317714809,
+   "repere": [
+    82,
+    0.74,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27741",
+   "interet": 79.98998165210341,
+   "faisabilite": 94.5,
+   "pertinence": 85.79398899126204,
+   "repere": [
+    100,
+    0.93,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-6698",
+   "interet": 79.98205769093964,
+   "faisabilite": 94.5,
+   "pertinence": 85.78923461456378,
+   "repere": [
+    100,
+    0.72,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26607",
+   "interet": 79.7421685505584,
+   "faisabilite": 94.5,
+   "pertinence": 85.64530113033504,
+   "repere": [
+    67,
+    0.94,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28486",
+   "interet": 81.6750271906944,
+   "faisabilite": 91.6,
+   "pertinence": 85.64501631441664,
+   "repere": [
+    40,
+    0.64,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32418",
+   "interet": 81.11597630093459,
+   "faisabilite": 92.4,
+   "pertinence": 85.62958578056075,
+   "repere": [
+    58,
+    0.7,
+    "au_dessus",
+    "frais_fourchette"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35926",
+   "interet": 81.11597630093459,
+   "faisabilite": 92.4,
+   "pertinence": 85.62958578056075,
+   "repere": [
+    47,
+    0.68,
+    "au_dessus",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-27099",
+   "interet": 79.68554514509249,
+   "faisabilite": 94.5,
+   "pertinence": 85.6113270870555,
+   "repere": [
+    68,
+    0.92,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-26328",
+   "interet": 79.7421685505584,
+   "faisabilite": 94.4,
+   "pertinence": 85.60530113033505,
+   "repere": [
+    80,
+    0.73,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10837",
+   "interet": 80.2197371624666,
+   "faisabilite": 93.6,
+   "pertinence": 85.57184229747995,
+   "repere": [
+    76,
+    0.7,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10762",
+   "interet": 79.90749630411689,
+   "faisabilite": 94,
+   "pertinence": 85.54449778247013,
+   "repere": [
+    99,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-7866",
    "interet": 80.55625746802207,
-   "faisabilite": 95.9,
-   "pertinence": 86.69375448081325,
+   "faisabilite": 92.8,
+   "pertinence": 85.45375448081325,
    "repere": [
     70,
     0.67,
@@ -727,14 +682,59 @@
    "categorie": "securite",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-2804",
+   "interet": 81.35201353603183,
+   "faisabilite": 91.6,
+   "pertinence": 85.45120812161909,
+   "repere": [
+    57,
+    0.62,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-14042",
+   "interet": 79.40462186762397,
+   "faisabilite": 94.5,
+   "pertinence": 85.44277312057439,
+   "repere": [
+    98,
+    0.83,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-24125",
+   "interet": 79.39356926348832,
+   "faisabilite": 94.4,
+   "pertinence": 85.39614155809299,
+   "repere": [
+    100,
+    0.75,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
    {
-    "id": "aix-marseille-universite-marseille-licence-droit",
+    "id": "psup-12531",
     "categorie": "securite",
-    "pertinence": 88.93332105593217,
+    "pertinence": 86.73332105593217,
     "repere": [
      86,
      "au_dessus"
@@ -759,15 +759,6 @@
     ]
    },
    {
-    "id": "u-de-tours-tours-double-licence-droit-science-politique",
-    "categorie": "ambitieux",
-    "pertinence": 82.94433070247847,
-    "repere": [
-     22,
-     "en_dessous"
-    ]
-   },
-   {
     "id": "psup-35695",
     "categorie": "ambitieux",
     "pertinence": 80.015961366711,
@@ -777,21 +768,21 @@
     ]
    },
    {
-    "id": "avignon-universite-avignon-licence-science-politique",
+    "id": "psup-39568",
     "categorie": "ambitieux",
-    "pertinence": 85.61299739086579,
+    "pertinence": 84.6431655809725,
     "repere": [
-     35,
+     9,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-48613",
-    "categorie": "realiste",
-    "pertinence": 83.02007770464455,
+    "id": "psup-36539",
+    "categorie": "ambitieux",
+    "pertinence": 76.9024421151569,
     "repere": [
-     37,
-     "au_dessus"
+     28,
+     "en_dessous"
     ]
    },
    {
@@ -813,11 +804,20 @@
     ]
    },
    {
-    "id": "uco-facultes-libres-de-l-ouest-niort-niort-licence-science-politique",
+    "id": "psup-11488",
     "categorie": "realiste",
-    "pertinence": 85.78687587749553,
+    "pertinence": 72.51098679555363,
     "repere": [
-     100,
+     43,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-48613",
+    "categorie": "realiste",
+    "pertinence": 83.02007770464455,
+    "repere": [
+     37,
      "au_dessus"
     ]
    }
@@ -836,7 +836,7 @@
     "sciences_humaines"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec licence de langues et double licence comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le droit : on a concentré tes vœux sur licence de droit ou science po, avec licence de langues et IEP comme solutions de repli. Un vœu « découverte » t'ouvre à DEUST (diplôme universitaire bac + 2).",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -851,33 +851,33 @@
   "liste": [
    {
     "x": {
-     "id": "u-d-orleans-orleans-double-licence-droit-histoire",
+     "id": "psup-11077",
      "categorie": "realiste",
-     "pertinence": 83.34120456168425,
+     "pertinence": 80.06323689042736,
      "repere": [
-      78,
+      22,
       "moyenne"
      ]
     }
    },
    {
     "x": {
-     "id": "u-paris-1-pantheon-sorbonne-paris-double-licence-droit-philosophie",
+     "id": "psup-35694",
      "categorie": "ambitieux",
-     "pertinence": 82.54541948431591,
+     "pertinence": 80.015961366711,
      "repere": [
-      20,
+      5,
       "en_dessous"
      ]
     }
    },
    {
     "x": {
-     "id": "institut-catholique-de-paris-paris-double-licence-droit-philosophie",
+     "id": "psup-11075",
      "categorie": "realiste",
-     "pertinence": 82.54017644507533,
+     "pertinence": 79.42323689042738,
      "repere": [
-      73,
+      21,
       "moyenne"
      ]
     }
@@ -885,7 +885,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "739ea73fc935b2f694ccad79990e9779ad9150d335abe5130ae69a2d0f619735",
-  "textes": "975f73cdcb3c4892a0ef0e9c77a92696e33ddea6b89d6b382c4ab1b54ae9785a"
+  "calculs": "4c2997bb680ec1fec0626768274efe473e8835515ddb9f6aed0ed818cd76d0fa",
+  "textes": "463f2fd4830324079133348ea5d62e08e352de7273733e9ecdb7e2e971154ee0"
  }
 }

@@ -45,12 +45,13 @@ test("sans intérêt santé : toute LAS est classée après la meilleure licence
   }
 });
 
+// I2 : l'exemple de la licence de Toulon (psup-10367) est remplacé par celle de Côte d'Azur (psup-2258), meilleure licence simple d'éco-gestion dans les résultats une fois les fiches maison retirées.
 test("sans intérêt santé : exemple concret, la LAS d'éco-gestion passe derrière la licence d'éco-gestion", () => {
   const { A } = analyser(profil("ecg-expertes-faible"));
   const rang = (id) => A.resultats.findIndex((x) => x.f.id === id);
-  assert.ok(rang("psup-28381") > rang("psup-10367"), "LAS Sorbonne Paris Nord avant la licence Économie-gestion de Toulon");
+  assert.ok(rang("psup-28381") > rang("psup-2258"), "LAS Sorbonne Paris Nord avant la licence Économie-gestion de Côte d'Azur");
   assert.equal(forme(A.resultats[rang("psup-28381")]), "las");
-  assert.ok(A.resultats[rang("psup-28381")].pertinence > A.resultats[rang("psup-10367")].pertinence, "la pertinence affichée ne change pas");
+  assert.ok(A.resultats[rang("psup-28381")].pertinence > A.resultats[rang("psup-2258")].pertinence, "la pertinence affichée ne change pas");
 });
 
 test("avec un intérêt santé, même léger : l'ordre n'est pas modifié", () => {

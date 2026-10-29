@@ -153,7 +153,7 @@
    "exclu": null
   },
   {
-   "id": "ps-10201",
+   "id": "psup-31287",
    "interet": 80.59064070541176,
    "faisabilite": 83.25,
    "pertinence": 81.65438442324705,
@@ -258,6 +258,36 @@
    "exclu": null
   },
   {
+   "id": "psup-2258",
+   "interet": 79.99109151192906,
+   "faisabilite": 83.25,
+   "pertinence": 81.29465490715744,
+   "repere": [
+    51,
+    0.78,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-28381",
+   "interet": 80.51806034459848,
+   "faisabilite": 83.25,
+   "pertinence": 81.61083620675909,
+   "repere": [
+    9,
+    0.96,
+    "au_dessus",
+    "taux_bas"
+   ],
+   "categorie": "ambitieux",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-35071",
    "interet": 79.62060077054932,
    "faisabilite": 83.25,
@@ -303,6 +333,21 @@
    "exclu": "Tu as indiqué vouloir rester en France."
   },
   {
+   "id": "psup-35072",
+   "interet": 79.38527973582846,
+   "faisabilite": 83.25,
+   "pertinence": 80.93116784149709,
+   "repere": [
+    74,
+    0.85,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-10367",
    "interet": 79.37279582711044,
    "faisabilite": 83.25,
@@ -314,21 +359,6 @@
     "tres_ouverte"
    ],
    "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-28381",
-   "interet": 80.51806034459848,
-   "faisabilite": 83.25,
-   "pertinence": 81.61083620675909,
-   "repere": [
-    9,
-    0.96,
-    "au_dessus",
-    "taux_bas"
-   ],
-   "categorie": "ambitieux",
    "bloque": false,
    "exclu": null
   },
@@ -378,7 +408,7 @@
    "exclu": null
   },
   {
-   "id": "ps-1029",
+   "id": "psup-31294",
    "interet": 79.19780826262625,
    "faisabilite": 83.25,
    "pertinence": 80.81868495757575,
@@ -453,22 +483,7 @@
    "exclu": null
   },
   {
-   "id": "ps-5121",
-   "interet": 79.21270666976116,
-   "faisabilite": 83.15,
-   "pertinence": 80.7876240018567,
-   "repere": [
-    64,
-    0.8,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "ps-5077",
+   "id": "psup-31403",
    "interet": 79.12146774290694,
    "faisabilite": 83.25,
    "pertinence": 80.77288064574417,
@@ -706,21 +721,6 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
-  },
-  {
-   "id": "psup-35342",
-   "interet": 78.50717650047406,
-   "faisabilite": 83.25,
-   "pertinence": 80.40430590028444,
-   "repere": [
-    28,
-    0.78,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
   }
  ],
  "voeux": {
@@ -735,7 +735,7 @@
     ]
    },
    {
-    "id": "ps-10201",
+    "id": "psup-31287",
     "categorie": "securite",
     "pertinence": 81.65438442324705,
     "repere": [
@@ -762,20 +762,11 @@
     ]
    },
    {
-    "id": "paris1-dl-histoire-scpo",
+    "id": "psup-11217",
     "categorie": "ambitieux",
-    "pertinence": 76.96720899717485,
+    "pertinence": 75.7684162561234,
     "repere": [
-     10,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-43011",
-    "categorie": "realiste",
-    "pertinence": 77.41493906972416,
-    "repere": [
-     43,
+     16,
      "au_dessus"
     ]
    },
@@ -807,9 +798,18 @@
     ]
    },
    {
-    "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
+    "id": "psup-39297",
+    "categorie": "realiste",
+    "pertinence": 73.06491519014686,
+    "repere": [
+     26,
+     "au_dessus"
+    ]
+   },
+   {
+    "id": "psup-10372",
     "categorie": "securite",
-    "pertinence": 77.42157386371582,
+    "pertinence": 77.6024559359953,
     "repere": [
      100,
      "au_dessus"
@@ -830,7 +830,7 @@
     "gestion_commerce"
    ]
   },
-  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre licence d'éco-gestion, prépa ECG et double licence, plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
+  "explication": "Tu t'intéresses surtout à la finance et l'économie : tes vœux se partagent entre licence d'éco-gestion, prépa ECG et DCG (comptabilité et gestion), plus quelques autres pistes. Un vœu « découverte » t'ouvre à licence de maths ou d'informatique.",
   "decouvertes": {}
  },
  "nouvelles": [
@@ -845,7 +845,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "8748149355275dabeda7e1005572a93a0c898f902ba3421dc7d6310c98ef26ba",
-  "textes": "d841952e278f3b2658c0281c5927859befee8268ed305d31aaff3629ccd0bfe0"
+  "calculs": "444547f314e818618bc5c636d010a349b9ebab759b11e9b4ec126407f550de0e",
+  "textes": "ca924e9fc7ef09c4b0083f4b039803f36a8b922ef9b8952cf1e8b04b59bb1041"
  }
 }

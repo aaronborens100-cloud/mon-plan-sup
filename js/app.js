@@ -2,7 +2,7 @@
  * js/app.js : application (routeur et vues).
  *
  * Rôle : charger les données (blocs intégrés à la page, sinon data/*.json), construire le
- * catalogue (fiches Mon Plan Sup + Parcoursup), gérer la navigation par adresse (#accueil,
+ * catalogue (formations Parcoursup + fiches à l'étranger), gérer la navigation par adresse (#accueil,
  * #liste, #plan, #explorer, #profil, #formation-…, #donnees) et afficher chaque page : accueil,
  * profil et questionnaire, Ma liste, fiche formation, catalogue, Mon plan, Mes données.
  * Gère aussi les clics et la saisie, et enregistre l'état avec CapStore.
@@ -20,11 +20,11 @@
   const DANS_IFRAME = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
 
   let DATA = null, QUEST = null, METIERS = null, POURS = null, EXTRA = null, etat = S.lire();
-  // Base fusionnée : CAT = toutes les fiches affichées (ancienne base + Parcoursup), sans doublon certain
+  // CAT = toutes les formations affichées (formations Parcoursup + fiches à l'étranger)
   // (le calcul est dans js/catalogue.js ; ces variables en reprennent l'état après chaque construction, voir synchroCatalogue)
   let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCONS = null, LIEUX = null, FRAIS_PRIVES_META = null, CAMPUS = {};
   function synchroCatalogue() { ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS } = C.etat()); }
-  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
+  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
   migrer();
 
   function migrer() {
@@ -58,11 +58,11 @@
     const [d, ps, fu, st, fil, aj, sts, man, , fpr, att] = await Promise.all([charger("data-formations", "data/formations.json"), charger("data-parcoursup", "data/parcoursup.json").catch(() => null), charger("data-anciennes-fiches", "data/anciennes-fiches.json").catch(() => null), charger("data-stats", "data/stats.json").catch(() => null), charger("data-filieres", "data/filieres.json").catch(() => null), charger("data-ajustements", "data/ajustements.json").catch(() => null), charger("data-statuts-stats", "data/statuts-stats.json").catch(() => null), charger("data-stats-manuelles", "data/stats-manuelles.json").catch(() => null), chargerLycees().catch(() => null), charger("data-frais-prives", "data/frais-prives.json").catch(() => null), charger("data-attendus-filieres", "data/attendus-filieres.json").catch(() => null)]);
     C.construireCatalogue(d, ps, fu, st, fil, aj, sts, man, fpr, att);
     synchroCatalogue();
-    const redir = C.redirigerVoeux(etat);   // fiches remplacées ou redirigées, fiches maison retirées
+    const redir = C.redirigerVoeux(etat);   // anciennes fiches maison redirigées vers Parcoursup ou retirées
     etat.retenus = redir.etat.retenus;
     if (redir.messages.length) app.avisRetrait = true;
     if (redir.modifie) sauver(true);   // redirections et retraits enregistrés tout de suite
-    C.completerCalendrier(d);
+    C.completerCalendrier(d, aj);
     DATA = d; window.__DATA = DATA;
   });
   // Pages qui ont besoin des formations : toutes sauf l'accueil (chiffres complétés à l'arrivée des données)
@@ -1102,7 +1102,6 @@
       </header>
       ${f.__campusEtranger ? blocCampusEtranger(f) : ""}
       ${MENTION_STATS[f.stats] ? `<p class="notice small"><strong>${esc(MENTION_STATS[f.stats])}</strong>${f.stats === "nouvelle_2026" ? " Elle n'entre pas dans ta liste de 10 vœux : elle peut t'être proposée à part, dans « Nouvelle formation à la rentrée 2026 », et tu peux l'ajouter toi-même." : " Elle n'est pas proposée dans ta liste de vœux tant qu'il n'y a pas de chiffres sourcés, mais tu peux l'ajouter toi-même."}</p>` : ""}
-      ${CATBY[f.id] && CATBY[f.id].av ? `<p class="notice small"><strong>À vérifier.</strong> ${esc(CATBY[f.id].avTxt.join(" "))} <a href="#formation-${f.id}" data-action="ancre" data-cible="sec-fusion">Voir le détail</a></p>` : ""}
       ${f.famille ? (() => { const sib = A.resultats.filter((r) => r.f.famille && r.f.famille.id === f.famille.id && r.f.id !== f.id); return `<div class="bloc-famille"><span class="bf-ico">${ico("groupe")}</span><div class="stack" style="gap:6px"><span class="fw">Famille : ${esc(f.famille.nom)}</span><span class="small muted">${esc(f.famille.description)}</span>${sib.length ? `<span class="small">Mêmes attentes : ${sib.map((r) => `<a href="#formation-${r.f.id}">${esc(r.f.etablissement.replace(/^Lycée /, ""))}</a> <span class="muted">(${E.CAT_LABEL[r.categorie].toLowerCase()} · ${repereTxt(r.repere)})</span>`).join(", ")}</span>` : ""}</div></div>`; })() : ""}
       <nav class="sommaire" aria-label="Sur cette fiche"><button data-action="ancre" data-cible="sec-formation"><span>1</span>Formation</button><button data-action="ancre" data-cible="sec-poursuites"><span>2</span>Poursuite d'études</button><button data-action="ancre" data-cible="sec-metiers"><span>3</span>Métiers et débouchés</button></nav>
 
@@ -1182,12 +1181,11 @@
             <optgroup label="Catégories Parcoursup">${tfs.map((k) => `<option value="${esc(k)}" ${c.type === k ? "selected" : ""}>${esc(libCat(k))}</option>`).join("")}</optgroup></select></div>
           <div class="field"><label for="cregion">Région</label><select id="cregion" data-cfiltre="region"><option value="">Toutes</option>${regions.map((r) => `<option ${c.region === r ? "selected" : ""}>${esc(r)}</option>`).join("")}<option value="etranger" ${c.region === "etranger" ? "selected" : ""}>Étranger</option></select></div>
           <div class="field"><label for="capp">Apprentissage</label><select id="capp" data-cfiltre="app"><option value="">Indifférent</option><option value="oui" ${c.app === "oui" ? "selected" : ""}>En apprentissage</option><option value="non" ${c.app === "non" ? "selected" : ""}>Hors apprentissage</option></select></div>
-          <label class="row small check-label"><input type="checkbox" data-cfiltre="verif" ${c.verif ? "checked" : ""}> Seulement les fiches « À vérifier »</label>
         </div>
       </div>
       <div class="resultats-tete"><p aria-live="polite"><b>${nbFr(liste.length)}</b> formation${liste.length > 1 ? "s" : ""} trouvée${liste.length > 1 ? "s" : ""}</p><span class="tiny muted">Places : capacité Parcoursup 2025 du vœu · base du ${esc(fmtDate(FU ? FU.meta.version : DATA.meta.version))}</span></div>
       <div class="cat-grille">${vis.map((e) => `<a class="cat-carte ton-${tonType(e.type, e.type_label)}" href="#formation-${e.id}">
-          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}${e.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : e.stats === "sans_stats" ? '<span class="pill neutral">Stats non publiées</span>' : ""}</div>
+          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : e.stats === "sans_stats" ? '<span class="pill neutral">Stats non publiées</span>' : ""}</div>
           <h3>${esc(e.nom)}</h3>
           <p class="f-lieu"><span>${ico("ecole")}${esc(e.etablissement)}</span></p>
           <div class="cat-pied"><span>${ico("pin")}${esc(e.ville)}${e.pays !== "France" ? ", " + esc(e.pays) : ""}</span><span>${ico("groupe")}${e.places ? nbFr(e.places) + " places" : "places n. c."}</span><span>${ico("euro")}${e.cout != null ? (e.coutMin != null && e.coutMin < e.cout ? `${E.fmtEur(e.coutMin)} à ${E.fmtEur(e.cout)}` : E.fmtEur(e.cout)) + "/an" : "coût n. c."}</span></div>
@@ -1200,7 +1198,6 @@
     let l = CAT;
     if (c.type) l = l.filter((e) => e.type === c.type);
     if (c.source) l = l.filter((e) => e.src === c.source);
-    if (c.verif) l = l.filter((e) => e.av);
     if (c.app) l = l.filter((e) => (c.app === "oui") === !!e.app);
     if (c.region) l = l.filter((e) => (c.region === "etranger" ? e.pays !== "France" : e.region === c.region));
     if (c.q) { const mots = sansAccents(c.q).split(/\s+/).filter(Boolean); l = l.filter((e) => mots.every((m) => e.cle.includes(m))); }
@@ -1208,11 +1205,6 @@
   }
   const SRC_LIB = { P: "Parcoursup", O: "site officiel", A: "autre source", E: "donnée éditeur" };
   const srcBadge = (code) => (Array.isArray(code) ? code.map(srcBadge).join("") : code ? `<span class="badge-src src-${code}">${SRC_LIB[code] || esc(code)}</span>` : "");
-  function pillSource(e) {
-    if (e.src === "fusion") return '<span class="pill neutral">Mon Plan Sup + Parcoursup</span>';
-    if (e.src === "parcoursup") return '<span class="pill neutral">Parcoursup</span>';
-    return '<span class="pill neutral">Mon Plan Sup</span>';
-  }
   function lienFiche(id) { const e = CATBY[ALIAS[id] || id]; return e ? `<a href="#formation-${e.id}">${esc(e.nom)}</a> <span class="muted">(${esc(e.etablissement)}, ${esc(e.ville)})</span>` : esc(id); }
   function blocParcoursup(r) {
     const L = (arr) => (arr && arr.length ? arr.map(esc).join("<br>") : "");
@@ -1235,43 +1227,27 @@
   }
   const BLOC_LIB = { admission: "Admission (chiffres)", mentions_admis: "Mentions des admis", notes: "Niveau scolaire", cout: "Coût", langue_requise: "Langues", specialites: "Spécialités", classement: "Classement", candidature: "Candidature", calendrier: "Calendrier", tests: "Tests", integrations: "Intégrations" };
   function blocFusion(f) {
-    if (f.__gen && f.__gen.modele) {
-      const e = CATBY[f.id];
-      return `<div class="card stack" id="sec-fusion"><h3>Sources et données officielles</h3>
-        <p class="small">Cette fiche remplace la fiche Mon Plan Sup « ${esc(f.__gen.modeleNom)} », qui ne précisait pas l'option. Elle en reprend tout le contenu (famille, classement, spécialités, débouchés)${srcBadge("E")}. Les chiffres d'admission et les mentions sont ceux de cette option (statistiques officielles 2025)${srcBadge("P")}.</p>
-        <h4>Données Parcoursup</h4>${e && e.ps ? blocParcoursup(e.ps) : ""}</div>`;
-    }
     if (f.__gen) {
-      const e = CATBY[f.id], fam = f.__gen.fam, prob = (FU && FU.ps_probables[f.__gen.gta]) || [], dup = (FU && FU.ps_doublons[f.__gen.gta]) || [];
-      return `<div class="card stack" id="sec-fusion"><h3>Sources et données officielles</h3>
+      const e = CATBY[f.id], fam = f.__gen.fam;
+      // exemples : anciennes fiches Mon Plan Sup de la filière encore reliées à une formation affichée (sinon, rien n'est cité)
+      const exemples = fam.origine === "deduit_intitule" ? [] : (fam.exemples || []).filter((id) => CATBY[ALIAS[id] || id]).slice(0, 3);
+      return `<div class="card stack" id="sec-sources"><h3>Sources et données officielles</h3>
         <p class="small">Fiche construite à partir de Parcoursup. Chiffres d'admission et mentions : ${STATS[f.__gen.gta] ? `statistiques officielles 2025${srcBadge("P")}` : f.admission.session ? `statistiques de la session ${esc(f.admission.session)}${f.admission.statut === "releve_manuel" ? ", relevé manuel" : ""}` : esc((MENTION_STATS[f.stats] || MENTION_STATS.sans_stats).replace(/^./, (c) => c.toLowerCase()).replace(/\.$/, ""))}. ${fam.origine === "deduit_intitule"
           ? `Profil, domaines, spécialités et métiers : déduits de l'intitulé officiel de la filière (« ${esc(fam.libelle)} », code ${esc(fam.nmc)})${srcBadge("E")}, confiance ${esc(fam.confiance)}.`
-          : `Profil, domaines, spécialités, métiers et poursuites : repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière (code ${esc(fam.nmc)})${srcBadge("E")}, par exemple ${fam.exemples.slice(0, 3).map((id) => lienFiche(id)).join(", ")}.`} Ces éléments décrivent la filière, pas cet établissement en particulier : à vérifier.</p>
-        ${prob.length ? `<div class="notice small"><strong>À vérifier : fiche peut-être déjà présente.</strong> ${prob.map((id) => lienFiche(id)).join(", ")}.</div>` : ""}
-        ${dup.length ? `<div class="notice small"><strong>À vérifier : doublon Parcoursup possible.</strong> ${dup.map((g) => lienFiche("psup-" + g)).join(", ")}.</div>` : ""}
+          : `Profil, domaines, spécialités, métiers et poursuites : repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière (code ${esc(fam.nmc)})${srcBadge("E")}${exemples.length ? `, par exemple ${exemples.map((id) => lienFiche(id)).join(", ")}` : ""}.`} Ces éléments décrivent la filière, pas cet établissement en particulier : à vérifier.</p>
         <h4>Données Parcoursup</h4>${e && e.ps ? blocParcoursup(e.ps) : ""}</div>`;
     }
-    const e = CATBY[f.id], d = FU && FU.anciennes[f.id];
-    if (!e || !d) return "";
-    const conf = d.x || [];
+    // fiche à l'étranger (data/formations.json)
+    const d = FU && FU.anciennes[f.id];
+    if (!CATBY[f.id] || !d) return "";
     const prov = Object.entries(d.p || {}).filter(([k]) => BLOC_LIB[k]);
-    let h = `<div class="card stack" id="sec-fusion"><h3>Sources et données officielles</h3>`;
-    if (e.ps) {
-      h += `<p class="small">Cette fiche réunit les informations de Mon Plan Sup et la fiche officielle Parcoursup 2026 correspondante (correspondance certaine : ${esc(d.r)}).</p>`;
-      if (conf.length) h += `<div class="notice small"><strong>Informations divergentes, à vérifier.</strong> Les deux valeurs sont conservées.<ul class="why">${conf.map((x) => `<li><span class="fw">${esc(x.champ)}</span> : Mon Plan Sup indique « ${esc(x.ancienne)} »${srcBadge({ PARCOURSUP: "P", SITE_OFFICIEL: "O", AUTRE: "A", DONNEE_EDITEUR: "E" }[x.ancienne_source && x.ancienne_source.provenance] || "E")} ; Parcoursup indique « ${esc(x.parcoursup)} »${srcBadge("P")}${x.resolution ? `<br><span class="small muted">${esc(x.resolution)}</span>` : ""}</li>`).join("")}</ul></div>`;
-      if (f.__compl) h += `<p class="small">Champs vides de Mon Plan Sup complétés par les statistiques officielles Parcoursup 2025${srcBadge("P")} : ${esc([...Object.keys(f.__compl.admission || {}).filter((c) => !c.startsWith("_")).map((c) => ({ places: "places", candidats: "vœux", admis: "admis", taux: "taux d'accès" }[c] || c)), f.__compl.mentions_admis ? "mentions des admis" : null, f.__compl.notes ? "moyenne estimée des admis" : null].filter(Boolean).join(", "))}. Les valeurs déjà présentes n'ont pas été modifiées.</p>`;
-      h += `<h4>Données Parcoursup</h4>${blocParcoursup(e.ps)}`;
-    } else if (d.m === "P") {
-      h += `<div class="notice small"><strong>À vérifier : correspondance Parcoursup probable.</strong> ${esc(d.r)} Les fiches restent séparées tant que la correspondance n'est pas confirmée.<ul class="why">${(d.c || []).map((g) => `<li>${lienFiche("psup-" + g)}</li>`).join("")}</ul></div>`;
-    } else {
-      h += `<p class="small muted">${f.pays === "France" || f.__campusEtranger ? "Aucune fiche Parcoursup 2026 correspondante trouvée de façon sûre." : "Formation hors de France : pas de fiche Parcoursup."}</p>`;
-    }
-    if (prov.length) h += `<h4>Provenance des informations de Mon Plan Sup</h4><p class="small muted">Provenance déclarée lors de la saisie ; ces informations n'ont pas été revérifiées pendant la fusion.</p><dl class="facts small">${prov.map(([k, v]) => `<dt>${esc(BLOC_LIB[k])}</dt><dd>${srcBadge(v)}</dd>`).join("")}<dt>Profil, domaines, métiers, sélectivité</dt><dd>${srcBadge("E")}</dd></dl>`;
+    let h = `<div class="card stack" id="sec-sources"><h3>Sources et données officielles</h3>`;
+    h += `<p class="small muted">${f.pays === "France" || f.__campusEtranger ? "Aucune fiche Parcoursup 2026 correspondante trouvée de façon sûre." : "Formation hors de France : pas de fiche Parcoursup."}</p>`;
+    if (prov.length) h += `<h4>Provenance des informations de Mon Plan Sup</h4><p class="small muted">Provenance déclarée lors de la saisie ; ces informations n'ont pas été revérifiées.</p><dl class="facts small">${prov.map(([k, v]) => `<dt>${esc(BLOC_LIB[k])}</dt><dd>${srcBadge(v)}</dd>`).join("")}<dt>Profil, domaines, métiers, sélectivité</dt><dd>${srcBadge("E")}</dd></dl>`;
     return h + `</div>`;
   }
   function vueFichePs(e) {
     const r = e.ps;
-    const prob = (FU && FU.ps_probables[r.gta]) || [], dup = (FU && FU.ps_doublons[r.gta]) || [];
     const v = (col) => (STATS[r.gta] ? statDe(r.gta, col) : null);
     const tuiles = [
       ["groupe", "Places", v("capa_fin") != null ? nbFr(v("capa_fin")) : "n. c.", "ciel"],
@@ -1283,13 +1259,11 @@
       <header class="fiche-hero ton-${tonType(e.type, e.type_label)}">
         <a href="#explorer" class="lien-retour">${ico("retour")}Catalogue</a>
         <div class="fiche-hero-txt">
-          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}</div>
+          <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}</div>
           <h1>${esc(e.nom)}</h1><p class="f-lieu"><span>${ico("ecole")}${esc(e.etablissement)}</span><span>${ico("pin")}${esc(e.ville)}${r.departement ? " · " + esc(r.departement) : ""}</span></p>
         </div>
         <div class="tuiles">${tuiles.map(([i, l, val, t]) => `<div class="tuile ton-${t}"><span class="tuile-ico">${ico(i)}</span><span class="tuile-l">${l}</span><span class="tuile-v">${esc(val)}</span></div>`).join("")}</div>
       </header>
-      ${prob.length ? `<div class="notice small"><strong>À vérifier : fiche peut-être déjà présente.</strong> Cette formation correspond peut-être à : <ul class="why">${prob.map((id) => `<li>${lienFiche(id)}</li>`).join("")}</ul>Les deux fiches restent séparées tant que la correspondance n'est pas confirmée.</div>` : ""}
-      ${dup.length ? `<div class="notice small"><strong>À vérifier : doublon Parcoursup possible.</strong> Parcoursup publie ${dup.length + 1} vœux aux informations identiques (seuls le code, l'adresse GPS et la fiche diffèrent) : ${dup.map((g) => lienFiche("psup-" + g)).join(", ")}. Il s'agit souvent de sites ou de sous-vœux différents ; vérifie sur les fiches officielles.</div>` : ""}
       <section class="card stack"><div class="carte-tete"><span class="info-ico ton-violet">${ico("dossier")}</span><h2>Informations officielles Parcoursup</h2></div>${blocParcoursup(r)}</section>
       <p class="notice info small">Mon Plan Sup n'a pas encore de fiche détaillée pour cette formation (niveau attendu, spécialités, débouchés) : elle apparaît dans le catalogue mais pas encore dans tes recommandations personnalisées.</p>
       ${AVERT}

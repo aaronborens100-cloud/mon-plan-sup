@@ -93,13 +93,15 @@ test("issue #41 : le PGE de Paris-La Défense sans coordonnées n'entre plus dan
 test("élève de Mauriac (données actuelles) : liste après correction, rien à distance inconnue ni à plus de 45 km", () => {
   const { E } = site;
   const { A, W } = analyser(site, MAURIAC_PROFIL, MAURIAC_REPONSES);
-  // la liste après correction (4 vœux, 0 « sécurité ») : le rayon de 45 km autour de Mauriac ne laisse pas plus.
+  // la liste après correction (0 « sécurité ») : le rayon de 45 km autour de Mauriac ne laisse pas plus.
   // psup-47937 (frais « jusqu'à 1 750 € selon les revenus ») n'est plus exclu par le budget : décision du fondateur, PR A2 (issue #49)
+  // I2 : les deux DN MADE du lycée Saint-Géraud d'Aurillac (anciennes fiches maison dnmade-materiaux-… et dnmade-graphisme-…)
+  // sont maintenant les formations Parcoursup psup-21644 et psup-21642, notées par leur filière ; « Matériaux » (psup-21644) passe
+  // sous le seuil de la liste (règle « très ouverte en dessous », débouchés éloignés des envies) : 3 vœux au lieu de 4.
   assert.deepEqual(ids(W.liste), [
     "psup-47937",
-    "dnmade-materiaux-lycee-de-la-communication-saint-geraud-aurillac",
     "psup-23106",
-    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",
+    "psup-21642",
   ]);
   assert.equal(W.protection.nbSecurite, 0);
   for (const [nom, l] of Object.entries(proposees(site, A, W))) {

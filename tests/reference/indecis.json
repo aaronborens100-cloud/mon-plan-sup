@@ -110,81 +110,6 @@
  },
  "top": [
   {
-   "id": "u-de-reims-champagne-ardenne-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    64,
-    0.6,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-franche-comte-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    60,
-    0.54,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bretagne-occidentale-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    59,
-    0.22,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-rouen-normandie-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    59,
-    0.55,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-strasbourg-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 76.75,
-   "pertinence": 81.9,
-   "repere": [
-    53,
-    0.44,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-29102",
    "interet": 85.33333333333334,
    "faisabilite": 74.45,
@@ -239,6 +164,21 @@
     0.64,
     "au_dessus",
     "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-15119",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.85,
+   "pertinence": 80.34,
+   "repere": [
+    64,
+    0.6,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -335,171 +275,6 @@
    "exclu": null
   },
   {
-   "id": "u-de-lorraine-nancy-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    47,
-    0.34,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-caen-normandie-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    43,
-    0.42,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-evry-paris-saclay-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    43,
-    0.52,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-jean-monnet-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    41,
-    0.52,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-cote-d-azur-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    40,
-    0.51,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-toulon-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    36,
-    0.47,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-rennes-2-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    34,
-    0.34,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-bourgogne-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    34,
-    0.48,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-montpellier-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    27,
-    0.31,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-toulouse-iii-paul-sabatier-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    22,
-    0.24,
-    "en_dessous",
-    "en_dessous"
-   ],
-   "categorie": "ambitieux",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-poitiers-staps",
-   "interet": 85.33333333333334,
-   "faisabilite": 72.75,
-   "pertinence": 80.30000000000001,
-   "repere": [
-    22,
-    0.32,
-    "moyenne",
-    "realiste"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
    "id": "psup-22966",
    "interet": 85.33333333333334,
    "faisabilite": 72.45,
@@ -545,6 +320,21 @@
    "exclu": null
   },
   {
+   "id": "psup-3526",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.45,
+   "pertinence": 80.18,
+   "repere": [
+    60,
+    0.54,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-4756",
    "interet": 85.33333333333334,
    "faisabilite": 72.45,
@@ -575,6 +365,21 @@
    "exclu": null
   },
   {
+   "id": "psup-10951",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.45,
+   "pertinence": 80.18,
+   "repere": [
+    43,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-18647",
    "interet": 85.33333333333334,
    "faisabilite": 72.05,
@@ -582,6 +387,21 @@
    "repere": [
     84,
     0.51,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-9701",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.05,
+   "pertinence": 80.02000000000001,
+   "repere": [
+    59,
+    0.55,
     "moyenne",
     "realiste"
    ],
@@ -620,6 +440,21 @@
    "exclu": null
   },
   {
+   "id": "psup-5361",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.05,
+   "pertinence": 80.02000000000001,
+   "repere": [
+    41,
+    0.52,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-9937",
    "interet": 85.33333333333334,
    "faisabilite": 72.05,
@@ -627,6 +462,21 @@
    "repere": [
     35,
     0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-11267",
+   "interet": 85.33333333333334,
+   "faisabilite": 72.05,
+   "pertinence": 80.02000000000001,
+   "repere": [
+    35,
+    0.51,
     "moyenne",
     "realiste"
    ],
@@ -657,6 +507,36 @@
    "repere": [
     41,
     0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-20460",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.65,
+   "pertinence": 79.86000000000001,
+   "repere": [
+    40,
+    0.51,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10368",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.65,
+   "pertinence": 79.86000000000001,
+   "repere": [
+    36,
+    0.47,
     "moyenne",
     "realiste"
    ],
@@ -708,16 +588,136 @@
    "categorie": "realiste",
    "bloque": false,
    "exclu": null
+  },
+  {
+   "id": "psup-8023",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    53,
+    0.44,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-31002",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    47,
+    0.47,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-8747",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    45,
+    0.42,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23301",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    45,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-23303",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    38,
+    0.46,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-3274",
+   "interet": 85.33333333333334,
+   "faisabilite": 71.25,
+   "pertinence": 79.7,
+   "repere": [
+    34,
+    0.48,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-2178",
+   "interet": 85.33333333333334,
+   "faisabilite": 70.85,
+   "pertinence": 79.54,
+   "repere": [
+    57,
+    0.41,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-8678",
+   "interet": 85.33333333333334,
+   "faisabilite": 70.85,
+   "pertinence": 79.54,
+   "repere": [
+    44,
+    0.4,
+    "moyenne",
+    "realiste"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
   }
  ],
  "voeux": {
   "liste": [
    {
-    "id": "u-de-reims-champagne-ardenne-staps",
+    "id": "psup-29102",
     "categorie": "securite",
-    "pertinence": 81.9,
+    "pertinence": 80.98,
     "repere": [
-     64,
+     80,
      "au_dessus"
     ]
    },
@@ -731,12 +731,12 @@
     ]
    },
    {
-    "id": "u-de-bretagne-occidentale-staps",
+    "id": "psup-30879",
     "categorie": "ambitieux",
-    "pertinence": 81.9,
+    "pertinence": 79.34400000000001,
     "repere": [
-     59,
-     "en_dessous"
+     2,
+     "moyenne"
     ]
    },
    {
@@ -785,12 +785,12 @@
     ]
    },
    {
-    "id": "u-de-caen-normandie-aes",
+    "id": "psup-39468",
     "categorie": "securite",
-    "pertinence": 65.31666666666666,
+    "pertinence": 64.8377192982456,
     "repere": [
-     100,
-     "moyenne"
+     99,
+     "au_dessus"
     ]
    },
    {
@@ -832,6 +832,39 @@
   "liste": [
    {
     "x": {
+     "id": "portsmouth-economics",
+     "categorie": "realiste",
+     "pertinence": 59.11000000000001,
+     "repere": [
+      null,
+      "inconnue"
+     ]
+    },
+    "ancre": {
+     "id": "psup-39468",
+     "categorie": "securite",
+     "pertinence": 64.8377192982456,
+     "repere": [
+      99,
+      "au_dessus"
+     ]
+    },
+    "frais": 12753,
+    "vie": {
+     "min": 1370,
+     "max": 1370,
+     "texte": "1 171 £/mois hors Londres, 1 529 £/mois à Londres : montants exigés pour le visa étudiant",
+     "source": "https://www.gov.uk/student-visa/money",
+     "statut": "officiel"
+    },
+    "francais": false,
+    "moinsCher": true,
+    "date": "2027-01-13",
+    "bientot": false,
+    "jours": 104
+   },
+   {
+    "x": {
      "id": "uclouvain-louvain-la-neuve-bachelier-en-sciences-de-la-motricite-orientation-edu",
      "categorie": "realiste",
      "pertinence": 79.30000000000001,
@@ -841,11 +874,11 @@
      ]
     },
     "ancre": {
-     "id": "u-de-reims-champagne-ardenne-staps",
+     "id": "psup-29102",
      "categorie": "securite",
-     "pertinence": 81.9,
+     "pertinence": 80.98,
      "repere": [
-      64,
+      80,
       "au_dessus"
      ]
     },
@@ -872,11 +905,11 @@
      ]
     },
     "ancre": {
-     "id": "u-de-reims-champagne-ardenne-staps",
+     "id": "psup-29102",
      "categorie": "securite",
-     "pertinence": 81.9,
+     "pertinence": 80.98,
      "repere": [
-      64,
+      80,
       "au_dessus"
      ]
     },
@@ -891,46 +924,13 @@
     "date": null,
     "bientot": false,
     "jours": null
-   },
-   {
-    "x": {
-     "id": "dshs-cologne-bsc-sport-und-leistung",
-     "categorie": "realiste",
-     "pertinence": 69.94,
-     "repere": [
-      null,
-      "inconnue"
-     ]
-    },
-    "ancre": {
-     "id": "u-de-bretagne-occidentale-staps",
-     "categorie": "ambitieux",
-     "pertinence": 81.9,
-     "repere": [
-      59,
-      "en_dessous"
-     ]
-    },
-    "frais": null,
-    "vie": {
-     "min": 992,
-     "max": 992,
-     "texte": "992 €/mois : montant du compte bloqué exigé pour le visa étudiant",
-     "source": "https://www.expatrio.com/about-germany/blocked-amount-2025",
-     "statut": "source_secondaire"
-    },
-    "francais": false,
-    "moinsCher": false,
-    "date": null,
-    "bientot": false,
-    "jours": null
    }
   ],
   "budgetSerre": true,
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "7e4b3427bb5f51dcde4129a3dbbae5030b5e723a9201dbd388d9259ad159c33f",
-  "textes": "ea18cfa240a32ea11bd93fc1063364a806169b7dc83dd78d200808ca51c0e7f1"
+  "calculs": "ad4793147604758dba0ea8e7630773fa64ed29452c606949f6e91abdcf8dc1ba",
+  "textes": "9f6cf585eb0d11f85618d7ff3d035180e698fa3dece254dbc00847bae19e6e24"
  }
 }

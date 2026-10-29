@@ -327,11 +327,11 @@ test("licence de secteur : priorité expliquée, jamais « sûre » à cause du 
   assert.equal(E.texteLicenceSecteur(0), BASE);
   assert.equal(E.texteLicenceSecteur(1), BASE);
   assert.equal(E.texteLicenceSecteur(2), PARTIR);
-  // sante-svt (Nice, mobilité « proche ») : Licence de Biologie, Université de Toulon (La Garde)
+  // sante-svt (Nice, mobilité « proche ») : Licence de Sciences de la vie, Université Côte d'Azur (Nice). Avant I2, l'exemple était la licence de Biologie de Toulon (La Garde, psup-10369), sortie de la liste quand les fiches maison fusionnées ont été retirées.
   const p = PROFILS.find((x) => x.id === "sante-svt");
   const { A, W } = analyser(p);
-  const toulon = A.resultats.find((x) => x.f.id === "psup-10369");
-  assert.ok(toulon && /Biologie/.test(toulon.f.nom) && toulon.f.ville === "La Garde");
+  const toulon = A.resultats.find((x) => x.f.id === "psup-2302");
+  assert.ok(toulon && /Sciences de la vie/.test(toulon.f.nom) && toulon.f.ville === "Nice");
   assert.equal(toulon.repere.regle, "licence_secteur");
   assert.equal(toulon.repere.pourquoi, BASE);
   assert.ok(toulon.repere.pourquoi.startsWith(`Au moins ${E.SEUIL_TAUX_SECURITE} % des candidats ont reçu une proposition`), "le texte commence par la condition");
@@ -341,7 +341,7 @@ test("licence de secteur : priorité expliquée, jamais « sûre » à cause du 
   const fiche = s.afficher("#formation-" + toulon.f.id);
   assert.ok(fiche.includes(`href="${E.SOURCE_SECTEUR.source}"`), "la fiche contient l'URL de la FAQ Parcoursup");
   assert.match(fiche, /prise-en-compte-du-secteur-geographique" target="_blank" rel="noopener">[^<]+<\/a> · consulté le 19 octobre 2026/);
-  assert.ok(W.liste.includes(toulon), "la licence de Toulon sort de la liste de sante-svt");
+  assert.ok(W.liste.includes(toulon), "la licence de Nice sort de la liste de sante-svt");
   for (const t of [toulon.repere.pourquoi, toulon.repere.texte, ...toulon.raisons, ...toulon.ajust]) assert.doesNotMatch(String(t), /sûre/i);
   // aucun texte « licence_secteur » ne dit « sûre », quelle que soit la mobilité
   for (const m of ["domicile", "proche", "partout"]) {

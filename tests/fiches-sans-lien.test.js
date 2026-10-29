@@ -3,8 +3,8 @@
  *
  * Décision du fondateur : les fiches de data/formations.json dont le pays est la France et dont la correspondance
  * Parcoursup n'est pas certaine (data/anciennes-fiches.json, anciennes[id].m = "P" probable ou "N" aucune) ne sont plus proposées.
- * Restent : les fiches fusionnées avec certitude (m = "C"), les fiches à l'étranger, et les fiches « modèles » de
- * data/ajustements.json (remplacements), qui ne sont déjà plus affichées.
+ * (Depuis I2, les fiches fusionnées avec certitude, m = "C", et les 15 modèles ECG sont retirées aussi : voir
+ * tests/i2-retrait.test.js. Il ne reste que les fiches à l'étranger.)
  *
  * Vœux enregistrés : un identifiant retiré reste valide.
  *   - m = "P" : redirigé vers la première candidate de anciennes[id].c présente dans le catalogue ;
@@ -19,8 +19,7 @@ const { chargerSite } = require("./charger-site");
 const PROFILS = require("./profils");
 
 const ANCIENNES = require("../data/anciennes-fiches.json").anciennes;
-const AJ = require("../data/ajustements.json");
-const MODELES = new Set(Object.keys(AJ.remplacements));
+const MODELES = new Set(Object.entries(ANCIENNES).filter(([, x]) => x.remplacee_par).map(([id]) => id));   // les 15 modèles ECG
 const MESSAGE = "Une formation de ta liste n'est plus proposée par Mon Plan Sup (fiche sans correspondance Parcoursup). Elle a été retirée de ta liste.";
 const P = PROFILS[0];
 const ETAT = (retenus) => ({ profil: P.profil, reponses: P.reponses, retenus, profilTermine: true, qIndex: 999 });
@@ -28,15 +27,10 @@ const ETAT = (retenus) => ({ profil: P.profil, reponses: P.reponses, retenus, pr
 let site;
 test.before(async () => { site = await chargerSite(); });
 
-test("aucune fiche France hors fusion certaine (m = C) dans le catalogue, sauf les 15 modèles", () => {
+test("aucune fiche France hors Parcoursup dans le catalogue (ni m = C, ni modèle ECG)", () => {
   assert.equal(MODELES.size, 15);
-  const intrus = site.DATA.formations.filter((f) => f.pays === "France" && ANCIENNES[f.id] && ANCIENNES[f.id].m !== "C" && !MODELES.has(f.id));
+  const intrus = site.DATA.formations.filter((f) => f.pays === "France" && !f.id.startsWith("psup-"));
   assert.deepEqual(intrus.map((f) => f.id), []);
-  // les 15 modèles sont remplacés par des fiches Parcoursup (non affichées sous leur ancien identifiant)
-  assert.deepEqual(site.DATA.formations.filter((f) => MODELES.has(f.id)).map((f) => f.id), []);
-  // les fiches fusionnées avec certitude sont toujours là
-  const fusionnees = site.DATA.formations.filter((f) => ANCIENNES[f.id] && ANCIENNES[f.id].m === "C");
-  assert.ok(fusionnees.length > 700, `fiches m = C : ${fusionnees.length}`);
 });
 
 test("un vœu sur une fiche P à candidate unique est redirigé vers psup-<code>", async () => {
@@ -59,11 +53,13 @@ test("un vœu sur une fiche N est retiré, avec un message affiché une seule fo
   assert.ok(!s.afficher("#liste").includes(MESSAGE), "message répété");
 });
 
-test("un vœu sur une fiche conservée n'est pas touché, sans message", async () => {
-  const [id] = Object.entries(ANCIENNES).find(([, x]) => x.m === "C");
+// Décision d'Aaron (I2) : les fiches fusionnées (m = C) sont retirées aussi ; le vœu suit vers psup-<code>, sans message.
+// (Avant I2, ce test attendait un vœu « non touché » sur une fiche m = C, qui existait encore.)
+test("un vœu sur une ancienne fiche fusionnée (m = C) est redirigé vers sa formation Parcoursup, sans message", async () => {
+  const [id, x] = Object.entries(ANCIENNES).find(([, y]) => y.m === "C" && site.CAT.some((e) => e.id === "psup-" + y.g));
   const s = await chargerSite({}, { etat: ETAT([id]) });
   assert.ok(!s.afficher("#liste").includes(MESSAGE));
-  assert.ok(!s.etatEnregistre() || s.etatEnregistre().retenus.join() === id);
+  assert.deepEqual(s.etatEnregistre().retenus, ["psup-" + x.g]);
 });
 
 test("à l'étranger : le même nombre de fiches qu'avant (519)", () => {

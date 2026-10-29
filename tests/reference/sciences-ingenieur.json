@@ -144,6 +144,21 @@
    "exclu": null
   },
   {
+   "id": "psup-35619",
+   "interet": 85.91426728298356,
+   "faisabilite": 94.5,
+   "pertinence": 89.34856036979014,
+   "repere": [
+    97,
+    0.74,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-35631",
    "interet": 85.91426728298356,
    "faisabilite": 94.5,
@@ -279,7 +294,7 @@
    "exclu": null
   },
   {
-   "id": "u-de-franche-comte-mathematiques",
+   "id": "psup-3536",
    "interet": 85.2338786181897,
    "faisabilite": 94.5,
    "pertinence": 88.94032717091383,
@@ -294,7 +309,7 @@
    "exclu": null
   },
   {
-   "id": "licence-mathematiques-parcours-mathematiques-et-interactions-avignon-universite-avignon",
+   "id": "psup-10458",
    "interet": 85.13433884795629,
    "faisabilite": 94.5,
    "pertinence": 88.88060330877377,
@@ -309,7 +324,7 @@
    "exclu": null
   },
   {
-   "id": "licence-mathematiques-universite-de-nimes-nimes",
+   "id": "psup-23857",
    "interet": 85.07784967327778,
    "faisabilite": 94.5,
    "pertinence": 88.84670980396668,
@@ -318,6 +333,21 @@
     0.86,
     "au_dessus",
     "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-39220",
+   "interet": 84.89453470790261,
+   "faisabilite": 94.4,
+   "pertinence": 88.69672082474156,
+   "repere": [
+    71,
+    0.66,
+    "au_dessus",
+    "securite"
    ],
    "categorie": "securite",
    "bloque": false,
@@ -384,7 +414,7 @@
    "exclu": null
   },
   {
-   "id": "licence-mathematiques-parcours-mathematiques-et-applications-universite-de-haute-alsace-mulhous",
+   "id": "psup-44307",
    "interet": 84.7274272941106,
    "faisabilite": 94.5,
    "pertinence": 88.63645637646636,
@@ -429,7 +459,22 @@
    "exclu": null
   },
   {
-   "id": "u-de-toulon-mathematiques",
+   "id": "psup-43142",
+   "interet": 84.67991840137249,
+   "faisabilite": 94.5,
+   "pertinence": 88.6079510408235,
+   "repere": [
+    79,
+    0.8,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-10372",
    "interet": 84.63209210390035,
    "faisabilite": 94.5,
    "pertinence": 88.57925526234021,
@@ -534,10 +579,40 @@
    "exclu": null
   },
   {
-   "id": "u-de-poitiers-mathematiques",
+   "id": "psup-42975",
+   "interet": 84.48288493801428,
+   "faisabilite": 94.5,
+   "pertinence": 88.48973096280858,
+   "repere": [
+    100,
+    1,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-35183",
    "interet": 84.38845170307748,
    "faisabilite": 94.5,
    "pertinence": 88.43307102184649,
+   "repere": [
+    100,
+    0.8,
+    "au_dessus",
+    "tres_ouverte"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-4901",
+   "interet": 84.35204423967325,
+   "faisabilite": 94.5,
+   "pertinence": 88.41122654380395,
    "repere": [
     100,
     0.8,
@@ -556,6 +631,21 @@
    "repere": [
     64,
     0.8,
+    "au_dessus",
+    "securite"
+   ],
+   "categorie": "securite",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-47147",
+   "interet": 85.48249068630201,
+   "faisabilite": 92.8,
+   "pertinence": 88.4094944117812,
+   "repere": [
+    60,
+    0.67,
     "au_dessus",
     "securite"
    ],
@@ -609,7 +699,7 @@
    "exclu": null
   },
   {
-   "id": "licence-mathematiques-universite-de-perpignan-via-domitia-perpignan",
+   "id": "psup-7884",
    "interet": 84.28378570210955,
    "faisabilite": 94.5,
    "pertinence": 88.37027142126573,
@@ -635,96 +725,6 @@
     "securite"
    ],
    "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-39956",
-   "interet": 84.25540968058233,
-   "faisabilite": 94.5,
-   "pertinence": 88.3532458083494,
-   "repere": [
-    64,
-    0.77,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-lorraine-metz-mathematiques",
-   "interet": 84.24660495587754,
-   "faisabilite": 94.5,
-   "pertinence": 88.34796297352653,
-   "repere": [
-    100,
-    0.72,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-43054",
-   "interet": 84.24660495587754,
-   "faisabilite": 94.5,
-   "pertinence": 88.34796297352653,
-   "repere": [
-    67,
-    1,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "u-de-reims-champagne-ardenne-mathematiques",
-   "interet": 84.21231082450285,
-   "faisabilite": 94.5,
-   "pertinence": 88.32738649470171,
-   "repere": [
-    100,
-    0.62,
-    "au_dessus",
-    "tres_ouverte"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32596",
-   "interet": 84.19185241529856,
-   "faisabilite": 94.5,
-   "pertinence": 88.31511144917914,
-   "repere": [
-    72,
-    0.82,
-    "au_dessus",
-    "securite"
-   ],
-   "categorie": "securite",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32593",
-   "interet": 84.19185241529856,
-   "faisabilite": 94.5,
-   "pertinence": 88.31511144917914,
-   "repere": [
-    46,
-    0.78,
-    "au_dessus",
-    "realiste"
-   ],
-   "categorie": "realiste",
    "bloque": false,
    "exclu": null
   }
@@ -759,29 +759,29 @@
     ]
    },
    {
-    "id": "insa-toulouse-ingenieur",
+    "id": "psup-32300",
     "categorie": "ambitieux",
-    "pertinence": 81.256223133937,
+    "pertinence": 80.9645475507334,
     "repere": [
-     13,
-     "en_dessous"
+     14,
+     "au_dessus"
     ]
    },
    {
-    "id": "jean-perrin-lyon-mpsi",
+    "id": "psup-47331",
     "categorie": "ambitieux",
-    "pertinence": 81.22698866655486,
+    "pertinence": 85.72838923563992,
     "repere": [
-     33,
-     "en_dessous"
+     18,
+     "moyenne"
     ]
    },
    {
-    "id": "psup-39224",
+    "id": "psup-44822",
     "categorie": "realiste",
-    "pertinence": 88.64241082223798,
+    "pertinence": 79.29181128798002,
     "repere": [
-     48,
+     20,
      "au_dessus"
     ]
    },
@@ -795,29 +795,29 @@
     ]
    },
    {
-    "id": "psup-28894",
+    "id": "psup-3089",
     "categorie": "realiste",
-    "pertinence": 76.03705139957864,
+    "pertinence": 78.76330467000493,
     "repere": [
-     62,
-     "moyenne"
+     37,
+     "au_dessus"
     ]
    },
    {
-    "id": "ps-13328",
+    "id": "psup-11108",
     "categorie": "realiste",
-    "pertinence": 81.22081757331918,
+    "pertinence": 76.75262229149271,
     "repere": [
-     70,
-     "moyenne"
+     39,
+     "au_dessus"
     ]
    },
    {
-    "id": "u-jean-monnet-informatique",
+    "id": "psup-36348",
     "categorie": "securite",
-    "pertinence": 85.37195218265563,
+    "pertinence": 79.65970591551488,
     "repere": [
-     52,
+     72,
      "au_dessus"
     ]
    }
@@ -851,17 +851,6 @@
   "liste": [
    {
     "x": {
-     "id": "licence-mathematiques-parcours-international-universite-de-bordeaux-talence",
-     "categorie": "ambitieux",
-     "pertinence": 85.90227081530958,
-     "repere": [
-      15,
-      "en_dessous"
-     ]
-    }
-   },
-   {
-    "x": {
      "id": "psup-41045",
      "categorie": "ambitieux",
      "pertinence": 76.25416870649194,
@@ -881,11 +870,22 @@
       "en_dessous"
      ]
     }
+   },
+   {
+    "x": {
+     "id": "psup-28891",
+     "categorie": "ambitieux",
+     "pertinence": 74.01320498128375,
+     "repere": [
+      23,
+      "en_dessous"
+     ]
+    }
    }
   ]
  },
  "empreintes": {
-  "calculs": "792a2d07c47c1c5e2c122dfb29eaec7d47bb93fb221a2748db8e094cd78f420d",
-  "textes": "e8d9c7e7613cc6291a44b6f09227a596858b71704f4206be81fb22f221dfc8f3"
+  "calculs": "5411dae3fd18f71c64ec3e4878a3b621626ad65cc3db4cc1a2a8747f58928120",
+  "textes": "c90e0e9476777b528f14ad01ed3f2a55312b421103d0ad6b906ab2f0745647e7"
  }
 }

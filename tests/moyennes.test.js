@@ -230,9 +230,10 @@ test("correction 4 : les maths complémentaires ne sont pas comparées au repèr
   const compl = E.statsProfil(profil({ specialites: ["SES", "HGGSP"], specialiteAbandonnee: "maths", optionMaths: "complementaires",
     periodes: [periode("Terminale – T1", 13, { maths_complementaires: 6 })] }));
   assert.equal(compl.mathsMatiere, "maths_complementaires");
-  // une vraie licence du catalogue, avec un repère de moyenne et de maths fixé pour le test
-  const lic = DATA.formations.find((x) => x.type === "licence" && x.notes && x.notes.maths_cible != null && !x.epreuves_anticipees);
-  assert.ok(lic, "une licence avec un repère de maths");
+  // une vraie licence du catalogue, avec un repère de moyenne et de maths fixé pour le test (I2 : les fiches Parcoursup générées
+  // n'ont plus de repère de maths propre, il est donc toujours imposé ci-dessous)
+  const lic = DATA.formations.find((x) => x.type === "licence" && x.notes && !x.epreuves_anticipees);
+  assert.ok(lic, "une licence du catalogue");
   const f = Object.assign({}, lic, { specialites: {}, notes: Object.assign({}, lic.notes, { moyenne_cible: 12.5, maths_cible: 14 }) });
   const n = E.evaluer(f, compl, it).crit.notes;
   assert.equal(n.ecart, 0.5, "seule la moyenne générale (13 − 12,5) est comparée, pas 6 − 14");

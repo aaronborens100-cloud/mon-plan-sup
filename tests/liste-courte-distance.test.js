@@ -4,7 +4,7 @@
  * Décision du fondateur : « Dans ta zone de mobilité, seules N formations correspondent à ton profil. Pour avoir 10
  * vœux, élargis ta zone. » Jamais de vœu ajouté hors rayon (la liste ne change pas) ; une liste vide due à la distance
  * n'affiche pas « Complète ton profil… », réservé à un profil réellement incomplet.
- * Cas réels de l'issue : lycée André Honnorat (Barcelonnette, 0 vœu en « domicile ») et lycée de Mauriac (4 vœux).
+ * Cas réels de l'issue : lycée André Honnorat (Barcelonnette, 0 vœu en « domicile ») et lycée de Mauriac (4 vœux, 3 depuis I2).
  *
  * Lancer : npm test
  */
@@ -53,13 +53,14 @@ test("domicile, liste vide (Barcelonnette) : message de zone de mobilité, pas �
   assert.ok(!t.includes(COMPLETE));
 });
 
-test("domicile, 4 vœux (Mauriac) : « seules 4 formations correspondent », la liste reste sans vœu hors rayon", async () => {
+// I2 : 4 vœux avant le retrait des fiches maison (2 DN MADE d'Aurillac), 3 depuis (voir tests/domicile-sans-coordonnees.test.js)
+test("domicile, 3 vœux (Mauriac) : « seules 3 formations correspondent », la liste reste sans vœu hors rayon", async () => {
   const { W } = analyser(MAURIAC, "domicile");
-  assert.equal(W.liste.length, 4);
+  assert.equal(W.liste.length, 3);
   assert.equal(W.limiteeParDistance, true);
   for (const x of W.liste) assert.ok(x.dist !== null && site.E.distanceEquivalente(x.dist, x.traversee) <= 45, x.f.id);
   const t = texte(await page(MAURIAC, "domicile"));
-  assert.ok(t.includes("Dans ta zone de mobilité, seules 4 formations correspondent à ton profil. Pour avoir 10 vœux, élargis ta zone."));
+  assert.ok(t.includes("Dans ta zone de mobilité, seules 3 formations correspondent à ton profil. Pour avoir 10 vœux, élargis ta zone."));
 });
 
 test("même élève en « proche » ou « partout » : 10 vœux, aucun message de zone", async () => {

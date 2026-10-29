@@ -733,18 +733,18 @@
  "voeux": {
   "liste": [
    {
-    "id": "psup-12819",
+    "id": "psup-20439",
     "categorie": "securite",
-    "pertinence": 59.94502822819388,
+    "pertinence": 60.62850512013148,
     "repere": [
      100,
      "en_dessous"
     ]
    },
    {
-    "id": "u-cote-d-azur-philosophie",
+    "id": "psup-12819",
     "categorie": "securite",
-    "pertinence": 57.8675613898679,
+    "pertinence": 59.94502822819388,
     "repere": [
      100,
      "en_dessous"
@@ -778,11 +778,20 @@
     ]
    },
    {
-    "id": "dnmade-graphisme-lycee-rene-goscinny-drap",
+    "id": "psup-24344",
     "categorie": "ambitieux",
-    "pertinence": 46.488339044839535,
+    "pertinence": 46.28833904483954,
     "repere": [
      53,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-36461",
+    "categorie": "ambitieux",
+    "pertinence": 52.089641092744635,
+    "repere": [
+     48,
      "en_dessous"
     ]
    },
@@ -805,20 +814,11 @@
     ]
    },
    {
-    "id": "massena-nice-al",
+    "id": "psup-31974",
     "categorie": "ambitieux",
-    "pertinence": 40.919555419168674,
+    "pertinence": 38.63778882288774,
     "repere": [
-     54,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "dna-villa-arson-nice",
-    "categorie": "ambitieux",
-    "pertinence": 40.87466803613526,
-    "repere": [
-     12,
+     3,
      "en_dessous"
     ]
    }
@@ -829,8 +829,8 @@
    "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
   },
   "alertes": [
-   "Moins de 4 vœux « réaliste » disponibles avec tes critères.",
-   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
+   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %).",
+   "Moins de 4 vœux « réaliste » disponibles avec tes critères."
   ],
   "certitude": {
    "niveau": "decide",
@@ -855,7 +855,7 @@
   "liste": []
  },
  "empreintes": {
-  "calculs": "d47efe4f4ecc337f3c3bb085cfc6241b1723bd7dad1876121e66d6b35d70dade",
-  "textes": "1eb3eaac9e03aedba4a7a4e9325af5801a1bc43a329c491d5b2d96ce853888d9"
+  "calculs": "110d66d0170c89bb3b484cc567e1d516e89cf43652ec9c328d05471a64773d03",
+  "textes": "308deacf64f1b0194e96c16d95b9dbf97fe4c8b57397ef9cdd27049892e3f1cb"
  }
 }

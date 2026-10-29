@@ -171,6 +171,21 @@
    "exclu": null
   },
   {
+   "id": "psup-27500",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    93,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-41215",
    "interet": 55,
    "faisabilite": 61,
@@ -187,6 +202,21 @@
   },
   {
    "id": "psup-43196",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    92,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-13714",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
@@ -237,6 +267,21 @@
    "pertinence": 61,
    "repere": [
     90,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-32207",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    89,
     null,
     null,
     "sans_notes_ouverte"
@@ -352,6 +397,21 @@
   },
   {
    "id": "psup-41217",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    86,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-43347",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
@@ -516,7 +576,37 @@
    "exclu": null
   },
   {
+   "id": "psup-19378",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    80,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
    "id": "psup-32283",
+   "interet": 55,
+   "faisabilite": 61,
+   "pertinence": 61,
+   "repere": [
+    80,
+    null,
+    null,
+    "sans_notes_ouverte"
+   ],
+   "categorie": "realiste",
+   "bloque": false,
+   "exclu": null
+  },
+  {
+   "id": "psup-24779",
    "interet": 55,
    "faisabilite": 61,
    "pertinence": 61,
@@ -567,96 +657,6 @@
    "pertinence": 61,
    "repere": [
     78,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-29153",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    78,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-43198",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    78,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-49110",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    77,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-32497",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    75,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26404",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    75,
-    null,
-    null,
-    "sans_notes_ouverte"
-   ],
-   "categorie": "realiste",
-   "bloque": false,
-   "exclu": null
-  },
-  {
-   "id": "psup-26070",
-   "interet": 55,
-   "faisabilite": 61,
-   "pertinence": 61,
-   "repere": [
-    74,
     null,
     null,
     "sans_notes_ouverte"
@@ -849,7 +849,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "f348021e8c12ea89b0802f696b5eacbfc653b5336bae3a37624da7d4fddf3acb",
-  "textes": "6bd477b382f62e4f17b48a7e3238aeef694b8e733ac62beabaab54c512f12464"
+  "calculs": "f2c674e8c43f71513c7c7e166dd2a50cfe9b3ec880043d04992ffd2ccc96d6e5",
+  "textes": "d1e98bc54f448799e4bcb07c7ad8397e6284a53b9fbc5004872cb693c266a9fd"
  }
 }

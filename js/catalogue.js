@@ -2,7 +2,7 @@
  * js/catalogue.js : catalogue de formations (calcul seulement, aucun affichage).
  *
  * Rôle : décoder data/parcoursup.json, construire le catalogue (CAT, CATBY, PSBY, ALIAS, redirections des
- * anciens identifiants, périmètre BTS / BUT), les fiches Parcoursup (fichGeneree, fichDepuisModele), les
+ * anciens identifiants, périmètre BTS / BUT), les fiches Parcoursup (fichGeneree), les
  * statistiques (statDe), les coordonnées (gpsDe, communeGps, chargerLieux), les frais relevés (coutReleve),
  * les campus à l'étranger (données) et la redirection des vœux enregistrés (redirigerVoeux, fonction pure).
  * Aucune chaîne HTML, aucun accès à la page : js/app.js n'y fait que des appels et dessine.
@@ -14,7 +14,7 @@
 (function () {
   "use strict";
   const E = window.CapEngine;
-  // Base fusionnée : CAT = toutes les fiches affichées (ancienne base + Parcoursup), sans doublon certain
+  // CAT = toutes les formations affichées : formations Parcoursup (France) et fiches à l'étranger de data/formations.json
   let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCOLS = [], STCONS = null, STATUTS_ST = {}, MANUELLES = {}, FIL = null, ATT = {}, LIEUX = null, VILLES_GPS = {};
 
   const sansAccents = (x) => String(x || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
@@ -24,8 +24,9 @@
   // est gratuite ». Il ne change jamais le montant affiché.
   const PREFIXE_APPRENTISSAGE = "En contrat d'apprentissage (avec un employeur) : ";
   const texteApprentissage = (t) => `${PREFIXE_APPRENTISSAGE}${t.replace(/\.$/, "")}.`;
-  let REMPL = {};
-  // Fiches maison françaises retirées (sans lien certain avec Parcoursup) dont aucune formation Parcoursup affichée ne prend la suite
+  // Anciennes fiches maison françaises (retirées, règle 2) : REDIR[ancien id] = identifiants psup-CODE affichés qui les remplacent
+  // (data/anciennes-fiches.json, redirections) ; RETIREES = anciens identifiants dont aucune formation Parcoursup n'est affichée
+  let REDIR = {};
   let RETIREES = new Set();
   const AVIS_RETRAIT = "Une formation de ta liste n'est plus proposée par Mon Plan Sup (fiche sans correspondance Parcoursup). Elle a été retirée de ta liste.";
   function chargerLieux(li) {
@@ -108,10 +109,9 @@
   }
   // Coordonnées d'une fiche. Fiche liée à Parcoursup : coordonnées officielles de l'établissement (etab_gps), sinon
   // la commune Parcoursup dans le département Parcoursup. Sinon, la ville de la fiche (data/lieux.json) ; si plusieurs
-  // communes de ce nom sont éloignées (homonymes), le département départage : département Parcoursup de la fiche,
-  // département écrit dans la ville (« Saint-Pierre (Martinique) »), ou département commun aux formations Parcoursup
-  // probables de cette ville (data/anciennes-fiches.json). Sans département pour trancher : null (distance inconnue), jamais un
-  // homonyme pris au hasard.
+  // communes de ce nom sont éloignées (homonymes), le département départage : département Parcoursup de la fiche, ou
+  // département écrit dans la ville (« Saint-Pierre (Martinique) »). Sans département pour trancher : null (distance
+  // inconnue), jamais un homonyme pris au hasard.
   const SEUIL_KM_HOMONYMES = 20;   // deux communes de même nom à moins de 20 km : le même lieu (Papeete, Borgo)
   function communeGps(ville, deps) {
     const toutes = VILLES_GPS[sansAccents(String(ville || "").split(/\s*[/(]/)[0].trim())] || [];
@@ -130,27 +130,19 @@
     if (f.pays !== "France") return null;
     const ville = String(f.ville || "");
     const entreParentheses = (ville.match(/\(([^)]+)\)/) || [])[1];
-    const x = FU && FU.anciennes[f.id];
-    const nomVille = sansAccents(ville.split(/\s*[/(]/)[0].trim());
-    const depsProbables = [...new Set(((x && x.c) || []).map((g) => PSBY[g]).filter((r) => r && r.departement && sansAccents(r.commune) === nomVille).map((r) => r.departement))];
-    return communeGps(ville, [f.__dep, entreParentheses, depsProbables.length === 1 ? depsProbables[0] : null]);
+    return communeGps(ville, [f.__dep, entreParentheses]);
   }
   function construireCatalogue(d, psc, fu, st, fil, aj, sts, man, fp, att) {
     ATT = tableAttendus(att);
-    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REMPL = {}; RETIREES = new Set();
+    FU = fu; CAT = []; CATBY = {}; PSBY = {}; ALIAS = {}; FIL = fil; REDIR = {}; RETIREES = new Set();
     FRAIS_PRIVES = (fp && fp.formations) || {}; FRAIS_PRIVES_META = (fp && fp.meta) || null; FRAIS_A_PARTIR_DE = (fp && fp.a_partir_de) || {};
     FRAIS_PAR_MOIS = (fp && fp.par_mois) || {}; FRAIS_PREMIERE_ANNEE = (fp && fp.premiere_annee) || {};
     const lignesPs = psc ? decodePs(psc) : [];   // ordre du fichier (PSBY, aux clés numériques, serait trié par code)
     for (const r of lignesPs) PSBY[r.gta] = r;
-    // Périmètre (anciennes-fiches.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json :
-    // une fiche de type BUT ou BTS, ou fusionnée avec une formation Parcoursup BUT ou BTS, n'est ni affichée ni
-    // recommandée (données gardées dans le fichier). Sans cela, ces fiches entraient dans les listes de vœux.
-    // Règle 2 : les fiches maison françaises sans lien certain avec Parcoursup (anciennes-fiches.json, m = "P" ou "N") ont été retirées de
-    // data/formations.json, sauf les fiches « modèles » d'ajustements.json (remplacements), traitées plus bas. Leur identifiant
-    // reste valide pour les vœux enregistrés et les liens (voir ALIAS / RETIREES en fin de fonction).
-    const modelesRempl = new Set(Object.keys((aj && aj.remplacements) || {}));
-    const presentes = new Set(d.formations.map((f) => f.id));
-    const sansLien = fu ? Object.entries(fu.anciennes).filter(([id, x]) => (x.m === "P" || x.m === "N") && !presentes.has(id) && !modelesRempl.has(id)) : [];
+    // Périmètre (anciennes-fiches.json, perimetre.categories_masquees) appliqué aussi aux fiches de data/formations.json
+    // (une fiche de type BUT ou BTS n'est ni affichée ni recommandée).
+    // Règle 2 : data/formations.json ne contient plus que les fiches à l'étranger ; les formations françaises sont toutes des
+    // formations Parcoursup. Les anciens identifiants des fiches maison françaises restent valides (voir REDIR / RETIREES en fin de fonction).
     d.formations = d.formations.filter((f) => !ficheHorsPerimetre(f));
     if (st) { STATS = st.rows; STCOLS = st.meta.cols; STCONS = st.meta.consulte_le; }
     STATUTS_ST = (sts && sts.formations) || {};
@@ -167,63 +159,28 @@
     }
     E.definirTauxFilieres(Object.fromEntries(Object.entries(parNmc).map(([n, v]) => [n, { moyenne: v.reduce((a, x) => a + x, 0) / v.length, nb: v.length }])));
     if (fil) for (const [k, l] of Object.entries(fil.meta.types_label)) if (!d.meta.types[k]) d.meta.types[k] = l;   // types ajoutés par la table des filières
-    // compléments officiels (champs vides de l'ancienne base) : on ne remplace jamais une valeur existante
-    if (fu) for (const f of d.formations) {
-      const k = fu.anciennes[f.id] && fu.anciennes[f.id].k;
-      if (!k) continue;
-      f.__compl = k;
-      if (k.admission) { f.admission = Object.assign({}, f.admission); for (const [c, v] of Object.entries(k.admission)) if (!c.startsWith("_") && f.admission[c] == null) f.admission[c] = v; }
-      if (k.mentions_admis && !f.mentions_admis) f.mentions_admis = k.mentions_admis;
-      if (k.notes && f.notes && f.notes.moyenne_cible == null) f.notes = Object.assign({}, f.notes, { moyenne_cible: k.notes.moyenne_cible });
-    }
-    if (aj) for (const [oid, v] of Object.entries(aj.taux_officiel || {})) {
-      const f = d.formations.find((x) => x.id === oid);
-      if (f) { f.__tauxAncien = f.admission.taux; f.admission = Object.assign({}, f.admission, { taux: v }); }
-    }
-    const modeles = {};
-    if (aj) for (const [oid, gtas] of Object.entries(aj.remplacements || {})) {
-      const o = d.formations.find((x) => x.id === oid);
-      if (!o) continue;
-      REMPL[oid] = gtas.map((g) => "psup-" + g);
-      for (const g of gtas) modeles[g] = o;
-    }
-    if (Object.keys(REMPL).length) d.formations = d.formations.filter((f) => !REMPL[f.id]);
+    // Toute formation Parcoursup du périmètre reçoit une fiche notable par le moteur, à partir de la table des filières
     const genIds = new Map();
-    for (const [g, o] of Object.entries(modeles)) { const f = fichDepuisModele(o, g); if (f) { d.formations.push(f); genIds.set(g, f); } }
-    // Toute formation Parcoursup du périmètre reçoit une fiche notable par le moteur, à partir de la table des filières,
-    // sauf si elle a déjà une fiche : fusion certaine avec data/formations.json ou fiche remplacée (ajustements.json).
-    const fusionnees = new Set(fu ? Object.values(fu.anciennes).filter((x) => x.m === "C").map((x) => x.g) : []);
     if (fil) for (const r of lignesPs) {
-      if (modeles[r.gta] || fusionnees.has(r.gta) || horsPerimetre(r)) continue;
+      if (horsPerimetre(r)) continue;
       const g = fichGeneree(r, fil); if (g) { d.formations.push(g); genIds.set(g.__gen.gta, g); }
     }
-    for (const [oid, ids] of Object.entries(REMPL)) ALIAS[oid] = ids[0];
-    const merged = new Set();
     for (const f of d.formations) {
       if (f.__gen) continue;
-      const x = fu && fu.anciennes[f.id];
-      const ps = x && x.m === "C" ? PSBY[x.g] : null;
-      if (ps) { merged.add(ps.gta); ALIAS["psup-" + ps.gta] = f.id; if (ps.nmc) f.__nmc = ps.nmc; f.__tf = ps.tf; f.__pctBG = statDe(ps.gta, "pct_bg"); lierParcoursup(f, ps); }   // __tf, __pctBG : garde-fou des listes (moteur)
-      else f.statut_etab = null;   // fiche non liée à Parcoursup : le statut de data/formations.json n'est pas sourcé, il est inconnu
-      const avTxt = [];
-      if (x && x.m === "P") avTxt.push("Correspondance Parcoursup probable mais non confirmée.");
-      if (x && x.x && x.x.length) avTxt.push(`${x.x.length} information(s) divergente(s) entre Mon Plan Sup et Parcoursup.`);
-      if (ps && fu.ps_doublons[ps.gta]) avTxt.push("Doublon Parcoursup possible.");
+      f.statut_etab = null;   // fiche à l'étranger : le statut de data/formations.json n'est pas sourcé, il est inconnu
       CAT.push({ id: f.id, nom: f.nom, etablissement: f.etablissement, ville: f.ville, pays: f.pays, type: f.type, type_label: f.type_label,
-        places: (f.admission && f.admission.places) || (ps && statDe(ps.gta, "capa_fin")), cout: f.cout ? f.cout.valeur_annuelle_eur : null, coutMin: f.cout ? f.cout.min : null, src: ps ? "fusion" : "ancienne", ps, f,
-        region: ps ? ps.region : null, app: ps ? !!(ps.app && ps.app.length) : /apprentissage/i.test(f.nom), av: avTxt.length > 0, avTxt,
-        cle: sansAccents([f.nom, f.etablissement, f.ville, f.pays, f.type_label, ps ? [ps.nm.join(" "), ps.fl.join(" "), ps.etab_nom, ps.departement, ps.region].join(" ") : ""].join(" ")) });
+        places: f.admission && f.admission.places, cout: f.cout ? f.cout.valeur_annuelle_eur : null, coutMin: f.cout ? f.cout.min : null, src: "ancienne", ps: null, f,
+        region: null, app: /apprentissage/i.test(f.nom),
+        cle: sansAccents([f.nom, f.etablissement, f.ville, f.pays, f.type_label].join(" ")) });
     }
     for (const r of Object.values(PSBY)) {
-      if (merged.has(r.gta)) continue;
       if (horsPerimetre(r)) continue;   // BTS, BUT : formations non proposées par Mon Plan Sup (données conservées)
       const gf = genIds.get(r.gta) || null;
       if (gf && r.nmc) gf.__nmc = r.nmc;
       if (gf) { gf.__tf = r.tf; gf.__pctBG = statDe(r.gta, "pct_bg"); lierParcoursup(gf, r); }
-      const prob = (fu && fu.ps_probables[r.gta]) || [], dup = (fu && fu.ps_doublons[r.gta]) || [];
       CAT.push({ id: "psup-" + r.gta, nom: r.nm[0], etablissement: etabCourt(r.etab_nom), ville: r.commune || r.departement || "Non renseigné", pays: "France",
         type: gf ? gf.type : "psup:" + r.tf[0], type_label: gf ? gf.type_label : r.tf.join(" · "), places: statDe(r.gta, "capa_fin") || (gf && gf.admission.places), cout: gf ? gf.cout.valeur_annuelle_eur : null, coutMin: gf ? gf.cout.min : null, src: "parcoursup", ps: r, region: r.region, f: gf, stats: gf ? gf.stats : null,
-        app: !!(r.app && r.app.length), av: prob.length + dup.length > 0, avTxt: [],
+        app: !!(r.app && r.app.length),
         cle: sansAccents([r.nm.join(" "), r.fl.join(" "), r.etab_nom, r.commune, r.departement, r.region, r.tf.join(" ")].join(" ")) });
     }
     for (const e of CAT) if (e.f && !e.f.__gps) e.f.__gps = gpsDe(e.f, e.ps);
@@ -232,10 +189,12 @@
     E.lierFilieres(d.formations);
     CAT.sort((a, b) => a.nom.localeCompare(b.nom, "fr") || a.ville.localeCompare(b.ville, "fr"));
     for (const e of CAT) CATBY[e.id] = e;
-    // Fiches retirées : m = "P" → première candidate Parcoursup affichée (jamais un BTS ou un BUT masqué), sinon le vœu disparaît
-    for (const [id, x] of sansLien) {
-      const cible = x.m === "P" ? (x.c || []).map((g) => "psup-" + g).find((id) => CATBY[id] || (ALIAS[id] && CATBY[ALIAS[id]])) : null;
-      if (cible) ALIAS[id] = CATBY[cible] ? cible : ALIAS[cible]; else RETIREES.add(id);
+    // Anciens identifiants des fiches maison françaises : redirigés vers les formations Parcoursup affichées qui les remplacent,
+    // sinon (BTS et BUT masqués, aucune correspondance) le vœu est retiré avec un message
+    for (const [id, cibles] of Object.entries((fu && fu.redirections) || {})) {
+      if (CATBY[id]) continue;
+      const ok = cibles.filter((c) => CATBY[c]);
+      if (ok.length) { REDIR[id] = ok; ALIAS[id] = ok[0]; } else RETIREES.add(id);
     }
     window.__CAT = CAT;
   }
@@ -259,10 +218,7 @@
   const CATEGORIE_DU_TYPE = { but: "BUT", bts: "BTS - BTSA - BTSM" };
   function ficheHorsPerimetre(f) {
     const cats = (FU && FU.meta.perimetre && FU.meta.perimetre.categories_masquees) || [];
-    if (cats.includes(CATEGORIE_DU_TYPE[f.type])) return true;
-    const x = FU && FU.anciennes[f.id];
-    const ps = x && x.m === "C" ? PSBY[x.g] : null;   // fusion certaine avec Parcoursup
-    return !!(ps && horsPerimetre(ps));
+    return cats.includes(CATEGORIE_DU_TYPE[f.type]);
   }
   const NIV_TAUX = (t) => (t == null ? null : t < 10 ? "tres_haute" : t < 25 ? "haute" : t < 50 ? "moyenne" : "ouverte");
   const TC_ETAB = { "Publics": "public", "Privés en contrat avec l’Etat / EESC": "prive_sous_contrat", "Privés": "prive" };
@@ -418,30 +374,6 @@
     if (!va) appliquerAttendus(fiche, r.nmc);
     return fiche;
   }
-  function fichDepuisModele(o, g) {
-    const r = PSBY[g]; if (!r) return null;
-    const f = JSON.parse(JSON.stringify(o));
-    const v = (c) => statDe(g, c), src = r.dataviz || r.fiche, cons = "2026-10-08";
-    f.id = "psup-" + g; f.nom = r.nm[0].replace(/^CPGE - ECG - Mathématiques /, "CPGE ECG – Maths ").replace("approfondies", "approfondies").replace(" + ", " + ");
-    if (STATS[g]) {
-      const taux = v("taux_acces_ens");
-      f.admission = { taux, libelle: "Taux d'accès 2025", candidats: v("voe_tot"), places: v("capa_fin"), admis: v("acc_tot"),
-        texte: `${v("capa_fin")} places · ${v("voe_tot")} vœux reçus · ${v("acc_tot")} admis (Parcoursup 2025).${taux != null ? ` Taux d'accès : ${taux} %.` : ""}`, source: src, consulte_le: cons, statut: "officiel" };
-      const m = { TBF: v("pct_tbf"), TB: v("pct_tb"), B: v("pct_b"), AB: v("pct_ab"), sans: v("pct_sansmention") };
-      if (v("acc_tot") && Object.values(m).every((x) => x != null)) {
-        f.mentions_admis = Object.assign(m, { source: src, consulte_le: cons, statut: "officiel" });
-        const MID = { TBF: 18.6, TB: 16.9, B: 14.9, AB: 12.9, sans: 11.2 }, K = Object.keys(MID);
-        const moy = Math.round((K.reduce((a, k) => a + MID[k] * m[k], 0) / K.reduce((a, k) => a + m[k], 0)) * 10) / 10;
-        f.notes = Object.assign({}, f.notes, { moyenne_cible: moy, texte: `Moyenne au bac estimée des admis 2025 de cette option : ${String(moy).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions (Parcoursup 2025).${f.notes && f.notes.maths_cible != null ? " Repère de maths repris de la fiche Mon Plan Sup du lycée." : ""}`, statut: "estimation", source: src, consulte_le: cons });
-      }
-      if (taux != null) f.selectivite = { niveau: NIV_TAUX(taux) };
-    }
-    f.incertitudes = [`Fiche reprise de « ${o.nom} » (${o.etablissement}), qui ne précisait pas l'option HGG ou ESH : contenu éditorial commun aux options, chiffres d'admission propres à cette option.`, ...(o.incertitudes || [])];
-    f.__gen = { gta: g, modele: o.id, modeleNom: o.nom };
-    f.statut_etab = TC_ETAB[r.tc] || null;   // statut de cet établissement d'après Parcoursup, pas celui du modèle
-    appliquerAttendus(f, r.nmc);
-    return f;
-  }
   function decodePs(c) {
     const K = c.meta.cles, S = c.s, iG = K.indexOf("gta");
     const FICHE = (g) => `https://dossierappel.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=${g}&typeBac=0&originePc=0`;
@@ -463,21 +395,22 @@
   }
   window.__decodePs = decodePs;
 
-  // Fiches remplacées ou redirigées, fiches maison retirées : applique les redirections au nombre de vœux retenus
+  // Anciennes fiches maison redirigées vers Parcoursup ou retirées : applique les redirections aux vœux retenus
   // (fonction pure : renvoie le nouvel état et les messages, ne modifie pas l'état reçu ni ne l'enregistre).
-  // Reprend à l'identique les lignes qui étaient dans chargerFormations (app.js).
   function redirigerVoeux(etat) {
     const messages = [];
-    let retenus = [...new Set(etat.retenus.flatMap((id) => (REMPL[id] ? REMPL[id] : [ALIAS[id] || id])))];   // fiches remplacées ou redirigées
-    // fiches maison retirées sans correspondance Parcoursup affichée : vœu retiré de la liste, avec un message (une seule fois)
+    let retenus = [...new Set(etat.retenus.flatMap((id) => REDIR[id] || [ALIAS[id] || id]))];   // anciennes fiches redirigées
+    // anciennes fiches sans formation Parcoursup affichée : vœu retiré de la liste, avec un message (une seule fois)
     const retenusAvant = retenus.length;
     retenus = retenus.filter((id) => !RETIREES.has(id));
     if (retenus.length < retenusAvant) messages.push(AVIS_RETRAIT);
     return { etat: Object.assign({}, etat, { retenus }), messages, modifie: retenus.join("|") !== etat.retenus.join("|") };
   }
-  // Calendrier Parcoursup repris par les fiches qui n'en ont pas (lignes qui étaient dans chargerFormations)
-  function completerCalendrier(d) {
-    const calPs = (d.formations.find((f) => f.plateforme === "parcoursup" && f.calendrier && f.calendrier.length) || {}).calendrier || []; d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
+  // Calendrier Parcoursup repris par les fiches qui n'en ont pas (data/ajustements.json, calendrier_parcoursup : le calendrier
+  // des anciennes fiches maison françaises, gardé avec ses sources quand elles ont été retirées)
+  function completerCalendrier(d, aj) {
+    const calPs = (aj && aj.calendrier_parcoursup) || [];
+    d.formations.forEach((f) => { if (!f.calendrier) f.calendrier = calPs; });
   }
   // État courant, relu par app.js après construireCatalogue et chargerLieux (les variables sont réaffectées à chaque construction)
   const etat = () => ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS });
