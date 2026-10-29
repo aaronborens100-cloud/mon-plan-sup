@@ -8,10 +8,12 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 1. **Site en français, pour des lycéens.** Tous les textes affichés sont en français, clairs et
    accessibles à un élève de 16-18 ans (tutoiement, comme le reste du site). Le code et ses
    commentaires sont aussi en français.
-2. **Données officielles uniquement.** Les formations françaises viennent de la base officielle
-   Parcoursup (open data du ministère de l'Enseignement supérieur), sans fusion avec des fiches
-   maison ni fiches inventées. Toute donnée ajoutée cite sa source (URL, date de consultation).
-   Ne jamais compléter un chiffre manquant par une estimation présentée comme un fait.
+2. **Chiffres officiels uniquement.** Les chiffres (taux d'accès, places, mentions des admis, frais,
+   statistiques) viennent de sources officielles citées (URL, date de consultation), jamais d'une
+   estimation présentée comme un fait. Le profil d'une formation, ses métiers, sa charge de travail et
+   la moyenne visée tirée des anciennes fiches sont des estimations Mon Plan Sup, affichées comme
+   telles. Les formations françaises proposées sont celles de Parcoursup : aucune fiche inventée sans
+   formation Parcoursup correspondante.
 3. **Aucune donnée personnelle hors du navigateur.** Profil, notes, bulletins et réponses restent
    dans le navigateur de l'élève (`localStorage`). Pas d'envoi vers un serveur, pas d'analytics,
    pas de service tiers qui reçoit des données de l'élève. Les bulletins PDF sont lus localement
@@ -32,7 +34,8 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
   retirées (PR H, #76) ; leurs identifiants restent valides (redirection vers la formation Parcoursup, sinon vœu
   retiré avec un message). Il reste dans `data/formations.json` 1 345 fiches : 826 en France (811 fusionnées avec
   Parcoursup + 15 prépas ECG « modèles » de `data/ajustements.json`) et 519 à l'étranger (non concernées).
-  Leur retrait (PR I2) attend une décision d'Aaron : il change 88 listes de 10 vœux sur 114 profils.
+  Leur retrait est abandonné (décision d'Aaron du 29/10/2026, PR #84 fermée) : les 811 fiches fusionnées restent.
+  Une détection automatique des fiches suspectes est prévue.
 - `data/anciennes-fiches.json` (ex-`fusion.json`, renommé dans I1, #77) relie ces fiches à Parcoursup et définit
   le périmètre affiché (BTS et BUT masqués). Ne pas le supprimer sans une tâche dédiée.
 - `data/attendus-filieres.json` : attendus nationaux officiels (45 mentions de licence, PACES, 18 CPGE), recopiés mot
