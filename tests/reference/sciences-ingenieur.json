@@ -862,9 +862,9 @@
    },
    {
     "x": {
-     "id": "psup-28891",
+     "id": "psup-28874",
      "categorie": "ambitieux",
-     "pertinence": 75.01320498128374,
+     "pertinence": 74.84852661871065,
      "repere": [
       23,
       "en_dessous"
@@ -873,9 +873,9 @@
    },
    {
     "x": {
-     "id": "psup-28874",
+     "id": "psup-28891",
      "categorie": "ambitieux",
-     "pertinence": 74.84852661871065,
+     "pertinence": 74.01320498128375,
      "repere": [
       23,
       "en_dessous"
@@ -885,7 +885,7 @@
   ]
  },
  "empreintes": {
-  "calculs": "3113575fa87befdb613699bfe170471a5d52c50fba113e239565635c9eeafe59",
-  "textes": "f022dc977f5d9618baacdc0c4c355fd6da7da8c160ccd4b4dede26a7c0be630f"
+  "calculs": "167773af2910f711efd80d672f039bd44dfc9a7de195edeaf1a1000a02ae1de1",
+  "textes": "a53a1874d15a07f3c27dced6e68f4609634d75cf633c0ba50ef76d5af8c45a08"
  }
 }

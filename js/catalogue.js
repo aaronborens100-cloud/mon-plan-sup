@@ -311,18 +311,19 @@
     const t = (r.nm || []).join(" ");
     return /approfondies/i.test(t) ? "appro" : /appliqu/i.test(t) ? "appli" : null;
   }
-  // Ajustement du profil d'une formation scientifique d'après les statistiques officielles de ses admis.
-  // Sans fiche maison, une formation reçoit le profil moyen de sa filière (data/filieres.json), le même pour une école
-  // très sélective et une peu sélective. Règle (estimation calculée à partir des statistiques officielles Parcoursup 2025,
-  // jamais présentée comme un fait sur la fiche) : dans une filière à dominante scientifique (maths attendues au moins au
-  // niveau 2 et maths, ingénierie ou informatique parmi les deux premiers domaines), si la moyenne au bac estimée des
-  // admis (calculée à partir de la répartition officielle des mentions) atteint SEUIL_MOYENNE_MATHS, le niveau de maths
-  // attendu monte d'un cran (3 au plus) et « maths » est ajouté aux domaines s'il n'y est pas (en 2e position).
-  // Rien ne baisse, rien n'est ajouté sans moyenne officielle (formation sans statistiques : profil de la filière).
+  // Ajustement du profil d'une formation scientifique d'après les statistiques officielles de ses admis (PR R).
+  // Sans fiche maison, une formation reçoit le profil moyen de sa filière (data/filieres.json, table figée), le même pour
+  // une école très sélective et pour une peu sélective. Règle, limitée aux écoles d'ingénieurs et aux prépas scientifiques
+  // (type lu dans Parcoursup) d'une filière où le niveau de maths attendu est d'au moins 2 et dont le 1er domaine est
+  // scientifique : si la moyenne au bac estimée des admis (répartition officielle des mentions, Parcoursup 2025) atteint
+  // SEUIL_MOYENNE_MATHS, le niveau de maths attendu monte d'un cran (3 au plus) et « maths » est ajouté aux domaines
+  // (en 2e position) s'il n'y est pas. Rien ne baisse ; sans mentions publiées (moy null) ou sous le seuil, la valeur de
+  // la filière est gardée telle quelle. C'est une estimation, jamais un fait : la fiche le dit (incertitudes).
   const SEUIL_MOYENNE_MATHS = 16;
   const DOMAINES_SCIENTIFIQUES = ["maths", "ingenierie_tech", "data_informatique"];
-  function ajusterProfilOfficiel(fam, moy) {
-    const sc = fam.profil && fam.profil.maths >= 2 && (fam.domaines || []).slice(0, 2).some((d) => DOMAINES_SCIENTIFIQUES.includes(d));
+  const TYPES_PROFIL_OFFICIEL = ["ecole_ingenieur", "prepa_scientifique"];
+  function ajusterProfilOfficiel(fam, type, moy) {
+    const sc = TYPES_PROFIL_OFFICIEL.includes(type) && fam.profil && fam.profil.maths >= 2 && DOMAINES_SCIENTIFIQUES.includes((fam.domaines || [])[0]);
     if (!sc || moy == null || moy < SEUIL_MOYENNE_MATHS) return null;
     const maths = Math.min(3, fam.profil.maths + 1);
     const domaines = fam.domaines.includes("maths") ? fam.domaines : [fam.domaines[0], "maths", ...fam.domaines.slice(1)];
@@ -361,7 +362,7 @@
     const epreuves = (r.aut || []).some((a) => /épreuves de sélection/.test(a));
     const pub = r.tc === "Publics" && fam.cout_public;
     const chiffres = [places != null ? `${places} places` : null, voeux != null ? `${voeux} vœux reçus` : null, admis != null ? `${admis} admis` : null].filter(Boolean).join(" · ");
-    const aj = ajusterProfilOfficiel(fam, moy);   // profil et domaines relevés pour une formation scientifique très sélective, sinon null
+    const aj = ajusterProfilOfficiel(fam, type, moy);   // profil et domaines relevés d'après les mentions des admis (école d'ingénieurs ou prépa scientifique), sinon null
     const fiche = {
       id: "psup-" + g, type, type_label: (type === fam.type && fam.type_label) || fil.meta.types_label[type] || type, ...(opt ? { option: opt } : {}), nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
       ville: r.commune || r.departement || "Non renseigné", pays: "France", duree_ans: fam.duree_ans, langue: fam.langue, charge: fam.charge,
@@ -376,7 +377,7 @@
       mentions_admis: m, classement: null, integrations: [],
       incertitudes: [deduite ? `Profil, domaines, spécialités et métiers déduits de l'intitulé officiel de la filière Parcoursup (« ${fam.libelle} », ${fam.nmc}) : estimation à vérifier pour cet établissement.`
           : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
-        ...(aj ? [`Niveau de maths attendu et domaines relevés d'un cran : estimation calculée à partir des statistiques officielles Parcoursup 2025 (moyenne au bac estimée des admis : ${String(aj.moyenne).replace(".", ",")}/20), pas une donnée de la fiche.`] : []),
+        ...(aj ? [`Niveau de maths attendu et domaines relevés d'un cran par rapport à la moyenne de la filière : estimation, pas une donnée officielle de la fiche. Méthode : la moyenne au bac estimée des admis (${String(aj.moyenne).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions) atteint ${SEUIL_MOYENNE_MATHS}/20, seuil retenu pour une école d'ingénieurs ou une prépa scientifique. Source : statistiques Parcoursup 2025, consultées le ${cons} (${src}).`] : []),
         ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
         ...(man ? [`Pas de statistiques Parcoursup 2025 : chiffres ${man === anc ? "de la session" : "relevés à la main (session"} ${man.session}${man === anc ? "" : ")"}, sans les mentions des admis.`] : []),
         ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère d'admission. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelle formation à la rentrée 2026 »)."] : []),

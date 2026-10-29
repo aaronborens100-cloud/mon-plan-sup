@@ -46,7 +46,6 @@ Voir `README.md` pour l'organisation des fichiers et le lancement en local.
 - Pour les fiches générées (`psup-*`), le type de formation et l'option ECG (appro / appli) sont lus dans Parcoursup
   (table `TYPES_PS` de `js/catalogue.js`, catégorie + intitulé) ; sans règle, le type de `data/filieres.json` est gardé
   (`__gen.typeSansRegle`).
-- Profil des formations scientifiques : `ajusterProfilOfficiel` (`js/catalogue.js`) relève d'un cran le niveau de maths et les domaines quand la moyenne estimée des admis atteint 16 (estimation tirée des statistiques officielles, jamais un fait ; PR R).
 - La solution de secours de `js/bulletin.js` charge pdf.js 3.11.174 depuis cdnjs si `vendor/` est
   absent, alors que la version fournie est la 6.2.108.
 
