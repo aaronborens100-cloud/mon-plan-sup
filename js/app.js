@@ -27,7 +27,7 @@
   // (le calcul est dans js/catalogue.js ; ces variables en reprennent l'état après chaque construction, voir synchroCatalogue)
   let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCONS = null, LIEUX = null, FRAIS_PRIVES_META = null, CAMPUS = {};
   function synchroCatalogue() { ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS } = C.etat()); }
-  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
+  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "", puce: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
   migrer();
 
   function migrer() {
@@ -1309,34 +1309,77 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
   }
 
   /* ================================================================ CATALOGUE */
+  // Pastilles du catalogue (affichage seulement). Chaque pastille = une clé e.type ; « autres » = tous les types sans pastille
+  // (formations Parcoursup « psup:… », FCIL, DEUST…), non détaillés. Les effectifs sont calculés depuis CAT, jamais écrits en dur.
+  const PASTILLES = [
+    ["Classes préparatoires", [["prepa_ecg", "Prépa ECG"], ["prepa_scientifique", "Prépa scientifique"], ["prepa_litteraire", "Prépa littéraire (A/L)"], ["prepa_bl", "Prépa B/L"]]],
+    ["Université", [["licence", "Licence"], ["double_licence", "Double licence"], ["iep", "IEP"], ["college_universitaire", "Sciences Po"]]],
+    ["Écoles", [["ecole_ingenieur", "École d'ingénieurs post-bac"], ["ecole_commerce", "École de commerce post-bac"], ["ecole_art", "École d'art ou du spectacle"], ["dn_made", "DN MADE"], ["sante_social", "Santé ou social (diplôme d'État)"]]],
+    ["Bachelors", [["bachelor_france", "Bachelor en France"], ["bachelor_europeen", "Bachelor à l'étranger"]]],
+    ["Autres", [["autres", "Autres formations"]]],
+  ];
+  const TYPES_PASTILLE = new Set(PASTILLES.flatMap(([, l]) => l.map(([k]) => k)).filter((k) => k !== "autres"));
+  const NOM_PASTILLE = Object.fromEntries(PASTILLES.flatMap(([, l]) => l));
+  // Puces d'affinage : pas des types, mais des mots du nom de la fiche (accents ignorés, comme la recherche).
+  const PUCES = {
+    prepa_ecg: [["Maths approfondies", "approfondies"], ["Maths appliquées", "appliquees"], ["avec ESH", "esh"], ["avec HGG", "hgg"]],
+    prepa_scientifique: [["MPSI", "mpsi"], ["PCSI", "pcsi"], ["BCPST", "bcpst"]],
+  };
+  const RESTE = "__reste";
+  const motDuNom = (e, m) => new RegExp("\\b" + m + "\\b").test(sansAccents(e.nom).toLowerCase());
+  const clePastille = (e) => (TYPES_PASTILLE.has(e.type) ? e.type : "autres");
+  function puceOk(type, puce, e) {
+    const defs = PUCES[type] || [];
+    if (puce === RESTE) return !defs.some(([, m]) => motDuNom(e, m));
+    const d = defs.find(([l]) => l === puce);
+    return !d || motDuNom(e, d[1]);
+  }
+  function effectifsPastilles() {
+    const n = {}, puces = {};
+    for (const e of CAT) {
+      const k = clePastille(e);
+      n[k] = (n[k] || 0) + 1;
+      const defs = PUCES[k];
+      if (defs) { let aucune = true; for (const [l, m] of defs) if (motDuNom(e, m)) { puces[k + "|" + l] = (puces[k + "|" + l] || 0) + 1; aucune = false; } if (aucune) puces[k + "|" + RESTE] = (puces[k + "|" + RESTE] || 0) + 1; }
+    }
+    return { n, puces };
+  }
+  function blocPastilles() {
+    const c = app.cat, { n } = effectifsPastilles();
+    return PASTILLES.map(([titre, liste]) => {
+      const vis = liste.filter(([k]) => n[k]);
+      return vis.length ? `<div class="past-groupe"><h2>${esc(titre)}</h2><div class="pastilles">${vis.map(([k, l]) => `<button type="button" class="past" data-action="cat-pastille" data-k="${k}" aria-pressed="${c.type === k}"><b>${esc(l)}</b><span>${nbFr(n[k])} formation${n[k] > 1 ? "s" : ""}</span></button>`).join("")}</div></div>` : "";
+    }).join("");
+  }
+  // Bloc détail sous les pastilles : nom, effectif, puces d'affinage. Ouvre une <section> refermée par vueExplorer.
+  function enteteDetail(c, nbListe) {
+    if (!c.type) return "";
+    const { puces } = effectifsPastilles();
+    const defs = PUCES[c.type] || [];
+    const lignes = [["", "Toutes"], ...defs.map(([l]) => [l, l]), [RESTE, "Autres intitulés"]]
+      .filter(([k]) => k === "" || (puces[c.type + "|" + (k === RESTE ? RESTE : k)] || 0) > 0);
+    const aff = defs.length ? `<div class="chips-aff" role="group" aria-label="Affiner">${lignes.length > 1 ? lignes.map(([k, l]) => `<button type="button" class="chip-aff" data-action="cat-puce" data-k="${esc(k)}" aria-pressed="${(c.puce || "") === k}">${esc(l)}${k ? `<span class="cat-puce-n">${nbFr(puces[c.type + "|" + k] || 0)}</span>` : ""}</button>`).join("") : ""}</div>` : "";
+    return `<section class="cat-detail" aria-label="${esc(NOM_PASTILLE[c.type] || "Détail")}"><h3 class="cat-detail-titre">${esc(NOM_PASTILLE[c.type] || "")}</h3><p class="cat-detail-n">${nbFr(nbListe)} formation${nbListe > 1 ? "s" : ""}</p>${aff}`;
+  }
   function vueExplorer() {
     const c = app.cat;
     c.source = "";   // l'origine de la fiche n'est plus un critère proposé
     const liste = filtreCatalogue();
-    // Deux familles de valeurs dans e.type : les types Mon Plan Sup (clés comme « licence », libellé dans TYPES())
-    // et les catégories Parcoursup brutes, stockées avec le préfixe « psup: ». Les fiches Parcoursup enrichies portent
-    // un type Mon Plan Sup : on répartit donc par préfixe, et non par origine de la fiche.
-    const tousTypes = [...new Set(CAT.map((e) => e.type))];
-    const types = tousTypes.filter((k) => !String(k).startsWith("psup:")).sort((x, y) => String(TYPES()[x] || x).localeCompare(String(TYPES()[y] || y), "fr"));
-    const tfs = tousTypes.filter((k) => String(k).startsWith("psup:")).sort((x, y) => x.localeCompare(y, "fr"));
     const regions = [...new Set(CAT.map((e) => e.region).filter(Boolean))].sort();
     const vis = liste.slice(0, app.limiteCat);
-    // « psup: » fait 5 caractères : l'ancien code retirait 6 caractères et amputait la première lettre
-    const libCat = (k) => String(k).replace(/^psup:/, "");
     const nbEtr = CAT.filter((e) => e.pays !== "France").length;
     return `<div class="stack-lg">
-      ${pageHero({ sur: "Catalogue", titre: "Catalogue des formations", sous: `<strong>${nbFr(CAT.filter((e) => e.ps).length)} formations</strong> dont <strong>${nbFr(nbEtr)} à l'étranger</strong>. Les BTS et BUT ne sont pas proposés.`, ton: "violet", ico: "loupe" })}
+      ${pageHero({ sur: "Catalogue", titre: "Catalogue des formations", sous: `<strong>${nbFr(CAT.filter((e) => e.ps).length)} formations</strong> dont <strong>${nbFr(nbEtr)} à l'étranger</strong>. Choisis une filière, ou cherche par nom. Les BTS et BUT ne sont pas proposés.`, ton: "violet", ico: "loupe" })}
       <div class="filtres-cat card">
         <div class="recherche"><label for="cq" class="sr-only">Rechercher une formation</label>${ico("loupe")}<input id="cq" type="text" data-cfiltre="q" value="${esc(c.q)}" placeholder="Formation, établissement, ville…"></div>
         <div class="filters">
-          <div class="field"><label for="ctype">Type</label><select id="ctype" data-cfiltre="type"><option value="">Tous</option>
-            <optgroup label="Types Mon Plan Sup">${types.map((k) => `<option value="${esc(k)}" ${c.type === k ? "selected" : ""}>${esc(TYPES()[k] || k)}</option>`).join("")}</optgroup>
-            <optgroup label="Catégories Parcoursup">${tfs.map((k) => `<option value="${esc(k)}" ${c.type === k ? "selected" : ""}>${esc(libCat(k))}</option>`).join("")}</optgroup></select></div>
           <div class="field"><label for="cregion">Région</label><select id="cregion" data-cfiltre="region"><option value="">Toutes</option>${regions.map((r) => `<option ${c.region === r ? "selected" : ""}>${esc(r)}</option>`).join("")}<option value="etranger" ${c.region === "etranger" ? "selected" : ""}>Étranger</option></select></div>
           <div class="field"><label for="capp">Apprentissage</label><select id="capp" data-cfiltre="app"><option value="">Indifférent</option><option value="oui" ${c.app === "oui" ? "selected" : ""}>En apprentissage</option><option value="non" ${c.app === "non" ? "selected" : ""}>Hors apprentissage</option></select></div>
           <label class="row small check-label"><input type="checkbox" data-cfiltre="verif" ${c.verif ? "checked" : ""}> Seulement les fiches « À vérifier »</label>
         </div>
       </div>
+      <div class="cat-pastilles">${blocPastilles()}</div>
+      ${enteteDetail(c, liste.length)}
       <div class="resultats-tete"><p aria-live="polite"><b>${nbFr(liste.length)}</b> formation${liste.length > 1 ? "s" : ""} trouvée${liste.length > 1 ? "s" : ""}</p><span class="tiny muted">Places : capacité Parcoursup 2025 du vœu · base du ${esc(fmtDate(FU ? FU.meta.version : DATA.meta.version))}</span></div>
       <div class="cat-grille">${vis.map((e) => `<a class="cat-carte ton-${tonType(e.type, e.type_label)}" href="#formation-${e.id}">
           <div class="row badges">${typePill(e.type, e.type_label)}${e.app ? '<span class="pill ton-ciel">Apprentissage</span>' : ""}${e.av ? '<span class="pill verif">À vérifier</span>' : ""}${e.stats === "nouvelle_2026" ? '<span class="pill ton-menthe">Nouvelle en 2026</span>' : e.stats === "sans_stats" ? '<span class="pill neutral">Stats non publiées</span>' : ""}</div>
@@ -1345,12 +1388,15 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
           <div class="cat-pied"><span>${ico("pin")}${esc(e.ville)}${e.pays !== "France" ? ", " + esc(e.pays) : ""}</span><span>${ico("groupe")}${e.places ? nbFr(e.places) + " places" : "places n. c."}</span><span>${ico("euro")}${e.cout != null ? (e.coutMin != null && e.coutMin < e.cout ? `${E.fmtEur(e.coutMin)} à ${E.fmtEur(e.cout)}` : E.fmtEur(e.cout)) + "/an" : "coût n. c."}</span></div>
         </a>`).join("") || `<div class="card vide">${ico("loupe")}<p>Aucune formation ne correspond à ces critères.</p></div>`}</div>
       ${liste.length > app.limiteCat ? `<div class="plus-bloc"><button class="btn lg" data-action="cat-plus">Afficher la suite <span class="compteur">${nbFr(liste.length - app.limiteCat)}</span></button></div>` : ""}
+      ${c.type ? "</section>" : ""}
     </div>`;
   }
   function filtreCatalogue() {
     const c = app.cat;
     let l = CAT;
-    if (c.type) l = l.filter((e) => e.type === c.type);
+    if (c.type === "autres") l = l.filter((e) => !TYPES_PASTILLE.has(e.type));
+    else if (c.type) l = l.filter((e) => e.type === c.type);
+    if (c.type && c.puce) l = l.filter((e) => puceOk(c.type, c.puce, e));
     if (c.source) l = l.filter((e) => e.src === c.source);
     if (c.verif) l = l.filter((e) => e.av);
     if (c.app) l = l.filter((e) => (c.app === "oui") === !!e.app);
@@ -1808,6 +1854,9 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     }
     else if (a === "lycee-changer") { app.lyceeEdition = true; rendre(); const el = $("#lyceeq"); if (el) el.focus(); }
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
+    else if (a === "cat-pastille") { app.cat.type = app.cat.type === b.dataset.k ? "" : b.dataset.k; app.cat.puce = ""; app.limiteCat = 50; rendre();
+      const d = $(".cat-detail"); if (d) d.scrollIntoView({ block: "nearest", behavior: window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+    else if (a === "cat-puce") { app.cat.puce = b.dataset.k; app.limiteCat = 50; rendre(); }
     else if (a === "cat-plus") { app.limiteCat += 50; const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "retenir") { const id = b.dataset.id; etat.retenus = etat.retenus.includes(id) ? etat.retenus.filter((x) => x !== id) : etat.retenus.concat(id); sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W); purgerRemplacements(M); etat.retenus = voeuxAffiches(W, M).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }

@@ -890,3 +890,29 @@ body.route-accueil .faq-zone { display: none; }
 }
 @keyframes menu-entree { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .menu-ouvert .topbar .nav { animation: none; } }
+
+/* ---------- catalogue : grandes pastilles par filière */
+.cat-pastilles { display: flex; flex-direction: column; gap: 24px; }
+.past-groupe h2 { margin: 0 0 12px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--gris); font-weight: 700; }
+.pastilles { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.past { appearance: none; text-align: left; font: inherit; color: var(--encre); background: var(--blanc); border: 2px solid var(--gris-trait); border-radius: 16px; padding: 16px 18px; min-height: 92px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; gap: 2px; -webkit-tap-highlight-color: transparent; transition: border-color .15s, background .15s; }
+.past b { font-size: 20px; line-height: 1.2; }
+.past span { font-size: 14px; color: var(--gris-texte); font-variant-numeric: tabular-nums; }
+.past:hover { border-color: var(--marque); }
+.past:focus-visible, .chip-aff:focus-visible { outline: 3px solid var(--marque); outline-offset: 2px; }
+.past[aria-pressed="true"] { background: var(--marque); border-color: var(--marque); color: var(--sur-marque); }
+.past[aria-pressed="true"] span { color: #DFF0E5; }
+.cat-detail { border: 2px solid var(--marque); border-radius: 16px; padding: 24px; background: var(--blanc); display: flex; flex-direction: column; gap: 16px; }
+.cat-detail-titre { margin: 0; font-size: 26px; }
+.cat-detail-n { margin: -12px 0 0; color: var(--gris-texte); font-variant-numeric: tabular-nums; }
+.chips-aff { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-aff { appearance: none; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 14px; border: 2px solid var(--gris-trait); border-radius: 999px; background: var(--blanc); color: var(--encre); font: 600 14px var(--font-texte); cursor: pointer; }
+.chip-aff[aria-pressed="true"] { background: var(--marque-pale); border-color: var(--marque); color: var(--marque); }
+@media (max-width: 600px) {
+  .pastilles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .past { padding: 12px 14px; min-height: 84px; }
+  .past b { font-size: 16px; }
+  .cat-detail { padding: 16px; }
+  .cat-detail-titre { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .past { transition: none; } }
