@@ -482,5 +482,5 @@
   // État courant, relu par app.js après construireCatalogue et chargerLieux (les variables sont réaffectées à chaque construction)
   const etat = () => ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS });
   window.CapCatalogue = { construireCatalogue, chargerLieux, redirigerVoeux, completerCalendrier, etat, decodePs, statDe, sansAccents, etabCourt,
-    montantFrais, suffixeRevenus, texteApprentissage, MENTION_STATS, AVIS_RETRAIT };
+    montantFrais, suffixeRevenus, texteApprentissage, MENTION_STATS, AVIS_RETRAIT, typeParcoursup, fichGeneree, tableAttendus };
 })();
