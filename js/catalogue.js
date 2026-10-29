@@ -311,6 +311,24 @@
     const t = (r.nm || []).join(" ");
     return /approfondies/i.test(t) ? "appro" : /appliqu/i.test(t) ? "appli" : null;
   }
+  // Ajustement du profil d'une formation scientifique d'après les statistiques officielles de ses admis.
+  // Sans fiche maison, une formation reçoit le profil moyen de sa filière (data/filieres.json), le même pour une école
+  // très sélective et une peu sélective. Règle (estimation calculée à partir des statistiques officielles Parcoursup 2025,
+  // jamais présentée comme un fait sur la fiche) : dans une filière à dominante scientifique (maths attendues au moins au
+  // niveau 2 et maths, ingénierie ou informatique parmi les deux premiers domaines), si la moyenne au bac estimée des
+  // admis (calculée à partir de la répartition officielle des mentions) atteint SEUIL_MOYENNE_MATHS, le niveau de maths
+  // attendu monte d'un cran (3 au plus) et « maths » est ajouté aux domaines s'il n'y est pas (en 2e position).
+  // Rien ne baisse, rien n'est ajouté sans moyenne officielle (formation sans statistiques : profil de la filière).
+  const SEUIL_MOYENNE_MATHS = 16;
+  const DOMAINES_SCIENTIFIQUES = ["maths", "ingenierie_tech", "data_informatique"];
+  function ajusterProfilOfficiel(fam, moy) {
+    const sc = fam.profil && fam.profil.maths >= 2 && (fam.domaines || []).slice(0, 2).some((d) => DOMAINES_SCIENTIFIQUES.includes(d));
+    if (!sc || moy == null || moy < SEUIL_MOYENNE_MATHS) return null;
+    const maths = Math.min(3, fam.profil.maths + 1);
+    const domaines = fam.domaines.includes("maths") ? fam.domaines : [fam.domaines[0], "maths", ...fam.domaines.slice(1)];
+    if (maths === fam.profil.maths && domaines === fam.domaines) return null;
+    return { profil: Object.assign({}, fam.profil, { maths }), domaines, moyenne: moy };
+  }
   // Fiche d'une formation Parcoursup : attributs éditoriaux de sa filière (data/filieres.json, code nmc),
   // chiffres officiels de la formation (stats.json, session 2025) ou, à défaut, relevé manuel sourcé
   // (stats-manuelles.json). Sans chiffres, la fiche est quand même créée (taux et mentions à null), avec le statut
@@ -343,10 +361,11 @@
     const epreuves = (r.aut || []).some((a) => /épreuves de sélection/.test(a));
     const pub = r.tc === "Publics" && fam.cout_public;
     const chiffres = [places != null ? `${places} places` : null, voeux != null ? `${voeux} vœux reçus` : null, admis != null ? `${admis} admis` : null].filter(Boolean).join(" · ");
+    const aj = ajusterProfilOfficiel(fam, moy);   // profil et domaines relevés pour une formation scientifique très sélective, sinon null
     const fiche = {
       id: "psup-" + g, type, type_label: (type === fam.type && fam.type_label) || fil.meta.types_label[type] || type, ...(opt ? { option: opt } : {}), nom: r.nm[0], etablissement: etabCourt(r.etab_nom),
       ville: r.commune || r.departement || "Non renseigné", pays: "France", duree_ans: fam.duree_ans, langue: fam.langue, charge: fam.charge,
-      dossier_poids: fam.dossier_poids, profil: fam.profil, plateforme: hors ? "propre" : "parcoursup",
+      dossier_poids: fam.dossier_poids, profil: aj ? aj.profil : fam.profil, plateforme: hors ? "propre" : "parcoursup",
       tests: epreuves ? [{ nom: "Épreuves de sélection", obligatoire: true, texte: "Des épreuves de sélection sont mises en place pour candidater (fiche Parcoursup).", source: r.fiche, consulte_le: cons, statut: "officiel" }] : [],
       pieces: ["dossier Parcoursup", "projet de formation motivé"],
       langue_requise: { anglais_cecrl: fam.anglais_cecrl, texte: fam.anglais_cecrl ? `Niveau ${fam.anglais_cecrl} habituellement attendu dans cette filière (estimation).` : "Pas de certification exigée relevée pour cette filière.", statut: "estimation" },
@@ -357,19 +376,20 @@
       mentions_admis: m, classement: null, integrations: [],
       incertitudes: [deduite ? `Profil, domaines, spécialités et métiers déduits de l'intitulé officiel de la filière Parcoursup (« ${fam.libelle} », ${fam.nmc}) : estimation à vérifier pour cet établissement.`
           : `Profil, domaines, spécialités, métiers et poursuites repris des ${fam.nb} fiche(s) Mon Plan Sup de la même filière Parcoursup (${fam.nmc}) : estimation à vérifier pour cet établissement.`,
+        ...(aj ? [`Niveau de maths attendu et domaines relevés d'un cran : estimation calculée à partir des statistiques officielles Parcoursup 2025 (moyenne au bac estimée des admis : ${String(aj.moyenne).replace(".", ",")}/20), pas une donnée de la fiche.`] : []),
         ...(fam.confiance === "basse" ? ["Déduction peu sûre (intitulé de filière générique ou ambigu) : vérifie le contenu de la formation sur sa fiche Parcoursup."] : []),
         ...(man ? [`Pas de statistiques Parcoursup 2025 : chiffres ${man === anc ? "de la session" : "relevés à la main (session"} ${man.session}${man === anc ? "" : ")"}, sans les mentions des admis.`] : []),
         ...(stats === "nouvelle_2026" ? ["Nouvelle formation à la rentrée 2026 : pas encore de statistiques d'admission, donc pas de repère d'admission. Elle n'entre pas dans ta liste de 10 vœux (section « Nouvelle formation à la rentrée 2026 »)."] : []),
         ...(stats === "sans_stats" ? ["Statistiques d'admission non publiées : aucun repère d'admission, et cette formation n'est pas proposée dans ta liste de vœux (tu peux l'ajouter toi-même)."] : []),
         ...(aStats && moy == null ? ["Mentions des admis non publiées : pas de repère de moyenne."] : []), ...(!pub ? ["Frais non relevés."] : [])],
-      domaines: fam.domaines,
+      domaines: aj ? aj.domaines : fam.domaines,
       cout: pub ? Object.assign({}, fam.cout_public) : { valeur_annuelle_eur: null, texte: TC_ETAB[r.tc] && r.tc !== "Publics" ? "Établissement privé : frais non relevés, vérifie sur le site de l'établissement." : "Frais non relevés pour cette formation : vérifie sur le site de l'établissement.", statut: "non_communique" },   // « privé » seulement si Parcoursup le dit
       specialites: { obligatoires: sp.obligatoires, recommandees: sp.recommandees, maths_expertes: sp.maths_expertes,
         texte: ([sp.obligatoires.length ? `Attendues : ${spLib(sp.obligatoires)}.` : "", sp.recommandees.length ? `Conseillées : ${spLib(sp.recommandees)}.` : "", sp.maths_expertes ? "Option maths expertes " + { indispensable: "indispensable", fortement_conseillee: "fortement conseillée", conseillee: "conseillée" }[sp.maths_expertes] + "." : ""].filter(Boolean).join(" ") || "Pas de spécialité conseillée relevée pour cette filière.") + (deduite ? " (déduit de l'intitulé de la filière)" : " (repris des fiches Mon Plan Sup de la même filière)"), statut: "estimation" },
       statut_etab: TC_ETAB[r.tc] || null, selectivite: taux != null ? { niveau: NIV_TAUX(taux) } : { niveau: "moyenne", estimee: true },   // niveau par défaut pour le calcul, non affiché
       notes: { moyenne_cible: moy, maths_cible: null, texte: moy != null ? `Moyenne au bac estimée des admis 2025 : ${String(moy).replace(".", ",")}/20, calculée à partir de la répartition officielle des mentions (Parcoursup 2025).` : "Pas de repère chiffré.", statut: "estimation", source: src, consulte_le: cons },
       metiers: fam.metiers, poursuites: fam.poursuites,
-      __gen: { gta: g, fam, typeSansRegle: !typePs },
+      __gen: { gta: g, fam, typeSansRegle: !typePs, profilOfficiel: aj ? { maths: aj.profil.maths, moyenne: aj.moyenne } : null },
     };
     if (!va) appliquerAttendus(fiche, r.nmc);
     return fiche;

@@ -795,7 +795,7 @@
    {
     "id": "psup-25819",
     "categorie": "realiste",
-    "pertinence": 84.28105263157894,
+    "pertinence": 85.28105263157896,
     "repere": [
      20,
      "moyenne"
@@ -969,7 +969,7 @@
   "anglaisFragile": false
  },
  "empreintes": {
-  "calculs": "c546a3b26b0d436732a67ac4db6fd625fb238bb90025d5fdb9157dbf375dc571",
-  "textes": "74ef8558cb6ca62cc2a241cc4a1548024b9b1fa9a4022e453ed40f05e3a8dd40"
+  "calculs": "09d298b9370bcdbd6ab6325d9a007f2d66aef7001695de954006ee6d2347a45e",
+  "textes": "b117fd31e40db96bf5d0df5f2c8db666dc71eb9b6d7f72cb2727e49528f3a291"
  }
 }
