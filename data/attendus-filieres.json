@@ -1,0 +1,2970 @@
+{
+  "meta": {
+    "sources": [
+      {
+        "titre": "Éléments de cadrage national des attendus pour les mentions de licence",
+        "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+        "texte_extrait": "docs/releves/attendus-licence-2017-12-12.txt",
+        "date_document": "2017-12-12",
+        "url": null,
+        "url_a_fournir": true,
+        "fourni_par": "Aaron",
+        "recu_le": "2026-10-29",
+        "note": "45 mentions de licence + PACES ; la mention Théologie n'a pas d'attendus nationaux (voir mentions_sans_attendus)."
+      },
+      {
+        "titre": "Éléments de cadrage national des attendus, classes préparatoires aux grandes écoles (CPGE)",
+        "fichier": "docs/releves/attendus-cpge.pdf",
+        "texte_extrait": "docs/releves/attendus-cpge.txt",
+        "date_document": null,
+        "date_creation_pdf": "2018-01-19",
+        "url": null,
+        "url_a_fournir": true,
+        "fourni_par": "Aaron",
+        "recu_le": "2026-10-29",
+        "note": "Le document ne porte pas de date ; la date indiquée est celle des métadonnées du PDF. MP2I et ECG n'y figurent pas."
+      }
+    ],
+    "regle": "Attendus nationaux officiels du ministère de l'Enseignement supérieur, recopiés mot pour mot (citations) avec la page du PDF. Table de référence : aucun fichier de js/ ne la lit et elle ne change aucun résultat. Les champs nmc / correspondance, disciplines et specialites_deduites sont un rapprochement de Mon Plan Sup, pas une donnée officielle : « disciplines » ne contient que ce que le texte cite ; « specialites_deduites » est une interprétation (statut interpretation_mon_plan_sup). Chaque entrée reste valide = false tant qu'Aaron ne l'a pas validée ligne par ligne.",
+    "mentions_sans_attendus": [
+      {
+        "libelle": "Licence mention Théologie",
+        "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+        "page": 19,
+        "texte": "Cette mention ne comprend pas d’éléments de cadrage national car la formation n’est dispensée que par une seule université."
+      }
+    ]
+  },
+  "filieres": {
+    "Licence mention Administration publique": {
+      "type": "licence",
+      "libelle_document": "MENTION ADMINISTRATION PUBLIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "Aucun code « Administration publique » dans data/filieres.json.",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences d’expression écrite et orale qui témoignent de qualités rédactionnelles",
+          "page": 2
+        },
+        {
+          "texte": "Disposer d’aptitudes à la compréhension, à l’analyse et à la synthèse d’un texte",
+          "page": 2
+        },
+        {
+          "texte": "Disposer d’aptitudes à la logique et au raisonnement conceptuel et mathématique",
+          "page": 2
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 2
+        },
+        {
+          "texte": "Etre intéressé par les questions politiques, économiques et sociales et ouverture au monde",
+          "page": 2
+        }
+      ],
+      "disciplines": [],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 2
+    },
+    "Licence mention Droit": {
+      "type": "licence",
+      "libelle_document": "MENTION DROIT",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Droit"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences d’expression écrite et orale qui témoignent de qualités rédactionnelles et oratoires",
+          "page": 3
+        },
+        {
+          "texte": "Disposer d’aptitudes à la compréhension, à l’analyse et à la synthèse d’un texte",
+          "page": 3
+        },
+        {
+          "texte": "Disposer d’aptitudes à la logique et au raisonnement conceptuel",
+          "page": 3
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 3
+        },
+        {
+          "texte": "Etre ouvert au monde et disposer de connaissances linguistiques",
+          "page": 3
+        },
+        {
+          "texte": "Etre intéressé par les questions historiques, sociétales et politiques",
+          "page": 4
+        },
+        {
+          "texte": "Avoir répondu à un questionnaire d’auto-évaluation disponible sur le site de l’Onisep Terminales2017-2018 à partir du 22 janvier. Avoir répondu à ce questionnaire est une condition de recevabilité du dossier (une attestation téléchargeable sera délivrée par le site Terminales2017-2018). Cette attestation sera à joindre au dossier de candidature.",
+          "page": 4
+        }
+      ],
+      "disciplines": [],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 3
+    },
+    "Licence mention Economie": {
+      "type": "licence",
+      "libelle_document": "MENTION ÉCONOMIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Economie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences mathématiques et statistiques indispensables à l’économie et à la gestion",
+          "page": 5
+        },
+        {
+          "texte": "Savoir mobiliser des compétences d’expression écrite et orale et de raisonnement logique afin de pouvoir argumenter un raisonnement conceptuel",
+          "page": 5
+        },
+        {
+          "texte": "Disposer d’une culture générale",
+          "page": 5
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales afin d’être capable de travailler en autonomie et de manière responsable",
+          "page": 5
+        },
+        {
+          "texte": "Disposer de compétences en langue anglaise",
+          "page": 5
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "langue anglaise"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, langue anglaise) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 5
+    },
+    "Licence mention Gestion": {
+      "type": "licence",
+      "libelle_document": "MENTION GESTION",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Gestion",
+        "L1-Gestion-App"
+      ],
+      "correspondance": "certaine",
+      "note": "L1-Gestion-App : même licence en apprentissage.",
+      "citations": [
+        {
+          "texte": "Disposer d’un niveau de mathématiques et de raisonnement conceptuel et logique, ainsi que d’aptitudes à la compréhension, l’analyse et la synthèse",
+          "page": 6
+        },
+        {
+          "texte": "Savoir mobiliser des compétences d’expression écrite et orale en français et en anglais afin de pouvoir argumenter un raisonnement",
+          "page": 6
+        },
+        {
+          "texte": "Disposer d’un niveau de culture générale et témoigner d’un intérêt pour les questions sociétales",
+          "page": 6
+        },
+        {
+          "texte": "Disposer de capacités de travail et de réflexion, collectives et en autonomie",
+          "page": 6
+        },
+        {
+          "texte": "Avoir un intérêt pour le monde de l'entreprise et les domaines socio-économiques et managériaux",
+          "page": 6
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 6
+    },
+    "Licence mention Économie et gestion": {
+      "type": "licence",
+      "libelle_document": "MENTION ÉCONOMIE ET GESTION",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-EG"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer des compétences mathématiques et statistiques indispensables à l’économie et à la gestion",
+          "page": 7
+        },
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et de raisonnement logique afin de pouvoir argumenter un raisonnement conceptuel",
+          "page": 7
+        },
+        {
+          "texte": "Disposer d’une culture générale",
+          "page": 7
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales afin d’être capable de travailler en autonomie et de manière responsable",
+          "page": 7
+        },
+        {
+          "texte": "Disposer de compétences en langue anglaise",
+          "page": 7
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "langue anglaise"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, langue anglaise) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 7
+    },
+    "Licence mention Administration économique et sociale": {
+      "type": "licence",
+      "libelle_document": "MENTION ADMINISTRATION ÉCONOMIQUE ET SOCIALE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-AES"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression orale et écrite afin de pouvoir argumenter un raisonnement",
+          "page": 8
+        },
+        {
+          "texte": "Disposer de compétences mathématiques indispensables à la gestion et à l’économie",
+          "page": 8
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 8
+        },
+        {
+          "texte": "Etre intéressé par les questions sociétales et être ouvert au monde",
+          "page": 8
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 8
+    },
+    "Licence mention Science politique": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCE POLITIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SCIPO"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Intérêt pour les questions politiques et sociales",
+          "page": 9
+        },
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression orale et écrite afin de pouvoir argumenter un raisonnement",
+          "page": 9
+        },
+        {
+          "texte": "Disposer d’aptitudes à la compréhension et à l’analyse de documents",
+          "page": 9
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 9
+        }
+      ],
+      "disciplines": [],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 9
+    },
+    "Licence mention Sciences sanitaires et sociales": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES SANITAIRES ET SOCIALES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SSS"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 10
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 10
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 10
+        },
+        {
+          "texte": "Etre intéressé par les questions de santé et les questions sociales",
+          "page": 10
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et travailler en équipe",
+          "page": 10
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 10
+    },
+    "Licence mention Humanités": {
+      "type": "licence",
+      "libelle_document": "MENTION HUMANITÉS",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Huma"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 11
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 11
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 11
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 11
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et travailler en équipe",
+          "page": 11
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 11
+    },
+    "Licence mention Histoire": {
+      "type": "licence",
+      "libelle_document": "MENTION HISTOIRE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Histoire"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 12
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 12
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 12
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 12
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 12
+        },
+        {
+          "texte": "Avoir un intérêt pour la recherche documentaire",
+          "page": 12
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions historiques, politiques, économiques et sociales",
+          "page": 12
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 12
+    },
+    "Licence mention Histoire de l'art et archéologie": {
+      "type": "licence",
+      "libelle_document": "MENTION HISTOIRE DE L’ART ET ARCHÉOLOGIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-HAA"
+      ],
+      "correspondance": "certaine",
+      "note": "L1-HArts (« Histoire de l'art » seul) non retenu : mention différente.",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 13
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 13
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 13
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 13
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 13
+        },
+        {
+          "texte": "Avoir un intérêt pour l’art, l’archéologie, l’histoire et la culture",
+          "page": 13
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 13
+    },
+    "Licence mention Géographie et aménagement": {
+      "type": "licence",
+      "libelle_document": "MENTION GÉOGRAPHIE ET AMÉNAGEMENT",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-GA"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 14
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 14
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 14
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 14
+        },
+        {
+          "texte": "Avoir un intérêt pour la recherche documentaire",
+          "page": 14
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 14
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions de société, les problématiques environnementales, l’aménagement et l’occupation des espaces",
+          "page": 14
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 14
+    },
+    "Licence mention Sociologie": {
+      "type": "licence",
+      "libelle_document": "MENTION SOCIOLOGIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Sociologie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 15
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 15
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 15
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines et sociales",
+          "page": 15
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 15
+        },
+        {
+          "texte": "Avoir un intérêt pour la recherche documentaire",
+          "page": 15
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions politiques, économiques et sociales",
+          "page": 15
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 15
+    },
+    "Licence mention Psychologie": {
+      "type": "licence",
+      "libelle_document": "MENTION PSYCHOLOGIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Psychologie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 16
+        },
+        {
+          "texte": "Disposer de compétences de raisonnement logique et d’argumentation",
+          "page": 16
+        },
+        {
+          "texte": "Disposer de compétences dans au moins une langue étrangère, de préférence en anglais",
+          "page": 16
+        },
+        {
+          "texte": "Avoir des compétences dans les disciplines scientifiques",
+          "page": 16
+        },
+        {
+          "texte": "Avoir des compétences dans les disciplines littéraires et les disciplines de sciences sociales",
+          "page": 16
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 16
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 16
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Cette mention requiert en effet un bon niveau dans au moins une des disciplines suivantes : mathématiques, physique-chimie et sciences de la vie et de la terre.",
+          "page": 16
+        },
+        {
+          "texte": "Cette mention requiert en effet un bon niveau dans au moins deux des disciplines suivantes : français, philosophie, histoire-géographie et sciences économiques et sociales.",
+          "page": 16
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de la vie et de la Terre",
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "philosophie",
+        "français",
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT",
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences économiques et sociales, histoire-géographie, philosophie, français, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 16
+    },
+    "Licence mention Sciences de l'éducation": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DE L’ÉDUCATION",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SEF"
+      ],
+      "correspondance": "a_verifier",
+      "note": "L1-SEF s'intitule « Sciences de l'éducation et de la formation » : intitulé voisin, pas identique.",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 17
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 17
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 17
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions d’apprentissage et d’éducation / Avoir été engagé dans une action éducative et/ou sociale",
+          "page": 17
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail, seul ou en équipe",
+          "page": 17
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 17
+    },
+    "Licence mention Philosophie": {
+      "type": "licence",
+      "libelle_document": "MENTION PHILOSOPHIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Philosophie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 18
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 18
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 18
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour la pensée philosophique",
+          "page": 18
+        },
+        {
+          "texte": "Disposer d’une bonne culture générale et être ouvert au monde",
+          "page": 18
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail, seul ou en équipe",
+          "page": 18
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 18
+    },
+    "Licence mention Sciences sociales": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES SOCIALES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "Aucun code « Sciences sociales » (licence) dans data/filieres.json ; L1-SS est « Sciences pour la santé ».",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 20
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 20
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 20
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines et sociales",
+          "page": 20
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 20
+        },
+        {
+          "texte": "Avoir un intérêt pour la recherche documentaire",
+          "page": 20
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions politiques, économiques et sociales",
+          "page": 20
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 20
+    },
+    "Licence mention Sciences de l'homme, anthropologie, ethnologie": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DE L’HOMME, ANTHROPOLOGIE, ETHNOLOGIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SHAE"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 21
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 21
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 21
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les sciences humaines",
+          "page": 21
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 21
+        },
+        {
+          "texte": "Avoir un intérêt pour la recherche documentaire",
+          "page": 21
+        },
+        {
+          "texte": "Avoir un intérêt pour les questions historiques, politiques, économiques et sociales",
+          "page": 21
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 21
+    },
+    "Licence mention Sciences du langage": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DU LANGAGE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SL"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 22
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 22
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 22
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle pour le fonctionnement du langage humain",
+          "page": 22
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail",
+          "page": 22
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 22
+    },
+    "Licence mention Information-communication": {
+      "type": "licence",
+      "libelle_document": "MENTION INFORMATION COMMUNICATION",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-IC"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 23
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 23
+        },
+        {
+          "texte": "Etre intéressé par la démarche scientifique",
+          "page": 23
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail, seul ou en équipe",
+          "page": 23
+        },
+        {
+          "texte": "Disposer d’aptitudes dans l’appréhension des enjeux et mécanismes socio-économiques, politiques, médiatiques et culturels",
+          "page": 23
+        },
+        {
+          "texte": "Etre intéressé par les questions de société, l’actualité et les médias, la culture, le numérique et l’information",
+          "page": 23
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 23
+    },
+    "Licence mention Arts": {
+      "type": "licence",
+      "libelle_document": "MENTION ARTS",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Arts"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 24
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 24
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et faire preuve de curiosité intellectuelle",
+          "page": 24
+        },
+        {
+          "texte": "Etre sensibilisé aux pratiques de la discipline artistique visée",
+          "page": 24
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 24
+    },
+    "Licence mention Arts plastiques": {
+      "type": "licence",
+      "libelle_document": "MENTION ARTS PLASTIQUES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-AP"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 25
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 25
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et faire preuve de curiosité intellectuelle",
+          "page": 25
+        },
+        {
+          "texte": "Etre sensibilisé aux pratiques de la discipline artistique visée",
+          "page": 25
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 25
+    },
+    "Licence mention Arts du spectacle": {
+      "type": "licence",
+      "libelle_document": "MENTION ARTS DU SPECTACLE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-AS"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 26
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 26
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et faire preuve de curiosité intellectuelle",
+          "page": 26
+        },
+        {
+          "texte": "Etre sensibilisé aux pratiques de la discipline artistique visée",
+          "page": 26
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 26
+    },
+    "Licence mention Musicologie": {
+      "type": "licence",
+      "libelle_document": "MENTION MUSICOLOGIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Musicologie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 27
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 27
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome, organiser son travail et faire preuve de curiosité intellectuelle",
+          "page": 27
+        },
+        {
+          "texte": "Etre sensibilisé aux pratiques de la discipline artistique visée",
+          "page": 27
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 27
+    },
+    "Licence mention Lettres": {
+      "type": "licence",
+      "libelle_document": "MENTION LETTRES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Lettres"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer d’un très bon niveau rédactionnel qui permette notamment d’argumenter un raisonnement et d’analyser un texte",
+          "page": 28
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 28
+        },
+        {
+          "texte": "Etre intéressé par la culture et l’histoire littéraires et artistiques, ainsi que par l’étude de la langue française",
+          "page": 28
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour la littérature sous toutes ses formes (poésie, roman, essai, théâtre, cinématographie, etc.)",
+          "page": 28
+        },
+        {
+          "texte": "Disposer d’une bonne culture générale et être ouvert au monde",
+          "page": 28
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail seul ou en équipe",
+          "page": 28
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 28
+    },
+    "Licence mention Langues, littératures et civilisations étrangères et régionales (LLCER)": {
+      "type": "licence",
+      "libelle_document": "MENTION LANGUES, LITTÉRATURES ET CIVILISATIONS ÉTRANGERES ET RÉGIONALES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-LLCER"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer d’un très bon niveau rédactionnel qui permette d’argumenter un raisonnement",
+          "page": 29
+        },
+        {
+          "texte": "Disposer d’un très bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 29
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les cultures étrangères (lectures, théâtre, cinéma, documentaires, visite de musées, voyages)",
+          "page": 29
+        },
+        {
+          "texte": "Avoir un goût prononcé pour la lecture en français et en langue étrangère",
+          "page": 29
+        },
+        {
+          "texte": "Disposer d’une bonne culture générale et être ouvert au monde",
+          "page": 29
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail, seul ou en équipe",
+          "page": 29
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 29
+    },
+    "Licence mention Langues étrangères appliquées (LEA)": {
+      "type": "licence",
+      "libelle_document": "MENTION LANGUES ETRANGÈRES APPLIQUÉES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-LEA"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 30
+        },
+        {
+          "texte": "Disposer d’un très bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 30
+        },
+        {
+          "texte": "Avoir un intérêt pour le monde de l’entreprise",
+          "page": 30
+        },
+        {
+          "texte": "Avoir un intérêt pour un domaine d’application",
+          "page": 30
+        },
+        {
+          "texte": "Disposer d’une bonne culture générale et être ouvert au monde",
+          "page": 30
+        },
+        {
+          "texte": "Pouvoir travailler de façon autonome et organiser son travail, seul ou en équipe",
+          "page": 30
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 30
+    },
+    "Licence mention Lettres, langues": {
+      "type": "licence",
+      "libelle_document": "MENTION LETTRES, LANGUES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-LL"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite et orale afin de pouvoir argumenter un raisonnement",
+          "page": 31
+        },
+        {
+          "texte": "Disposer d’un bon niveau dans au moins une langue étrangère (niveau B)",
+          "page": 31
+        },
+        {
+          "texte": "Faire preuve de curiosité intellectuelle et plus particulièrement pour les cultures françaises et étrangères (lectures, théâtre, cinéma, documentaires, visite de musées, voyages)",
+          "page": 31
+        },
+        {
+          "texte": "Avoir un gout prononcé pour la lecture en français et en langue étrangère",
+          "page": 31
+        },
+        {
+          "texte": "Disposer d’aptitudes à travailler de façon autonome et à organiser son travail seul ou en équipe",
+          "page": 31
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 31
+    },
+    "Licence mention Informatique": {
+      "type": "licence",
+      "libelle_document": "MENTION INFORMATIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Info"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 32
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 32
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 32
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 32
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 32
+    },
+    "Licence mention Mathématiques et informatique appliquées aux sciences humaines et sociales": {
+      "type": "licence",
+      "libelle_document": "MENTION MATHÉMATIQUES ET INFORMATIQUE APPLIQUÉES AUX SCIENCES HUMAINES ET SOCIALES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-MIASHS"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 33
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 33
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 33
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 33
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 33
+    },
+    "Licence mention Mathématiques": {
+      "type": "licence",
+      "libelle_document": "MENTION MATHÉMATIQUES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Math"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 34
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 34
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 34
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 34
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 34
+    },
+    "Licence mention Physique": {
+      "type": "licence",
+      "libelle_document": "MENTION PHYSIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Physique"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 35
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 35
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 35
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 35
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 35
+    },
+    "Licence mention Chimie": {
+      "type": "licence",
+      "libelle_document": "MENTION CHIMIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Chimie"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 36
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 36
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 36
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 36
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 36
+    },
+    "Licence mention Physique, chimie": {
+      "type": "licence",
+      "libelle_document": "MENTION PHYSIQUE, CHIMIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-PC"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 37
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 37
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 37
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Physique-Chimie à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 37
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 37
+    },
+    "Licence mention Sciences de la vie": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DE LA VIE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SV"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 38
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 38
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 38
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 38
+        }
+      ],
+      "disciplines": [
+        "physique-chimie",
+        "sciences de la vie et de la Terre"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 38
+    },
+    "Licence mention Sciences de la Terre": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DE LA TERRE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-ST"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 39
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 39
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 39
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 39
+        }
+      ],
+      "disciplines": [
+        "physique-chimie",
+        "sciences de la vie et de la Terre"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 39
+    },
+    "Licence mention Sciences de la vie et de la Terre": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES DE LA VIE ET DE LA TERRE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SVT"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 40
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 40
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 40
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences expérimentales attendues en Sciences de la vie et de la Terre à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Physique-Chimie à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 40
+        }
+      ],
+      "disciplines": [
+        "physique-chimie",
+        "sciences de la vie et de la Terre"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (physique-chimie, sciences de la vie et de la Terre) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 40
+    },
+    "Licence mention Sciences et techniques des activités physiques et sportives": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES TECHNIQUES DES ACTIVITÉS PHYSIQUES ET SPORTIVES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-STAPS"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 41
+        },
+        {
+          "texte": "Savoir mobiliser des compétences en matière d’expression écrite afin de pouvoir développer un raisonnement argumenté",
+          "page": 41
+        },
+        {
+          "texte": "Disposer de compétences sportives",
+          "page": 41
+        },
+        {
+          "texte": "Manifester de l’intérêt pour l’exercice de responsabilité collective, associative ou citoyenne",
+          "page": 41
+        }
+      ],
+      "disciplines": [],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 41
+    },
+    "Licence mention Electronique, énergie électrique, automatique": {
+      "type": "licence",
+      "libelle_document": "MENTION ÉLECTRONIQUE, ÉNERGIE ÉLECTRIQUE, AUTOMATIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-EEEA"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 42
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 42
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 42
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 42
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences de l’ingénieur"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 42
+    },
+    "Licence mention Mécanique": {
+      "type": "licence",
+      "libelle_document": "MENTION MÉCANIQUE",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-Méca"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 43
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 43
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 43
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée. Une bonne maîtrise de compétences attendues dans une autre discipline, scientifique ou non, à la fin de la classe de terminale est préconisée.",
+          "page": 43
+        }
+      ],
+      "disciplines": [
+        "mathématiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 43
+    },
+    "Licence mention Génie civil": {
+      "type": "licence",
+      "libelle_document": "MENTION GÉNIE CIVIL",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-GC"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 44
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 44
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 44
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 44
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences de l’ingénieur"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 44
+    },
+    "Licence mention Sciences pour la santé": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES POUR LA SANTÉ",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SS"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de bonnes connaissances et compétences scientifiques",
+          "page": 45,
+          "sous_puces": [
+            {
+              "texte": "capacité à analyser, poser une problématique et à mener un raisonnement,",
+              "page": 45
+            },
+            {
+              "texte": "capacité d’abstraction, de logique et de modélisation,",
+              "page": 45
+            },
+            {
+              "texte": "très bonne maîtrise des compétences classiques et expérimentales attendues en Physique, Chimie, Sciences de la vie et de la terre, Mathématiques à la fin de la classe de terminale.",
+              "page": 45
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de bonnes compétences en communication",
+          "page": 45,
+          "sous_puces": [
+            {
+              "texte": "capacité à communiquer à l’écrit et à l’oral de manière rigoureuse et adaptée,",
+              "page": 45
+            },
+            {
+              "texte": "capacité à se documenter dans au moins une langue étrangère, prioritairement anglaise, et capacité souhaitée à l’écrire et à la parler à un niveau B.",
+              "page": 45
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de bonnes connaissances et compétences méthodologiques et comportementales",
+          "page": 45,
+          "sous_puces": [
+            {
+              "texte": "capacité d’apprentissage : curiosité, capacité organiser et à conduire ses apprentissages,",
+              "page": 45
+            },
+            {
+              "texte": "capacité à fournir une très importante quantité de travail personnel : être capable de le programmer et de s’y tenir dans la durée.",
+              "page": 45
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de qualités humaines, d’empathie, de bienveillance et d’écoute est essentiel dans toutes les filières ouvrant aux métiers de Santé.",
+          "page": 45
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de la vie et de la Terre",
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 45
+    },
+    "Licence mention Sciences et technologies": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES ET TECHNOLOGIES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "Aucun code « Sciences et technologies » (licence) dans data/filieres.json.",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 46
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 46
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 46
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Est préconisée à la fin de la classe de terminale une bonne maîtrise des compétences attendues dans l’une au moins des disciplines suivantes : Mathématiques, Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur. Est préconisée à la fin de la classe de terminale une maîtrise correcte des compétences expérimentales attendues dans l’une au moins des disciplines suivantes : Physique-Chimie, Sciences de la vie et de la Terre ou Sciences de l’ingénieur.",
+          "page": 46
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de la vie et de la Terre",
+        "sciences de l’ingénieur"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT",
+          "SI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 46
+    },
+    "Licence mention Sciences pour l'ingénieur": {
+      "type": "licence",
+      "libelle_document": "MENTION SCIENCES POUR L’INGÉNIEUR",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "L1-SPI"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Disposer de compétences scientifiques",
+          "page": 47
+        },
+        {
+          "texte": "Disposer de compétences en communication",
+          "page": 47
+        },
+        {
+          "texte": "Disposer de compétences méthodologiques et comportementales",
+          "page": 47
+        }
+      ],
+      "precisions_disciplines": [
+        {
+          "texte": "Une très bonne maîtrise des compétences attendues en Sciences de l’ingénieur à la fin de la classe de terminale est préconisée. Une bonne maîtrise des compétences attendues en Mathématiques à la fin de la classe de terminale est préconisée en fonction du portail auquel appartient la mention.",
+          "page": 47
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences de l’ingénieur"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences de l’ingénieur) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 47
+    },
+    "PACES": {
+      "type": "licence",
+      "libelle_document": "PACES",
+      "fichier": "docs/releves/attendus-licence-2017-12-12.pdf",
+      "nmc": [
+        "PASS"
+      ],
+      "correspondance": "a_verifier",
+      "note": "La PACES a été remplacée par le PASS (rentrée 2020) : le texte de 2017 vise la PACES, pas le PASS.",
+      "citations": [
+        {
+          "texte": "Disposer de très bonnes connaissances et compétences scientifiques",
+          "page": 48,
+          "sous_puces": [
+            {
+              "texte": "capacité à analyser, poser une problématique et à mener un raisonnement,",
+              "page": 48
+            },
+            {
+              "texte": "capacité d’abstraction, de logique et de modélisation,",
+              "page": 48
+            },
+            {
+              "texte": "très bonne maîtrise des compétences classiques et expérimentales attendues en Physique, Chimie, Sciences de la vie et de la terre, Mathématiques à la fin de la classe de terminale",
+              "page": 48
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de très bonnes compétences en communication",
+          "page": 48,
+          "sous_puces": [
+            {
+              "texte": "capacité à communiquer à l’écrit et à l’oral de manière rigoureuse et adaptée,",
+              "page": 48
+            },
+            {
+              "texte": "capacité à se documenter dans au moins une langue étrangère, prioritairement anglaise, et capacité souhaitée à l’écrire et à la parler à un niveau B.",
+              "page": 48
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de très bonnes connaissances et compétences méthodologiques et comportementales",
+          "page": 48,
+          "sous_puces": [
+            {
+              "texte": "capacité d’apprentissage : curiosité, capacité organiser et à conduire ses apprentissages,",
+              "page": 48
+            },
+            {
+              "texte": "capacité à fournir une très importante quantité de travail personnel : être capable de le programmer et de s’y tenir dans la durée.",
+              "page": 48
+            }
+          ]
+        },
+        {
+          "texte": "Disposer de qualités d’engagement importantes compte tenu de la difficulté de la PACES et des filières qui en sont issues.",
+          "page": 48
+        },
+        {
+          "texte": "Disposer de qualités humaines, d’empathie, de bienveillance et d’écoute est essentiel dans toutes les filières ouvrant aux métiers de Santé.",
+          "page": 48
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de la vie et de la Terre",
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, langue étrangère) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 48
+    },
+    "CPGE BCPST (biologie, chimie, physique et sciences de la Terre)": {
+      "type": "cpge",
+      "libelle_document": "BCPST (biologie, chimie, physique et sciences de la Terre)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-BCPST"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines de la biologie et de la géologie et aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en sciences de la vie et de la terre, physique-chimie et mathématiques.",
+          "page": 2
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences de réflexion, d’argumentation et d’expression, écrites et orales, attestées par les résultats dans les classes de première et de terminale.",
+          "page": 2
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de la vie et de la Terre",
+        "biologie"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de la vie et de la Terre, biologie) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 2,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE MPSI (mathématiques, physique et sciences de l'ingénieur)": {
+      "type": "cpge",
+      "libelle_document": "MPSI (mathématiques, physique et sciences de l'ingénieur)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-MPSI"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines des mathématiques et des sciences ainsi qu’aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en mathématiques, physique-chimie et, le cas échéant, en sciences de l’ingénieur ou en informatique.",
+          "page": 2
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences de réflexion, d’argumentation et d’expression, écrites et orales, attestées par les résultats dans les classes de première et de terminale.",
+          "page": 2
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de l’ingénieur",
+        "informatique"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SI",
+          "NSI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 2,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE PCSI (physique, chimie et sciences de l'ingénieur)": {
+      "type": "cpge",
+      "libelle_document": "PCSI (physique, chimie et sciences de l'ingénieur)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-PCSI"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines des sciences et des mathématiques ainsi qu’aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en physique-chimie, mathématiques et, le cas échéant, en sciences de l’ingénieur ou en informatique.",
+          "page": 2
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 2
+        },
+        {
+          "texte": "Disposer de compétences de réflexion, d’argumentation et d’expression, écrites et orales, attestées par les résultats dans les classes de première et de terminale.",
+          "page": 2
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de l’ingénieur",
+        "informatique"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SI",
+          "NSI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 2,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE PTSI (physique, technologie et sciences de l'ingénieur)": {
+      "type": "cpge",
+      "libelle_document": "PTSI (physique, technologie et sciences de l'ingénieur)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-PTSI"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines des sciences, de la technologie et des mathématiques ainsi qu’aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 3
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en physique-chimie, mathématiques et, le cas échéant, en sciences de l’ingénieur ou en informatique.",
+          "page": 3
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 3
+        },
+        {
+          "texte": "Disposer de compétences de réflexion, d’argumentation et d’expression, écrites et orales, attestées par les résultats dans les classes de première et de terminale.",
+          "page": 3
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "sciences de l’ingénieur",
+        "informatique"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SI",
+          "NSI"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, sciences de l’ingénieur, informatique) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 3,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE TB (technologie et biologie)": {
+      "type": "cpge",
+      "libelle_document": "TB (technologie et biologie)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-TB"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines de la biologie et des biotechnologies et aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 3
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques et technologiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en biotechnologies, biologie, physique-chimie et mathématiques.",
+          "page": 3
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 3
+        },
+        {
+          "texte": "Montrer des dispositions au travail collaboratif et à la conduite de projets scientifiques et technologiques.",
+          "page": 3
+        },
+        {
+          "texte": "Être prêt à développer des compétences de réflexion, d’argumentation et d’expression en français, en philosophie et en langues vivantes.",
+          "page": 3
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "philosophie",
+        "français",
+        "langues vivantes",
+        "biologie",
+        "biotechnologies"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "SVT",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes, biologie, biotechnologies) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 3,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE TPC (technologie, physique et chimie)": {
+      "type": "cpge",
+      "libelle_document": "TPC (technologie, physique et chimie)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-TPC"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines de la physique-chimie et aux démarches associées, (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 3
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques et technologiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale en physique-chimie et en mathématiques.",
+          "page": 3
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 3
+        },
+        {
+          "texte": "Montrer des dispositions au travail collaboratif et à la conduite de projets scientifiques et technologiques.",
+          "page": 3
+        },
+        {
+          "texte": "Être prêt à développer des compétences de réflexion, d’argumentation et d’expression en français, en philosophie et en langues vivantes.",
+          "page": 3
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "philosophie",
+        "français",
+        "langues vivantes"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 3,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE TSI (technologie et sciences industrielles)": {
+      "type": "cpge",
+      "libelle_document": "TSI (technologie et sciences industrielles)",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-TSI"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines des sciences et de la technologie et aux démarches associées (analyse, modélisation, résolution de problème, expérimentation et communication).",
+          "page": 4
+        },
+        {
+          "texte": "Disposer de compétences dans les disciplines scientifiques et technologiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale dans les enseignements technologiques, en physique-chimie et en mathématiques.",
+          "page": 4
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 4
+        },
+        {
+          "texte": "Montrer des dispositions au travail collaboratif et à la conduite de projets scientifiques et technologiques.",
+          "page": 4
+        },
+        {
+          "texte": "Être prêt à développer des compétences de réflexion, d’argumentation et d’expression en français, en philosophie et en langues vivantes.",
+          "page": 4
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "physique-chimie",
+        "philosophie",
+        "français",
+        "langues vivantes",
+        "enseignements technologiques"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "physique_chimie",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, physique-chimie, philosophie, français, langues vivantes, enseignements technologiques) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 4,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE ENS Cachan C": {
+      "type": "cpge",
+      "libelle_document": "ENS Cachan C",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-PS-AD"
+      ],
+      "correspondance": "a_verifier",
+      "note": "ENS Cachan est devenue ENS Paris-Saclay ; CPGE-PS-AD (« arts et design ») semble être la filière C, à confirmer.",
+      "citations": [
+        {
+          "texte": "S’intéresser aux domaines de la création passée et contemporaine dans leur diversité et complémentarité.",
+          "page": 4
+        },
+        {
+          "texte": "Disposer de compétences dans les différents champs des humanités et scientifiques. Ces compétences peuvent être attestées notamment par les résultats obtenus en première et au cours de l’année de terminale.",
+          "page": 4
+        },
+        {
+          "texte": "Démontrer des compétences en matière d’expression écrite et orale en français et dans une langue étrangère afin de pouvoir argumenter un raisonnement et soutenir une conversation.",
+          "page": 4
+        },
+        {
+          "texte": "Posséder des capacités d’organisation et d’autonomie, mais également des dispositions au travail en équipe.",
+          "page": 4
+        },
+        {
+          "texte": "Avoir une curiosité sur le monde et les phénomènes de société et développer son sens de l’imagination et de l’initiative.",
+          "page": 4
+        }
+      ],
+      "disciplines": [
+        "langue étrangère"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 4,
+      "domaine_cpge": "FILIERE CPGE SCIENTIFIQUES (CODE DOMAINE 1)"
+    },
+    "CPGE ECE – Option économique": {
+      "type": "cpge",
+      "libelle_document": "ECE – Option économique",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur",
+      "citations": [
+        {
+          "texte": "S’intéresser à l’économie, la sociologie et à l’histoire du monde contemporain.",
+          "page": 5
+        },
+        {
+          "texte": "Disposer d’un bon niveau de connaissances, en particulier en sciences économiques et sociales mais également en mathématiques et dans les disciplines des humanités : lettres, langues, philosophie, histoire-géographie. Ces niveaux peuvent être attestés par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 5
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 5
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et de rédaction et être apte à mener des raisonnements rigoureux.",
+          "page": 5
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 5,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE ECS – Option scientifique": {
+      "type": "cpge",
+      "libelle_document": "ECS – Option scientifique",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur",
+      "citations": [
+        {
+          "texte": "S’intéresser à l’histoire, la géographie et la géopolitique du monde contemporain.",
+          "page": 5
+        },
+        {
+          "texte": "Disposer d’un bon niveau de connaissances, en particulier en histoire-géographie mais également en mathématiques et dans les disciplines des humanités : lettres, langues, philosophie. Ces niveaux peuvent être attestés par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 5
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 5
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et de rédaction et être apte à mener des raisonnements rigoureux.",
+          "page": 5
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 5,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE ECT – Option technologique": {
+      "type": "cpge",
+      "libelle_document": "ECT – Option technologique",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "filière supprimée en 2021 ; ECG à reprendre de la version en vigueur (CPGE-ECT existe pourtant dans data/filieres.json : à traiter dans la version en vigueur).",
+      "citations": [
+        {
+          "texte": "S’intéresser à la vie de l’entreprise et aux métiers du management (stratégie, finance, marketing, gestion des ressources humaines, gestion des systèmes d’information, entrepreneuriat).",
+          "page": 5
+        },
+        {
+          "texte": "Disposer d’un bon niveau de connaissances en économie-droit, en management et en sciences de gestion, attesté par les résultats obtenus en première et au cours de l’année de terminale, et être prêt à s’investir dans l’ensemble des autres disciplines.",
+          "page": 5
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail régulier et des capacités d’organisation, d’écoute, de persévérance et de curiosité.",
+          "page": 5
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation, d’expression écrite et orale et une capacité à mener des raisonnements logiques.",
+          "page": 5
+        }
+      ],
+      "disciplines": [
+        "économie-droit",
+        "management",
+        "sciences de gestion"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Le document ne cite aucune discipline du lycée pour cette filière : aucune spécialité n'est déduite."
+      },
+      "valide": false,
+      "page_debut": 5,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE ENS Rennes D1": {
+      "type": "cpge",
+      "libelle_document": "ENS Rennes D1",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-Rennes-D1"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux questions contemporaines et d’actualité, notamment dans le domaine des sciences sociales, et avoir un intérêt pour les disciplines juridiques et économiques.",
+          "page": 6
+        },
+        {
+          "texte": "Disposer d’un solide niveau de culture générale et de compétences d'analyse, de synthèse et d'expression écrite et orale en français et en langues étrangères. Ces compétences peuvent être attestées par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale en langues vivantes, philosophie, histoire-géographie et, le cas échéant, en sciences économiques et sociales.",
+          "page": 6
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail soutenu et approfondi ainsi que des capacités d’organisation.",
+          "page": 6
+        },
+        {
+          "texte": "Faire preuve d’une curiosité intellectuelle pour les questions abordées dans les disciplines mentionnées.",
+          "page": 6
+        }
+      ],
+      "disciplines": [
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "philosophie",
+        "français",
+        "langues vivantes"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (sciences économiques et sociales, histoire-géographie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 6,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE ENS Paris-Saclay D2": {
+      "type": "cpge",
+      "libelle_document": "ENS Paris-Saclay D2",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-Cachan-D2"
+      ],
+      "correspondance": "a_verifier",
+      "note": "ENS Cachan est devenue ENS Paris-Saclay ; CPGE-Cachan-D2 (« ENS Cachan D2 ») est probablement la même filière D2, à confirmer.",
+      "citations": [
+        {
+          "texte": "S’intéresser à l’économie.",
+          "page": 6
+        },
+        {
+          "texte": "Disposer d’un bon niveau de connaissances en mathématiques, en sciences économiques et sociales (le cas échéant) et, plus globalement, disposer de compétences d'analyse, de synthèse et d'expression écrite et orale en français et en langues étrangères. Ces compétences peuvent être attestées par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale en mathématiques, langues vivantes, philosophie, histoire-géographie et, le cas échéant, en sciences économiques et sociales.",
+          "page": 6
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail soutenu et approfondi ainsi que des capacités d’organisation.",
+          "page": 6
+        },
+        {
+          "texte": "Faire preuve d’une curiosité intellectuelle pour les questions abordées dans les disciplines mentionnées pour appréhender l’étude des problématiques économiques.",
+          "page": 6
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "philosophie",
+        "français",
+        "langues vivantes"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 6,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE St Cyr – Option économique": {
+      "type": "cpge",
+      "libelle_document": "St Cyr – Option économique",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [],
+      "correspondance": "aucune",
+      "note": "Aucun code « St Cyr option économique » dans data/filieres.json.",
+      "citations": [
+        {
+          "texte": "Être intéressé par une carrière militaire et avoir une bonne aptitude physique.",
+          "page": 6
+        },
+        {
+          "texte": "S’intéresser à l’économie, la sociologie et à l’histoire du monde contemporain ; disposer d’un bon niveau de connaissances en sciences économiques et sociales (le cas échéant) ainsi qu’en mathématiques et dans les disciplines des humanités : lettres, langues, philosophie, histoire-géographie. Ces niveaux peuvent être attestés par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 6
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 6
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et de rédaction et être apte à mener des raisonnements rigoureux.",
+          "page": 6
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 6,
+      "domaine_cpge": "FILIERE CPGE ECONOMIQUES ET COMMERCIALES (CODE DOMAINE 2)"
+    },
+    "CPGE B/L – Lettres et sciences sociales": {
+      "type": "cpge",
+      "libelle_document": "B/L – Lettres et sciences sociales",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-BL"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser aux disciplines des humanités, aux sciences économiques et sociales, aux mathématiques ainsi qu’aux croisements entre ces différentes disciplines.",
+          "page": 7
+        },
+        {
+          "texte": "Disposer d’un bon niveau de connaissances en mathématiques, en sciences économiques et sociales (le cas échéant) et dans les disciplines des humanités : lettres, langues, philosophie, histoire-géographie. Ce niveau peut être attesté par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 7
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 7
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et de rédaction et être apte à mener des raisonnements rigoureux.",
+          "page": 7
+        }
+      ],
+      "disciplines": [
+        "mathématiques",
+        "sciences économiques et sociales",
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "maths",
+          "SES",
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (mathématiques, sciences économiques et sociales, histoire-géographie, lettres, philosophie, français) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 7,
+      "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
+    },
+    "CPGE Lettres": {
+      "type": "cpge",
+      "libelle_document": "Lettres",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-AL"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser à l’ensemble des disciplines des humanités et disposer d’un bon niveau dans ces disciplines : lettres, histoire-géographie, philosophie, langues anciennes ou vivantes, arts. Ce niveau peut être attesté par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 7
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 7
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et d’expression, à l’écrit comme à l’oral.",
+          "page": 7
+        },
+        {
+          "texte": "Faire preuve d’une curiosité intellectuelle pour les questions abordées dans les disciplines mentionnées et avoir du goût pour l’accès aux connaissances par toute forme de lecture.",
+          "page": 7
+        }
+      ],
+      "disciplines": [
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français",
+        "langues anciennes",
+        "arts"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "HGGSP",
+          "HLP",
+          "arts"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues anciennes, arts) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 7,
+      "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
+    },
+    "CPGE École nationale des Chartes": {
+      "type": "cpge",
+      "libelle_document": "École nationale des Chartes",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-CHARTES"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "S’intéresser à l’histoire et aux langues anciennes et disposer d’un bon niveau dans les disciplines des humanités : lettres, histoire-géographie, philosophie, langues anciennes ou vivantes, arts. Ce niveau peut être attesté par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 7
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 7
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et d’expression, à l’écrit comme à l’oral.",
+          "page": 7
+        },
+        {
+          "texte": "Faire preuve d’une curiosité intellectuelle pour les questions abordées dans les disciplines mentionnées et avoir du goût pour l’accès aux connaissances par toute forme de lecture.",
+          "page": 7
+        }
+      ],
+      "disciplines": [
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français",
+        "langues anciennes",
+        "arts"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "HGGSP",
+          "HLP",
+          "arts"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues anciennes, arts) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 7,
+      "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
+    },
+    "CPGE ST Cyr – Option lettres et sciences humaines": {
+      "type": "cpge",
+      "libelle_document": "ST Cyr – Option lettres et sciences humaines",
+      "fichier": "docs/releves/attendus-cpge.pdf",
+      "nmc": [
+        "CPGE-LSH-Cyr"
+      ],
+      "correspondance": "certaine",
+      "citations": [
+        {
+          "texte": "Être intéressé par une carrière militaire et avoir une bonne aptitude physique.",
+          "page": 8
+        },
+        {
+          "texte": "S’intéresser à l’ensemble des disciplines des humanités et disposer d’un bon niveau dans ces disciplines : lettres, histoire-géographie, philosophie, langues vivantes. Ce niveau peut être attesté par les résultats obtenus en première, à l’épreuve anticipée de français et au cours de l’année de terminale.",
+          "page": 8
+        },
+        {
+          "texte": "Posséder des aptitudes à un travail approfondi et des capacités d’organisation.",
+          "page": 8
+        },
+        {
+          "texte": "Montrer des qualités de réflexion, d’argumentation et d’expression, à l’écrit comme à l’oral.",
+          "page": 8
+        }
+      ],
+      "disciplines": [
+        "histoire-géographie",
+        "lettres",
+        "philosophie",
+        "français",
+        "langues vivantes"
+      ],
+      "specialites_deduites": {
+        "obligatoires": [],
+        "recommandees": [
+          "HGGSP",
+          "HLP"
+        ],
+        "statut": "interpretation_mon_plan_sup",
+        "justification": "Disciplines citées par le document (histoire-géographie, lettres, philosophie, français, langues vivantes) rapprochées des spécialités de data/filieres.json ; le texte demande des résultats dans ces disciplines sans exiger de spécialité, d'où aucune spécialité obligatoire."
+      },
+      "valide": false,
+      "page_debut": 8,
+      "domaine_cpge": "FILIERE CPGE LITTERAIRES (CODE DOMAINE 3)"
+    }
+  }
+}
