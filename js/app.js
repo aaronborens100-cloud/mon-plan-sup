@@ -27,7 +27,7 @@
   // (le calcul est dans js/catalogue.js ; ces variables en reprennent l'état après chaque construction, voir synchroCatalogue)
   let CAT = [], CATBY = {}, PSBY = {}, FU = null, ALIAS = {}, STATS = {}, STCONS = null, LIEUX = null, FRAIS_PRIVES_META = null, CAMPUS = {};
   function synchroCatalogue() { ({ CAT, CATBY, PSBY, FU, ALIAS, STATS, STCONS, LIEUX, FRAIS_PRIVES_META, CAMPUS } = C.etat()); }
-  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
+  const app = { vue: "accueil", etapeProfil: 0, ongletListe: "reco", plusFormations: false, filtreCat: "tous", filtres: { type: "", pays: "", q: "", exclus: false }, limite: 20, cat: { q: "", type: "", source: "", verif: false, app: "", region: "", groupe: "", sous: "" }, limiteCat: 50, confirmEffacer: false, imports: [], importEnCours: false, profilEdition: false };
   migrer();
 
   function migrer() {
@@ -1309,6 +1309,38 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
   }
 
   /* ================================================================ CATALOGUE */
+  // Grandes catégories du catalogue (affichage seulement, rien ne passe par le moteur). Le groupe vient du type de la fiche ;
+  // le sous-groupe se lit dans l'intitulé (prépas, licences) ou le pays (bachelors). Sans règle sûre : « Autres ».
+  const GROUPES = [["prepa-ecg", "Prépa ECG"], ["prepa-sci", "Prépa scientifique"], ["prepa-lit", "Prépa littéraire"], ["licence", "Licence"], ["bachelor", "Bachelor"],
+    ["ecole-ing", "École d'ingénieurs"], ["ecole-commerce", "École de commerce"], ["sante", "Santé et social"], ["art", "Art, design et architecture"], ["autres", "Autres formations"]];
+  const GROUPE_DU_TYPE = { prepa_ecg: "prepa-ecg", prepa_scientifique: "prepa-sci", prepa_litteraire: "prepa-lit", prepa_bl: "prepa-lit", licence: "licence", double_licence: "licence",
+    bachelor_europeen: "bachelor", bachelor_france: "bachelor", ecole_ingenieur: "ecole-ing", ecole_commerce: "ecole-commerce", sante_social: "sante", ecole_veterinaire: "sante",
+    dn_made: "art", ecole_art: "art", architecture: "art" };
+  const mot = (...liste) => new RegExp("\\b(" + liste.join("|") + ")\\b", "i");
+  const SOUS_PREPA = {
+    "prepa-ecg": [["ENS D1 / D2", mot("ENS")], ["ECT (bac techno)", mot("ECT")], ["ECG", mot("ECG")]],
+    "prepa-sci": [["MP2I", mot("MP2I")], ["MPSI", mot("MPSI")], ["PCSI", mot("PCSI")], ["PTSI", mot("PTSI")], ["TSI", mot("TSI")], ["BCPST", mot("BCPST")], ["TB", mot("TB")], ["TPC", mot("TPC")]],
+  };
+  const SOUS_LICENCE = [["Santé (PASS, LAS)", /\b(pass|las|acces sante|parcours d'acces)\b/], ["Sport (STAPS)", /staps|activites physiques/], ["Éducation et enseignement", /professorat|education|enseignement/],
+    ["Droit", /\bdroit\b/], ["Économie et gestion", /economi|gestion|administration economique|\baes\b/], ["Maths et informatique", /mathemat|informatique|numerique|miash/],
+    ["Langues", /\blangues?\b|llcer|etrangeres/], ["Sciences (physique, chimie, vie, terre)", /physique|chimie|\bvie\b|\bterre\b|biolog|ingenieur|electronique|mecanique|sciences pour|sciences et technologies/],
+    ["Lettres, arts et communication", /lettres|litterature|\barts?\b|musique|communication|cinema|langage|information/],
+    ["Histoire, géographie et sciences humaines", /histoire|geograph|psycholog|sociolog|philosoph|politique|anthropolog|archeolog|humaines|sociales/],
+    ["Sciences (physique, chimie, vie, terre)", /\bsciences?\b/]];
+  const classerGroupe = new WeakMap();
+  function groupeDe(e) {
+    let g = classerGroupe.get(e);
+    if (g) return g;
+    const grp = GROUPE_DU_TYPE[e.type] || "autres";
+    const texte = sansAccents(`${e.nom} ${e.type_label || ""}`).toLowerCase();
+    let sous = "";
+    if (SOUS_PREPA[grp]) { const r = SOUS_PREPA[grp].find(([, re]) => re.test(`${e.nom} ${e.type_label || ""}`)); sous = r ? r[0] : "Autres"; }
+    else if (grp === "licence") { const r = SOUS_LICENCE.find(([, re]) => re.test(texte)); sous = r ? r[0] : "Autres licences"; }
+    else if (grp === "bachelor") sous = e.pays || "Autres pays";
+    g = { grp, sous };
+    classerGroupe.set(e, g);
+    return g;
+  }
   function vueExplorer() {
     const c = app.cat;
     c.source = "";   // l'origine de la fiche n'est plus un critère proposé
@@ -1327,6 +1359,7 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     return `<div class="stack-lg">
       ${pageHero({ sur: "Catalogue", titre: "Catalogue des formations", sous: `<strong>${nbFr(CAT.filter((e) => e.ps).length)} formations</strong> dont <strong>${nbFr(nbEtr)} à l'étranger</strong>. Les BTS et BUT ne sont pas proposés.`, ton: "violet", ico: "loupe" })}
       <div class="filtres-cat card">
+        ${blocGroupes()}
         <div class="recherche"><label for="cq" class="sr-only">Rechercher une formation</label>${ico("loupe")}<input id="cq" type="text" data-cfiltre="q" value="${esc(c.q)}" placeholder="Formation, établissement, ville…"></div>
         <div class="filters">
           <div class="field"><label for="ctype">Type</label><select id="ctype" data-cfiltre="type"><option value="">Tous</option>
@@ -1347,10 +1380,22 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
       ${liste.length > app.limiteCat ? `<div class="plus-bloc"><button class="btn lg" data-action="cat-plus">Afficher la suite <span class="compteur">${nbFr(liste.length - app.limiteCat)}</span></button></div>` : ""}
     </div>`;
   }
-  function filtreCatalogue() {
+  function blocGroupes() {
+    const c = app.cat, base = filtreCatalogue(true);
+    const n = {}, ns = {};
+    for (const e of base) { const g = groupeDe(e); n[g.grp] = (n[g.grp] || 0) + 1; if (g.grp === c.groupe) ns[g.sous] = (ns[g.sous] || 0) + 1; }
+    const puce = (action, cle, lib, nb, actif) => `<button type="button" class="cat-puce${actif ? " actif" : ""}" data-action="${action}" data-k="${esc(cle)}" aria-pressed="${actif}">${esc(lib)}<span class="cat-puce-n">${nbFr(nb)}</span></button>`;
+    const sous = c.groupe ? Object.entries(ns).sort((a, b) => (a[0] === "Autres" || a[0] === "Autres licences" ? 1 : b[0] === "Autres" || b[0] === "Autres licences" ? -1 : b[1] - a[1])) : [];
+    return `<div class="cat-groupes" role="group" aria-label="Grandes catégories">
+        <div class="cat-puces">${puce("cat-groupe", "", "Toutes", base.length, !c.groupe)}${GROUPES.filter(([k]) => n[k]).map(([k, l]) => puce("cat-groupe", k, l, n[k], c.groupe === k)).join("")}</div>
+        ${sous.length > 1 ? `<div class="cat-puces cat-sous" role="group" aria-label="Dans cette catégorie">${puce("cat-sous", "", "Tous", n[c.groupe], !c.sous)}${sous.map(([l, nb]) => puce("cat-sous", l, l, nb, c.sous === l)).join("")}</div>` : ""}
+      </div>`;
+  }
+  function filtreCatalogue(sansGroupe) {
     const c = app.cat;
     let l = CAT;
     if (c.type) l = l.filter((e) => e.type === c.type);
+    if (!sansGroupe && c.groupe) l = l.filter((e) => { const g = groupeDe(e); return g.grp === c.groupe && (!c.sous || g.sous === c.sous); });
     if (c.source) l = l.filter((e) => e.src === c.source);
     if (c.verif) l = l.filter((e) => e.av);
     if (c.app) l = l.filter((e) => (c.app === "oui") === !!e.app);
@@ -1808,6 +1853,8 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     }
     else if (a === "lycee-changer") { app.lyceeEdition = true; rendre(); const el = $("#lyceeq"); if (el) el.focus(); }
     else if (a === "lycee-effacer") { p.lycee = null; app.lyceeEdition = false; sauver(true); rendre(); }
+    else if (a === "cat-groupe") { app.cat.groupe = b.dataset.k; app.cat.sous = ""; app.cat.type = ""; app.limiteCat = 50; rendre(); }
+    else if (a === "cat-sous") { app.cat.sous = b.dataset.k; app.limiteCat = 50; rendre(); }
     else if (a === "cat-plus") { app.limiteCat += 50; const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "retenir") { const id = b.dataset.id; etat.retenus = etat.retenus.includes(id) ? etat.retenus.filter((x) => x !== id) : etat.retenus.concat(id); sauver(true); const y = window.scrollY; rendre(); window.scrollTo(0, y); }
     else if (a === "auto-retenir") { { const A = analyse(), W = E.wishlist(A.resultats, 10, A.interets), M = equivalentsDe(A, W); purgerRemplacements(M); etat.retenus = voeuxAffiches(W, M).map(({ x }) => x.f.id); } sauver(true); rendre(); toast("Liste de 10 vœux générée"); }

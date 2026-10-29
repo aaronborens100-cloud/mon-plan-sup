@@ -890,3 +890,15 @@ body.route-accueil .faq-zone { display: none; }
 }
 @keyframes menu-entree { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .menu-ouvert .topbar .nav { animation: none; } }
+
+/* ---------- catalogue : grandes catégories */
+.cat-groupes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.cat-puces { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-puce { appearance: none; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 14px; border: 2px solid var(--gris-trait); border-radius: 999px; background: var(--blanc); color: var(--encre); font: 600 .9rem var(--font-texte); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cat-puce:hover { border-color: var(--marque); }
+.cat-puce.actif { background: var(--encre); border-color: var(--encre); color: var(--blanc); }
+.cat-puce-n { font-weight: 500; font-size: .8rem; opacity: .7; }
+.cat-sous .cat-puce { min-height: 34px; padding: 4px 12px; font-size: .82rem; border-width: 1.5px; }
+.cat-sous .cat-puce.actif { background: var(--marque); border-color: var(--marque); }
+
+@media (max-width: 600px) { .cat-puces { gap: 6px; } .cat-puce { padding: 5px 11px; font-size: .84rem; min-height: 38px; } }
