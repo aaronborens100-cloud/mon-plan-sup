@@ -122,7 +122,7 @@
   const MATIERES = [
     ["maths_expertes", ["MATHS EXPERTES", "MATHEMATIQUES EXPERTES", "MATHS EXPERT", "MATH EXPERT", "MATHEMATIQUES EXPERT", "OPT. MATHS EXPERTES"]],
     ["maths_complementaires", ["MATHS COMPLEMENTAIRES", "MATHEMATIQUES COMPLEMENTAIRES", "MATHS COMP", "MATHEMATIQUES COMP", "MATH COMPL"]],
-    ["AMC", ["ANGLAIS MONDE CONTEMPORAIN", "ANGLAIS, MONDE CONTEMPORAIN", "ANGL. MONDE CONTEMP", "ANGLAIS MONDE CONTEMP", "AMC"]],
+    ["AMC", ["ANGLAIS MONDE CONTEMPORAIN", "ANGLAIS, MONDE CONTEMPORAIN", "ANGL. MONDE CONTEMP", "ANGLAIS MONDE CONTEMP", "LLC ANGL.MOND.CONT", "ANGL.MOND.CONT", "AMC"]],
     ["LLCER_anglais", ["LLCER ANGLAIS", "LLCE ANGLAIS", "LANGUES, LITTERATURES ET CULTURES ETRANGERES ET REGIONALES ANGLAIS", "LANG. LITT. CULT. ANGLAIS", "LLCER AGL", "LLCER-ANGLAIS"]],
     ["LLCER_autre", ["LLCER ESPAGNOL", "LLCER ALLEMAND", "LLCER ITALIEN", "LLCE ESPAGNOL", "LLCER"]],
     ["HGGSP", ["HGGSP", "HIST.GEO.GEOPOL", "HISTOIRE-GEO. GEOPOL", "HIST GEO GEOPOL", "HIST.-GEO. GEOPOL", "HISTOIRE GEOGRAPHIE GEOPOLITIQUE", "HISTOIRE-GEOGRAPHIE, GEOPOLITIQUE"]],
@@ -317,6 +317,38 @@
   }
   const valeur = (n) => (n ? (n.v === null ? "" : String(n.v)) : "");
 
+  /* ---------- bilan périodique par compétences (Index Education : « Bilan périodique - Trimestre 2 »)
+     Pas de notes chiffrées : tableau Matières | Compétences évaluées | Détail des évaluations | Pos. | Appréciations.
+     Chaque matière commence par son nom (colonne de gauche, suivi du nom du professeur) ; son appréciation est
+     le texte de la colonne de droite, sur la même ligne et les suivantes, jusqu'à la matière suivante. */
+  const estEnteteBilan = (l) => /COMPETENCES EVALUEES/.test(norm(l.texte)) && /APPRECIATIONS/.test(norm(l.texte));
+  const estBilanCompetences = (lignes) => lignes.some(estEnteteBilan);
+  const DEBUT_PROF = /^(M\.|Mme|MME|Mlle|MLLE|Monsieur|Madame)\s/;
+  const FIN_BILAN = /MAITRISE|^ENGAGEMENTS|^ABSENCES|APPRECIATION GLOBALE|^©/;
+  function matieresBilan(lignes) {
+    const iEntete = lignes.findIndex(estEnteteBilan);
+    const entete = lignes[iEntete].items;
+    const x = (re) => { const it = entete.find((e) => re.test(norm(e.s))); return it ? it.x : null; };
+    const xMatieres = x(/^MATIERES/), xPos = x(/^POS\.?$/), xAppr = x(/^APPRECIATIONS/);
+    const maxNom = (xMatieres === null ? 55 : xMatieres) + 20;                      // le nom d'une matière commence au bord gauche du tableau
+    const minAppr = xPos !== null ? xPos + 5 : xAppr !== null ? xAppr - 70 : 400;   // les appréciations commencent après la colonne « Pos. »
+    let fin = lignes.findIndex((l, i) => i > iEntete && FIN_BILAN.test(norm(l.texte)));
+    if (fin < 0) fin = lignes.length;
+    const notes = {}; let courante = null;
+    for (const L of lignes.slice(iEntete + 1, fin)) {
+      const items = L.items.slice().sort((a, b) => a.x - b.x);
+      if (items[0].x < maxNom && !DEBUT_PROF.test(items[0].s.trim())) {
+        const mat = matiereDe(items[0].s);
+        courante = mat ? mat.cle : null;                                            // matière inconnue (ex. LCA Latin) : son texte n'est pas rangé ailleurs
+        if (courante && !notes[courante]) notes[courante] = { moy: "", classe: "", coef: "", min: "", max: "", appreciation: "" };
+      }
+      if (!courante) continue;
+      const texte = nettoieAppreciation(items.filter((it) => it.x >= minAppr).map((it) => it.s.trim()).join(" "));
+      if (texte) notes[courante].appreciation = (notes[courante].appreciation + " " + texte).trim();
+    }
+    return notes;
+  }
+
   /* ---------- niveau, période, mention */
   function niveauDeClasse(code) {
     const c = norm(code).replace(/\s+/g, "");
@@ -341,8 +373,10 @@
     // colonnes du tableau
     const detect = detecterColonnes(lignes);
     const colonnes = detect;
+    const bilan = !detect && estBilanCompetences(lignes);   // bilan par compétences : aucune note chiffrée à lire
     res.colonnes = detect ? [...new Set(detect.cols.map((c) => c.type))] : null;
-    if (!detect) res.alertes.push("En-têtes de colonnes non trouvés : ordre supposé « coef (si présent), moyenne élève, moyenne classe, min, max ». Vérifie.");
+    if (bilan) res.bilanCompetences = true;
+    if (!detect && !bilan) res.alertes.push("En-têtes de colonnes non trouvés : ordre supposé « coef (si présent), moyenne élève, moyenne classe, min, max ». Vérifie.");
     // niveau : la classe est écrite AVANT le tableau (« Classe : 1ère G3 », ou « 1D » seul sur sa ligne) ;
     // après le tableau, la décision d'orientation (« TERMINALE GENERALE… ») ne doit pas compter.
     const debut = detect ? detect.ligne : lignes.findIndex((l) => matiereDe(l.texte));
@@ -350,6 +384,8 @@
     for (const l of avant) {
       const t = l.texte.trim();
       const mc = t.match(/classe\s*:?\s*([0-9A-Za-zÀ-ÿ]+(?:\s?[A-Z0-9]{1,3})?)/i);
+      const me2 = t.match(/(?:^|\s)(1E|1ERE|1RE|2DE|2NDE|TLE|TERM)\s*\(\s*(\d{1,3})\s*[ÉEé]l[èe]ves?\s*\)/i);   // « 1E (32 Élèves) »
+      if (me2 && niveauDeClasse(me2[1])) { res.niveau = niveauDeClasse(me2[1]); res.effectif = me2[2]; break; }
       const code = mc ? mc[1] : (/^[12T][A-Z0-9]{0,4}$|^(1ère|1re|2nde|2de|Tle|Term)\s?[A-Z]?\d?$/i.test(t) ? t : null);
       if (code && niveauDeClasse(code)) { res.niveau = niveauDeClasse(code); break; }
     }
@@ -375,6 +411,10 @@
 
     // matières + appréciations
     let courante = null;
+    if (bilan) {
+      res.notes = matieresBilan(lignes);
+      res.alertes.push("Ce bilan évalue par compétences : il ne contient pas de notes chiffrées. Seules les appréciations de tes professeurs ont été lues. Si tu connais ta moyenne générale, saisis-la toi-même : sans elle, cette période ne compte pas dans ta moyenne.");
+    }
     const debutTable = detect ? detect.fin + 1 : 0;
     for (let i = debutTable; i < lignes.length; i++) {
       const l = lignes[i].texte;
@@ -389,13 +429,13 @@
         let s = l.replace(/appr[ée]ciation g[ée]n[ée]rale|avis du conseil de classe|avis du conseil|observations? du conseil de classe|appr[ée]ciation du conseil de classe|appr[ée]ciation globale/i, "").replace(/^[\s:–-]+/, "");
         for (let k = i + 1; k < Math.min(lignes.length, i + 6); k++) {
           const nk = norm(lignes[k].texte);
-          if (matiereDe(lignes[k].texte) || /SIGNATURE|LE PROVISEUR|LE CHEF D|CACHET|ABSENCES|RETARDS|VIE SCOLAIRE|MENTION|DECISION|^-?\s*(PREMIERE|TERMINALE) /.test(nk)) break;
+          if (matiereDe(lignes[k].texte) || /SIGNATURE|^©|LE PROVISEUR|LE CHEF D|CACHET|ABSENCES|RETARDS|VIE SCOLAIRE|MENTION|DECISION|^-?\s*(PREMIERE|TERMINALE) /.test(nk)) break;
           s += " " + lignes[k].texte;
         }
         res.appreciationGenerale = nettoieAppreciation(s);
         courante = null; continue;
       }
-      const mat = matiereDe(l);
+      const mat = bilan ? null : matiereDe(l);
       if (mat) {
         // la ligne qui porte les nombres : celle de la matière, ou la suivante
         let L = lignes[i];
@@ -424,6 +464,7 @@
         continue;
       }
       // ligne de continuation d'une appréciation
+      if (bilan) continue;
       if (courante && !MOTS_CLES.test(l) && !notes(l).length && l.trim().length > 3) {
         const a = nettoieAppreciation(l);
         if (a) res.notes[courante].appreciation = (res.notes[courante].appreciation + " " + a).trim();
@@ -436,7 +477,7 @@
     if (!res.label) res.alertes.push("Période non détectée : choisis-la dans la liste.");
     // Pas de moyenne générale lue : on n'en reconstitue pas à partir des matières (même règle que
     // CapEngine.statsProfil) ; la période ne comptera pas dans la moyenne tant qu'elle n'est pas saisie.
-    if (nb && !res.moyenneGenerale) res.alertes.push("Moyenne générale non trouvée dans le bulletin : recopie-la dans le champ « Moyenne générale ». Sans elle, cette période ne compte pas dans ta moyenne.");
+    if (nb && !res.moyenneGenerale && !bilan) res.alertes.push("Moyenne générale non trouvée dans le bulletin : recopie-la dans le champ « Moyenne générale ». Sans elle, cette période ne compte pas dans ta moyenne.");
     return res;
   }
 

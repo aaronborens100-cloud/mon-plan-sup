@@ -1799,7 +1799,7 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
         if (imp.label && Object.keys(imp.notes || {}).length) {
           const per = enregistrerImport(imp);
           app.ouverte = etat.profil.periodes.findIndex((x) => x.label === per.label);
-          toast(`Bulletin ${per.label} ajouté à ton profil : vérifie les valeurs ci-dessous.`);
+          toast(imp.bilanCompetences ? `Bilan ${per.label} ajouté : il n'a pas de notes chiffrées, seules les appréciations sont lues. Saisis ta moyenne générale.` : `Bulletin ${per.label} ajouté à ton profil : vérifie les valeurs ci-dessous.`);
         } else app.imports.push(imp);
       }
       if (!importsEnAttente().length) app.importBloque = false;
