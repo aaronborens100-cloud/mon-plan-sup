@@ -138,6 +138,9 @@
       m.innerHTML = vueAccueil();
       if (!DATA) chargerFormations().then(() => { const n = $("#nb-formations"); if (n) n.textContent = nbRond(); }, () => {});   // le nombre de formations attend le chargement
     }
+    // transition douce quand la page (ou l'étape du profil, l'onglet de la liste) change ; pas à chaque saisie ni à chaque filtre
+    const cleVue = v + (v === "profil" ? ":" + app.etapeProfil : v === "liste" ? ":" + app.ongletListe : "");
+    if (cleVue !== app.derniereVue) { app.derniereVue = cleVue; if (m.classList) { m.classList.remove("vue-entree"); void m.offsetWidth; m.classList.add("vue-entree"); } }
     if (!LIEUX && $("#lyceeq")) chargerLycees().then(() => { if (app.lyceeQ && $("#lyceeq")) rendreRechercheLycee(); }, () => {});
     if (app.avisRetrait && DATA) { app.avisRetrait = false; m.innerHTML = `<p class="notice info" role="status">${AVIS_RETRAIT}</p>` + m.innerHTML; }   // fiche retirée de la liste de l'élève
     const h1 = m.querySelector("h1");
@@ -324,7 +327,10 @@
 <a href="#profil" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 32px; background: var(--encre); color: var(--blanc); border-radius: 999px; font-weight: 700; font-size: 16px">Créer mon profil</a>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
-<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 10px; background: var(--marque); color: #FFFFFF; border-radius: 999px; font-size: 14px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Ta liste en 5 min</span></div>
+<div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 8px; background: var(--blanc); border-radius: 999px; font-size: 14px; font-weight: 700">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: var(--marque); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+<span>Ta liste en 5 min</span>
+</div>
 <div style="display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px 0 8px; background: var(--blanc); border-radius: 999px; font-size: 14px; font-weight: 700">
 <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--marque); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
 <span>100 % gratuit</span>
@@ -385,7 +391,7 @@
 <div style="flex: 1 1 320px; min-width: 0">
 <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--marque); color: var(--sur-marque); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700">1</div>
 <h3 style="margin: 16px 0 8px; font-size: 28px; line-height: 1.2; font-weight: 700">Débute ton orientation dès maintenant</h3>
-<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Dis-nous ta classe et tes spécialités. Ça prend un seul écran.</p>
+<p style="margin: 0; font-size: 16px; color: var(--gris-texte)">Dis-nous ta classe et tes spécialités. Tout est enregistré sur ton appareil.</p>
 </div>
 <div style="flex: 1 1 440px; min-width: 0; background: var(--blanc); border: 1px solid var(--gris-trait); border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
 <div style="font-size: 14px; font-weight: 700">Tes spécialités</div>
