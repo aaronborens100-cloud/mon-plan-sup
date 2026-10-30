@@ -97,12 +97,14 @@ test("élève de Mauriac (données actuelles) : liste après correction, rien à
   // psup-47937 (frais « jusqu'à 1 750 € selon les revenus ») n'est plus exclu par le budget : décision du fondateur, PR A2 (issue #49)
   // Depuis le 30/10/2026 (liste 3 / 4 / 3), la liste est complétée par des vœux ambitieux ou réalistes signalés « hors de ta zone de
   // mobilité » : les 4 vœux de la zone sont les mêmes, les autres sont tous signalés et jamais « sécurité ».
-  assert.deepEqual(ids(W.liste.filter((x) => !x.horsZone)).sort(), [
+  // (le plafond par établissement, assoupli en dernier recours, peut ajouter un 5e vœu de la zone : on vérifie que les 4 y sont)
+  const dansZone = ids(W.liste.filter((x) => !x.horsZone));
+  const attendus = [
     "psup-47937",
     "dnmade-materiaux-lycee-de-la-communication-saint-geraud-aurillac",
     "psup-23106",
-    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",
-  ].sort());
+    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",].sort();
+  assert.deepEqual(dansZone.filter((id) => attendus.includes(id)).sort(), attendus);
   assert.ok(W.liste.filter((x) => x.horsZone).every((x) => x.categorie !== "securite" && /Hors de ta zone de mobilité/.test(x.repere.pourquoi)));
   assert.equal(W.protection.nbSecurite, 0);
   for (const [nom, l] of Object.entries(proposees(site, A, W))) {

@@ -778,59 +778,57 @@
     ]
    },
    {
-    "id": "psup-10367",
+    "id": "psup-22666",
     "categorie": "realiste",
-    "pertinence": 43.82064977597575,
+    "pertinence": 58.985070544191814,
     "repere": [
-     90,
+     87,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-26145",
+    "id": "psup-22669",
     "categorie": "realiste",
-    "pertinence": 44.506,
+    "pertinence": 58.02582869496412,
     "repere": [
-     90,
+     93,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-20410",
+    "id": "psup-43571",
     "categorie": "realiste",
-    "pertinence": 43.284351215500664,
+    "pertinence": 44.29264490564655,
+    "repere": [
+     97,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "psup-22664",
+    "categorie": "realiste",
+    "pertinence": 56.31718408930327,
+    "repere": [
+     98,
+     "en_dessous"
+    ]
+   },
+   {
+    "id": "u-cote-d-azur-lettres",
+    "categorie": "securite",
+    "pertinence": 58.54850512013147,
     "repere": [
      100,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "psup-5345",
-    "categorie": "realiste",
-    "pertinence": 41.50333333333333,
-    "repere": [
-     92,
-     "en_dessous"
-    ]
-   },
-   {
-    "id": "dnmade-graphisme-lycee-rene-goscinny-drap",
-    "categorie": "ambitieux",
-    "pertinence": 46.488339044839535,
-    "repere": [
-     53,
      "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
-  "alertes": [
-   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
-  ],
+  "alertes": [],
   "certitude": {
    "niveau": "decide",
    "top": [

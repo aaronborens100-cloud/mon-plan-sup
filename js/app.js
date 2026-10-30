@@ -1099,10 +1099,13 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
   function blocProtection(P) {
     return `<div class="notice small protection ${PROTECTION_TON[P.niveau]}"><p><strong>${esc(P.message)}</strong></p><p class="tiny muted">${esc(E.PROTECTION_REPERE)} ${esc(E.LIMITE_REPERE)}</p></div>`;
   }
-  // Message quand la distance acceptée laisse moins de 10 vœux (issue #58). N = 0 : « aucune formation ne correspond ».
-  function messageListeCourte(n) {
-    if (n === 0) return "Dans ta zone de mobilité, aucune formation ne correspond à ton profil. Pour avoir 10 vœux, élargis ta zone.";
-    return `Dans ta zone de mobilité, ${n === 1 ? "seule 1 formation correspond" : `seules ${n} formations correspondent`} à ton profil. Pour avoir 10 vœux, élargis ta zone.`;
+  // Message quand la distance acceptée laisse moins de 10 vœux (issue #58). n = vœux dans la zone (N = 0 : « aucune formation
+  // ne correspond »), horsZone = vœux de la liste signalés « Hors de ta zone de mobilité » (décision du 30/10/2026).
+  function messageListeCourte(n, horsZone = 0) {
+    const dedans = n === 0 ? "Dans ta zone de mobilité, aucune formation ne correspond à ton profil."
+      : `Dans ta zone de mobilité, ${n === 1 ? "seule 1 formation correspond" : `seules ${n} formations correspondent`} à ton profil.`;
+    const dehors = horsZone ? ` ${horsZone === 1 ? "Le vœu signalé « hors de ta zone de mobilité » est" : `Les ${horsZone} vœux signalés « hors de ta zone de mobilité » sont`} là pour compléter ta liste.` : "";
+    return `${dedans}${dehors} Pour avoir 10 vœux, élargis ta zone.`;
   }
   function vueVoeux(A) {
     const W = E.wishlist(A.resultats, 10, A.interets);
@@ -1115,7 +1118,7 @@ ${AFFICHER_QUI_SOMMES_NOUS ? `<section class="qsn">
     const btnAuto = `<button class="btn ${sel.length ? "" : "primary"}" data-action="auto-retenir">${ico("etoile")}${sel.length ? "Recalculer une liste équilibrée de 10 vœux" : "Générer une liste équilibrée de 10 vœux"}</button>`;
     if (!sel.length) {
       return `<section class="stack">${intro}
-        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${voeuxAffiches(W, M).map(({ v, x }) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><div class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))} · ${noteCourte(x)}</span>${x !== v ? ligneRemplace(v) : ""}${ligneRepere(x)}${W.decouvertes.has(v.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(v.f.id))}</span>` : ""}${blocEquivalents(v, M, A.stats)}</div><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : ""}${W.limiteeParDistance ? `<p class="muted liste-courte">${esc(messageListeCourte(W.liste.length))}</p>` : (W.liste.length ? "" : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>')}
+        <div class="card stack proposition"><div class="row" style="justify-content:space-between"><h3>Proposition de liste équilibrée</h3><span class="pill ton-bleu">${W.liste.length} formations</span></div>${W.explication ? `<p class="explication">${ico("ampoule")}<span>${esc(W.explication)}</span></p>` : ""}${W.liste.length ? `<ol class="wish">${voeuxAffiches(W, M).map(({ v, x }) => `<li><span class="wish-cat">${catPill(x.categorie)}</span><div class="wish-nom"><a href="#formation-${x.f.id}">${esc(x.f.nom)}</a><span class="small muted">${esc(x.f.etablissement)} · ${esc(x.f.ville)} · ${esc(E.voieLabel(x.f))} · ${noteCourte(x)}</span>${x !== v ? ligneRemplace(v) : ""}${ligneRepere(x)}${W.decouvertes.has(v.f.id) ? `<span class="wish-dec"><span class="pill ton-violet">${ico("boussole")}Découverte</span> ${esc(W.decouvertes.get(v.f.id))}</span>` : ""}${blocEquivalents(v, M, A.stats)}</div><span class="chance-txt ton-${CAT_TON[x.categorie]}">${repereTxt(x.repere)}</span></li>`).join("")}</ol>` : ""}${W.limiteeParDistance ? `<p class="muted liste-courte">${esc(messageListeCourte(W.liste.filter((x) => !x.horsZone).length, W.liste.filter((x) => x.horsZone).length))}</p>` : (W.liste.length ? "" : '<p class="muted">Complète ton profil et le questionnaire pour obtenir une proposition.</p>')}
           ${W.liste.length ? blocProtection(W.protection) : ""}
           ${W.alertes.map((a) => `<p class="notice small">${esc(a)}</p>`).join("")}
           <div class="row no-print">${btnAuto}</div></div>${etr}</section>`;

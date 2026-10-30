@@ -1095,10 +1095,11 @@
     const choisis = [];
     const oxbridge = (x) => /Oxford|Cambridge/.test(x.f.etablissement);
     const parFil = {}, parFam = {};
+    let maxEtab = 2;   // au plus 2 vœux par établissement (assoupli en dernier recours, voir elargir)
     let maxFil = 2;   // au plus 2 établissements pour une même formation, de catégories différentes
     const fam = (x) => (x.f.famille ? x.f.famille.id : null);
     const fil = (x) => intitule(x.f);
-    const peut = (x) => (parEtab[x.f.etablissement] || 0) < 2 && (parFil[fil(x)] || 0) < maxFil && (!fam(x) || (parFam[fam(x)] || 0) < 2)
+    const peut = (x) => (parEtab[x.f.etablissement] || 0) < maxEtab && (parFil[fil(x)] || 0) < maxFil && (!fam(x) || (parFam[fam(x)] || 0) < 2)
       && !choisis.some((c) => fil(c) === fil(x) && c.categorie === x.categorie && maxFil <= 2) && (parType[V(x)] || 0) < maxType(V(x)) && !choisis.includes(x)
       && !(oxbridge(x) && choisis.some((c) => oxbridge(c)));
     const prend = (x) => { choisis.push(x); parEtab[x.f.etablissement] = (parEtab[x.f.etablissement] || 0) + 1; parType[V(x)] = (parType[V(x)] || 0) + 1; parFil[fil(x)] = (parFil[fil(x)] || 0) + 1; if (fam(x)) parFam[fam(x)] = (parFam[fam(x)] || 0) + 1; };
@@ -1144,11 +1145,13 @@
     // catégorie, formations au-delà de la zone de mobilité (écartées pour leur distance seulement, signalées sur le vœu).
     // Les « sécurité » ne profitent que de l'étape (1) : jamais de zone dépassée ; s'il en manque encore, remplir() les remplace par des réalistes et affiche le message existant.
     const elargir = (cat, manque) => {
-      const sauve = { maxFil, bonusType, plancher };
+      const sauve = { maxFil, maxEtab, bonusType, plancher };
       const dedans = ok.filter((x) => x.categorie === cat && !decouvertes.has(x.f.id));
       const dehors = cat === "securite" ? [] : resultats.filter((x) => x.categorie === cat && x.dist !== null && ecarteeParDistance(x) && !decouvertes.has(x.f.id));   // distance inconnue : on ne peut pas dire « hors zone », elle reste exclue
       const paliers = [() => { maxFil = 3; bonusType = sauve.bonusType + 2; plancher = sauve.plancher - 10; },
-        () => { bonusType = sauve.bonusType + 10; plancher = -Infinity; }];
+        () => { bonusType = sauve.bonusType + 10; plancher = -Infinity; },
+        () => { maxEtab = 3; },
+        () => { maxEtab = Infinity; }];
       let k = 0;
       for (const pool of dehors.length ? [dedans, dedans.concat(dehors)] : [dedans]) {
         for (const palier of paliers) {
@@ -1158,7 +1161,7 @@
         }
         if (k >= manque) break;
       }
-      ({ maxFil, bonusType, plancher } = sauve);
+      ({ maxFil, maxEtab, bonusType, plancher } = sauve);
       return k;
     };
     const remplir = (cat, q, alerteQ = q) => {

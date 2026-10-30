@@ -76,8 +76,8 @@ test("aucune note renseignée : message « Renseigne tes bulletins »", () => {
 });
 
 // message attendu pour certains profils types
-// fragile : « minimum » depuis l'issue #45 (licence de secteur à 100 % d'accès, sûre même sous la moyenne des admis ; avant : « aucun »)
-const ATTENDU = { fragile: "minimum", vide: "sans_notes", "eco-excellent-decide": "bon" };
+// fragile : « bon » depuis le 30/10/2026 (3 / 4 / 3 : le plafond par établissement assoupli en dernier recours donne la 3e sécurité) ; « minimum » depuis l'issue #45 ; avant : « aucun »
+const ATTENDU = { fragile: "bon", vide: "sans_notes", "eco-excellent-decide": "bon" };
 
 for (const p of PROFILS) {
   test(`profil « ${p.id} » : protection calculée sur la liste de 10 vœux`, () => {
