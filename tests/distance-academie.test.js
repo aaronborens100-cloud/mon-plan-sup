@@ -360,7 +360,11 @@ test("règle « domicile » : avec un lycée, rien à plus de 45 km (fragile) ; 
   assert.equal(fragile.reponses.mobilite, "domicile");
   const { A, W } = analyser(fragile);
   assert.ok(W.liste.length > 0);
-  for (const x of W.liste) assert.ok(x.dist !== null && E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
+  // décision du fondateur du 30/10/2026 (liste 3 / 4 / 3) : au-delà de 45 km, seulement un vœu ambitieux ou réaliste qui le dit
+  for (const x of W.liste) {
+    if (x.horsZone) { assert.ok(x.categorie !== "securite" && /Hors de ta zone de mobilité/.test(x.repere.pourquoi), `${x.f.id} hors zone non signalé`); continue; }
+    assert.ok(x.dist !== null && E.distanceEquivalente(x.dist, x.traversee) <= E.DISTANCE_ACCEPTEE_KM[0], `${x.f.ville} à ${x.dist} km`);
+  }
   // toute formation au-delà de 45 km (traversée comprise) est exclue, avec la distance dans le message
   for (const x of A.resultats) {
     if (x.dist === null || E.distanceEquivalente(x.dist, x.traversee) <= 45) continue;

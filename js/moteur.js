@@ -1076,6 +1076,10 @@
   }
   function construireWishlist(resultats, n, it, imposee) {
     const ok = resultats.filter((x) => !x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f));
+    // formations écartées uniquement pour leur distance (« domicile » : plus de 45 km, étranger, distance inconnue ;
+    // « proche » : distance inconnue) : seules candidates à dépasser la zone de mobilité (ambitieux, puis réalistes)
+    const ecarteeParDistance = (x) => x.horsDistance && x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f)
+      && (/chez tes parents/.test(x.exclu) || x.exclu === MESSAGE_PROCHE_DISTANCE_INCONNUE);
     const cert = certitude(it);
     const V = (x) => voie(x.f);
     const parEtab = {}, parType = {};
@@ -1134,10 +1138,34 @@
     const alerter = (cat, texte) => { if (!alerteDe[cat]) { alerteDe[cat] = true; alertes.push(texte); } };
     // remplit q places de la catégorie cat (mêmes règles de diversité, même plancher) ; s'il manque des vœux
     // « sécurité », les places restantes vont aux meilleurs « réalistes » (plancher abaissé de 10) et l'alerte s'affiche
+    // Décision du fondateur (30/10/2026) : tous les élèves ont 3 / 4 / 3. Quand une catégorie (réaliste ou ambitieuse) manque,
+    // on l'élargit sans jamais changer la catégorie d'un vœu ni assouplir une règle de catégorie : (1) pertinence (plancher)
+    // et diversité (même filière, plafond par voie) assouplies POUR CETTE CATÉGORIE ; (2) puis, toujours pour cette
+    // catégorie, formations au-delà de la zone de mobilité (écartées pour leur distance seulement, signalées sur le vœu).
+    // Les « sécurité » ne profitent que de l'étape (1) : jamais de zone dépassée ; s'il en manque encore, remplir() les remplace par des réalistes et affiche le message existant.
+    const elargir = (cat, manque) => {
+      const sauve = { maxFil, bonusType, plancher };
+      const dedans = ok.filter((x) => x.categorie === cat && !decouvertes.has(x.f.id));
+      const dehors = cat === "securite" ? [] : resultats.filter((x) => x.categorie === cat && x.dist !== null && ecarteeParDistance(x) && !decouvertes.has(x.f.id));   // distance inconnue : on ne peut pas dire « hors zone », elle reste exclue
+      const paliers = [() => { maxFil = 3; bonusType = sauve.bonusType + 2; plancher = sauve.plancher - 10; },
+        () => { bonusType = sauve.bonusType + 10; plancher = -Infinity; }];
+      let k = 0;
+      for (const pool of dehors.length ? [dedans, dedans.concat(dehors)] : [dedans]) {
+        for (const palier of paliers) {
+          palier();
+          while (k < manque) { const x = meilleur(pool); if (!x) break; prend(x); k++; }
+          if (k >= manque) break;
+        }
+        if (k >= manque) break;
+      }
+      ({ maxFil, bonusType, plancher } = sauve);
+      return k;
+    };
     const remplir = (cat, q, alerteQ = q) => {
       const dispo = ok.filter((x) => x.categorie === cat && !decouvertes.has(x.f.id));
       let k = 0;
       while (k < q) { const x = meilleur(dispo); if (!x) break; prend(x); k++; }
+      if (k < q) k += elargir(cat, q - k);
       if (k < q) {
         if (cat === "securite") {
           plancher -= 10;
@@ -1184,6 +1212,15 @@
         ? `Tu n'avais pas coché ce type de formation (${t}), mais il correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`
         : `Un type de formation auquel tu n'as peut-être pas pensé (${t}), mais qui correspond bien à ${d.length ? "ton intérêt pour " + listeFr(d.slice(0, 2)) : "ton profil"}.`;
     };
+    // vœu au-delà de la zone de mobilité (jamais « sécurité ») : copie qui le dit sur le vœu ; le résultat de recommander() n'est pas modifié
+    for (let i = 0; i < choisis.length; i++) {
+      const x = choisis[i];
+      if (!x.horsDistance) continue;
+      const loin = x.dist !== null && !x.traversee ? ` (à ${Math.round(x.dist)} km de ton lycée)` : "";
+      const note = `Hors de ta zone de mobilité${loin} : à toi de voir si tu es prêt(e) à partir si cette formation t'intéresse.`;
+      choisis[i] = Object.assign({}, x, { exclu: null, horsZone: true, ajust: x.ajust.concat("hors de ta zone de mobilité"),
+        repere: Object.assign({}, x.repere, { pourquoi: `${x.repere.pourquoi} ${note}`, horsZone: true }) });
+    }
     const W = { liste: choisis, protection: protection(choisis, sansLycee), alertes, certitude: cert, explication,
       decouvertes: new Map(dec.map((x) => [x.f.id, raisonDec(x)])) };
     // Règles de diversité pour les formations équivalentes (equivalentsListe) : la liste où x prend la place i respecte-t-elle
@@ -1203,8 +1240,6 @@
     // Liste courte à cause de la distance acceptée (question « mobilite », issue #58) : moins de n vœux alors que des
     // formations, écartées uniquement pour leur distance (« domicile » : plus de 45 km, étranger, distance inconnue ;
     // « proche » : distance inconnue), auraient pu y entrer. Propriété non énumérable : la liste ne change pas.
-    const ecarteeParDistance = (x) => x.horsDistance && x.exclu && !x.bloque && voeuParcoursup(x.f) && !horsListe(x.f)
-      && (/chez tes parents/.test(x.exclu) || x.exclu === MESSAGE_PROCHE_DISTANCE_INCONNUE);
     Object.defineProperty(W, "limiteeParDistance", { value: choisis.length < n && resultats.some(ecarteeParDistance), enumerable: false });
     return W;
   }

@@ -44,22 +44,28 @@ async function page(p, mob) {
 }
 const texte = (html) => html.replace(/<[^>]+>/g, " ").replace(/&#39;|&#x27;/g, "'").replace(/\s+/g, " ");
 
-test("domicile, liste vide (Barcelonnette) : message de zone de mobilité, pas « Complète ton profil »", async () => {
+// Décision du fondateur du 30/10/2026 (liste 3 / 4 / 3) : les vœux ambitieux, puis réalistes, qui manquent peuvent dépasser la
+// zone de mobilité, à condition de le dire sur le vœu. La liste n'est plus vide ni limitée à la zone : on vérifie que les
+// vœux de la zone sont les seuls sans mention, et que les autres sont signalés « hors de ta zone de mobilité », jamais « sécurité ».
+const dansLaZone = (W) => W.liste.filter((x) => !x.horsZone);
+const horsZone = (W) => W.liste.filter((x) => x.horsZone);
+
+test("domicile, zone vide (Barcelonnette) : aucun vœu dans la zone, les vœux proposés sont signalés « hors de ta zone de mobilité »", async () => {
   const { W } = analyser(BARCELONNETTE, "domicile");
-  assert.equal(W.liste.length, 0);
+  assert.equal(dansLaZone(W).length, 0);
+  assert.ok(horsZone(W).length > 0 && W.liste.length < 10);
   assert.equal(W.limiteeParDistance, true);
-  const t = texte(await page(BARCELONNETTE, "domicile"));
-  assert.ok(t.includes("Dans ta zone de mobilité, aucune formation ne correspond à ton profil. Pour avoir 10 vœux, élargis ta zone."));
-  assert.ok(!t.includes(COMPLETE));
+  for (const x of horsZone(W)) assert.ok(x.categorie !== "securite" && /Hors de ta zone de mobilité/.test(x.repere.pourquoi), x.f.id);
+  assert.ok(!texte(await page(BARCELONNETTE, "domicile")).includes(COMPLETE));
 });
 
-test("domicile, 4 vœux (Mauriac) : « seules 4 formations correspondent », la liste reste sans vœu hors rayon", async () => {
+test("domicile, 4 vœux dans la zone (Mauriac) : les autres sont signalés hors zone, jamais « sécurité »", async () => {
   const { W } = analyser(MAURIAC, "domicile");
-  assert.equal(W.liste.length, 4);
-  assert.equal(W.limiteeParDistance, true);
-  for (const x of W.liste) assert.ok(x.dist !== null && site.E.distanceEquivalente(x.dist, x.traversee) <= 45, x.f.id);
-  const t = texte(await page(MAURIAC, "domicile"));
-  assert.ok(t.includes("Dans ta zone de mobilité, seules 4 formations correspondent à ton profil. Pour avoir 10 vœux, élargis ta zone."));
+  assert.equal(dansLaZone(W).length, 4);
+  assert.ok(horsZone(W).length > 0);
+  for (const x of dansLaZone(W)) assert.ok(x.dist !== null && site.E.distanceEquivalente(x.dist, x.traversee) <= 45, x.f.id);
+  for (const x of horsZone(W)) assert.ok(x.categorie !== "securite" && /Hors de ta zone de mobilité/.test(x.repere.pourquoi), x.f.id);
+  assert.ok(!texte(await page(MAURIAC, "domicile")).includes(COMPLETE));
 });
 
 test("même élève en « proche » ou « partout » : 10 vœux, aucun message de zone", async () => {

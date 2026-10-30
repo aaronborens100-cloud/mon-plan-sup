@@ -28,7 +28,7 @@ const REGLES = {
   securite_hors_distance: "Aucune formation « sécurité » au-delà de la distance acceptée (45 km « domicile », 250 km « proche »), de l'autre côté de la mer ou à l'étranger",
   securite_distance_inconnue: "Aucune formation « sécurité » sans coordonnées pour un élève « domicile » ou « proche » qui a indiqué son lycée",
   securite_hors_territoire: "Aucune formation « sécurité » hors des territoires acceptés (zone du lycée + zones cochées dans « pays »)",
-  domicile_au_dela_45_km: "Élève « domicile » avec lycée : aucun vœu (liste ou équivalent) à plus de 45 km (traversée comprise), quelle que soit sa catégorie",
+  domicile_au_dela_45_km: "Élève « domicile » avec lycée : aucun vœu (liste ou équivalent) à plus de 45 km (traversée comprise), quelle que soit sa catégorie ; seule exception (décision du 30/10/2026) : un vœu ambitieux ou réaliste de la liste de 10 qui porte la mention « Hors de ta zone de mobilité »",
   dix_voeux: "La liste proposée compte 10 vœux",
   alerte_moins_de_3_surs: "Moins de 3 vœux « sécurité » dans la liste ⇒ l'alerte « Pas assez de vœux vraiment sûrs » est affichée (page Mes vœux)",
   protection_coherente: "Le message de protection correspond au nombre de vœux « sécurité » et est affiché (page Mes vœux)",
@@ -125,7 +125,11 @@ function controler(site, p) {
       ajoute("voeu_bac_pro", nom(x), `${ou} ; bacheliers généraux ${pctBG} %, catégorie ${(f.__tf || []).join(", ")}`);
     if (mob === 0 && s.geo) {
       const g = geographie(E, s, x);
-      if (g.loin || (g.dist !== null && g.dist + (g.traversee ? E.SURCOUT_TRAVERSEE_KM : 0) > 45))
+      // Décision du fondateur du 30/10/2026 (liste 3 / 4 / 3) : un vœu AMBITIEUX ou RÉALISTE de la liste de 10 peut dépasser la zone
+      // « domicile » s'il le dit (« Hors de ta zone de mobilité » dans l'explication du vœu). Jamais « sécurité », jamais un équivalent.
+      const ditHorsZone = ou === "liste" && (x.categorie === "ambitieux" || x.categorie === "realiste")
+        && /Hors de ta zone de mobilité/.test((x.repere && x.repere.pourquoi) || "");
+      if (!ditHorsZone && (g.loin || (g.dist !== null && g.dist + (g.traversee ? E.SURCOUT_TRAVERSEE_KM : 0) > 45)))
         ajoute("domicile_au_dela_45_km", nom(x), `${ou} ; ${g.loin ? "à l'étranger" : `${Math.round(g.dist)} km${g.traversee ? " + traversée" : ""}`}`);
     }
   }
