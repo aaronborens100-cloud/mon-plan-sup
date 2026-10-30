@@ -778,60 +778,57 @@
     ]
    },
    {
-    "id": "dnmade-graphisme-lycee-rene-goscinny-drap",
-    "categorie": "ambitieux",
-    "pertinence": 46.488339044839535,
+    "id": "psup-22666",
+    "categorie": "realiste",
+    "pertinence": 58.985070544191814,
     "repere": [
-     53,
+     87,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-24813",
-    "categorie": "ambitieux",
-    "pertinence": 45.826579720778206,
+    "id": "psup-22669",
+    "categorie": "realiste",
+    "pertinence": 58.02582869496412,
     "repere": [
-     63,
+     93,
      "en_dessous"
     ]
    },
    {
-    "id": "psup-24814",
-    "categorie": "ambitieux",
-    "pertinence": 44.9305797207782,
+    "id": "psup-43571",
+    "categorie": "realiste",
+    "pertinence": 44.29264490564655,
     "repere": [
-     57,
+     97,
      "en_dessous"
     ]
    },
    {
-    "id": "massena-nice-al",
-    "categorie": "ambitieux",
-    "pertinence": 40.919555419168674,
+    "id": "psup-22664",
+    "categorie": "realiste",
+    "pertinence": 56.31718408930327,
     "repere": [
-     54,
+     98,
      "en_dessous"
     ]
    },
    {
-    "id": "dna-villa-arson-nice",
-    "categorie": "ambitieux",
-    "pertinence": 40.87466803613526,
+    "id": "u-cote-d-azur-lettres",
+    "categorie": "securite",
+    "pertinence": 58.54850512013147,
     "repere": [
-     12,
+     100,
      "en_dessous"
     ]
    }
   ],
   "protection": {
-   "nbSecurite": 2,
-   "niveau": "minimum",
-   "message": "Ta liste a 2 vœux sûrs. C'est un minimum : un troisième te protégerait davantage."
+   "nbSecurite": 3,
+   "niveau": "bon",
+   "message": "Ta liste a 3 vœux sûrs : garde-les, ce sont eux qui te protègent si les autres ne passent pas."
   },
-  "alertes": [
-   "Moins de 4 vœux « réaliste » disponibles avec tes critères.",
-   "Pas assez de vœux vraiment sûrs dans tes domaines : complète avec des licences de ton académie ou des formations moins demandées (taux d'accès d'au moins 50 %)."
-  ],
+  "alertes": [],
   "certitude": {
    "niveau": "decide",
    "top": [
@@ -840,7 +837,7 @@
     "langues"
    ]
   },
-  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de lettres ou sciences humaines, avec diplôme d'État santé ou social et licence de langues comme solutions de repli.",
+  "explication": "Tes réponses montrent un intérêt net pour le management et le commerce : on a concentré tes vœux sur licence de langues, avec licence de lettres ou sciences humaines et année préparatoire ou de mise à niveau comme solutions de repli.",
   "decouvertes": {}
  },
  "nouvelles": [

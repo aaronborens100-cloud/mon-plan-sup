@@ -83,7 +83,7 @@ test("issue #41 : le PGE de Paris-La Défense sans coordonnées n'entre plus dan
   assert.ok(!A.resultats.some((x) => x.f.id === PGE), "fiche PGE retirée du catalogue");
   assert.ok(!ids(W.liste).includes(PGE), "PGE dans la liste");
   for (const [nom, l] of Object.entries(proposees(siteAncien, A, W))) {
-    for (const x of l) {
+    for (const x of l.filter((y) => !(nom === "liste" && y.horsZone))) {   // 30/10/2026 : les vœux « hors zone » sont signalés (tests/repartition-343.test.js)
       assert.notEqual(x.dist, null, `${nom} : ${x.f.id} à distance inconnue`);
       assert.ok(E.distanceEquivalente(x.dist, x.traversee) <= 45, `${nom} : ${x.f.id} à ${Math.round(x.dist)} km`);
     }
@@ -95,15 +95,20 @@ test("élève de Mauriac (données actuelles) : liste après correction, rien à
   const { A, W } = analyser(site, MAURIAC_PROFIL, MAURIAC_REPONSES);
   // la liste après correction (4 vœux, 0 « sécurité ») : le rayon de 45 km autour de Mauriac ne laisse pas plus.
   // psup-47937 (frais « jusqu'à 1 750 € selon les revenus ») n'est plus exclu par le budget : décision du fondateur, PR A2 (issue #49)
-  assert.deepEqual(ids(W.liste), [
+  // Depuis le 30/10/2026 (liste 3 / 4 / 3), la liste est complétée par des vœux ambitieux ou réalistes signalés « hors de ta zone de
+  // mobilité » : les 4 vœux de la zone sont les mêmes, les autres sont tous signalés et jamais « sécurité ».
+  // (le plafond par établissement, assoupli en dernier recours, peut ajouter un 5e vœu de la zone : on vérifie que les 4 y sont)
+  const dansZone = ids(W.liste.filter((x) => !x.horsZone));
+  const attendus = [
     "psup-47937",
     "dnmade-materiaux-lycee-de-la-communication-saint-geraud-aurillac",
     "psup-23106",
-    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",
-  ]);
+    "dnmade-graphisme-lycee-de-la-communication-saint-geraud-aurillac",].sort();
+  assert.deepEqual(dansZone.filter((id) => attendus.includes(id)).sort(), attendus);
+  assert.ok(W.liste.filter((x) => x.horsZone).every((x) => x.categorie !== "securite" && /Hors de ta zone de mobilité/.test(x.repere.pourquoi)));
   assert.equal(W.protection.nbSecurite, 0);
   for (const [nom, l] of Object.entries(proposees(site, A, W))) {
-    for (const x of l) {
+    for (const x of l.filter((y) => !(nom === "liste" && y.horsZone))) {
       assert.notEqual(x.dist, null, `${nom} : ${x.f.id} à distance inconnue`);
       assert.ok(E.distanceEquivalente(x.dist, x.traversee) <= 45, `${nom} : ${x.f.id} à ${Math.round(x.dist)} km`);
     }
